@@ -74,3 +74,58 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 公钥
 
 ```
 
+# 处理方法2
+
+[处理方法2][http://t.csdn.cn/7osap]
+
+输入命令` sudo apt-get update`, 报错
+
+
+
+这里可以看到有两个问题，一个是 ubuntu自己的源连不上了[第二三个红框框] ，一个是 `vmware `这个软件 [第一个红框框]。
+
+首先解决第一个问题。archive.ubuntu.com是ubuntu的默认源，也是官网的源。但是现在连不上，那就换个其他的源，用阿里的。
+
+首先打开 软件和更新，设置选择 阿里的服务器
+
+
+
+这时候，点击关闭，会要求重新载入，点击重新载入会报错，这是因为`sources.list`里面对阿里这个源配置的这个artful 属性不对。
+
+
+
+打开文件`/etc/apt/sources.list`
+
+
+删除里面的所有内容，替换成：
+
+```bash
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe 
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe
+```
+
+**出现的问题, 文件自动添加一行, 需要手动删除**
+
+
+
+这样第一个源的问题就解决了。然后 解决第二个`vmware`的问题，打开文件夹` /etc/apt/sources.list.d`
+
+`cd /etc/apt/sources.list.d`
+用 ls 命令查看这个文件夹里的所有内容
+
+
+
+由于出问题的是`vmware`， 我们就把`vmware-tools.list `删除（建议不要直接删除，而是改成` vmware-tools.list.bak`。同理要修改某个配置文件xxx时，先备份成 `xxx.bak`文件，然后再修改）。这里删除不用担心软件无法更新，系统会自动再生成一个可用的 .list文件
+
+`sudo mv vmware-tools.list vmware-tools.list.bak`
+然后再执行 sudo apt-get update 就没有错误了
+————————————————
+版权声明：本文为CSDN博主「titake」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_22498427/article/details/104345138
