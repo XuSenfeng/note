@@ -245,6 +245,49 @@ Saturday
 
 将分组和管道符号一起使用来创建可能的模式匹配组是很常见的做
 
+## 正则表达式实战
+
+### 目录文件计数
+
+```bash
+  1 #!/bin/bash                                                                           
+  2 
+  3 mypath=$( echo $PATH | sed 's/:/ /g' )
+  4 count=1
+  5 for directory in $mypath		# 获取文件目录
+  6 do
+  7     check=$(ls $directory)		# 获取文件列表
+  8     for item in $check
+  9     do
+ 10         count=$[ $count+1 ]
+ 11     done
+ 12     echo "$directory - $count"
+ 13     count=0
+ 14 done
+```
+
+### 解析邮箱地址
+
+`username@hostname`值可用字母数字字符以及以下特殊字符
+
++   点
++   单破折号
++   加号
++   下划线
+
+服务器名和域名也必须遵照严格的命名规则，只允许字母数字字符以及以下特殊字符
+
++   点
++   下划线
+
+```bash
+^([a-zA-Z0-9_\+\-\.]+)@([a-zA-Z0-9_\.\-]+)\.([a-zA-Z]{2,5})$
+```
+
+
+
+
+
 
 
 
