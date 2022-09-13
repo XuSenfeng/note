@@ -178,6 +178,13 @@ int gpio_direction_output(unsigned gpio, int value)
 
 >   设置gpio的值
 
+```c
+int devm_gpio_request_one(struct device *dev, unsigned gpio,
+			  unsigned long flags, const char *label)
+```
+
+>   一次性完成设置, 参数一, 调用的dev设备, 第二个参数, gpio标号, 第三个参数, 以GPIOF_开头的标志, 最后一个名字
+
 ### 相关的of函数
 
 ```c

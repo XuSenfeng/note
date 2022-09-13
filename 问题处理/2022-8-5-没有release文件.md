@@ -129,3 +129,62 @@ deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe
 ————————————————
 版权声明：本文为CSDN博主「titake」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/qq_22498427/article/details/104345138
+
+
+
+
+
+# 之后出现
+
+```c
+root@jiao-virtual-machine:/# apt update
+Get:1 http://old-releases.ubuntu.com/ubuntu cosmic InRelease [242 kB]
+0% [1 InRelease gpgv 242 kB] [Waiting for headers]Couldn't create tempfiles for splitting up /var/lib/apErr:1 http://old-releases.ubuntu.com/ubuntu cosmic InReleaseInRelease
+  Could not execute 'apt-key' to verify signature (is gnupg installed?)
+Get:2 http://old-releases.ubuntu.com/ubuntu cosmic-security InRelease [88.7 kB]
+0% [2 InRelease gpgv 88.7 kB] [Waiting for headers]                                   354 B/s 11min 23sCouldn't create tempfiles for splitting up /var/lib/apt/lists/partial/old-releases.ubuntu.com_ubuntu_distErr:2 http://old-releases.ubuntu.com/ubuntu cosmic-security InRelease                                  
+  Could not execute 'apt-key' to verify signature (is gnupg installed?)
+Get:3 http://old-releases.ubuntu.com/ubuntu cosmic-updates InRelease [88.7 kB]                         
+0% [3 InRelease gpgv 88.7 kB] [Waiting for headers]                                   354 B/s 15min 34sCouldn't create tempfiles for splitting up /var/lib/apt/lists/partial/old-releases.ubuntu.com_ubuntu_distErr:3 http://old-releases.ubuntu.com/ubuntu cosmic-updates InRelease                                   
+  Could not execute 'apt-key' to verify signature (is gnupg installed?)
+Get:4 http://old-releases.ubuntu.com/ubuntu cosmic-proposed InRelease [92.5 kB]                        
+0% [4 InRelease gpgv 92.5 kB] [Waiting for headers]                                   354 B/s 19min 45sCouldn't create tempfiles for splitting up /var/lib/apt/lists/partial/old-releases.ubuntu.com_ubuntu_distErr:4 http://old-releases.ubuntu.com/ubuntu cosmic-proposed InRelease                                  
+  Could not execute 'apt-key' to verify signature (is gnupg installed?)
+Get:5 http://old-releases.ubuntu.com/ubuntu cosmic-backports InRelease [74.6 kB]                       
+0% [5 InRelease gpgv 74.6 kB]                                                          354 B/s 24min 6sCouldn't create tempfiles for splitting up /var/lib/apt/lists/partial/old-releases.ubuntu.com_ubuntu_distErr:5 http://old-releases.ubuntu.com/ubuntu cosmic-backports InRelease                                 
+  Could not execute 'apt-key' to verify signature (is gnupg installed?)
+Reading package lists... Done                                                                          
+W: GPG error: http://old-releases.ubuntu.com/ubuntu cosmic InRelease: Could not execute 'apt-key' to verify signature (is gnupg installed?)
+E: The repository 'http://old-releases.ubuntu.com/ubuntu cosmic InRelease' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+W: GPG error: http://old-releases.ubuntu.com/ubuntu cosmic-security InRelease: Could not execute 'apt-key' to verify signature (is gnupg installed?)
+E: The repository 'http://old-releases.ubuntu.com/ubuntu cosmic-security InRelease' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+W: GPG error: http://old-releases.ubuntu.com/ubuntu cosmic-updates InRelease: Could not execute 'apt-key' to verify signature (is gnupg installed?)
+E: The repository 'http://old-releases.ubuntu.com/ubuntu cosmic-updates InRelease' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+W: GPG error: http://old-releases.ubuntu.com/ubuntu cosmic-proposed InRelease: Could not execute 'apt-key' to verify signature (is gnupg installed?)
+E: The repository 'http://old-releases.ubuntu.com/ubuntu cosmic-proposed InRelease' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+W: GPG error: http://old-releases.ubuntu.com/ubuntu cosmic-backports InRelease: Could not execute 'apt-key' to verify signature (is gnupg installed?)
+E: The repository 'http://old-releases.ubuntu.com/ubuntu cosmic-backports InRelease' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+```
+
+```
+    
+//原因没有权限    
+root@jiao-virtual-machine:/# chmod 777 /tmp
+```
+
+
+
+
+
+
+

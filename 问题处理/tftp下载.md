@@ -9,9 +9,9 @@
 # 下载启动
 
 ```
-	setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 -83000000'
-	saveenv
-	boot
+setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 -83000000'
+saveenv
+boot
 ```
 
 # linux下使用
