@@ -240,7 +240,7 @@ void set_segmdesc(struct SEGMENT_DESCRIPTOR *sd, unsigned int limit, int base, i
 	sd->base_high    = (base >> 24) & 0xff;
 	return;
 }
-
+//第一个参数是地址, 第二个参数是函数指针, 第三个参数是段地址, 第四个参数是段的属性
 void set_gatedesc(struct GATE_DESCRIPTOR *gd, int offset, int selector, int ar)
 {
 	gd->offset_low   = offset & 0xffff;
