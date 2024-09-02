@@ -157,7 +157,7 @@ struct SEGMENT_DESCRIPTOR {
 
 >   初始化的位置在0x00270000-0x0027ffff, 是随机选择的, 存在GDTR寄存器里面
 
->   ![image-20230724221323463](E:\a学习\笔记\img\image-20230724221323463.png)
+>   ![image-20230724221323463](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242256010.png)
 >
 >   段限长设置的是段的地址, 最小单位是G决定的, 0表示一字节, 1表示4KB
 >
@@ -197,7 +197,7 @@ struct GATE_DESCRIPTOR {
 >
 >   任务门描述符中含有一个任务TSS段的选择符，该任务用于处理异常和/或中断。
 >
->   ![image-20230724222911339](E:\a学习\笔记\img\image-20230724222911339.png)
+>   ![image-20230724222911339](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242256011.png)
 
 ## 初始化
 

@@ -120,7 +120,7 @@ AH = 0x0e, AL: character code, BH=0, BL=color code, 返回值无
 
 最开始的内存是BIOS实现功能使用的, 在0xf000附近存在BIOS本体
 
-![image-20230720185103853](E:\a学习\笔记\img\image-20230720185103853.png)
+![image-20230720185103853](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242256921.png)
 
 在0xfc00到0xfdff是启动区的位置
 

@@ -7,11 +7,11 @@ tags: esp32
 
 # Flash和psram的配置
 
-![image-20230917101913064](E:\a学习\笔记\img\image-20230917101913064.png)
+![image-20230917101913064](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242257402.png)
 
-![image-20230917102856323](E:\a学习\笔记\img\image-20230917102856323.png)
+![image-20230917102856323](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242257404.png)
 
-![image-20230917103515582](E:\a学习\笔记\img\image-20230917103515582.png)
+![image-20230917103515582](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242257405.png)
 
 > 使用扩展的SRAM的话这几个引脚就会被占用
 
@@ -104,13 +104,13 @@ factory,app,factory,0x10000,1M,
 
 ## 添加分区表
 
-![image-20230917105409604](E:\a学习\笔记\img\image-20230917105409604.png)
+![image-20230917105409604](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242257406.png)
 
-![image-20230917105358856](E:\a学习\笔记\img\image-20230917105358856.png)
+![image-20230917105358856](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242257407.png)
 
 > 把这个文件添加到文件夹里面
 
-![image-20230917105947422](E:\a学习\笔记\img\image-20230917105947422.png)
+![image-20230917105947422](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242257408.png)
 
 ```bash
 *******************************************************************************
@@ -127,7 +127,7 @@ ota_1,app,ota_1,0x210000,1M,
 
 > 分区表增加了
 
-![image-20230917110203861](E:\a学习\笔记\img\image-20230917110203861.png)
+![image-20230917110203861](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202408242257409.png)
 
 > 之后可以在上面的表里面进行修改分区表, 也可以添加自己的分区
 >
