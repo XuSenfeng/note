@@ -64,6 +64,16 @@ gr.Interface.from_pipeline(pipeline("question-answering", model="uer/roberta-bas
 >
 > ![image-20241006112326045](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061123128.png)
 
+## 选取
+
+[Tasks - Hugging Face](https://huggingface.co/tasks)
+
+[What is Question Answering? - Hugging Face](https://huggingface.co/tasks/question-answering)
+
+可以在这里面选取他推荐的模型, 数据集, 测试算法
+
+![image-20241008181712046](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410081817288.png)
+
 ## 基础组件Pipeline
 
 把数据进行预处理, 模型调用以及模型调用以及结果后处理组装为一个流水线, 使得我们输入的文本可以获取为最后的结果
@@ -489,6 +499,10 @@ ids = tokenizer.encode_plus(sen, add_special_tokens=True, max_length=20, padding
 ```
 
 > 也可以直接使用`ids = tokenizer(sen, add_special_tokens=True, max_length=20, padding='max_length')`
+>
+> token_type_ids用于标识不同文本片段的token类型。在BERT模型中，输入文本可能包含多个文本片段，例如问题和答案。token_type_ids可以用来区分不同文本片段的token，帮助模型捕捉文本之间的关联信息。通过将不同文本片段的token赋予不同的token_type_ids，模型可以更好地理解每个文本片段之间的关系。
+>
+> attention_mask用于控制哪些token对于模型是可见的，哪些token应该被屏蔽掉。在BERT模型中，输入文本通常会进行padding使得输入序列长度相同。通过在attention_mask中将padding的token对应的位置设为0，模型可以忽略这些padding token，避免对其进行不必要的计算，提高了模型的计算效率。
 
 #### 处理多个数据(速度更快)
 
@@ -616,7 +630,7 @@ model = AutoModel.from_pretrained("hfl/rbt3")
 > model = AutoModel.from_pretrained("E:/JHY/python/2024-10-5-transforms/hlfrbt3")
 > ```
 >
-> 还可以使用git克隆的方式进行
+> 还可以使用git克隆的方式进行, 在train按钮的左侧三个点
 >
 > ![image-20241007110417069](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071104166.png)
 >
@@ -1449,4 +1463,328 @@ import evaluate
 evaluate.list_evaluation_modules()
 ```
 
-> 可以使用这个函数获取可以使用的评估函数
+> 可以使用这个函数获取可以使用的评估函数, 这里面有一部分Huggingface实现, 另一部分是社区实现的, 不想看社区实现的时候可以加一个参数`include_community=False`
+>
+> 可以使用参数`with_details=True`获取更详细的信息
+>
+> ![image-20241008170841605](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410081708806.png)
+
+```python
+accuracy = evaluate.load('accuracy') # 加载
+print(accuracy.description) # 获取描述以及计算方式
+"""
+Accuracy is the proportion of correct predictions among the total number of cases processed. It can be computed with:
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+ Where:
+TP: True positive
+TN: True negative
+FP: False positive
+FN: False negative
+"""
+print(accuracy.inputs_description)
+"""
+Args:
+    predictions (`list` of `int`): Predicted labels.
+    references (`list` of `int`): Ground truth labels.
+    normalize (`boolean`): If set to False, returns the number of correctly classified samples. Otherwise, returns the fraction of correctly classified samples. Defaults to True.
+    sample_weight (`list` of `float`): Sample weights Defaults to None.
+
+Returns:
+    accuracy (`float` or `int`): Accuracy score. Minimum possible value is 0. Maximum possible value is 1.0, or the number of examples input, if `normalize` is set to `True`.. A higher score means higher accuracy.
+
+Examples:
+
+    Example 1-A simple example
+        >>> accuracy_metric = evaluate.load("accuracy")
+        >>> results = accuracy_metric.compute(references=[0, 1, 2, 0, 1, 2], predictions=[0, 1, 1, 2, 1, 0])
+        >>> print(results)
+        {'accuracy': 0.5}
+
+    Example 2-The same as Example 1, except with `normalize` set to `False`.
+        >>> accuracy_metric = evaluate.load("accuracy")
+        >>> results = accuracy_metric.compute(references=[0, 1, 2, 0, 1, 2], predictions=[0, 1, 1, 2, 1, 0], normalize=False)
+        >>> print(results)
+        {'accuracy': 3.0}
+
+    Example 3-The same as Example 1, except with `sample_weight` set.
+        >>> accuracy_metric = evaluate.load("accuracy")
+        >>> results = accuracy_metric.compute(references=[0, 1, 2, 0, 1, 2], predictions=[0, 1, 1, 2, 1, 0], sample_weight=[0.5, 2, 0.7, 0.5, 9, 0.4])
+        >>> print(results)
+        {'accuracy': 0.8778625954198473}
+"""
+```
+
+> 直接打印的时候会把所有的数据打印出来
+
+```python
+result = accuracy.compute(references=[0, 1, 1, 0], predictions=[0, 1, 0, 1])
+result
+```
+
+在实际应用的时候数据可能不是一次性传进来的
+
+```python
+for ref, pred in zip([0, 1, 1, 0], [0, 1, 1, 0]):
+    accuracy.add(references=ref, predictions=pred)
+accuracy.compute()
+```
+
+```python
+for ref, pred in zip([[0, 1, 1, 0], [0, 1, 1, 0]], [[0, 1, 0, 1], [0, 1, 1, 0]]):
+    accuracy.add_batch(references=ref, predictions=pred)
+accuracy.compute()
+```
+
+> ```python
+> zip_data = zip([[0, 1, 1, 0], [0, 1, 1, 0]], [[0, 1, 0, 1], [0, 1, 1, 0]])
+> list(zip_data)
+> """
+> [([0, 1, 1, 0], [0, 1, 0, 1]), ([0, 1, 1, 0], [0, 1, 1, 0])]
+> """
+> for ref, pred in zip([[0, 1, 1, 0], [0, 1, 1, 0]], [[0, 1, 0, 1], [0, 1, 1, 0]]):
+>     print(ref, pred)
+> """
+> [0, 1, 1, 0] [0, 1, 0, 1]
+> [0, 1, 1, 0] [0, 1, 1, 0]
+> """
+> ```
+
+### 多指标评估函数
+
+可以在同时进行多个评估函数
+
+```python
+clf_metrics = evaluate.combine(['accuracy', 'precision', 'recall', 'f1'])
+clf_metrics.compute(references=[0, 1, 1, 0], predictions=[0, 1, 0, 1])
+"""
+{'accuracy': 0.5, 'precision': 0.5, 'recall': 0.5, 'f1': 0.5}
+"""
+```
+
+### 评估结果可视化
+
+这一个库只有一个雷达图的方式进行对比不同模型的结果
+
+```python
+from  evaluate.visualization import radar_plot
+data = [
+    {"accuracy": 0.98, "precision": 0.97, "recall": 0.99, "f1": 0.98},
+    {"accuracy": 0.96, "precision": 0.99, "recall": 0.97, "f1": 0.96},
+    {"accuracy": 0.92, "precision": 0.96, "recall": 0.99, "f1": 0.97},
+]
+model_names = ["model1", "model2", "model3"]
+plot = radar_plot(data, model_names)
+```
+
+### 实际应用
+
+```python
+import evaluate
+clf_metrics = evaluate.combine(['accuracy', 'f1'])
+
+def evaluate():
+    """
+    Description: 评估模型在验证集上的性能
+    Returns:
+        模型的准确率
+    """
+    model.eval()
+    with torch.no_grad():
+        for batch in validloader:
+            if torch.cuda.is_available():
+                batch = {k:v.cuda() for k, v in batch.items()}
+            outputs = model(**batch)
+            pred = outputs.logits.argmax(dim=-1) # 预测的类别
+            clf_metrics.add_batch(predictions=pred.long(), references=batch["labels"].long())
+    return clf_metrics.compute()
+```
+
+## Trainer
+
+![image-20241008190813102](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410081908319.png)
+
+[Trainer (huggingface.co)](https://huggingface.co/docs/transformers/trainer)
+
+```python
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+# 获取参数集
+train_args = TrainingArguments(output_dir="./checkpoints", save_safetensors=True)
+train_args
+
+from transformers import DataCollatorWithPadding
+# 训练模型
+# args:
+#   model: 模型
+#   args: 训练参数
+#   train_dataset: 训练数据集
+#   eval_dataset: 评估数据集
+#   data_collator: 数据收集器
+#   compute_metrics: 评估指标
+trainer = Trainer(model=model, args=train_args, 
+                  train_dataset=tokenized_datasets["train"], 
+                  eval_dataset=tokenized_datasets["test"],
+                  data_collator=DataCollatorWithPadding(tokenizer=tokenizer),
+                  compute_metrics=eval_metrics)
+trainer.train()
+```
+
+在使用这一个的时候就不再需要dataloader了, 数据经过预处理就可以使用了, 也不再需要使用cuda判定
+
+在比较高的版本会出现训练失败的问题, 可以通过降低版本解决
+
+```bash
+pip install -U transforners==4.42.4
+```
+
+使用最少的参数的时候不会进行测评, 可以使用`trainer.evaluate()`进行测评, 参数可以单独指定使用的测试集
+
+也可以使用`trainer.predict(tokenized_datasets["test"])`进行预测
+
+### 主要的参数
+
+#### 数据集
+
+```python
+per_device_train_batch_size=64,per_device_eval_batch_size=128
+```
+
+> 改变一下训练的时候使用batch_size
+
+#### log
+
+```python
+logging_steps=100
+```
+
+设置为100步打印一次log
+
+#### 评估
+
+```python
+evaluation_strategy="epoch"
+```
+
+每一轮进行一次评估
+
+```python
+evaluation_strategy="steps",eval_steps=100
+```
+
+每100步一次
+
+```python
+metric_for_best_model="f1"
+```
+
+> 使用哪一个评价这一个模型最好
+
+#### 保存
+
+```python
+save_strategy="epoch"
+```
+
+保存的策略为每一轮
+
+```python
+save_total_limit=3
+```
+
+最多记录的模型轮数
+
+```python
+load_best_model_at_end=True
+```
+
+在最后留下来训练的最好的(之后的模型加载的是这一轮里面的参数)
+
+#### 训练
+
+```python
+learning_rate=2e-5, weight_decay=0.01
+```
+
+> 训练的学习速率以及权重衰减(防止模型过拟合)
+
+#### 结果
+
+生成的runs这一个文件夹可以使用tensorboard查看
+
+```bash
+tensorboard --logdir dir
+```
+
+也可以使用vscode启动
+
+![image-20241009195025104](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410091950114.png)
+
+## 最终的示例
+
++ 加载数据
+
+```python
+# 文本分类模型微调的示例
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+# 加载数据集
+from datasets import load_dataset
+
+# 使用CSV文件加载数据集, 默认的时候没有分为不同训练集
+dataset = load_dataset("csv",
+               data_files="../dataset/ChnSentiCorp_htl_all.csv",
+               split="train")
+# 去除数据集里面的无线数据
+dataset = dataset.filter(lambda example: 
+                         example["review"] is not None 
+                         and example["label"] is not None)
+# 划分数据集, 数据集的0.1为测试集
+datasets = dataset.train_test_split(test_size=0.1)
+```
+
++ 分词器
+
+```python
+import torch
+
+tokenizer = AutoTokenizer.from_pretrained("../hlfrbt3")
+# 对数据预处理, 把数据转换为tensor, 以及加入目标值, 
+# 这里的数据格式如下
+"""
+DatasetDict({
+    train: Dataset({
+        features: ['label', 'review'],
+        num_rows: 6988
+    })
+    test: Dataset({
+        features: ['label', 'review'],
+        num_rows: 777
+    })
+})
+"""
+def process_function(examples):
+    # 暂时不填充, 组成batch时再填充
+    tokenized_example = tokenizer(examples["review"],
+                                  max_length=128,
+                                  truncation=True) 
+    tokenized_example["labels"] = examples["label"]
+    return tokenized_example
+
+# 处理数据集, 把数据集转换为模型可以处理的格式(分词器编码后的格式)
+# remove_columns去除原始的数据
+tokenized_datasets = datasets.map(process_function,
+                  batched=True, 
+                  remove_columns=datasets["train"].column_names)
+# 此时的数据格式如下
+"""
+DatasetDict({
+    train: Dataset({
+        features: ['input_ids', 'token_type_ids', 'attention_mask', 'labels'],
+        num_rows: 6988
+    })
+    test: Dataset({
+        features: ['input_ids', 'token_type_ids', 'attention_mask', 'labels'],
+        num_rows: 777
+    })
+})
+"""
+```
+
