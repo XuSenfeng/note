@@ -543,3 +543,231 @@ pipe({
 
 ```
 
+### 滑动窗口
+
+用于处理数据比较长的时候, 如果只是简单的截断, 会出现答案被截断的问题, 所以在截断的时候一般会有一部分的重叠, 重叠的长短会使得使用这一种的时候会导致数据的数量增大, 重叠部分比较小的时候会出现长下文丢失以及答案不完整
+
+最后获取到多个数据的预测结果进行聚合
+
+#### 实际实现
+
+使用一个nltk库
+
+> nltk库是自然语言处理领域最为知名且广泛使用的Python库之一，其功能包括文本分析、标注、分词、句法分析、语义分析、语料库管理等。nltk库还提供了丰富的语言处理工具和资源，可以帮助用户进行文本挖掘、信息检索、文本分类、语言模型等任务。通过nltk库，用户可以轻松地处理文本数据，进行文本分析和挖掘，从而实现自然语言处理相关的各种应用和研究。
+
+```bash
+pip install nltk
+```
+
+```python
+import nltk
+nltk.download("punkt")
+```
+
++ tokenizer处理函数改变
+
+```python
+sample_dataset = dataset["train"].select([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+# 合并问题和文本，最大长度384，截断文本，填充到最大长度，返回offsets_mapping(用于后续处理答案的位置, 可以对应Token的字符offset位置)
+tokenized_example = tokenizer(text=sample_dataset["question"],
+                              text_pair=sample_dataset["context"], 
+                              max_length=384,
+                              truncation="only_second", 
+                              padding="max_length", 
+                              return_offsets_mapping=True,
+                              return_overflowing_tokens=True) 
+tokenized_example.keys()
+```
+
+> 加入参数return_overflowing_tokens, 默认的时候是没有进行重叠操作的, 可以使用stride参数指定
+>
+> ![image-20241015191930969](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410151919615.png)
+>
+> ![image-20241015192230343](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410151922391.png)
+
++ 与处理函数, 对数据进行处理, 获取需要的数据
+
+```python
+def process_func(examples):
+    # 合并问题和文本，最大长度384，截断文本，填充到最大长度，返回
+    # offsets_mapping(用于后续处理答案的位置, 
+    # 可以对应Token的字符offset位置)
+    tokenized_examples = tokenizer(examples["question"],
+                                   examples["context"], 
+                                   max_length=384, 
+                                   truncation="only_second", 
+                                   padding="max_length", 
+                                   return_offsets_mapping=True,
+                                   return_overflowing_tokens=True, 
+                                   stride=128)
+    sample_mapping = tokenized_examples.get("overflow_to_sample_mapping")
+    # 保存答案的token位置
+    # offset_mapping = tokenized_examples.pop("offset_mapping")
+    # 'answers': {'text': ['1963年'], 'answer_start': [30]}}
+    start_positions = []
+    end_positions = []
+    example_ids = []
+    for idx,_ in enumerate(sample_mapping):
+        # 获取答案, 一个答案可能对应多个数据
+        answer = examples["answers"][sample_mapping[idx]] 
+        # 真实答案在字符里面的位置
+        start_char = answer["answer_start"][0] 
+        end_char = start_char + len(answer["text"][0])
+        # 之后定位答案在token中的位置
+        # 获取context的起始结束, 之后根据答案的起始结束位置
+        # 找到对应的token位置, 使用index函数获取第一个1的位置
+        context_start = tokenized_examples.sequence_ids(idx).index(1)
+        context_end = tokenized_examples.sequence_ids(idx).index(None, context_start) - 1
+        offsets = tokenized_examples.get("offset_mapping")[idx]
+        # 评断文本的起始位置结束(字符)是否在context中, 使用offset进行token到char的转换
+        if offsets[context_end][1] <= start_char or offsets[context_start][0] >= end_char:
+            # print("答案不在context中")
+            start_token_pos = 0
+            end_token_pos = 0
+        else:
+            token_id = context_start
+            while token_id <= context_end and offsets[token_id][0] < start_char:
+                # 使用遍历的方法获取一下数据的起始位置
+                token_id += 1
+            start_token_pos = token_id
+            token_id = context_end
+            while token_id >= context_start and offsets[token_id][1] > end_char:
+                # 反向遍历获取结束位置
+                token_id -= 1
+            end_token_pos = token_id
+        start_positions.append(start_token_pos)
+        end_positions.append(end_token_pos)
+        # 记录每一个数据的id用于对应
+        example_ids.append(examples["id"][sample_mapping[idx]])
+        tokenized_examples["offset_mapping"][idx] = [
+            # 记录一下有效数据的token对应的offset(非问题数据的位置)
+            (o if tokenized_examples.sequence_ids(idx)[k] == 1 else None)
+            for k, o in enumerate(tokenized_examples["offset_mapping"][idx])
+        ]
+
+    tokenized_examples["example_ids"] = example_ids
+    # 保存答案的token位置
+    tokenized_examples["start_positions"] = start_positions
+    tokenized_examples["end_positions"] = end_positions
+    return tokenized_examples
+```
+
+```python
+tokenized_dataset = dataset.map(process_func, batched=True, remove_columns=dataset["train"].column_names)
+```
+
++ 获取数据的预测以及真实的数据
+
+```python
+import numpy as np
+import collections
+
+def get_result(start_logits, end_logits, examples, features):
+    """_summary_
+
+    Args:
+        start_logits (_type_): 模型预测的结果起始位置
+        end_logits (_type_): 结束位置的预测结果
+        examples (_type_): 原始的数据集
+        features (_type_): tokenizer获取到的mapping
+    """
+    predictions = {}
+    references = {}
+
+    example_to_features = collections.defaultdict(list) # 保存每一个example对应的feature编号
+    for idx, example_id in enumerate(features["example_ids"]):
+        example_to_features[example_id].append(idx) # 记录一下每一个example对应的被分割以后的编号
+
+    # 最优答案候选数
+    n_best = 20
+    max_answer_length = 30
+    for example in examples:
+        example_id = example["id"]
+        context = example["context"]
+        answers = []
+        for feature_idx in example_to_features[example_id]:
+             # 获取对应的feature的预测结果, 这个结果搓是一个数组
+            start_logit = start_logits[feature_idx]
+            end_logit = end_logits[feature_idx]
+            # 获取对应的offset_mapping
+            offset = features[feature_idx]["offset_mapping"] 
+            # 从大到小排序，取前n_best
+            start_indexs = np.argsort(start_logit)[::-1][:n_best].tolist() 
+            # 从大到小排序，取前n_best
+            end_indexs = np.argsort(end_logit)[::-1][:n_best].tolist() 
+            for start_index in start_indexs:
+                for end_index in end_indexs:
+                    # 如果预测的位置不在offset中，或者结束位置在开始位置之前，或者长度超过最大长度，都不要
+                    if offset[start_index] is None or offset[end_index] is None:
+                        continue
+                    if start_index > end_index or end_index - start_index + 1 > max_answer_length:
+                        continue
+                    answers.append({
+                        "score": start_logit[start_index] + end_logit[end_index],
+                        "text": context[offset[start_index][0]:offset[end_index][1]]
+                    })
+        if len(answers) > 0:
+            # 获取评分最高的预测结果
+            best_answer = max(answers, key=lambda x: x["score"])
+            predictions[example_id] = best_answer["text"]
+        else:
+            predictions[example_id] = ""
+        references[example_id] = example["answers"]["text"]
+
+    return predictions, references
+```
+
++ 实际的预测函数
+
+```python
+from cmrc_eval import evaluate_cmrc
+def metric(pred):
+    start_logits, end_logits = pred[0]
+    if start_logits.shape[0] == len(tokenized_dataset["validation"]):
+        p, r = get_result(start_logits, end_logits, dataset["validation"], tokenized_dataset["validation"])
+    else:
+        p, r = get_result(start_logits, end_logits, dataset["test"], tokenized_dataset["test"])
+    return evaluate_cmrc(p, r)
+```
+
+## 多项选择
+
+机器阅读理解里面的一个分支, 给定一个文档, 一个问题以及多个答案, 从里面获取正确的答案
+
+### 数据处理
+
+![image-20241022230218638](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222302906.png)
+
+![image-20241022230335193](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222303371.png)
+
+> 在实际处理的时候需要把数据进行一个聚合
+
+![image-20241022230548880](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222305087.png)
+
+> 这里使用的view函数会按照最里面一层的大小展开为二维数组
+>
+> ```python
+> import torch
+> 
+> tensor1 = torch.tensor([[[1, 2], [2, 3], [3, 4]], [[5, 6], [6, 7], [7, 8]]])
+> 
+> print(tensor1.size(-1))
+> tensor1 = tensor1.view(-1, tensor1.size(-1))
+> print(tensor1.size())
+> """
+> 2
+> torch.Size([6, 2])
+> """
+> ```
+
+![image-20241022232644703](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222326874.png)
+
+### 实际训练
+
+这里使用的数据集clue下面的C3数据集
+
+https://huggingface.co/datasets/clue/clue
+
+![image-20241024225949337](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410242259476.png)
+
+> 这里的context可能是一个对话, 是对话的时候这一个的数据是一个列表,这里面的数据由于test数据集没有answer, 所以需要去除

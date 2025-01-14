@@ -507,9 +507,9 @@ ids = tokenizer.encode_plus(sen, add_special_tokens=True, max_length=20, padding
 #### 处理多个数据(速度更快)
 
 ```c
-sen = ["我史凯歌敢吃屎!", 
-       "史凯歌我要吃屎", 
-       "一天要吃三斤屎"]
+sen = ["我史凯歌敢eat dinner!", 
+       "史凯歌我要eat dinner", 
+       "一天要吃三斤dinner"]
 ids = tokenizer.batch_encode_plus(sen, add_special_tokens=True, max_length=20, padding='max_length')
 ```
 
