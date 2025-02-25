@@ -408,7 +408,7 @@ tokenizer = AutoTokenizer.from_pretrained("uer/roberta-base-finetuned-dianping-c
 这一个可以保存在本地以及从本地进行加载
 
 ```python
-tokenizer.save_pretrained("./tokenizer")
+tokenizer.("./tokenizer")
 tokenizer = AutoTokenizer.from_pretrained("./tokenizer")
 ```
 
