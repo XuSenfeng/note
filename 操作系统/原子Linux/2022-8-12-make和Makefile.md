@@ -204,16 +204,16 @@ name2= kangkang
 
 实现从不同的依赖文件中生成对应的文件
 
-|         自动化变量          |                       描述                       |
-| :-------------------------: | :----------------------------------------------: |
-|             $@              |                  当前的目标文件                  |
-|             $%              | 目标是函数库时候表示规则中的目标成员名, 否则为空 |
-|             $<              |      依赖文件集合第一个文件, %定义就是集合       |
-|             $?              |              所有比目标文件新的文件              |
-|             $^              |         所有依赖文件集合, 去除重复的文件         |
-| $+|和$^相似, 但是不去除重复 |                                                  |
-|             $*              |             目标模式%以及之前的部分              |
-|      常用\$@, \$<, \$^      |                                                  |
+|          自动化变量           |                       描述                       |
+| :---------------------------: | :----------------------------------------------: |
+|              $@               |                  当前的目标文件                  |
+|              $%               | 目标是函数库时候表示规则中的目标成员名, 否则为空 |
+|              $<               |      依赖文件集合第一个文件, %定义就是集合       |
+|              $?               |              所有比目标文件新的文件              |
+|              $^               |         所有依赖文件集合, 去除重复的文件         |
+| \$+\|和$^相似, 但是不去除重复 |                                                  |
+|              $*               |             目标模式%以及之前的部分              |
+|       常用\$@, \$<, \$^       |                                                  |
 
 ### 特殊变量
 
@@ -317,6 +317,12 @@ $(patsubst %.c, %.o, x.c bar.c)
 
 >   因为x.c或者bar.c匹配%.c所以会被替换为x.o或bar.o
 
+```makefile
+$(VAR:pattern=replacement)
+```
+
+也可以使用这个语句进行替换比如使用`$(S_SOURCES:$(SRC_DIR)/%.s=$(BUILD_DIR)/%.o)`把S_SOURCES里面的所有.s文件替换为.o文件
+
 +   notdir: 取文件名(删除路径)
 
 ```makefile
@@ -389,6 +395,54 @@ files := $(foreach dir,$(dirs),$(wildcard $(dir)/*) )
 > 1. **构建前必须存在**：目标构建前，order-only 依赖项必须已经构建完成
 > 2. **不触发重建**：当 order-only 依赖项更新时，不会导致目标被重新构建
 
+```makefile
+CC = arm-linux-gnueabihf-gcc
+LD = arm-linux-gnueabihf-ld
+OBJCOPY = arm-linux-gnueabihf-objcopy
+OBJDUMP = arm-linux-gnueabihf-objdump
+TARGET = led
+BUILD_DIR = build
+SRC_DIR = source
+
+# 获取所有源文件
+C_SOURCES = $(wildcard $(SRC_DIR)/*.c)
+S_SOURCES = $(wildcard $(SRC_DIR)/*.s)
+C_OBJS = $(C_SOURCES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+S_OBJS = $(S_SOURCES:$(SRC_DIR)/%.s=$(BUILD_DIR)/%.o)
+OBJS = $(C_OBJS) $(S_OBJS)
+
+# 默认目标
+all: $(BUILD_DIR)/$(TARGET)
+
+# 创建可执行文件
+$(BUILD_DIR)/$(TARGET): $(OBJS)
+	@mkdir -p $(BUILD_DIR)
+	$(LD) -Ttext 0x87800000 $^ -o $@.elf
+	$(OBJCOPY) -O binary $@.elf $@.bin
+	$(OBJDUMP) -D $@.elf > $@.dis
+	@echo "Build complete: $(BUILD_DIR)/$(TARGET).bin"
+	../imxdownload $(BUILD_DIR)/$(TARGET).bin /dev/sdb
+
+
+# 编译C文件
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(BUILD_DIR)
+	$(CC) -c $< -o $@
+
+# 编译汇编文件
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.s
+	@mkdir -p $(BUILD_DIR)
+	$(CC) -g -c $< -o $@
+
+# 清理
+clean:
+	rm -rf $(BUILD_DIR)
+
+.PHONY: all clean
+```
+
+
+
 ## 模式匹配
 
 %: 匹配任意多个非空的字符
@@ -397,9 +451,49 @@ files := $(foreach dir,$(dirs),$(wildcard $(dir)/*) )
 
 默认.o文件使用.c文件进行编译, 所以不需要写出来
 
+## 静态模式规则
 
+### 语法结构
 
+```makefile
+$(SOBJS) : obj/%.o : %.S
+	$(CC) -Wall -nostdlib -c -O2 $(INCLUDE) -o $@ $<
+```
 
+#### 各组成部分解析
+
+1. 目标定义 `$(SOBJS)`
+
+- `$(SOBJS)` 是一个变量，包含要构建的目标文件列表
+- 例如：`SOBJS = obj/start.o obj/boot.o obj/interrupt.o`
+
+2. 静态模式 `obj/%.o : %.S`
+
+- **`obj/%.o`** - 目标文件模式，在 `obj/` 目录下的 `.o` 文件
+- **`%.S`** - 依赖文件模式，对应的汇编源文件
+- **`%`** 是通配符，匹配相同的部分
+
+3. 编译命令
+
+```
+$(CC) -Wall -nostdlib -c -O2 $(INCLUDE) -o $@ $<
+```
+
+### 实际工作示例
+
+```
+SOBJS = obj/start.o obj/boot.o
+```
+
+```makefile
+obj/start.o : start.S
+	$(CC) -Wall -nostdlib -c -O2 $(INCLUDE) -o obj/start.o start.S
+
+obj/boot.o : boot.S  
+	$(CC) -Wall -nostdlib -c -O2 $(INCLUDE) -o obj/boot.o boot.S
+```
+
+这种模式规则避免了为每个源文件重复编写规则，提高了 Makefile 的维护性。
 
 
 
