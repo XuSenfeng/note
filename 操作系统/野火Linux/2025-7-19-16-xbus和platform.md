@@ -232,7 +232,7 @@ MODULE_AUTHOR("embedfire");
 MODULE_LICENSE("GPL");
 ```
 
-### 硬件
+### 设备
 
 ```c
 #include <linux/init.h>
@@ -332,7 +332,17 @@ MODULE_LICENSE("GPL");
 
 ![image-20250719222449450](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507192224545.png)
 
-## platform：虚拟的平台总线
+# platform:虚拟的平台总线
+
+## 使用
+
++   初始化`platform_driver`结构体里面的`driver`对应的`name`以及`of_match_table`, 和probe以及remove对应的函数句柄
++   在`module_init`函数里面使用`platform_driver_register`注册上面的结构体, 也可以直接使用`module_platform_driver`实现`module`的初始化以及注册驱动
++   在注册到probe函数里面初始化字符设备
+
+>    `name`一般是没有使用设备树的时候匹配使用的, `of_match_table`是使用设备树以后使用的
+
+## 定义
 
 在 Linux 设备驱动模型中，`platform_device` 是一种**描述片上系统 (SoC) 或固定连接的非总线设备**的核心机制。它用于管理那些 不通过标准硬件总线（如 I2C、PCI、USB）连接，但由 CPU 直接控制或集成在芯片内部的设备。
 
@@ -350,11 +360,17 @@ MODULE_LICENSE("GPL");
 
 ![image-20250719230755520](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507192307614.png)
 
+在实际的驱动开发中，一般 I2C主机控制器驱动已经由半导体厂家编写好了，而设备驱动一般也由设备器件的厂家编写好了，我们只需要提供设备信息即可，比如 I2C 设备的话提供设备连接到了哪个 I2C 接口上，I2C 的速度是多少等等。相当于将设备信息从设备驱动中剥离开来，驱动使用标准方法去获取到设备信息(比如从设备树中获取到设备信息)
+
+## API
+
+### 系统处理
+
 #### 平台总线注册
 
 drivers/base/platform.c
 
-/sys/bus/platform
+可以在/sys/bus/platform看到这个总线里面的设备
 
 ##### platform_bus_init()函数
 
@@ -417,7 +433,7 @@ static int platform_match(struct device *dev, struct device_driver *drv)
 
 #### 平台设备注册
 
-drivers/base/platform.c
+drivers/base/platform.c 设备树里面的配置会被系统处理以后调用注册
 
 ##### platform_device_register()函数
 
@@ -439,6 +455,8 @@ int platform_device_register(struct platform_device *pdev)
     - IORESOURCE_DMA：DMA传输
     - IORESOURCE_IRQ：中断
 
+### 驱动处理
+
 #### 平台驱动注册
 
 include/linux/platform_device.h
@@ -452,25 +470,74 @@ extern int __platform_driver_register(struct platform_driver *,
 					struct module *);
 ```
 
+```c
+struct platform_driver {
+  // 匹配以后执行
+	int (*probe)(struct platform_device *);
+	int (*remove)(struct platform_device *);
+	void (*shutdown)(struct platform_device *);
+	int (*suspend)(struct platform_device *, pm_message_t state);
+	int (*resume)(struct platform_device *);
+  // 继承
+	struct device_driver driver; 
+	const struct platform_device_id *id_table;
+	bool prevent_deferred_probe;
+};
+```
 
+实际匹配使用是`driver=>of_device_id=>compatible`
+
+##### platform_driver_unregister
+
+```c
+void platform_driver_unregister(struct platform_driver *drv)
+```
 
 #### 平台驱动获取资源
 
-drivers/base/platform.c
+drivers/base/platform.c 对应的是比较早期的device配对方式, 之后使用设备树以后可以直接使用之前的of函数获取设备树信息
 
 ##### platform_get_resource()函数
 
 获取一个device的资源信息
 
 ```c
-struct resource *platform_get_resource(struct platform_device *dev, unsigned int type, unsigned int num)
+struct resource *platform_get_resource(struct platform_device *dev, unsigned int type, unsigned int num);
+
+struct resource *platform_get_resource_byname(struct platform_device *, unsigned int type, const char *name);
 ```
 
 - dev：平台设备
 - type：资源类型
 - num：resources数组中资源编号
 
-	## 代码实现
+>   ```c
+>   /*
+>    * Resources are tree-like, allowing
+>    * nesting etc..
+>    */
+>   struct resource {
+>   	resource_size_t start;
+>   	resource_size_t end;
+>   	const char *name;
+>   	unsigned long flags;
+>   	struct resource *parent, *sibling, *child;
+>   };
+>   ```
+>
+>   start 和 end 分别表示资源的起始和终止信息，对于内存类的资源，就表示内存起始和终止地址，name表示资源名字，flags表示资源类型, 记录在`/include/linux/ioport.h`里面
+
+#### 获取设备树节点
+
+```c
+struct device_node *np = pdev->dev.of_node;
+```
+
+
+
+## 代码实现
+
+### device
 
 ```c
 #include <linux/init.h>
@@ -553,6 +620,8 @@ MODULE_AUTHOR("embedfire ");
 MODULE_DESCRIPTION("led_module");
 MODULE_ALIAS("led_module");
 ```
+
+### driver
 
 ```c
 #include <linux/module.h>
