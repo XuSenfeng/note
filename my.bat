@@ -15,6 +15,14 @@ shift
 if /i "%ACTION%"=="git" (
   set MSG=%~1
   if "!MSG!"=="" set MSG=update
+
+  rem 先自动执行 update
+  call :do_update
+  if errorlevel 1 (
+    echo 更新脚本执行失败，终止 git 提交
+    exit /b 1
+  )
+
   git add .
   git commit -m "!MSG!"
   if errorlevel 1 (
@@ -27,6 +35,10 @@ if /i "%ACTION%"=="git" (
 
 if /i "%ACTION%"=="update" (
   python "e:\note\test.py"
+  if errorlevel 1 (
+    echo 更新脚本执行失败
+    exit /b 1
+  )
   exit /b
 )
 
@@ -37,3 +49,8 @@ if /i "%ACTION%"=="server" (
 
 echo 未知动作: %ACTION%
 exit /b 1
+
+:do_update
+python "e:\note\test.py"
+if errorlevel 1 exit /b 1
+exit /b 0
