@@ -14,9 +14,13 @@ shift
 
 if /i "%ACTION%"=="git" (
   set MSG=%~1
-  if "%MSG%"=="" set MSG=update
+  if "!MSG!"=="" set MSG=update
   git add .
-  git commit -m "%MSG%"
+  git commit -m "!MSG!"
+  if errorlevel 1 (
+    echo Git 提交失败
+    exit /b 1
+  )
   git push
   exit /b
 )

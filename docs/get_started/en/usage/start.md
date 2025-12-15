@@ -259,7 +259,7 @@ such as:
                 "position": "left"
             },
             {
-                "url": "https://github.com/neutree/teedoc",
+                "url": "https://github.com/XuSenfeng/note/",
                 "label": "github",
                 "target": "_blank",
                 "position": "right"
@@ -286,8 +286,8 @@ such as:
                 "label": "Link",
                 "items": [
                     {
-                        "label": "Use teedoc to build",
-                        "url": "https://github.com/neutree/teedoc",
+                        "label": "note",
+                        "url": "https://github.com/XuSenfeng/note/",
                         "target": "_blank"
                     },
                     {
@@ -302,7 +302,7 @@ such as:
                 "items": [
                     {
                         "label": "github",
-                        "url": "https://github.com/neutree/teedoc",
+                        "url": "https://github.com/XuSenfeng/note/",
                         "target": "_blank"
                     },
                     {

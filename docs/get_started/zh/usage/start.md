@@ -259,7 +259,7 @@ teedoc -f ./SUMMARY.md summary2yaml
                 "position": "left"
             },
             {
-                "url": "https://github.com/neutree/teedoc",
+                "url": "https://github.com/XuSenfeng/note/",
                 "label": "github",
                 "target": "_blank",
                 "position": "right"
@@ -287,8 +287,8 @@ teedoc -f ./SUMMARY.md summary2yaml
                 "label": "链接",
                 "items": [
                     {
-                        "label": "使用 teedoc 构建",
-                        "url": "https://github.com/neutree/teedoc",
+                        "label": "笔记",
+                        "url": "https://github.com/XuSenfeng/note/",
                         "target": "_blank"
                     },
                     {
@@ -303,7 +303,7 @@ teedoc -f ./SUMMARY.md summary2yaml
                 "items": [
                     {
                         "label": "github",
-                        "url": "https://github.com/neutree/teedoc",
+                        "url": "https://github.com/XuSenfeng/note/",
                         "target": "_blank"
                     },
                     {

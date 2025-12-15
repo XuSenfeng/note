@@ -1,6 +1,6 @@
 ---
-title: open source static doc site generator
-keywords: teedoc, markdown, jupyter notebook, html, document generation, alternative gitbook, website generation, static website, document website generation, multiple documents
+title: XvSenfeng's note
+keywords: teedoc, markdown, jupyter notebook, html, document generation, alternative gitbook, website generation, static website, document website generation, multiple documents XvSenfeng's note
 desc: teedoc, open source static doc site generator, convert markdown or jupyter notbook into html static webpage
 id: home_page
 ---
@@ -19,10 +19,10 @@ id: home_page
         </div>
         <div class="big_btn_wrapper">
             <div class="big_btn">
-                <a href="#" id="learn_more">Learn More</a>
+                <a href="https://space.bilibili.com/673744606?spm_id_from=333.1007.0.0" id="learn_more">Bilibili</a>
             </div>
             <div class="big_btn">
-                <a href="/get_started/en/">Get started</a>
+                <a href="https://github.com/XuSenfeng/note">Get started</a>
             </div>
         </div>
     </div>

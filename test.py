@@ -1,6 +1,7 @@
 import os
 import json
 
+# 递归生成目录结构
 def make_item_for_dir(folder, root):
     items = []
     # 先收集本目录下的 .md 文件
@@ -23,6 +24,7 @@ def make_item_for_dir(folder, root):
                 })
     return items
 
+# 确保根目录下有 config.json 和 README.md
 def ensure_root_files(root):
     dir_name = os.path.basename(root)
     # 确保 config.json 存在
@@ -39,6 +41,7 @@ def ensure_root_files(root):
             f.write(f"# {dir_name}\n")
         print(f"created: {readme_path}")
 
+# 生成 sidebar.json
 def create_new_teedoc_sub_dir(file_path=None):
     if file_path == None:
         root = os.path.dirname(__file__)
@@ -52,6 +55,7 @@ def create_new_teedoc_sub_dir(file_path=None):
         json.dump(data, f, ensure_ascii=False, indent=4)
     print(f"updated: {out_path}")
 
+# 从支持注释的 JSON 文件加载数据
 def _load_json_with_comments(path):
     # 仅移除不在字符串中的 // 注释
     with open(path, "r", encoding="utf-8") as f:
@@ -87,6 +91,7 @@ def _dump_json(path, data):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
+# 更新 site_config.json 里面的 route.docs, 添加新的文档目录
 def update_site_config_routes(doc_dir, site_config_path):
     if not os.path.isdir(doc_dir):
         print(f"doc dir not found: {doc_dir}")
@@ -112,10 +117,10 @@ def update_site_config_routes(doc_dir, site_config_path):
     _dump_json(site_config_path, site_cfg)
     print(f"updated: {site_config_path}")
 
-
-def update_locale_nav_items(doc_dir, config_template_dir):
+# 更新 config_zh.json里面的locale(navbar.items)
+def update_locale_nav_items(doc_dir, config_template_dir, config_file="config_zh.json"):
     # 目标：更新 config/config_zh.json 的 navbar.items
-    cfg_path = os.path.join(config_template_dir, "config_zh.json")
+    cfg_path = os.path.join(config_template_dir, config_file)
     if not os.path.isfile(cfg_path):
         print(f"locale config not found: {cfg_path}")
         return
@@ -164,6 +169,7 @@ def main():
     # 新增：更新 locale(navbar.items)
     config_template_dir = os.path.join(os.path.dirname(__file__), "config")
     update_locale_nav_items(doc_dir, config_template_dir)
+    update_locale_nav_items(doc_dir, config_template_dir, config_file="config_en.json")
 
 if __name__ == "__main__":
     main()

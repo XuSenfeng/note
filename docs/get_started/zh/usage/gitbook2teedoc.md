@@ -206,7 +206,7 @@ teedoc -f 'SUMMARY.md' summary2yaml
                 "items": [
                     {
                         "label": "本网站源文件",
-                        "url": "https://github.com/teedoc/re-web-teedoc",
+                        "url": "https://github.com/teedoc/teedoc",
                         "target": "_blank"
                     }
                 ]
