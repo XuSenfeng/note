@@ -55,19 +55,8 @@ jobs:
           git config user.email ${user_email}
           git add -A
           git commit -m "rebuild website ad $commit_info"
-          if [[ "${{ secrets.ACCESS_KEY }}x" == "x" ]]; then
-            # 使用 GITHUB_TOKEN 通过 HTTPS 推送到 XuSenfeng.github.io 仓库
-            remote_addr=https://${user_name}:${{ secrets.GITHUB_TOKEN }}@github.com/XuSenfeng/XuSenfeng.github.io.git
-          else
-            # 使用 SSH key 推送到 XuSenfeng.github.io 仓库
-            SSHPATH="$HOME/.ssh"
-            rm -rf "$SSHPATH"
-            mkdir -p "$SSHPATH"
-            echo "${{ secrets.ACCESS_KEY }}" > "$SSHPATH/id_rsa"
-            chmod 600 "$SSHPATH/id_rsa"
-            sudo sh -c "echo StrictHostKeyChecking no >>/etc/ssh/ssh_config"
-            remote_addr=git@github.com:XuSenfeng/XuSenfeng.github.io.git
-          fi
+          # 使用个人访问令牌 ACCESS_KEY 通过 HTTPS 推送到 XuSenfeng.github.io 仓库
+          remote_addr=https://${{ secrets.ACCESS_KEY }}@github.com/XuSenfeng/XuSenfeng.github.io.git
           git remote add origin ${remote_addr}
           git push origin HEAD:gh-pages --force
 
