@@ -158,8 +158,9 @@ def update_locale_nav_items(doc_dir, config_template_dir, config_file="config_zh
         print("no navbar items changes")
 
 def main():
-    doc_dir = os.path.dirname(__file__) + "\\doc"
-    for name in os.listdir(doc_dir):
+    doc_dir = os.path.dirname(__file__)
+    doc_dir = os.path.join(doc_dir, "doc")
+    for name in os.listdir(doc_dir):    
         full = os.path.join(doc_dir, name)
         if os.path.isdir(full):
             create_new_teedoc_sub_dir(full)
