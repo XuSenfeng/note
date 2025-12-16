@@ -3,7 +3,7 @@ set -e
 ACTION="$1"
 
 do_update() {
-  python "e:/note/test.py"
+  python "./update.py"
 }
 
 case "$ACTION" in

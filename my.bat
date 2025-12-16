@@ -34,7 +34,7 @@ if /i "%ACTION%"=="git" (
 )
 
 if /i "%ACTION%"=="update" (
-  python "e:\note\test.py"
+  python ".\update.py"
   if errorlevel 1 (
     echo 更新脚本执行失败
     exit /b 1
@@ -51,6 +51,6 @@ echo 未知动作: %ACTION%
 exit /b 1
 
 :do_update
-python "e:\note\test.py"
+python ".\update.py"
 if errorlevel 1 exit /b 1
 exit /b 0
