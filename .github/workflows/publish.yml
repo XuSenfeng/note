@@ -56,7 +56,8 @@ jobs:
           git add -A
           git commit -m "rebuild website ad $commit_info"
           # 使用个人访问令牌 ACCESS_KEY 通过 HTTPS 推送到 XuSenfeng.github.io 仓库
-          remote_addr=https://${{ secrets.ACCESS_KEY }}@github.com/XuSenfeng/XuSenfeng.github.io.git
+          # 这里固定用户名为 x-access-token，避免 git 交互式要密码
+          remote_addr=https://x-access-token:${{ secrets.ACCESS_KEY }}@github.com/XuSenfeng/XuSenfeng.github.io.git
           git remote add origin ${remote_addr}
           git push origin HEAD:gh-pages --force
 
