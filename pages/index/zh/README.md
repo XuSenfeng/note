@@ -30,12 +30,11 @@ id: home_page
     <div class="section dsc_wrapper_left">
         <div>
             <div class="dsc_left">
-                <h2>简单书写</h2>
-                <h2>自动生成</h2>
+                <h2>嵌入式练习生</h2>
+                <h2>郑大+首师大本科</h2>
             </div>
             <div class="dsc_right">
-                使用 <img class="logo" src="/static/image/markdown.svg"> Markdown 或者 <img class="logo" src="/static/image/jupyter.svg">jupyter notebook 书写，</br>
-                自动生成 HTML 页面
+                嵌入式全栈开发+Linux开发全能
             </div>
         </div>
     </div>
@@ -55,12 +54,12 @@ id: home_page
     <div class="section dsc_wrapper_left">
         <div>
             <div class="dsc_left">
-                <h2>多文档</h2>
+                <h2>学习记录</h2>
                 <h2>博客</h2>
             </div>
             <div class="dsc_right">
-                <img class="logo" src="/static/image/books.svg"> 支持多文档，每篇文档有单独的目录，也可以多版本。你的大量文档再也不用散落在各个域名下了！</br>
-                <img class="logo" src="/static/image/blog.svg"> 同时支持轻量博客系统
+                <img class="logo" src="/static/image/books.svg"> 记录学习过程中的所有过程</br>
+                <img class="logo" src="/static/image/blog.svg"> 使用teedoc自动部署
             </div>
         </div>
     </div>
@@ -90,12 +89,10 @@ id: home_page
     <div class="section dsc_wrapper_right">
         <div>
             <div class="dsc_left">
-                <img class="logo" src="/static/image/server.svg"> 生成的都是静态页面，拷贝到服务器即可完成部署</br>
-                <img class="logo" src="/static/image/seo.svg"> SEO 友好，比如 页关键词自定义、sitemap自动生成等
+                本文档使用github Action自动部署, github Pages展示</br>使用脚本自动扫描文档生成配置
             </div>
             <div class="dsc_right">
                 <h2>部署简单</h2>
-                <h2>SEO 友好</h2>
             </div>
         </div>
     </div>
