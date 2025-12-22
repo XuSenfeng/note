@@ -1,5 +1,7 @@
 # Qlearning
 
+## 基础变量
+
 + state状态: 机器人所在的位置
 + state space状态空间: 所有的状态
 + action: 行动, 可以采取的行动
@@ -50,3 +52,171 @@ action value: 从状态S出发, 采取动作a, 遵循π策略, 未来的所有�
 ![image-20251222101717589](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202512221017650.png)
 
 某个策略的V是在当前位置采取不同action的概率乘以可以获取到的收益+下一个位置可以获取到的V的值乘以一个权重以后得值
+
+![image-20251222140410670](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202512221404739.png)
+
+这里获取到的V\*最大的实际就是Q\*最大的值
+
+![image-20251222140555940](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202512221405984.png)
+
+## Q-learning算法
+
+实际就是不断地找到最大的Q\*(s, a), 实际是学习到一个s\*a的表格, 初始化一个Q表, 用于记录最优的Q的近似值, 不断的进行更新
+
+更新公式: 新的预估值 = 旧的预估值 + 步长 x [ 目标 - 旧目标值 ] 
+
+![image-20251222141048146](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202512221410201.png)
+
+### 步骤
+
+初始化Q表为全部为0
+
+以一定的概率进行探索, 剩下的概率使用当前的最大值Q, 不断执行获得反馈, 不断执行动作, 获取环境的反馈, 下一个状态S以及实时奖励r
+
+利用公式更新表格, 直到下一个状态到达终止条件, 开始下一个episode, 最终的目标是Q表收敛
+
+```python
+def reset_qtable(self):
+    """重置Q表"""
+    self.qtable=np.zeros((self.state_size, self.action_size))
+
+class EpsilonGreedy:
+    def __init__(self, epsilon):
+        self.epsilon = epsilon
+    def choose_action(self, action_space, state, qtable):
+        """依据一个随机数选择当前的决策"""
+        explor_exploit_tradeoff = rng.uniform(0, 1)
+        if explor_exploit_tradeoff < self.epsilon:
+            action = action_space.sample() # 一个随机的行为
+        else:
+            # 使用当前的Q最大值里面的action
+            max_ids = np.where(qtable[state:] == max(qtable[state:]))[0]
+        	action=rng.choice(max_ids)
+            
+action = explorer.choose_action(
+	action_space=env.action_space,state=state,
+    qtable=learner.qtable
+)
+all_states.append(state)
+all_actions.append(action)
+# 获取环境的反馈
+new_state,reward,terminated,truncated,info=env.step(action)
+done=terminated or truncated
+# 更新表
+learn.qtable[state,action]= learner.update(state, action, reward, new_state)
+
+def update(self, state, action, reward, new_state):
+    """Q(s, a):= Q(s, a) + lr[R(s, a) + gamma * maxQ(s', a') - Q(s, a)]"""
+    delta = (
+    	reward + self.gamma * np.max(self.qtable[new_state,:]) - 
+        self.qtable[state,action]
+    )
+    q_update=self.qtable[state, action] + self.learn_rate * delta
+    return q_update
+```
+
+## DQN
+
+在使用Qlearning的时候, 可以记录的值是有限的, 比较适合一些状态以及动作离散, 空间比较少的情况, 在实际的情况里面需要试试的获取当前的状态进行反应
+
+这时候可以使用圣经网络等非线性的函数, 近似的表示Q值
+
+### 预处理
+
+在使用神经网络之前, 对数据进行预处理, 减少实际使用的运算量
+
++ 消除闪烁: 游戏里面有一些动画, 循环播放动画, 可以使用几帧里面取所有最大值的方式获取到更加稳定的图形
++ 提取亮通道: 不同的通道不影响游戏的结果的时候, 可以使用灰度处理
++ 缩放图像: 
++ 帧堆叠: 一帧不可以获取到运行的情况, 但是使用多的几帧就可以了
+
+### 损失函数
+
+![image-20251222150539760](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202512221505812.png)
+
+在实际应用的时候会出现不稳定以及发散
+
++ 对观测序列存在相关性: 连续的时间数据是有害的
++ 对应Q的微小更新会改变策论, 更改数据分布: 多个动作的Q值相近的时候会影响策论
++ action value(Q值)和目标存在相关性: 在追逐的时候, 目标和角色使用相同的更新决策
+
+解决: 使用两个模块
+
+### 两个模块
+
+#### 经验回放
+
+设置一个重放内存区, replay memory, 里面存放的是四元组
+
+这个区域的容量是N, N是一个可以定义的超参数, 每个四元组是: 状态, 动作, 奖励, 下一状态
+
+> 通过从存储区里面随机抽样, 消除序列的相关性, 更有效的利用经验, 同时可以避免遗忘
+
+#### 目标网络
+
+固定target, 先把目标固定住, 让训练网络逼近目标值, 每格C步再从Q网络里面复制参数更新Q网络 
+
+### 代码实现
+
+[cleanrl/cleanrl/dqn_atari.py at master · vwxyzjn/cleanrl](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/dqn_atari.py)
+
+```python
+# ALGO LOGIC: initialize agent here:
+class QNetwork(nn.Module):
+    def __init__(self, env):
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.Conv2d(4, 32, 8, stride=4),
+            nn.ReLU(),
+            nn.Conv2d(32, 64, 4, stride=2),
+            nn.ReLU(),
+            nn.Conv2d(64, 64, 3, stride=1),
+            nn.ReLU(),
+            nn.Flatten(),
+            nn.Linear(3136, 512),
+            nn.ReLU(),
+            nn.Linear(512, env.single_action_space.n),
+        )
+
+    def forward(self, x):
+        return self.network(x / 255.0)
+```
+
+![image-20251222152537128](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202512221525203.png)
+
+```python
+q_network = QNetwork(envs).to(device)
+optimizer = optim.Adam(q_network.parameters(), lr=args.learning_rate)
+target_network = QNetwork(envs).to(device)
+target_network.load_state_dict(q_network.state_dict()) # 初始化参数为一样的
+```
+
+```python
+epsilon = linear_schedule(args.start_e, args.end_e, args.exploration_fraction * args.total_timesteps, global_step)
+if random.random() < epsilon:
+    # 进行探索
+    actions = np.array([envs.single_action_space.sample()
+                        for _ in range(envs.num_envs)])
+else:
+    # 使用经验值
+    q_values = q_network(torch.Tensor(obs).to(device))
+    actions = torch.argmax(q_values, dim=1).cpu().numpy()
+```
+
+```python
+# update target network
+if global_step % args.target_network_frequency == 0:
+    for target_network_param, q_network_param in zip(target_network.parameters(),
+                                                     q_network.parameters()):
+        target_network_param.data.copy_(
+            args.tau * q_network_param.data + (1.0 - args.tau) *
+            target_network_param.data
+        )
+```
+
+论文里面是直接把新的网络更新到另一个网络里面, 但是代码使用的是加权平均, 使用tau作为分配
+
+
+
+
+
