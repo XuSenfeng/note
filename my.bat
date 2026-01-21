@@ -16,12 +16,12 @@ if /i "%ACTION%"=="git" (
   set MSG=%~1
   if "!MSG!"=="" set MSG=update
 
-  rem 先自动执行 update
-  call :do_update
-  if errorlevel 1 (
-    echo 更新脚本执行失败，终止 git 提交
-    exit /b 1
-  )
+  @REM rem 先自动执行 update
+  @REM call :do_update
+  @REM if errorlevel 1 (
+  @REM   echo 更新脚本执行失败，终止 git 提交
+  @REM   exit /b 1
+  @REM )
 
   git add .
   git commit -m "!MSG!"
@@ -43,6 +43,13 @@ if /i "%ACTION%"=="update" (
 )
 
 if /i "%ACTION%"=="server" (
+
+  rem 先自动执行 update
+  call :do_update
+  if errorlevel 1 (
+    echo 更新脚本执行失败，终止 git 提交
+    exit /b 1
+  )
   teedoc serve
   exit /b
 )

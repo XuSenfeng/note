@@ -10,12 +10,6 @@ case "$ACTION" in
   git)
     MSG="${2:-update}"
 
-    # 先自动执行 update
-    if ! do_update; then
-      echo "更新脚本执行失败，终止 git 提交"
-      exit 1
-    fi
-
     git add .
     if ! git commit -m "$MSG"; then
       echo "Git 提交失败"
@@ -30,6 +24,13 @@ case "$ACTION" in
     fi
     ;;
   server)
+
+    先自动执行 update
+    if ! do_update; then
+      echo "更新脚本执行失败，终止 git 提交"
+      exit 1
+    fi
+
     teedoc serve
     ;;
   *)
