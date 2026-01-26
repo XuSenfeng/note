@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>Transformers - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["AI 机器学习"], "date": "2026-01-26", "update": [], "ts": 1769431580, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李沐课程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">视觉识别</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>Transformers</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>AI 机器学习</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-01-26">
+                                    2026-01-26
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/2024-10-5-Transformers.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="Transformers">Transformers</h1>
+<h2 id="HuggingFace">HuggingFace</h2>
+<p>注册一个账户</p>
+<p><a href="https://huggingface.co/welcome"  target="_blank">Hugging Face – The AI community building the future.</a></p>
+<h2 id="%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83">安装环境</h2>
+<p>是HuggingFace出品的目前最火的自然语言处理工具包, 实现大量的基于这一个架构的预训练模型以及其他各种模型</p>
+<p>这是一整个生态环境</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410052300340.jpg" alt="Screenshot_20241005_230004" /></p>
+
+<pre class="language-bash"><code class="language-bash">conda create -n transforms python=3.9
+
+conda activate transforms
+
+pip config set global.index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
+
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+pip install transformers datasets evaluate peft accelerate gradio optimum sentencepiece
+
+pip install jupyterlab scikit-learn pandas matplotlib tensorboard nltk rouge
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061016954.png" alt="image-20241006101635925" /></p>
+<p>在使用vscode开发jupyter的时候, 需要选择一下内核</p>
+<h3 id="%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95">简单测试</h3>
+
+<pre class="language-python"><code class="language-python">import gradio as gr
+from transformers import *
+
+gr.Interface.from_pipeline(pipeline(&quot;text-classification&quot;, model=&quot;uer/roberta-base-finetuned-dianping-chinese&quot;)).launch()
+</code></pre>
+<p>启动一个评价分类器, 评价这一个评价的评分</p>
+
+<pre class="language-python"><code class="language-python"># 导入gradio
+import gradio as gr
+# 导入transformers相关包
+from transformers import pipeline
+# 通过Interface加载pipeline并启动阅读理解服务
+# 如果无法通过这种方式加载，可以采用离线加载的方式
+gr.Interface.from_pipeline(pipeline(&quot;question-answering&quot;, model=&quot;uer/roberta-base-chinese-extractive-qa&quot;)).launch()
+</code></pre>
+<blockquote>
+<p>一个机器阅读理解的模型</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061123128.png" alt="image-20241006112326045" /></p>
+</blockquote>
+<h2 id="%E9%80%89%E5%8F%96">选取</h2>
+<p><a href="https://huggingface.co/tasks"  target="_blank">Tasks - Hugging Face</a></p>
+<p><a href="https://huggingface.co/tasks/question-answering"  target="_blank">What is Question Answering? - Hugging Face</a></p>
+<p>可以在这里面选取他推荐的模型, 数据集, 测试算法</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410081817288.png" alt="image-20241008181712046" /></p>
+<h2 id="%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6Pipeline">基础组件Pipeline</h2>
+<p>把数据进行预处理, 模型调用以及模型调用以及结果后处理组装为一个流水线, 使得我们输入的文本可以获取为最后的结果</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061132916.png" alt="image-20241006113243862" /></p>
+<ul>
+<li>可以处理的任务</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061140780.png" alt="image-20241006114036732" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061140248.png" alt="image-20241006114053198" /></p>
+<blockquote>
+<p>audio-classification ：音频分类<br />
+automatic-speech-recognition ：自动语音识别<br />
+text-to-audio ：文本转音频<br />
+feature-extraction ：特征提取<br />
+text-classification ：文本分类<br />
+token-classification ：标记分类<br />
+question-answering ：问答系统<br />
+table-question-answering ：表格问答<br />
+visual-question-answering ：视觉问答<br />
+document-question-answering ：文档问答<br />
+fill-mask ：填充掩码<br />
+summarization ：摘要生成<br />
+translation ：翻译<br />
+text2text-generation ：文本生成<br />
+text-generation ：文本生成<br />
+zero-shot-classification ：零样本分类<br />
+zero-shot-image-classification ：零样本图像分类<br />
+zero-shot-audio-classification ：零样本音频分类<br />
+image-classification ：图像分类<br />
+image-feature-extraction ：图像特征提取<br />
+image-segmentation ：图像分割<br />
+image-to-text ：图像转文本<br />
+object-detection ：物体检测<br />
+zero-shot-object-detection ：零样本物体检测<br />
+depth-estimation ：深度估计<br />
+video-classification ：视频分类<br />
+mask-generation ：掩码生成<br />
+image-to-image ：图像到图像</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">from transformers.pipelines import SUPPORTED_TASKS
+for k, v in SUPPORTED_TASKS.items():
+    print(k, v)
+</code></pre>
+<blockquote>
+<p>可以使用以上的方法进行查看</p>
+</blockquote>
+<h3 id="%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E">使用说明</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061259357.png" alt="image-20241006125917307" /></p>
+
+<pre class="language-python"><code class="language-python">class TextClassificationPipeline(Pipeline):
+    &quot;&quot;&quot;
+    Text classification pipeline using any `ModelForSequenceClassification`. See the [sequence classification
+    examples](../task_summary#sequence-classification) for more information.
+
+    Example:
+
+    ```python
+    &gt;&gt;&gt; from transformers import pipeline
+
+    &gt;&gt;&gt; classifier = pipeline(model=&quot;distilbert/distilbert-base-uncased-finetuned-sst-2-english&quot;)
+    &gt;&gt;&gt; classifier(&quot;This movie is disgustingly good !&quot;)
+    [{'label': 'POSITIVE', 'score': 1.0}]
+
+    &gt;&gt;&gt; classifier(&quot;Director tried too much.&quot;)
+    [{'label': 'NEGATIVE', 'score': 0.996}]
+</code></pre>
+
+<pre class="language-none"><code class="language-none">Learn more about the basics of using a pipeline in the [pipeline tutorial](../pipeline_tutorial)
+
+This text classification pipeline can currently be loaded from [`pipeline`] using the following task identifier:
+`&quot;sentiment-analysis&quot;` (for classifying sequences according to positive or negative sentiments).
+
+If multiple classification labels are available (`model.config.num_labels &gt;= 2`), the pipeline will run a softmax
+over the results. If there is a single label, the pipeline will run a sigmoid over the result.
+
+The models that this pipeline can use are models that have been fine-tuned on a sequence classification task. See
+the up-to-date list of available models on
+[huggingface.co/models](https://huggingface.co/models?filter=text-classification).
+&quot;&quot;&quot;
+
+</code></pre>
+
+<pre class="language-none"><code class="language-none">
+这一个里面只有最简单的方法调用, 在实际使用可以看他的`__call__`方法
+
+```python
+def __call__(self, inputs, **kwargs):
+        &quot;&quot;&quot;
+        Classify the text(s) given as inputs.
+
+        Args:
+            inputs (`str` or `List[str]` or `Dict[str]`, or `List[Dict[str]]`):
+                One or several texts to classify. In order to use text pairs for
+                your classification, you can send a
+                dictionary containing `{&quot;text&quot;, &quot;text_pair&quot;}` keys, or a list of
+                those.
+            top_k (`int`, *optional*, defaults to `1`):
+                How many results to return.
+            function_to_apply (`str`, *optional*, defaults to `&quot;default&quot;`):
+                The function to apply to the model outputs in order to retrieve the
+                scores. Accepts four different
+                values:
+
+                If this argument is not specified, then it will apply the following
+                functions according to the number
+                of labels:
+
+                - If the model has a single label, will apply the sigmoid function
+                on the output.
+                - If the model has several labels, will apply the softmax function
+                on the output.
+
+                Possible values are:
+
+                - `&quot;sigmoid&quot;`: Applies the sigmoid function on the output.
+                - `&quot;softmax&quot;`: Applies the softmax function on the output.
+                - `&quot;none&quot;`: Does not apply any function on the output.
+
+        Return:
+            A list or a list of list of `dict`: Each result comes as list of 
+            dictionaries with the following keys:
+
+            - **label** (`str`) -- The label predicted.
+            - **score** (`float`) -- The corresponding probability.
+
+            If `top_k` is used, one such dictionary is returned per label.
+        &quot;&quot;&quot;
+</code></pre>
+<h3 id="%E5%8A%A0%E8%BD%BD">加载</h3>
+
+<pre class="language-python"><code class="language-python">from transformers import *
+pipe = pipeline('text-classification')
+</code></pre>
+<blockquote>
+<p>使用这一个命令的时候会自动下载默认使用的模型, 一般是一个英文模型</p>
+
+<pre class="language-python"><code class="language-python">pipe(&quot;very good&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061209566.png" alt="image-20241006120905391" /></p>
+<p>其他的模型可以在huggingface这一个网页进行寻找, 之前使用的是<a href="https://huggingface.co/uer/roberta-base-finetuned-dianping-chinese"  target="_blank">uer/roberta-base-finetuned-dianping-chinese · Hugging Face</a>这一个模型, 可以在标签进行分类筛选</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061200115.png" alt="image-20241006120056003" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061207795.png" alt="image-20241006120757759" /></p>
+<p>这个就是模型的名字</p>
+
+<pre class="language-c"><code class="language-c">pipe = pipeline('text-classification', model='uer/roberta-base-finetuned-dianping-chinese')
+</code></pre>
+<ul>
+<li>方法二</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">from transformers import *
+
+model = AutoModelForSequenceClassification.from_pretrained('uer/roberta-base-finetuned-dianping-chinese')
+tokenizer = AutoTokenizer.from_pretrained('uer/roberta-base-finetuned-dianping-chinese')
+pipe = pipeline(&quot;text-classification&quot;, model=model, tokenizer=tokenizer)
+</code></pre>
+<p>把模型以及分词器单独创建出来, 这两个需要同时指定</p>
+<blockquote>
+<p>使用这两种方法加载的模型实际是使用CPU进行运行的</p>
+
+<pre class="language-python"><code class="language-python">print(pipe.model.device)
+</code></pre>
+</blockquote>
+<h3 id="%E4%BD%BF%E7%94%A8GPU">使用GPU</h3>
+
+<pre class="language-python"><code class="language-python">pipe = pipeline('text-classification', model='uer/roberta-base-finetuned-dianping-chinese', device=0)
+</code></pre>
+<h3 id="%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB%E7%A4%BA%E4%BE%8B">图像识别示例</h3>
+
+<pre class="language-python"><code class="language-python">from transformers import *
+
+checkpoint = &quot;google/owlvit-base-patch32&quot;
+detector = pipeline(model=checkpoint, task=&quot;zero-shot-object-detection&quot;)
+
+import requests
+from PIL import Image
+# 获取检测的图片
+url = &quot;https://unsplash.com/photos/oj0zeY2Ltk4/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTR8fHBpY25pY3xlbnwwfHx8fDE2Nzc0OTE1NDk&amp;force=true&amp;w=640&quot;
+im = Image.open(requests.get(url, stream=True).raw)
+im.show()
+# 进行检测
+predictions = detector(
+    im,
+    candidate_labels=[&quot;hat&quot;, &quot;sunglasses&quot;, &quot;book&quot;],
+)
+print(predictions)
+
+from PIL import ImageDraw
+# 绘制一下结果
+draw = ImageDraw.Draw(im)
+
+for prediction in predictions:
+    box = prediction[&quot;box&quot;]
+    label = prediction[&quot;label&quot;]
+    score = prediction[&quot;score&quot;]
+    xmin, ymin, xmax, ymax = box.values()
+    draw.rectangle((xmin, ymin, xmax, ymax), outline=&quot;red&quot;, width=1)
+    draw.text((xmin, ymin), f&quot;{label}: {round(score,2)}&quot;, fill=&quot;red&quot;)
+
+im.show()
+</code></pre>
+<blockquote>
+
+<pre class="language-c"><code class="language-c">class ZeroShotObjectDetectionPipeline(ChunkPipeline):
+    &quot;&quot;&quot;
+    Zero shot object detection pipeline using `OwlViTForObjectDetection`. This pipeline predicts bounding boxes of
+    objects when you provide an image and a set of `candidate_labels`.
+
+    Example:
+
+    ```python
+    &gt;&gt;&gt; from transformers import pipeline
+
+    &gt;&gt;&gt; detector = pipeline(model=&quot;google/owlvit-base-patch32&quot;, task=&quot;zero-shot-object-detection&quot;)
+    &gt;&gt;&gt; detector(
+    ...     &quot;http://images.cocodataset.org/val2017/000000039769.jpg&quot;,
+    ...     candidate_labels=[&quot;cat&quot;, &quot;couch&quot;],
+    ... )
+    [{'score': 0.287, 'label': 'cat', 'box': {'xmin': 324, 'ymin': 20, 'xmax': 640, 'ymax': 373}}, {'score': 0.254, 'label': 'cat', 'box': {'xmin': 1, 'ymin': 55, 'xmax': 315, 'ymax': 472}}, {'score': 0.121, 'label': 'couch', 'box': {'xmin': 4, 'ymin': 0, 'xmax': 642, 'ymax': 476}}]
+
+    &gt;&gt;&gt; detector(
+    ...     &quot;https://huggingface.co/datasets/Narsil/image_dummy/raw/main/parrots.png&quot;,
+    ...     candidate_labels=[&quot;head&quot;, &quot;bird&quot;],
+    ... )
+    [{'score': 0.119, 'label': 'bird', 'box': {'xmin': 71, 'ymin': 170, 'xmax': 410, 'ymax': 508}}]
+</code></pre>
+
+<pre class="language-none"><code class="language-none">Learn more about the basics of using a pipeline in the [pipeline tutorial](../pipeline_tutorial)
+
+This object detection pipeline can currently be loaded from [`pipeline`] using the following task identifier:
+`&quot;zero-shot-object-detection&quot;`.
+
+See the list of available models on
+[huggingface.co/models](https://huggingface.co/models?filter=zero-shot-object-detection).
+&quot;&quot;&quot;
+</code></pre>
+
+<pre class="language-none"><code class="language-none">
+</code></pre>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061319203.png" alt="image-20241006131935059" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410061319339.png" alt="image-20241006131947210" /></p>
+<h3 id="%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B">处理流程</h3>
+<ul>
+<li>初始化Tokenizer</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">tokenizer = AutoTokenizer.from_pretrained('uer/roberta-base-finetuned-dianping-chinese')
+</code></pre>
+<ul>
+<li>初始化Model</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">model = AutoModelForSequenceClassification.from_pretrained('uer/roberta-base-finetuned-dianping-chinese')
+</code></pre>
+<ul>
+<li>数据预处理</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">imput_text = &quot;可以&quot;
+inputs = tokenizer(input_text, return_tensors='pt') # 返回值是一个pytorch tensor
+</code></pre>
+<ul>
+<li>模型预测</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">res = model(**inputs).logits
+</code></pre>
+<ul>
+<li>结果后处理</li>
+</ul>
+<p>softmax输出的是概率分布（比如在多分类问题中，Softmax输出的是每个类别对应的概率）</p>
+<img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062224000.png"/>
+
+<pre class="language-python"><code class="language-python">logits = res.logits
+logits = torch.softmax(logits, dim=1) # 在维度1进行计算
+
+pred = torch.argmax(logits, dim=1).item()
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062228807.png" alt="image-20241006222812760" /></p>
+<h2 id="Tokenizer">Tokenizer</h2>
+<p>进行数据的预处理</p>
+<ol>
+<li>分词: 使用分词器对文本数据进行分词</li>
+<li>构建词典: 根据分词器的处理结果, Step2构建词典:根据数据集分词的结果，构建词典映射(这一步并不绝对，如果采用预训练词向量，词典映射要根据词向量文件进行处理);</li>
+<li>数据转换:根据构建好的词典，将分词处理后的数据做映射，将文本序列转换为数字序列;</li>
+<li>数据填充与截断:在以batch输入到模型的方式中，需要对过短的数据进行填充，过长的数据进行截断，保证数据长度符合模型能接受的范围，同时batch内的数据维度大小一致。</li>
+</ol>
+<p>在使用Tokenizer的时候可以进行以上的所有处理</p>
+<h3 id="%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8">基本使用</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062234321.png" alt="image-20241006223441164" /></p>
+
+<pre class="language-python"><code class="language-python">from transformers import AutoTokenizer
+</code></pre>
+<blockquote>
+<p>不同的模型会使用不同的Tokenizer, 所以这里封装了一个AutoTokenizer, 根据传入的参数确定最后的结果</p>
+</blockquote>
+<ul>
+<li>加载分词器</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">sen = &quot;我史凯歌敢吃屎!&quot;
+tokenizer = AutoTokenizer.from_pretrained(&quot;uer/roberta-base-finetuned-dianping-chinese&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062239203.png" alt="image-20241006223955140" /></p>
+<p>这一个可以保存在本地以及从本地进行加载</p>
+
+<pre class="language-python"><code class="language-python">tokenizer.(&quot;./tokenizer&quot;)
+tokenizer = AutoTokenizer.from_pretrained(&quot;./tokenizer&quot;)
+</code></pre>
+<p>之后可以进行分词</p>
+
+<pre class="language-python"><code class="language-python">tokens = tokenizer.tokenize(sen)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062244514.png" alt="image-20241006224426467" /></p>
+<ul>
+<li>可以查看一下这一个分词器的词典</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062246264.png" alt="image-20241006224655209" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062247055.png" alt="image-20241006224712011" /></p>
+<ul>
+<li>把词语转换为id</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">ids = tokenizer.convert_tokens_to_ids(tokens)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062249711.png" alt="image-20241006224944657" /></p>
+<blockquote>
+<p>也可以反过来转换</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062250417.png" alt="image-20241006225045369" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062252671.png" alt="image-20241006225224620" /></p>
+</blockquote>
+<ul>
+<li>填充截断</li>
+</ul>
+
+<pre class="language-python"><code class="language-python"># 填充
+ids = tokenizer.encode(sen, add_special_tokens=False, padding='max_length', max_length=10)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062259454.png" alt="image-20241006225920394" /></p>
+
+<pre class="language-python"><code class="language-python"># 截断
+ids = tokenizer.encode(sen, add_special_tokens=False, truncation=True, max_length=5)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062300854.png" alt="image-20241006230016792" /></p>
+<p>在截断的时候如果添加标志位, 这一个标志位不会被截断</p>
+<p>实际使用的时候, 需要区分一下那一部分是填充的数据, 以及区分一下句子的前后</p>
+
+<pre class="language-python"><code class="language-python">attention_mask = [1 if idx != 0 else 0 for idx in ids]
+token_type_ids = [0] * len(ids)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062305927.png" alt="image-20241006230541868" /></p>
+<h3 id="%E7%AE%80%E4%BE%BF%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">简便使用方法</h3>
+<h4 id="%E5%8D%95%E4%B8%AA%E6%95%B0%E6%8D%AE">单个数据</h4>
+
+<pre class="language-python"><code class="language-python">ids = tokenizer.encode(sen)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062253211.png" alt="image-20241006225340157" /></p>
+<blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062254025.png" alt="image-20241006225442970" /></p>
+<p>这一个模型在处理的时候会加入用于区分句子的token可以使用参数取消</p>
+
+<pre class="language-python"><code class="language-python">ids = tokenizer.encode(sen, add_special_tokens=False)
+str = tokenizer.decode(ids, skip_special_tokens=True)
+</code></pre>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">ids = tokenizer.encode_plus(sen, add_special_tokens=True, max_length=20, padding='max_length')
+</code></pre>
+
+<pre class="language-bash"><code class="language-bash">{
+'input_ids': [101, 2769, 1380, 1132, 3625, 3140, 1391, 2241, 106, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+}
+</code></pre>
+<blockquote>
+<p>也可以直接使用<code>ids = tokenizer(sen, add_special_tokens=True, max_length=20, padding='max_length')</code></p>
+<p>token_type_ids用于标识不同文本片段的token类型。在BERT模型中，输入文本可能包含多个文本片段，例如问题和答案。token_type_ids可以用来区分不同文本片段的token，帮助模型捕捉文本之间的关联信息。通过将不同文本片段的token赋予不同的token_type_ids，模型可以更好地理解每个文本片段之间的关系。</p>
+<p>attention_mask用于控制哪些token对于模型是可见的，哪些token应该被屏蔽掉。在BERT模型中，输入文本通常会进行padding使得输入序列长度相同。通过在attention_mask中将padding的token对应的位置设为0，模型可以忽略这些padding token，避免对其进行不必要的计算，提高了模型的计算效率。</p>
+</blockquote>
+<h4 id="%E5%A4%84%E7%90%86%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%28%E9%80%9F%E5%BA%A6%E6%9B%B4%E5%BF%AB%29">处理多个数据(速度更快)</h4>
+
+<pre class="language-c"><code class="language-c">sen = [&quot;我史凯歌敢eat dinner!&quot;, 
+       &quot;史凯歌我要eat dinner&quot;, 
+       &quot;一天要吃三斤dinner&quot;]
+ids = tokenizer.batch_encode_plus(sen, add_special_tokens=True, max_length=20, padding='max_length')
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">{
+'input_ids': [
+[101, 2769, 1380, 1132, 3625, 3140, 1391, 2241, 106, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[101, 1380, 1132, 3625, 2769, 6206, 1391, 2241, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [101, 671, 1921, 6206, 1391, 676, 3165, 2241, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+], 
+'token_type_ids': [
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+], 
+'attention_mask': [
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]}
+</code></pre>
+</blockquote>
+<h3 id="Fast-/-Slow-Tokenizer">Fast / Slow Tokenizer</h3>
+<p>Fast Tokenizer是基于Rust实现的, Slow Tokenizer是基于python实现的速度比较慢</p>
+
+<pre class="language-python"><code class="language-python">tokenizer = AutoTokenizer.from_pretrained(&quot;uer/roberta-base-finetuned-dianping-chinese&quot;, use_fast=False)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062318774.png" alt="image-20241006231850680" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062320847.png" alt="image-20241006232053744" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062321402.png" alt="image-20241006232109337" /></p>
+<p>fast tokenizer会有更多的返回值, 主要是应用于命名实体识别以及qa</p>
+
+<pre class="language-python"><code class="language-python">sen = &quot;我史凯歌敢吃shit! dreaming&quot;
+inputs = tokenizer(sen, return_offsets_mapping=True)
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">{
+'input_ids': [101, 2769, 1380, 1132, 3625, 3140, 1391, 11772, 8165, 106, 10252, 8221, 102], 
+'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+'offset_mapping': [(0, 0), (0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 9), (9, 10), (10, 11), (12, 17), (17, 20), (0, 0)]
+}
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410062327233.png" alt="image-20241006232704170" /></p>
+<p>有时候一个词会被拆分为多个部分, 可以使用这一个进行对对应, None对应的是(0, 0), 英文的时候比较明显, 第(6, 9)个字符和(9, 10)是一个英文单词被拆分为两个</p>
+</blockquote>
+<h3 id="%E5%85%B6%E5%AE%83%E5%8F%82%E6%95%B0">其它参数</h3>
+<p>在下载一些自主开发的分词器的时候, 需要指定一个参数<code>trust_remote_code=True</code></p>
+
+<pre class="language-python"><code class="language-python">tokenizer = AutoTokenizer.from_pretrained(&quot;THUDM/chatglm-6b&quot;, trust_remote_code=True)
+</code></pre>
+<h2 id="Model">Model</h2>
+<p>原始的Transform分为编码器(Encoder)以及解码器(Decoder)模型, Encoder部分接收输入并且为他构建特征表示, Decoder使用Encoder的编码结果以及其他的输入序列生成目标序列</p>
+<p>无论是编码器还是解码器都是多个TransformsBlock堆叠而成的</p>
+<p>TransformsBlock由注意力机制(Attention)以及FFN组成</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409241053267.png" alt="image-20240924105336210" /></p>
+<blockquote>
+<p><strong>注意力机制</strong>, 在计算当前的词的特征表示的时候, 可以通过注意力机制有选择性的告诉模式要使用哪一部分的上下文</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071010900.png" alt="image-20241007101012759" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071011461.png" alt="image-20241007101132383" /></p>
+<h3 id="AutoModel">AutoModel</h3>
+<p>AutoModel是Hugging Face的Transformers库中的一个非常实用的类，它属于自动模型选择的机制。这个设计允许用户在不知道具体模型细节的情况下，根据给定的模型名称或模型类型自动加载相应的预训练模型。它减少了代码的重复性，并提高了灵活性，使得开发者可以轻松地切换不同的模型进行实验或应用。</p>
+<h3 id="Model-Head">Model Head</h3>
+<p>Model Head在预训练模型的基础上添加一层或多层的额外网络结构来适应特定的模型任务，方便于开发者快速加载transformers库中的不同类型模型，不用关心模型内部细节。</p>
+<p>Model Head是Transformers模型里的一层，通常用于对模型输出进行后续处理。其作用是接收模型的输出，然后将其映射成最终的输出。这可能涉及到一系列操作，比如分类、回归、生成等任务。Model Head可以将模型输出转化为适合特定任务的格式，并加入适当的损失函数进行训练。</p>
+<p>在分类任务中，Model Head可能会接收模型输出的每个token的表示，然后将它们汇总成整个句子的表示，最终通过一个全连接层将其分类为不同的类别。</p>
+<p>在生成任务中，Model Head可能会接收模型输出的每个token的表示，然后将其依次输入到一个解码器中生成整个序列。</p>
+<p>总的来说，Model Head的作用是将模型输出进行最终的转化，使得模型可以完成具体的任务。</p>
+<ul>
+<li>ForCausalLM：因果语言模型头，用于decoder类型的任务，主要进行文本生成，生成的每个词依赖于之前生成的所有词。比如GPT、Qwen</li>
+<li>ForMaskedLM：掩码语言模型头，用于encoder类型的任务，主要进行预测文本中被掩盖和被隐藏的词，比如BERT。</li>
+<li>ForSeq2SeqLM：序列到序列模型头，用于encoder-decoder类型的任务，主要处理编码器和解码器共同工作的任务，比如机器翻译或文本摘要。</li>
+<li>ForQuestionAnswering：问答任务模型头，用于问答类型的任务，从给定的文本中抽取答案。通过一个encoder来理解问题和上下文，对答案进行抽取。</li>
+<li>ForSequenceClassification：文本分类模型头，将输入序列映射到一个或多个标签。例如主题分类、情感分类。</li>
+<li>ForTokenClassification：标记分类模型头，用于对标记进行识别的任务。将序列中的每个标记映射到一个提前定义好的标签。如命名实体识别，打标签</li>
+<li>ForMultiplechoice：多项选择任务模型头，包含多个候选答案的输入，预测正确答案的选项。</li>
+</ul>
+<h3 id="%E4%B8%8B%E8%BD%BD%E5%8A%A0%E8%BD%BD%28%E6%97%A0Model-Head%29">下载加载(无Model Head)</h3>
+
+<pre class="language-python"><code class="language-python">model = AutoModel.from_pretrained(&quot;hfl/rbt3&quot;)
+</code></pre>
+<blockquote>
+<p>使用这一个方式的时候可以从官网进行下载模型, 如果这一个失败可以在</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071055312.png" alt="image-20241007105514201" /></p>
+<p>这里下载的是pytorch版本的模型</p>
+
+<pre class="language-python"><code class="language-python">model = AutoModel.from_pretrained(&quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;)
+</code></pre>
+<p>还可以使用git克隆的方式进行, 在train按钮的左侧三个点</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071104166.png" alt="image-20241007110417069" /></p>
+<p>在使用默认的命令的时候, 会下载所有的三个模型, 所以可以使用</p>
+
+<pre class="language-bash"><code class="language-bash">git lfs clone &quot;https://huggingface.co/hfl/rbt3&quot; --include=&quot;*.bin&quot;
+</code></pre>
+</blockquote>
+<h3 id="%E9%85%8D%E7%BD%AE">配置</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071113850.png" alt="image-20241007111339761" /></p>
+<blockquote>
+<p>可以在下载的时候对模型进行配置</p>
+</blockquote>
+<p>也可以使用<code>model.config</code>获取这一个模型的配置参数, 最全的可以使用下面的函数加载</p>
+
+<pre class="language-python"><code class="language-python">config = AutoConfig.from_pretrained(&quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;)
+</code></pre>
+<p>使用这一种方式加载的时候参数和变量是可以改变的</p>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">BertConfig {
+  &quot;_name_or_path&quot;: &quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;,
+  &quot;architectures&quot;: [
+    &quot;BertForMaskedLM&quot;
+  ],
+  &quot;attention_probs_dropout_prob&quot;: 0.1,
+  &quot;classifier_dropout&quot;: null,
+  &quot;directionality&quot;: &quot;bidi&quot;,
+  &quot;hidden_act&quot;: &quot;gelu&quot;,
+  &quot;hidden_dropout_prob&quot;: 0.1,
+  &quot;hidden_size&quot;: 768,
+  &quot;initializer_range&quot;: 0.02,
+  &quot;intermediate_size&quot;: 3072,
+  &quot;layer_norm_eps&quot;: 1e-12,
+  &quot;max_position_embeddings&quot;: 512,
+  &quot;model_type&quot;: &quot;bert&quot;,
+  &quot;num_attention_heads&quot;: 12,
+  &quot;num_hidden_layers&quot;: 3,
+  &quot;output_past&quot;: true,
+  &quot;pad_token_id&quot;: 0,
+  &quot;pooler_fc_size&quot;: 768,
+  &quot;pooler_num_attention_heads&quot;: 12,
+  &quot;pooler_num_fc_layers&quot;: 3,
+  &quot;pooler_size_per_head&quot;: 128,
+  &quot;pooler_type&quot;: &quot;first_token_transform&quot;,
+  &quot;position_embedding_type&quot;: &quot;absolute&quot;,
+  &quot;transformers_version&quot;: &quot;4.44.2&quot;,
+  &quot;type_vocab_size&quot;: 2,
+  &quot;use_cache&quot;: true,
+  &quot;vocab_size&quot;: 21128
+}
+</code></pre>
+</blockquote>
+<p>输出是一个BertConfig类, 这个类继承于PretrainedConfig类, 有很多的参数是在上面没有显示的</p>
+<p>实际功能</p>
+
+<pre class="language-python"><code class="language-python">sen = &quot;我爱北京天安门&quot;
+tokenizer = AutoTokenizer.from_pretrained(&quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;)
+inputs = tokenizer(sen, return_tensors=&quot;pt&quot;)
+output = model(**inputs)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071128164.png" alt="image-20241007112810082" /></p>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">          9.1205e-01, -9.9994e-01, -3.5651e-01,  9.9433e-01,  9.3075e-01,
+         -3.3699e-01,  9.9916e-01, -1.0331e-01]], grad_fn=&lt;TanhBackward0&gt;), hidden_states=None, past_key_values=None, attentions=None, cross_attentions=None)
+</code></pre>
+</blockquote>
+<blockquote>
+<p>这时候的输出有一部分的数据是没有参数的, 可以在加载的时候加一个参数</p>
+
+<pre class="language-c"><code class="language-c">model = AutoModel.from_pretrained(&quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;, output_attentions=True)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071131938.png" alt="image-20241007113159856" /></p>
+</blockquote>
+<p>这一个模型是一个不带Model Header的</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071133143.png" alt="image-20241007113346059" /></p>
+<p>一条数据, 长度为9的inputids</p>
+<h3 id="%E6%9C%89Model-Head">有Model Head</h3>
+
+<pre class="language-python"><code class="language-python">from transformers import AutoModelForSequenceClassification
+clz_model = AutoModelForSequenceClassification.from_pretrained(&quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;, num_labels=2)
+clz_model(**inputs)
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">SequenceClassifierOutput(loss=None, logits=tensor([[ 0.0296, -0.4734]], grad_fn=&lt;AddmmBackward0&gt;), hidden_states=None, attentions=None)
+</code></pre>
+<p>没有传label, 所以这里的loss=None</p>
+</blockquote>
+<p>可以使用参数num_labels设置输出的分类个数</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071144912.png" alt="image-20241007114416817" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071143951.png" alt="image-20241007114337851" /></p>
+<p>这里的bert是一个模型编码器<a href="https://blog.csdn.net/yjw123456/article/details/120211601#:~:text=%E6%9C%AC%E6%96%87%E8%AF%A6%E7%BB%86%E8%A7%A3%E6%9E%90BERT"  target="_blank">【理论篇】是时候彻底弄懂BERT模型了(收藏)-CSDN博客</a></p>
+<h3 id="%E5%BE%AE%E8%B0%83%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B">微调代码示例</h3>
+<p>使用数据集<a href="https://github.com/SophonPlus/ChineseNlpCorpus"  target="_blank">SophonPlus/ChineseNlpCorpus</a></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071235397.png" alt="image-20241007123535302" /></p>
+<h4 id="%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%A5%E5%8F%8A%E5%A4%84%E7%90%86">获取数据集以及处理</h4>
+
+<pre class="language-python"><code class="language-python"># 文本分类模型微调的示例
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+# 加载数据
+import pandas as pd
+
+# data = pd.read_csv(&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;)
+# data.head()
+
+# data = data.dropna()    # 删除缺失值
+# data.iloc[1]
+
+# 创建dataset
+from torch.utils.data import Dataset
+
+class MyDataset(Dataset):
+    def __init__(self):
+        super().__init__()
+        self.data = pd.read_csv(&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;)
+        self.data = self.data.dropna()
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data.iloc[idx][&quot;review&quot;], self.data.iloc[idx][&quot;label&quot;]
+
+    dataset = MyDataset()
+
+for i in range(5):
+    print(dataset[i])
+&quot;&quot;&quot;
+('距离川沙公路较近,但是公交指示不对,如果是&quot;蔡陆线&quot;的话,会非常麻烦.建议用别的路线.房间较为简单.', 1)
+('商务大床房，房间很大，床有2M宽，整体感觉经济实惠不错!', 1)
+('早餐太差，无论去多少人，那边也不加食品的。酒店应该重视一下这个问题了。房间本身很好。', 1)
+('宾馆在小街道上，不大好找，但还好北京热心同胞很多~宾馆设施跟介绍的差不多，房间很小，确实挺小，但加上低价位因素，还是无超所值的；环境不错，就在小胡同内，安静整洁，暖气好足-_-||。。。呵还有一大优势就是从宾馆出发，步行不到十分钟就可以到梅兰芳故居等等，京味小胡同，北海距离好近呢。总之，不错。推荐给节约消费的自助游朋友~比较划算，附近特色小吃很多~', 1)
+('CBD中心,周围没什么店铺,说5星有点勉强.不知道为什么卫生间没有电吹风', 1)
+&quot;&quot;&quot;
+# 划分数据集
+from torch.utils.data import random_split
+
+trainset, validset = random_split(dataset, lengths=[0.9, 0.1])   # 乱序划分数据集
+
+print(len(trainset), len(validset))
+&quot;&quot;&quot;
+(6989, 776)
+&quot;&quot;&quot;
+
+# 建立DataLoader
+from torch.utils.data import DataLoader
+trainloader = DataLoader(trainset, batch_size=32, shuffle=True)  # 乱序, 一组大小为32
+validloader = DataLoader(validset, batch_size=32, shuffle=False) # 不乱序
+</code></pre>
+<blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071307339.png" alt="image-20241007130723273" /></p>
+<p>也可以使用<code>next(enumerate(trainloader))</code></p>
+<p>默认的时候使用这一个函数进行聚合的结果是文字聚集为一个元组, 数字是一个tensor, 如果想要使用Tokenizer进行处理这一个数据, 文字为一个list可以重写一下`collate_fn, input_ids是Tokenizer字典里面的一项的名字, 由于在Bert模型里面labels是其中另一个参数, 所以把这两个打包</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410071333543.png" alt="image-20241007133339446" /></p>
+
+<pre class="language-python"><code class="language-python">import torch 
+tokenizer = AutoTokenizer.from_pretrained(&quot;../hlfrbt3&quot;)
+def j_collate_fn(batch):
+     texts, labels = [], []
+     for text, label in batch:
+         texts.append(text)
+         labels.append(label)
+     # 128是模型的最大长度
+     inputs = tokenizer(texts, padding=&quot;max_length&quot;, truncation=True, max_length=128,
+                        return_tensors=&quot;pt&quot;) 
+     inputs[&quot;labels&quot;] = torch.tensor(labels)
+    # 返回一个字典里面两个Value为tensor格式
+     return inputs
+# 建立DataLoader
+from torch.utils.data import DataLoader
+# 乱序, 一组大小为32
+trainloader = DataLoader(trainset, batch_size=32, shuffle=True, collate_fn=j_collate_fn)
+# 不乱序
+validloader= DataLoader(validset, batch_size=32, shuffle=False, collate_fn=j_collate_fn)
+</code></pre>
+</blockquote>
+<h4 id="%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9E%8B%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%8C%96">导入模型以及优化</h4>
+
+<pre class="language-python"><code class="language-python">from torch.optim import AdamW
+# 导入模型
+model = AutoModelForSequenceClassification.from_pretrained(&quot;../hlfrbt3&quot;)
+if torch.cuda.is_available():
+    model = model.cuda()
+# 定义优化器
+optimizer = AdamW(model.parameters(), lr=1e-5) # 1e-5是学习率, 迁移学习使用的一般比较低
+</code></pre>
+<h4 id="%E5%AE%9E%E9%99%85%E8%AE%AD%E7%BB%83%E5%87%BD%E6%95%B0">实际训练函数</h4>
+
+<pre class="language-python"><code class="language-python">def evaluate():
+    &quot;&quot;&quot;
+    Description: 评估模型在验证集上的性能
+    Returns:
+        模型的准确率
+    &quot;&quot;&quot;
+    model.eval()
+    acc_num = 0
+    with torch.no_grad():
+        for batch in validloader:
+            if torch.cuda.is_available():
+                batch = {k:v.cuda() for k, v in batch.items()}
+            outputs = model(**batch)
+            pred = outputs.logits.argmax(dim=-1) # 预测的类别
+            acc_num += (pred == batch[&quot;labels&quot;].long()).float().sum().item()
+    return acc_num / len(validset)
+
+def train(epoch=3, log_step=100):
+    &quot;&quot;&quot;
+    Description: 训练模型
+    Args:
+        epoch (int, optional): 训练的次数. Defaults to 3.
+        log_step (int, optional): 打印log的步长. Defaults to 100.
+    &quot;&quot;&quot;
+    global_step=0
+    for ep in range(epoch):
+        model.train()
+        # 遍历训练集
+        for batch in trainloader:
+            # 将数据放到cuda上
+            if torch.cuda.is_available():
+                batch = {k:v.cuda() for k, v in batch.items()}
+            optimizer.zero_grad()
+            outputs = model(**batch)
+            outputs.loss.backward()
+            optimizer.step()
+            global_step += 1
+            if global_step % log_step == 0:
+                print(f&quot;epoch={ep}, global_step={global_step}, loss={outputs.loss.item()}&quot;)
+        # 每个epoch结束评估一次
+        acc = evaluate()
+        print(f&quot;epoch={ep}, acc={acc}&quot;)
+</code></pre>
+
+<pre class="language-python"><code class="language-python">print(f'before train {evaluate()}')
+train()
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">before train 0.31056701030927836
+epoch=0, global_step=100, loss=0.293989360332489
+epoch=0, global_step=200, loss=0.31614530086517334
+epoch=0, acc=0.8904639175257731
+epoch=1, global_step=300, loss=0.1351868063211441
+epoch=1, global_step=400, loss=0.17762571573257446
+epoch=1, acc=0.8865979381443299
+epoch=2, global_step=500, loss=0.17976289987564087
+epoch=2, global_step=600, loss=0.19925124943256378
+epoch=2, acc=0.8853092783505154
+</code></pre>
+</blockquote>
+<h4 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h4>
+
+<pre class="language-python"><code class="language-python">sen = &quot;我觉得这家饭店的饭很好吃, 体验很好!&quot;
+with torch.inference_mode():
+    inputs = tokenizer(sen, padding=&quot;max_length&quot;, truncation=True, max_length=128, return_tensors=&quot;pt&quot;)
+    if torch.cuda.is_available():
+        inputs = {k:v.cuda() for k, v in inputs.items()}
+    outputs = model(**inputs)
+    pred = outputs.logits.argmax(dim=-1)
+    print(pred.item())
+</code></pre>
+<ul>
+<li>使用pipe进行</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">from transformers import pipeline
+model.config.id2label = id2label # 这一步也可以在模型加载的时候实现
+pipe = pipeline(&quot;text-classification&quot;, model=model, tokenizer=tokenizer, device=0 if torch.cuda.is_available() else -1)
+pipe(sen)
+</code></pre>
+<h2 id="Dataset">Dataset</h2>
+<h3 id="%E5%8A%A0%E8%BD%BD">加载</h3>
+<p>一个可以方便的从Huggingface加载数据集的库</p>
+<p>这里使用的模型是<a href="https://huggingface.co/datasets/madao33/new-title-chinese"  target="_blank">madao33/new-title-chinese · Datasets at Hugging Face</a></p>
+
+<pre class="language-python"><code class="language-python">from datasets import *
+dataset = load_dataset(&quot;madao33/new-title-chinese&quot;)
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">DatasetDict({
+    train: Dataset({
+        features: ['title', 'content'],
+        num_rows: 5850
+    })
+    validation: Dataset({
+        features: ['title', 'content'],
+        num_rows: 1679
+    })
+})
+</code></pre>
+</blockquote>
+<p>对于其他的一些数据集, 比如glue是一个任务的集合, 需要再加一个参数指定实际加载的任务</p>
+
+<pre class="language-python"><code class="language-python">boolq_dataset = load_dataset(&quot;super_glue&quot;, &quot;boolq&quot;, trust_remote_code=True)
+boolq_dataset
+</code></pre>
+<blockquote>
+<p><a href="https://huggingface.co/datasets/aps/super_glue"  target="_blank">aps/super_glue · Datasets at Hugging Face</a></p>
+
+<pre class="language-bash"><code class="language-bash">Downloading data: 100%|██████████| 4.12M/4.12M [00:01&lt;00:00, 3.20MB/s]
+Generating train split: 100%|██████████| 9427/9427 [00:00&lt;00:00, 14841.26 examples/s]
+Generating validation split: 100%|██████████| 3270/3270 [00:00&lt;00:00, 28511.03 examples/s]
+Generating test split: 100%|██████████| 3245/3245 [00:00&lt;00:00, 29980.43 examples/s]
+DatasetDict({
+ train: Dataset({
+     features: ['question', 'passage', 'idx', 'label'],
+     num_rows: 9427
+ })
+ validation: Dataset({
+     features: ['question', 'passage', 'idx', 'label'],
+     num_rows: 3270
+ })
+ test: Dataset({
+     features: ['question', 'passage', 'idx', 'label'],
+     num_rows: 3245
+ })
+})
+</code></pre>
+</blockquote>
+<p>一个数据集分为数据集, 验证集, 测试集三部分, 只想加载一部分的话</p>
+
+<pre class="language-python"><code class="language-python">boolq_dataset_train = load_dataset(&quot;super_glue&quot;, &quot;boolq&quot;, trust_remote_code=True, split=&quot;train&quot;)
+</code></pre>
+<p>也可以进一步拆分</p>
+
+<pre class="language-python"><code class="language-python">boolq_dataset_train = load_dataset(&quot;super_glue&quot;, &quot;boolq&quot;, trust_remote_code=True, split=&quot;train[:100]&quot;)
+boolq_dataset_train = load_dataset(&quot;super_glue&quot;, &quot;boolq&quot;, trust_remote_code=True, split=&quot;train[:10%]&quot;)
+boolq_dataset_train = load_dataset(&quot;super_glue&quot;, &quot;boolq&quot;, trust_remote_code=True, split=[&quot;train[:10%]&quot;, &quot;validation[:10%]&quot;])
+</code></pre>
+<h3 id="%E6%9F%A5%E7%9C%8B">查看</h3>
+
+<pre class="language-python"><code class="language-python">dataset[&quot;train&quot;][:2]
+dataset[&quot;train&quot;][&quot;title&quot;][:2]
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072225595.png" alt="image-20241007222540350" /></p>
+
+<pre class="language-python"><code class="language-python">dataset[&quot;train&quot;].features
+dataset.column_names
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072227852.png" alt="image-20241007222715762" /></p>
+<blockquote>
+<p>使用这种直接选取的方式获取的数据是一个字典的模式</p>
+</blockquote>
+<h3 id="%E5%88%92%E5%88%86">划分</h3>
+<p>取一个数据集按比例划分为训练集以及测试集</p>
+
+<pre class="language-python"><code class="language-python">dataset[&quot;train&quot;].train_test_split(test_size=0.1, stratify_by_column=&quot;lable&quot;)
+</code></pre>
+<blockquote>
+<p>在实际划分的时候指定参数stratify_by_column为以及lable可以按照这一个标签划分的比较均衡</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072234130.png" alt="image-20241007223443044" /></p>
+</blockquote>
+<h3 id="%E9%80%89%E5%8F%96%E4%BB%A5%E5%8F%8A%E8%BF%87%E6%BB%A4">选取以及过滤</h3>
+
+<pre class="language-python"><code class="language-python">dataset[&quot;train&quot;].select([1, 2])
+dataset[&quot;train&quot;].filter(lambda example: &quot;中国&quot; in example[&quot;title&quot;])
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072238368.png" alt="image-20241007223822283" /></p>
+<h3 id="%E6%95%B0%E6%8D%AE%E6%98%A0%E5%B0%84">数据映射</h3>
+<p>对每一条数据进行同一个处理</p>
+
+<pre class="language-python"><code class="language-python">def add_title(example):
+    example[&quot;title&quot;] = &quot;Predix: &quot; + example[&quot;title&quot;]
+    return example
+
+prefix_dataset = dataset.map(add_title)
+prefix_dataset[&quot;train&quot;][:2][&quot;title&quot;]
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072243728.png" alt="image-20241007224325640" /></p>
+<blockquote>
+<p>个每一个标题加一个前缀</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">from transformers import AutoTokenizer
+tokenizer = AutoTokenizer.from_pretrained(&quot;bert-base-chinese&quot;)
+def preprocess_function(examples):
+    model_inputs = tokenizer(examples[&quot;content&quot;], padding=&quot;max_length&quot;, truncation=True,
+                             max_length=512)
+    labels = tokenizer(examples[&quot;title&quot;], padding=&quot;max_length&quot;, truncation=True,
+                       max_length=32)
+    model_inputs[&quot;labels&quot;] = labels[&quot;input_ids&quot;]
+    return model_inputs
+
+processed_dataset = dataset.map(preprocess_function)
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">DatasetDict({
+    train: Dataset({
+        features: ['title', 'content', 'input_ids', 'token_type_ids', 'attention_mask', 'labels'],
+        num_rows: 5850
+    })
+    validation: Dataset({
+        features: ['title', 'content', 'input_ids', 'token_type_ids', 'attention_mask', 'labels'],
+        num_rows: 1679
+    })
+})
+</code></pre>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">processed_dataset = dataset.map(preprocess_function, batched=True)
+processed_dataset
+</code></pre>
+<blockquote>
+<p>如果将 <code>batched=True</code>，则 <code>dataset</code> 中的数据将按照设置的批大小进行处理，而不是一次处理一个样本。</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072258436.png" alt="image-20241007225823344" /></p>
+</blockquote>
+<p>也可以使用多线程的方式进行加载</p>
+
+<pre class="language-python"><code class="language-python">processed_dataset = dataset.map(preprocess_function, num_proc=4)
+processed_dataset
+</code></pre>
+<blockquote>
+<p>在使用测一个函数的时候, tokenizer是不可以传递到子进程的, 所以处理的函数需要改变一下</p>
+
+<pre class="language-python"><code class="language-python">from transformers import AutoTokenizer
+tokenizer = AutoTokenizer.from_pretrained(&quot;bert-base-chinese&quot;)
+def preprocess_function(examples, tokenizer=tokenizer):
+    model_inputs = tokenizer(examples[&quot;content&quot;], padding=&quot;max_length&quot;, truncation=True, max_length=512)
+    labels = tokenizer(examples[&quot;title&quot;], padding=&quot;max_length&quot;, truncation=True, max_length=32)
+    model_inputs[&quot;labels&quot;] = labels[&quot;input_ids&quot;]
+    return model_inputs
+</code></pre>
+</blockquote>
+<p>可以在这一个函数里面使用参数把不需要的输出字段进行删除</p>
+
+<pre class="language-python"><code class="language-python">processed_dataset = dataset.map(preprocess_function, batched=True,
+                                remove_columns=dataset[&quot;train&quot;].column_names)
+processed_dataset
+</code></pre>
+<blockquote>
+<p>去除原始字段</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072304567.png" alt="image-20241007230448456" /></p>
+</blockquote>
+<h3 id="%E4%BF%9D%E5%AD%98%E4%BB%A5%E5%8F%8A%E5%8A%A0%E8%BD%BD">保存以及加载</h3>
+
+<pre class="language-python"><code class="language-python">processed_dataset.save_to_disk(&quot;my_dataset&quot;)
+processed_dataset = load_from_disk(&quot;my_dataset&quot;)
+</code></pre>
+<h3 id="%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%B7%B1%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86">加载自己的数据集</h3>
+<p>如果是一个csv格式的数据集</p>
+
+<pre class="language-python"><code class="language-python">dataset = load_dataset(&quot;csv&quot;, data_files=&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072308817.png" alt="image-20241007230845712" /></p>
+<p>如果不希望有这一个默认的分组, 可以加一个参数取消</p>
+
+<pre class="language-python"><code class="language-python">dataset = load_dataset(&quot;csv&quot;, data_files=&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;, split=&quot;train&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072310661.png" alt="image-20241007231055560" /></p>
+<p>也可以使用另一个函数加载</p>
+
+<pre class="language-python"><code class="language-python">dataset = Dataset.from_csv(&quot;E:/JHY/python/2024-10-5-transforms/dataset/ChnSentiCorp_htl_all.csv&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072314904.png" alt="image-20241007231431791" /></p>
+<p>在实际加载的时候可以按照一个文件夹进行加载, 也可以把data_files指定为一个数组</p>
+
+<pre class="language-python"><code class="language-python">dataset = load_dataset(&quot;csv&quot;, data_dir=&quot;../dataset&quot;, split=&quot;train&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410072316772.png" alt="image-20241007231614570" /></p>
+<p>如果是按照pandas加载的数据</p>
+
+<pre class="language-python"><code class="language-python">import pandas as pd
+df = pd.read_csv(&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;)
+dataset  = Dataset.from_pandas(df)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410080919550.png" alt="image-20241008090421592" /></p>
+<p>使用from_list的时候实际是从一个字典的list里面进行加载</p>
+
+<pre class="language-python"><code class="language-python">list = [{&quot;text&quot;: &quot;abc&quot;}, {&quot;text&quot;: &quot;bcd&quot;}]
+</code></pre>
+<p>如果数据非常的复杂, 需要通过脚本的方式进行加载, 也可以使用load_dataset进行脚本加载</p>
+<p>这里使用的测试的文本是cmrc2018</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410080918749.png" alt="image-20241008091829631" /></p>
+<p>在直接加载的时候, 需要指定实际的数据的位置, 否则加载的数据会分组出错</p>
+
+<pre class="language-python"><code class="language-python">dataset_json = load_dataset(&quot;json&quot;, data_files=&quot;../dataset/cmrc2018_trial.json&quot;, field=&quot;data&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410080925401.png" alt="image-20241008092505281" /></p>
+<p>实际加载的也不是很完整</p>
+
+<pre class="language-python"><code class="language-python">import json
+import datasets
+from datasets import DownloadManager, DatasetInfo
+
+class CMRC2018TRIAL(datasets.GeneratorBasedBuilder):
+
+    def _info(self) -&gt; DatasetInfo:
+        &quot;&quot;&quot;
+            info方法, 定义数据集的信息,这里要对数据的字段进行定义
+        :return:
+        &quot;&quot;&quot;
+        return datasets.DatasetInfo(
+            description=&quot;CMRC2018 trial&quot;,
+            features=datasets.Features({
+                    &quot;id&quot;: datasets.Value(&quot;string&quot;),
+                    &quot;context&quot;: datasets.Value(&quot;string&quot;),
+                    &quot;question&quot;: datasets.Value(&quot;string&quot;),
+                    &quot;answers&quot;: datasets.features.Sequence(
+                        {
+                            &quot;text&quot;: datasets.Value(&quot;string&quot;),
+                            &quot;answer_start&quot;: datasets.Value(&quot;int32&quot;),
+                        }
+                    )
+                })
+        )
+
+    def _split_generators(self, dl_manager: DownloadManager):
+        &quot;&quot;&quot;
+            返回datasets.SplitGenerator
+            涉及两个参数: name和gen_kwargs
+            name: 指定数据集的划分
+            gen_kwargs: 指定要读取的文件的路径, 与_generate_examples的入参数一致
+        :param dl_manager:
+        :return: [ datasets.SplitGenerator ]
+        &quot;&quot;&quot;
+        return [datasets.SplitGenerator(name=datasets.Split.TRAIN, 
+                                        gen_kwargs={&quot;filepath&quot;: &quot;../dataset/cmrc2018_trial.json&quot;})]
+
+    def _generate_examples(self, filepath):
+        &quot;&quot;&quot;
+            生成具体的样本, 使用yield
+            需要额外指定key, id从0开始自增就可以
+        :param filepath:
+        :return:
+        &quot;&quot;&quot;
+        # Yields (key, example) tuples from the dataset
+        with open(filepath, encoding=&quot;utf-8&quot;) as f:
+            data = json.load(f)
+            for example in data[&quot;data&quot;]:
+                for paragraph in example[&quot;paragraphs&quot;]:
+                    context = paragraph[&quot;context&quot;].strip()
+                    for qa in paragraph[&quot;qas&quot;]:
+                        question = qa[&quot;question&quot;].strip()
+                        id_ = qa[&quot;id&quot;]
+
+                        answer_starts = [answer[&quot;answer_start&quot;] for answer in qa[&quot;answers&quot;]]
+                        answers = [answer[&quot;text&quot;].strip() for answer in qa[&quot;answers&quot;]]
+    				  # 返回值的第一个字段是一个id, 之后是和_split_generators
+                        # 字段里面的声明一样的数据
+                        yield id_, {
+                            &quot;context&quot;: context,
+                            &quot;question&quot;: question,
+                            &quot;id&quot;: id_,
+                            &quot;answers&quot;: {
+                                &quot;answer_start&quot;: answer_starts,
+                                &quot;text&quot;: answers,
+                            },
+                        }
+
+</code></pre>
+
+<pre class="language-python"><code class="language-python">dataset_json = load_dataset(&quot;../python-src/load_script.py&quot;, split=&quot;train&quot;, trust_remote_code=True)
+num = 0
+for example in dataset_json:
+    num += 1
+    print(example)
+    if num == 5:
+        break
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410080947382.png" alt="image-20241008094720254" /></p>
+<h3 id="Dataset-with-DataCollator">Dataset with DataCollator</h3>
+<p>transforms内置一部分的DataCollator, 是不需要我们自己写的</p>
+<p>这时候的数据还是list, 希望使用dataloader把数据拼接为batch的tensor</p>
+<p><strong>注: </strong>使用这一个的时候里面的数据只能有transform原始的字段</p>
+
+<pre class="language-bash"><code class="language-bash">{'label': [1, 1, 1], 'input_ids': [[101, 6655, 4895, 2335, 3763, 1062, 6662, 6772, 6818, 117, 852, 3221, 1062, 769, 2900, 4850, 679, 2190, 117, 1963, 3362, 3221, 107, 5918, 7355, 5296, 107, 4638, 6413, 117, 833, 7478, 2382, 7937, 4172, 119, 2456, 6379, 4500, 1166, 4638, 6662, 5296, 119, 2791, 7313, 6772, 711, 5042, 1296, 119, 102], [101, 1555, 1218, 1920, 2414, 2791, 8024, 2791, 7313, 2523, 1920, 8024, 2414, 3300, 100, 2160, 8024, 3146, 860, 2697, 6230, 5307, 3845, 2141, 2669, 679, 7231, 106, 102], [101, 3193, 7623, 1922, 2345, 8024, 3187, 6389, 1343, 1914, 2208, 782, 8024, 6929, 6804, 738, 679, 1217, 7608, 1501, 4638, 511, 6983, 2421, 2418, 6421, 7028, 6228, 671, 678, 6821, 702, 7309, 7579, 749, 511, 2791, 7313, 3315, 6716, 2523, 1962, 511, 102]], 'token_type_ids': [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], 'attention_mask': [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]}
+</code></pre>
+
+<pre class="language-python"><code class="language-python">collator = DataCollatorWithPadding(tokenizer=tokenizer)
+from torch.utils.data import DataLoader
+data_loader = DataLoader(tokenized_datasets, collate_fn=collator, batch_size=8, shuffle=True)
+</code></pre>
+
+<pre class="language-bash"><code class="language-bash">{'input_ids': tensor([[ 101,  677, 1453,  ...,    0,    0,    0],
+        [ 101, 4384, 1862,  ...,    0,    0,    0],
+        [ 101, 2791, 7313,  ...,    0,    0,    0],
+        ...,
+        [ 101, 4289, 5401,  ...,    0,    0,    0],
+        [ 101, 1168, 6809,  ..., 3613,  738,  102],
+        [ 101, 2791, 7313,  ...,    0,    0,    0]]), 'token_type_ids': tensor([[0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0],
+        ...,
+        [0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0],
+        [0, 0, 0,  ..., 0, 0, 0]]), 'attention_mask': tensor([[1, 1, 1,  ..., 0, 0, 0],
+        [1, 1, 1,  ..., 0, 0, 0],
+        [1, 1, 1,  ..., 0, 0, 0],
+        ...,
+        [1, 1, 1,  ..., 0, 0, 0],
+        [1, 1, 1,  ..., 1, 1, 1],
+        [1, 1, 1,  ..., 0, 0, 0]]), 'labels': tensor([1, 1, 1, 1, 0, 1, 0, 1])}
+</code></pre>
+<blockquote>
+<p>实际填充会把数据填充到这一个批次里面最长的</p>
+</blockquote>
+<h3 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h3>
+
+<pre class="language-python"><code class="language-python">from transformers import DataCollatorWithPadding
+
+dataset = load_dataset(&quot;csv&quot;, data_files=&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;, split=&quot;train&quot;)
+dataset = dataset.filter(lambda example: example[&quot;review&quot;] is not None)
+# for data in dataset:
+#     print(data)
+
+def process_function(examples):
+    # 暂时不填充, 组成batch时再填充
+    tokenized_example = tokenizer(examples[&quot;review&quot;], max_length=128, truncation=True) 
+    tokenized_example[&quot;label&quot;] = examples[&quot;label&quot;]
+    return tokenized_example
+
+tokenized_datasets = dataset.map(process_function, batched=True, 
+                                 remove_columns=dataset.column_names)
+print(tokenized_datasets[:3])
+</code></pre>
+
+<pre class="language-bash"><code class="language-bash">{'label': [1, 1, 1], 
+'input_ids': [
+[101, 6655, 4895, 2335, 3763, 1062, 6662, 6772, 6818, 117, 852, 3221, 1062, 769, 2900, 4850, 679, 2190, 117, 1963, 3362, 3221, 107, 5918, 7355, 5296, 107, 4638, 6413, 117, 833, 7478, 2382, 7937, 4172, 119, 2456, 6379, 4500, 1166, 4638, 6662, 5296, 119, 2791, 7313, 6772, 711, 5042, 1296, 119, 102], 
+[101, 1555, 1218, 1920, 2414, 2791, 8024, 2791, 7313, 2523, 1920, 8024, 2414, 3300, 100, 2160, 8024, 3146, 860, 2697, 6230, 5307, 3845, 2141, 2669, 679, 7231, 106, 102], 
+[101, 3193, 7623, 1922, 2345, 8024, 3187, 6389, 1343, 1914, 2208, 782, 8024, 6929, 6804, 738, 679, 1217, 7608, 1501, 4638, 511, 6983, 2421, 2418, 6421, 7028, 6228, 671, 678, 6821, 702, 7309, 7579, 749, 511, 2791, 7313, 3315, 6716, 2523, 1962, 511, 102]
+], 
+'token_type_ids': [
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+], 
+'attention_mask': [
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+]
+}
+</code></pre>
+<p>这时候的数据还是list, 希望使用dataloader把数据拼接为batch的tensor</p>
+
+<pre class="language-python"><code class="language-python">collator = DataCollatorWithPadding(tokenizer=tokenizer)
+from torch.utils.data import DataLoader
+data_loader = DataLoader(tokenized_datasets, collate_fn=collator, batch_size=8, shuffle=True)
+</code></pre>
+<p>把数据转为batch tensor以及进行填充</p>
+<h3 id="%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96">代码优化</h3>
+
+<pre class="language-python"><code class="language-python"># 文本分类模型微调的示例
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+# 加载数据集
+from datasets import load_dataset
+
+dataset = load_dataset(&quot;csv&quot;, data_files=&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;, split=&quot;train&quot;)
+dataset = dataset.filter(lambda example: example[&quot;review&quot;] is not None and example[&quot;label&quot;] is not None)
+print(dataset)
+&quot;&quot;&quot;
+Dataset({
+    features: ['label', 'review'],
+    num_rows: 7765
+})
+&quot;&quot;&quot;
+
+# 划分数据集, 获取训练集以及测试集
+datasets = dataset.train_test_split(test_size=0.1)
+datasets
+
+&quot;&quot;&quot;
+DatasetDict({
+    train: Dataset({
+        features: ['label', 'review'],
+        num_rows: 6988
+    })
+    test: Dataset({
+        features: ['label', 'review'],
+        num_rows: 777
+    })
+})
+&quot;&quot;&quot;
+
+import torch
+
+tokenizer = AutoTokenizer.from_pretrained(&quot;../hlfrbt3&quot;)
+
+def process_function(examples):
+    # 暂时不填充, 组成batch时再填充
+    tokenized_example = tokenizer(examples[&quot;review&quot;], max_length=128, truncation=True) 
+    tokenized_example[&quot;label&quot;] = examples[&quot;label&quot;]
+    return tokenized_example
+
+# 处理数据集, 把数据集转换为模型可以处理的格式(分词器编码后的格式)
+tokenized_datasets = datasets.map(process_function, batched=True, remove_columns=datasets[&quot;train&quot;].column_names)
+tokenized_datasets
+
+&quot;&quot;&quot;
+DatasetDict({
+    train: Dataset({
+        features: ['label', 'input_ids', 'token_type_ids', 'attention_mask'],
+        num_rows: 6988
+    })
+    test: Dataset({
+        features: ['label', 'input_ids', 'token_type_ids', 'attention_mask'],
+        num_rows: 777
+    })
+})
+&quot;&quot;&quot;
+
+
+# 建立DataLoader
+from torch.utils.data import DataLoader
+from transformers import DataCollatorWithPadding
+trainset = tokenized_datasets[&quot;train&quot;]
+validset = tokenized_datasets[&quot;test&quot;]
+# 乱序, 一组大小为32, 进行填充
+trainloader = DataLoader(trainset, batch_size=32, shuffle=True, collate_fn=DataCollatorWithPadding(tokenizer))  
+validloader = DataLoader(validset, batch_size=32, shuffle=False, collate_fn=DataCollatorWithPadding(tokenizer)) # 不乱序
+</code></pre>
+<h2 id="Evaluate">Evaluate</h2>
+<p>是一个机器学习的模型评估函数库, 只需要一行代码可以加载各种任务的评估函数</p>
+<p><a href="https://huggingface.co/docs/evaluate/index"  target="_blank">🤗 Evaluate (huggingface.co)</a></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410081151914.png" alt="image-20241008115134639" /></p>
+
+<pre class="language-python"><code class="language-python">import evaluate
+evaluate.list_evaluation_modules()
+</code></pre>
+<blockquote>
+<p>可以使用这个函数获取可以使用的评估函数, 这里面有一部分Huggingface实现, 另一部分是社区实现的, 不想看社区实现的时候可以加一个参数<code>include_community=False</code></p>
+<p>可以使用参数<code>with_details=True</code>获取更详细的信息</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410081708806.png" alt="image-20241008170841605" /></p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">accuracy = evaluate.load('accuracy') # 加载
+print(accuracy.description) # 获取描述以及计算方式
+&quot;&quot;&quot;
+Accuracy is the proportion of correct predictions among the total number of cases processed. It can be computed with:
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+ Where:
+TP: True positive
+TN: True negative
+FP: False positive
+FN: False negative
+&quot;&quot;&quot;
+print(accuracy.inputs_description)
+&quot;&quot;&quot;
+Args:
+    predictions (`list` of `int`): Predicted labels.
+    references (`list` of `int`): Ground truth labels.
+    normalize (`boolean`): If set to False, returns the number of correctly classified samples. Otherwise, returns the fraction of correctly classified samples. Defaults to True.
+    sample_weight (`list` of `float`): Sample weights Defaults to None.
+
+Returns:
+    accuracy (`float` or `int`): Accuracy score. Minimum possible value is 0. Maximum possible value is 1.0, or the number of examples input, if `normalize` is set to `True`.. A higher score means higher accuracy.
+
+Examples:
+
+    Example 1-A simple example
+        &gt;&gt;&gt; accuracy_metric = evaluate.load(&quot;accuracy&quot;)
+        &gt;&gt;&gt; results = accuracy_metric.compute(references=[0, 1, 2, 0, 1, 2], predictions=[0, 1, 1, 2, 1, 0])
+        &gt;&gt;&gt; print(results)
+        {'accuracy': 0.5}
+
+    Example 2-The same as Example 1, except with `normalize` set to `False`.
+        &gt;&gt;&gt; accuracy_metric = evaluate.load(&quot;accuracy&quot;)
+        &gt;&gt;&gt; results = accuracy_metric.compute(references=[0, 1, 2, 0, 1, 2], predictions=[0, 1, 1, 2, 1, 0], normalize=False)
+        &gt;&gt;&gt; print(results)
+        {'accuracy': 3.0}
+
+    Example 3-The same as Example 1, except with `sample_weight` set.
+        &gt;&gt;&gt; accuracy_metric = evaluate.load(&quot;accuracy&quot;)
+        &gt;&gt;&gt; results = accuracy_metric.compute(references=[0, 1, 2, 0, 1, 2], predictions=[0, 1, 1, 2, 1, 0], sample_weight=[0.5, 2, 0.7, 0.5, 9, 0.4])
+        &gt;&gt;&gt; print(results)
+        {'accuracy': 0.8778625954198473}
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>直接打印的时候会把所有的数据打印出来</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">result = accuracy.compute(references=[0, 1, 1, 0], predictions=[0, 1, 0, 1])
+result
+</code></pre>
+<p>在实际应用的时候数据可能不是一次性传进来的</p>
+
+<pre class="language-python"><code class="language-python">for ref, pred in zip([0, 1, 1, 0], [0, 1, 1, 0]):
+    accuracy.add(references=ref, predictions=pred)
+accuracy.compute()
+</code></pre>
+
+<pre class="language-python"><code class="language-python">for ref, pred in zip([[0, 1, 1, 0], [0, 1, 1, 0]], [[0, 1, 0, 1], [0, 1, 1, 0]]):
+    accuracy.add_batch(references=ref, predictions=pred)
+accuracy.compute()
+</code></pre>
+<blockquote>
+
+<pre class="language-python"><code class="language-python">zip_data = zip([[0, 1, 1, 0], [0, 1, 1, 0]], [[0, 1, 0, 1], [0, 1, 1, 0]])
+list(zip_data)
+&quot;&quot;&quot;
+[([0, 1, 1, 0], [0, 1, 0, 1]), ([0, 1, 1, 0], [0, 1, 1, 0])]
+&quot;&quot;&quot;
+for ref, pred in zip([[0, 1, 1, 0], [0, 1, 1, 0]], [[0, 1, 0, 1], [0, 1, 1, 0]]):
+    print(ref, pred)
+&quot;&quot;&quot;
+[0, 1, 1, 0] [0, 1, 0, 1]
+[0, 1, 1, 0] [0, 1, 1, 0]
+&quot;&quot;&quot;
+</code></pre>
+</blockquote>
+<h3 id="%E5%A4%9A%E6%8C%87%E6%A0%87%E8%AF%84%E4%BC%B0%E5%87%BD%E6%95%B0">多指标评估函数</h3>
+<p>可以在同时进行多个评估函数</p>
+
+<pre class="language-python"><code class="language-python">clf_metrics = evaluate.combine(['accuracy', 'precision', 'recall', 'f1'])
+clf_metrics.compute(references=[0, 1, 1, 0], predictions=[0, 1, 0, 1])
+&quot;&quot;&quot;
+{'accuracy': 0.5, 'precision': 0.5, 'recall': 0.5, 'f1': 0.5}
+&quot;&quot;&quot;
+</code></pre>
+<h3 id="%E8%AF%84%E4%BC%B0%E7%BB%93%E6%9E%9C%E5%8F%AF%E8%A7%86%E5%8C%96">评估结果可视化</h3>
+<p>这一个库只有一个雷达图的方式进行对比不同模型的结果</p>
+
+<pre class="language-python"><code class="language-python">from  evaluate.visualization import radar_plot
+data = [
+    {&quot;accuracy&quot;: 0.98, &quot;precision&quot;: 0.97, &quot;recall&quot;: 0.99, &quot;f1&quot;: 0.98},
+    {&quot;accuracy&quot;: 0.96, &quot;precision&quot;: 0.99, &quot;recall&quot;: 0.97, &quot;f1&quot;: 0.96},
+    {&quot;accuracy&quot;: 0.92, &quot;precision&quot;: 0.96, &quot;recall&quot;: 0.99, &quot;f1&quot;: 0.97},
+]
+model_names = [&quot;model1&quot;, &quot;model2&quot;, &quot;model3&quot;]
+plot = radar_plot(data, model_names)
+</code></pre>
+<h3 id="%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8">实际应用</h3>
+
+<pre class="language-python"><code class="language-python">import evaluate
+clf_metrics = evaluate.combine(['accuracy', 'f1'])
+
+def evaluate():
+    &quot;&quot;&quot;
+    Description: 评估模型在验证集上的性能
+    Returns:
+        模型的准确率
+    &quot;&quot;&quot;
+    model.eval()
+    with torch.no_grad():
+        for batch in validloader:
+            if torch.cuda.is_available():
+                batch = {k:v.cuda() for k, v in batch.items()}
+            outputs = model(**batch)
+            pred = outputs.logits.argmax(dim=-1) # 预测的类别
+            clf_metrics.add_batch(predictions=pred.long(), references=batch[&quot;labels&quot;].long())
+    return clf_metrics.compute()
+</code></pre>
+<h2 id="Trainer">Trainer</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410081908319.png" alt="image-20241008190813102" /></p>
+<p><a href="https://huggingface.co/docs/transformers/trainer"  target="_blank">Trainer (huggingface.co)</a></p>
+
+<pre class="language-python"><code class="language-python">from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+# 获取参数集
+train_args = TrainingArguments(output_dir=&quot;./checkpoints&quot;, save_safetensors=True)
+train_args
+
+from transformers import DataCollatorWithPadding
+# 训练模型
+# args:
+#   model: 模型
+#   args: 训练参数
+#   train_dataset: 训练数据集
+#   eval_dataset: 评估数据集
+#   data_collator: 数据收集器
+#   compute_metrics: 评估指标
+trainer = Trainer(model=model, args=train_args, 
+                  train_dataset=tokenized_datasets[&quot;train&quot;], 
+                  eval_dataset=tokenized_datasets[&quot;test&quot;],
+                  data_collator=DataCollatorWithPadding(tokenizer=tokenizer),
+                  compute_metrics=eval_metrics)
+trainer.train()
+</code></pre>
+<p>在使用这一个的时候就不再需要dataloader了, 数据经过预处理就可以使用了, 也不再需要使用cuda判定</p>
+<p>在比较高的版本会出现训练失败的问题, 可以通过降低版本解决</p>
+
+<pre class="language-bash"><code class="language-bash">pip install -U transforners==4.42.4
+</code></pre>
+<p>使用最少的参数的时候不会进行测评, 可以使用<code>trainer.evaluate()</code>进行测评, 参数可以单独指定使用的测试集</p>
+<p>也可以使用<code>trainer.predict(tokenized_datasets[&quot;test&quot;])</code>进行预测</p>
+<h3 id="%E4%B8%BB%E8%A6%81%E7%9A%84%E5%8F%82%E6%95%B0">主要的参数</h3>
+<h4 id="%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</h4>
+
+<pre class="language-python"><code class="language-python">per_device_train_batch_size=64,per_device_eval_batch_size=128
+</code></pre>
+<blockquote>
+<p>改变一下训练的时候使用batch_size</p>
+</blockquote>
+<h4 id="log">log</h4>
+
+<pre class="language-python"><code class="language-python">logging_steps=100
+</code></pre>
+<p>设置为100步打印一次log</p>
+<h4 id="%E8%AF%84%E4%BC%B0">评估</h4>
+
+<pre class="language-python"><code class="language-python">evaluation_strategy=&quot;epoch&quot;
+</code></pre>
+<p>每一轮进行一次评估</p>
+
+<pre class="language-python"><code class="language-python">evaluation_strategy=&quot;steps&quot;,eval_steps=100
+</code></pre>
+<p>每100步一次</p>
+
+<pre class="language-python"><code class="language-python">metric_for_best_model=&quot;f1&quot;
+</code></pre>
+<blockquote>
+<p>使用哪一个评价这一个模型最好</p>
+</blockquote>
+<h4 id="%E4%BF%9D%E5%AD%98">保存</h4>
+
+<pre class="language-python"><code class="language-python">save_strategy=&quot;epoch&quot;
+</code></pre>
+<p>保存的策略为每一轮</p>
+
+<pre class="language-python"><code class="language-python">save_total_limit=3
+</code></pre>
+<p>最多记录的模型轮数</p>
+
+<pre class="language-python"><code class="language-python">load_best_model_at_end=True
+</code></pre>
+<p>在最后留下来训练的最好的(之后的模型加载的是这一轮里面的参数)</p>
+<h4 id="%E8%AE%AD%E7%BB%83">训练</h4>
+
+<pre class="language-python"><code class="language-python">learning_rate=2e-5, weight_decay=0.01
+</code></pre>
+<blockquote>
+<p>训练的学习速率以及权重衰减(防止模型过拟合)</p>
+</blockquote>
+<h4 id="%E7%BB%93%E6%9E%9C">结果</h4>
+<p>生成的runs这一个文件夹可以使用tensorboard查看</p>
+
+<pre class="language-bash"><code class="language-bash">tensorboard --logdir dir
+</code></pre>
+<p>也可以使用vscode启动</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410091950114.png" alt="image-20241009195025104" /></p>
+<h2 id="%E6%9C%80%E7%BB%88%E7%9A%84%E7%A4%BA%E4%BE%8B">最终的示例</h2>
+<ul>
+<li>加载数据</li>
+</ul>
+
+<pre class="language-python"><code class="language-python"># 文本分类模型微调的示例
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+# 加载数据集
+from datasets import load_dataset
+
+# 使用CSV文件加载数据集, 默认的时候没有分为不同训练集
+dataset = load_dataset(&quot;csv&quot;,
+               data_files=&quot;../dataset/ChnSentiCorp_htl_all.csv&quot;,
+               split=&quot;train&quot;)
+# 去除数据集里面的无线数据
+dataset = dataset.filter(lambda example: 
+                         example[&quot;review&quot;] is not None 
+                         and example[&quot;label&quot;] is not None)
+# 划分数据集, 数据集的0.1为测试集
+datasets = dataset.train_test_split(test_size=0.1)
+</code></pre>
+<ul>
+<li>分词器</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">import torch
+
+tokenizer = AutoTokenizer.from_pretrained(&quot;../hlfrbt3&quot;)
+# 对数据预处理, 把数据转换为tensor, 以及加入目标值, 
+# 这里的数据格式如下
+&quot;&quot;&quot;
+DatasetDict({
+    train: Dataset({
+        features: ['label', 'review'],
+        num_rows: 6988
+    })
+    test: Dataset({
+        features: ['label', 'review'],
+        num_rows: 777
+    })
+})
+&quot;&quot;&quot;
+def process_function(examples):
+    # 暂时不填充, 组成batch时再填充
+    tokenized_example = tokenizer(examples[&quot;review&quot;],
+                                  max_length=128,
+                                  truncation=True) 
+    tokenized_example[&quot;labels&quot;] = examples[&quot;label&quot;]
+    return tokenized_example
+
+# 处理数据集, 把数据集转换为模型可以处理的格式(分词器编码后的格式)
+# remove_columns去除原始的数据
+tokenized_datasets = datasets.map(process_function,
+                  batched=True, 
+                  remove_columns=datasets[&quot;train&quot;].column_names)
+# 此时的数据格式如下
+&quot;&quot;&quot;
+DatasetDict({
+    train: Dataset({
+        features: ['input_ids', 'token_type_ids', 'attention_mask', 'labels'],
+        num_rows: 6988
+    })
+    test: Dataset({
+        features: ['input_ids', 'token_type_ids', 'attention_mask', 'labels'],
+        num_rows: 777
+    })
+})
+&quot;&quot;&quot;
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/2024-10-6-Juoyter.html">
+                            <span class="label">2024-10-6-Juoyter</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

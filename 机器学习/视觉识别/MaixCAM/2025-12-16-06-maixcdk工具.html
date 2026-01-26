@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>Maixcdk工具 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李沐课程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">视觉识别</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>Maixcdk工具</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-23">
+                                    2025-12-23
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <p><a href="https://github.com/Neutree/c_cpp_project_framework%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF%E8%BF%99%E4%B8%AA%E5%9F%BA%E7%A1%80%E6%A1%86%E6%9E%B6%E5%B0%81%E8%A3%85"  target="_blank">https://github.com/Neutree/c_cpp_project_framework%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF%E8%BF%99%E4%B8%AA%E5%9F%BA%E7%A1%80%E6%A1%86%E6%9E%B6%E5%B0%81%E8%A3%85</a></p>
+<blockquote>
+<p>整个工作流程可以理解成：</p>
+<ul>
+<li><p><code>maixcdk build</code> 先用 Python 脚本生成这个极简的 <code>CMakeLists.txt</code>。</p>
+</li>
+<li><p>然后在build目录里调用</p>
+
+<pre class="language-none"><code class="language-none">cmake 参数 ..
+</code></pre>
+<ul>
+<li>CMake 读到这个 <code>CMakeLists.txt</code>；</li>
+<li>通过 <code>include(${SDK_PATH}/tools/cmake/compile.cmake)</code> 把 MaixCDK 的通用构建逻辑拉进来；</li>
+<li>利用传入的 <code>PROJECT_PATH</code>、<code>PLATFORM</code>、组件 CMakeLists 等，生成完整的 Makefile。</li>
+</ul>
+</li>
+<li><p>再用 <code>cmake --build .</code> 真正去编译。</p>
+</li>
+</ul>
+</blockquote>
+<p><code>tools/maixtool/maixtool/maixcdk.py</code></p>
+<p>这个文件实际的工作是查找一下CDK的根目录, 之后添加<code>tools/cmake</code>目录到搜索路径, 然后调用<code>/tools/cmake/project.py</code>里面的main函数, 参数是CDK的路径以及当前的路径</p>
+
+<pre class="language-python"><code class="language-python">def exec_project_py():
+    # 1. get MaixCDK path
+    sdk_path = get_sdk_path()
+    print(&quot;-- SDK_PATH:{}&quot;.format(sdk_path))
+    project_path = os.path.abspath(&quot;.&quot;)
+
+    # 2. execute project script from SDK
+    project_file_path = sdk_path+&quot;/tools/cmake/project.py&quot;
+    sys.path.insert(0, os.path.dirname(project_file_path))
+    from project import main
+    main(sdk_path, project_path)
+</code></pre>
+<h2 id="project.py">project.py</h2>
+<h3 id="get_extra_cmds">get_extra_cmds</h3>
+<p>从<code>tools/cmds</code>文件夹里面获取到所有有<code>parser</code>参数的工具</p>
+
+<pre class="language-python"><code class="language-python">def get_extra_cmds(sdk_path) -&gt; tuple:
+    '''
+        return extra_tools
+        {
+            &quot;run&quot;:
+            {
+                &quot;obj&quot;: tool_object,
+                &quot;cmd&quot;: cmd,
+                &quot;parser&quot;: arg_parser
+            }
+        }
+    '''
+    # find extra tools
+    tools_dir = os.path.join(sdk_path, &quot;tools&quot;, &quot;cmds&quot;)
+    sys.path.insert(1, tools_dir)
+    # find all .py files in tools dir
+    extra_tools_names = []
+    extra_tools = {}
+    for name in os.listdir(tools_dir):
+        if name.endswith(&quot;.py&quot;):
+            extra_tools_names.append(name[:-3])
+    # import all tools
+    for name in extra_tools_names:
+        # import from tool file
+        tool = __import__(name)
+        if hasattr(tool, &quot;parser&quot;):
+            extra_tools[tool.__name__] = {
+                &quot;obj&quot;: tool,
+                &quot;cmd&quot;: tool.parser.prog,
+                &quot;parser&quot;: tool.parser
+            }
+    return extra_tools
+</code></pre>
+<h3 id="parse_args%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E5%99%A8">parse_args参数解析器</h3>
+
+<pre class="language-python"><code class="language-python">def parse_args(sdk_path, project_path, extra_tools):
+    # 创建一个project.py的解释器
+    parser = argparse.ArgumentParser(description='build tool, e.g. `python project.py build`', prog=&quot;project.py&quot;)
+    # 添加一个子解释器用于处理不同的命令, 比如build, clean等
+    # 解析以后使用args.cmd获取使用的参数
+    subparsers = parser.add_subparsers(help='command help', dest=&quot;cmd&quot;)
+    # 为之前的额外的命令创建解释器
+    for k,v in extra_tools.items():
+        sub_parser = v[&quot;parser&quot;]
+        subparsers.add_parser(sub_parser.prog, parents=[sub_parser], help=sub_parser.description)
+
+    # cmd build 添加build以及
+    parser_build = subparsers.add_parser(&quot;build&quot;, help=&quot;start compile project, temp files in `build` dir, dist files in `dist` dir, build command by default always execute cmake to regenerate, to disable file change scan (cmake execute), use build2 command or add --no-gen option to only compile changed files, warning build2 will not detect file additions and deletions&quot;)
+    parser_build2 = subparsers.add_parser(&quot;build2&quot;, help=&quot;same as `maixcdk build --no-gen`, compile project, not scan files additions and deletions, only compile changed files, so build faster but be attention you should use build again if you add new file or delete files&quot;)
+    parser_build.add_argument(&quot;--no-gen&quot;, action=&quot;store_true&quot;, default=False, help=&quot;same as command build2, by default the build command do the same action as rebuild to avoid user can't understand rebuild, but if you don't want to re-execute cmake command, and only compile, use this option&quot;)
+    # 这两个build都有的参数
+    def add_build_args(parser_):
+        parser_.add_argument('--config-file',
+                                help='config file path, e.g. config_defaults.mk',
+                                metavar='PATH',
+                                default=&quot;{}/config_defaults.mk&quot;.format(project_path))
+        parser_.add_argument('--verbose',
+                                help='for build command, execute `cmake -build . --verbose` to compile',
+                                action=&quot;store_true&quot;,
+                                default=False)
+        parser_.add_argument('-G', '--generator', default=&quot;&quot;, help=&quot;project type to generate, supported type on your platform see `cmake --help`&quot;)
+        parser_.add_argument('--release', action=&quot;store_true&quot;, default=False, help=&quot;release mode, default is release mode&quot;)
+        parser_.add_argument('--debug', action=&quot;store_true&quot;, default=False, help=&quot;debug mode, default is release mode&quot;)
+        parser_.add_argument('--build-type', default=None, help=&quot;build type, [Debug, Release, MinRelSize, RelWithDebInfo], you can also set build type by CMAKE_BUILD_TYPE environment variable&quot;)
+        parser_.add_argument('-p', &quot;--platform&quot;, default=&quot;&quot;, help=&quot;device name, e.g. linux, maixcam, m2dock&quot;, choices=get_platforms(sdk_path))
+        parser_.add_argument('--toolchain-id', default=&quot;&quot;, help=&quot;toolchain id, if platform has multiple toolchains, use this option to select one. Empty will let you select one interactively, 'default' means use the default toolchain defined in platform yaml file.&quot;)
+    add_build_args(parser_build)
+    add_build_args(parser_build2)
+
+    # cmd menuconfig配置命令的解析参数添加
+    parser_menuconfig = subparsers.add_parser(&quot;menuconfig&quot;, help=&quot;open menuconfig panel, a visual config panel&quot;)
+    parser_menuconfig.add_argument('--config-file',
+                            help='config file path, e.g. config_defaults.mk',
+                            metavar='PATH',
+                            default=&quot;{}/config_defaults.mk&quot;.format(project_path))
+    parser_menuconfig.add_argument('-p', &quot;--platform&quot;, default=&quot;&quot;, help=&quot;device name, e.g. linux, maixcam, m2dock&quot;, choices=get_platforms(sdk_path))
+
+    # cmd clean
+    subparsers.add_parser(&quot;clean&quot;, help=&quot;clean build files, won't clean configuration&quot;)
+
+    # cmd distclean
+    subparsers.add_parser(&quot;distclean&quot;, help=&quot;clean all generated files, including build files and configuration&quot;)
+    	# 实际的解析命令, 可以使用cmds.对应的名字获取实际的读取参数
+    args = parser.parse_args()
+    return args, parser
+</code></pre>
+<h3 id="%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86">配置文件处理</h3>
+<p>在build/config/project_vars.json可以找到使用的配置文件, 里面记录了编译模式之类的信息</p>
+
+<pre class="language-json"><code class="language-json">{
+    &quot;PROJECT_ID&quot;: &quot;hello_world&quot;,
+    &quot;SDK_PATH&quot;: &quot;/home/jiao/Maix/MaixCDK&quot;,
+    &quot;PROJECT_PATH&quot;: &quot;/home/jiao/Maix/MaixCDK/examples/hello_world&quot;,
+    &quot;MAIXCDK_EXTRA_COMPONENTS_PATH&quot;: &quot;&quot;,
+    &quot;PY_PKG_COMPONENTS_PATH&quot;: &quot;/home/jiao/miniconda3/envs/maix/lib/python3.11/site-packages&quot;,
+    &quot;PY_USR_PKG_COMPONENTS_PATH&quot;: &quot;&quot;,
+    &quot;CMAKE_BUILD_TYPE&quot;: &quot;MinSizeRel&quot;,
+    &quot;BUILD_TYPE&quot;: &quot;Release&quot;,
+    &quot;PLATFORM&quot;: &quot;linux&quot;,
+    &quot;CMAKE_GENERATOR&quot;: &quot;Unix Makefiles&quot;,
+    &quot;TOOLCHAIN_ID&quot;: &quot;&quot;,
+    &quot;DEFAULT_CONFIG_FILE&quot;: &quot;&quot;,
+    &quot;PLATFORM_LINUX&quot;: 1
+}
+</code></pre>
+<p>同时根据用户传入的信息生成一部分每次编译都要重新生成的配置信息</p>
+<h3 id="%E7%94%9F%E6%88%90CMakeList.txt%E6%96%87%E4%BB%B6">生成CMakeList.txt文件</h3>
+<p>在<code>check_project_cmakelists</code>函数里面查看文件目录下面的CMakeList.txt是不是存在</p>
+<h3 id="%E6%9F%A5%E6%89%BE%E7%BC%96%E8%AF%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7">查找编译使用的工具</h3>
+<p>之后从<code>platforms/maixcam.yaml</code>查找实际使用的编译的配置</p>
+
+<pre class="language-yaml"><code class="language-yaml">toolchain:
+  - name: MUSL toolchain optimize by t-head
+    id: musl_t-head
+    default: true
+    url: https://github.com/sipeed/MaixCDK/releases/download/v0.0.0/host-tools-2025.7.28.tar.xz
+    urls:
+      - https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/07/16/host-tools.tar.gz # old version
+    sites:
+      - https://github.com/sophgo/cvi_mmf_sdk
+    sha256sum: 968b179a7faebfe8914e5163b2d85038b71824780fccde0b4b3ee9f67472d007
+    filename: host-tools-2025.7.28.tar.xz
+    path: toolchains/maixcam
+    bin_path: toolchains/maixcam/host-tools/gcc/riscv64-linux-musl-x86_64/bin
+    prefix: riscv64-unknown-linux-musl-
+    c_flags: -mcpu=c906fdv -march=rv64imafdcv0p7xthead -mcmodel=medany -mabi=lp64d
+    cxx_flags: -mcpu=c906fdv -march=rv64imafdcv0p7xthead -mcmodel=medany -mabi=lp64d
+</code></pre>
+<p>调用<code>tools/cmake/check_toolchain.py</code>文件里面的main函数</p>
+<p>更具这个配置最后生成的配置文件<code>build/config/toolchain_config.cmake</code></p>
+
+<pre class="language-cmake"><code class="language-cmake">set(CONFIG_TOOLCHAIN_PATH &quot;/home/jiao/Maix/MaixCDK/dl/extracted/toolchains/maixcam/host-tools/gcc/riscv64-linux-musl-x86_64/bin&quot;)
+set(CONFIG_TOOLCHAIN_PREFIX &quot;riscv64-unknown-linux-musl-&quot;)
+</code></pre>
+<h2 id="%E5%AE%9E%E9%99%85%E7%9A%84%E7%BC%96%E8%AF%91">实际的编译</h2>
+<p>编译调用的是<code>tools/cmake/build.py</code>文件里面的rebuild函数</p>
+<h3 id="get_all_components_dl_info">get_all_components_dl_info</h3>
+<blockquote>
+<p>进行对依赖的组件进行下载</p>
+</blockquote>
+<p>CDK里面的component配置实际是一个Cmake文件以及一个component.py的python文件, 里面记录下载这个组件使用的信息</p>
+<p>使用get_components_files获取到所有的component.py里面记录的下载函数, 最后使用函数<code>download_extract_files</code>进行下载</p>
+
+<pre class="language-python"><code class="language-python">    '''
+        @param confs kconfig vars, dict type
+        @return list type, items is dict type
+    '''
+    version = &quot;3.11.3&quot;
+    url = f&quot;https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz&quot;
+    if version == &quot;3.11.3&quot;:
+        sha256sum = &quot;d6c65aca6b1ed68e7a182f4757257b107ae403032760ed6ef121c9d55e81757d&quot;
+    else:
+        raise Exception(f&quot;version {version} not support&quot;)
+    sites = [&quot;https://github.com/nlohmann/json&quot;]
+    filename = f&quot;json.tar.xz&quot;
+    path = f&quot;json_srcs&quot;
+    check_file = 'json'
+    rename = {
+        f'json': 'json'
+    }
+
+    return [
+        {
+            'url': f'{url}',
+            'urls': [],
+            'sites': sites,
+            'sha256sum': sha256sum,
+            'filename': filename,
+            'path': path,
+            'check_files': [
+                check_file
+            ],
+            'rename': rename
+        }
+    ]
+</code></pre>
+<p>下载的压缩包在<code>dl/pkgs/json_srcs</code>解压以后的文件在<code>dl/extracted/json_srcs/json</code></p>
+<h4 id="find_valid_components">find_valid_components</h4>
+<p>从所有能找到的组件里，只保留 <code>main</code> 以及被 <code>main</code> 直接或间接依赖到的那些组件</p>
+<p>首先使用所有可以找到的组件构建一个依赖的表(从他们的component.py或CMakeList.txt文件里面查找依赖), 之后使用这个依赖的表实现, 由于这个表里面没有系统库, 所以只是检索已经有配置文件的组件</p>
+<blockquote>
+<p>每次编译时会将所有需要下载的文件列表写入到<code>dl/pkgs_info.json</code>，用户有网速问题的可以到官方 QQ 群或者第三方提供的网盘手动下载放到<code>dl/pkgs</code>目录即可</p>
+</blockquote>
+
+<pre class="language-none"><code class="language-none">main -&gt; 
+  basic -&gt;
+    ini
+    yaml
+    ntp_client
+</code></pre>
+<h4 id="%E8%BF%90%E8%A1%8Ccmake%E5%91%BD%E4%BB%A4">运行cmake命令</h4>
+
+<pre class="language-bash"><code class="language-bash">cmake -G Unix Makefiles -DPROJECT_ID=hello_world -DSDK_PATH=/home/jiao/Maix/MaixCDK -DPROJECT_PATH=/home/jiao/Maix/MaixCDK/examples/hello_world -DMAIXCDK_EXTRA_COMPONENTS_PATH= -DPY_PKG_COMPONENTS_PATH=/home/jiao/miniconda3/envs/maix/lib/python3.11/site-packages -DPY_USR_PKG_COMPONENTS_PATH= -DCMAKE_BUILD_TYPE=MinSizeRel -DBUILD_TYPE=Release -DPLATFORM=maixcam -DCMAKE_GENERATOR=Unix Makefiles -DTOOLCHAIN_ID=musl_t-head -DDEFAULT_CONFIG_FILE= -DPLATFORM_MAIXCAM=1 -DCMAKE_C_FLAGS=-mcpu=c906fdv -march=rv64imafdcv0p7xthead -mcmodel=medany -mabi=lp64d -DCMAKE_CXX_FLAGS=-mcpu=c906fdv -march=rv64imafdcv0p7xthead -mcmodel=medany -mabi=lp64d -DCMAKE_EXE_LINKER_FLAGS= -DCMAKE_C_LINK_FLAGS= -DCMAKE_CXX_LINK_FLAGS= ..
+</code></pre>
+<p>在当前 <code>build</code> 目录里，按指定参数为 <code>hello_world</code> 生成 Unix Makefiles 的工程，然后后续用 <code>cmake --build .</code> 真正编译</p>
+<p><strong>把 “hello_world + MaixCDK + maixcam 平台 + 指定 toolchain/CPU 参数” 这一整套信息告诉 CMake，让它生成后续 <code>make</code> 要用的 Makefile</strong></p>
+<h4 id="build">build</h4>
+
+<pre class="language-python"><code class="language-python">def build(build_path, configs, toolchain_info, verbose):
+    if not os.path.exists(build_path):
+        rebuild(build_path, configs, toolchain_info, verbose)
+        return
+    os.chdir(build_path)
+    # 查看是不是使用详细输出
+    if verbose:
+        if configs[&quot;CMAKE_GENERATOR&quot;] == &quot;Unix Makefiles&quot;:
+            res = subprocess.call([&quot;cmake&quot;, &quot;--build&quot;, &quot;.&quot;, &quot;--target&quot;, &quot;all&quot;, &quot;--&quot;, &quot;VERBOSE=1&quot;])
+        elif configs[&quot;CMAKE_GENERATOR&quot;] == &quot;Ninja&quot;:
+            res = subprocess.call([&quot;cmake&quot;, &quot;--build&quot;, &quot;.&quot;, &quot;--target&quot;, &quot;all&quot;, &quot;--&quot;, &quot;-v&quot;])
+        else:
+            res = subprocess.call([&quot;cmake&quot;, &quot;--build&quot;, &quot;.&quot;, &quot;--target&quot;, &quot;all&quot;])
+    else:
+      	# 实际运行的
+        if configs[&quot;CMAKE_GENERATOR&quot;] in [&quot;Unix Makefiles&quot;, &quot;Ninja&quot;]:
+            res = subprocess.call([&quot;cmake&quot;, &quot;--build&quot;, &quot;.&quot;, &quot;--target&quot;, &quot;all&quot;, &quot;--&quot;, &quot;-j{}&quot;.format(thread_num)])
+        else:
+            res = subprocess.call([&quot;cmake&quot;, &quot;--build&quot;, &quot;.&quot;, &quot;--target&quot;, &quot;all&quot;])
+    if res != 0:
+        exit(1)
+</code></pre>
+<h2 id="CMake%E6%96%87%E4%BB%B6">CMake文件</h2>
+
+<pre class="language-cmake"><code class="language-cmake"># !!! This file is auto generated by MaixCDK, don't modify it manually !!!
+
+cmake_minimum_required(VERSION 3.13)
+# 我自己加的
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# cmake used vars defined in MaixCDK/tools/cmake/project.py's get_configs function
+
+include(${SDK_PATH}/tools/cmake/compile.cmake)
+project(${PROJECT_ID})
+</code></pre>
+<ul>
+<li>CMake 会去包含 <code>MaixCDK/tools/cmake/compile.cmake</code>。</li>
+<li>这个脚本里完成了所有“真正的活”：<ul>
+<li>读取 <code>build/config/global_config.cmake</code> 和 Kconfig 生成的各种配置；</li>
+<li>根据 <code>PROJECT_PATH</code> / <code>PLATFORM</code> 等变量扫描组件目录；</li>
+<li>处理各 <code>components/**/CMakeLists.txt</code> 里的 <code>ADD_SRCS</code> / <code>ADD_REQUIREMENTS</code> 等；</li>
+<li>定义目标（可执行文件 / 库）、添加 include 路径、编译选项、链接系统库等。</li>
+</ul>
+</li>
+</ul>
+<p><code>project(${PROJECT_ID})</code></p>
+<ul>
+<li><code>PROJECT_ID</code> 同样来自命令行：<code>-DPROJECT_ID=hello_world</code>。</li>
+<li>这里告诉 CMake：当前工程名就叫 <code>hello_world</code>。</li>
+<li>后续 <code>compile.cmake</code> 会用这个名字来给 target 命名、生成输出文件名等。</li>
+</ul>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-12-14-05-MaixCDK基础使用</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html">
+                            <span class="label">2025-12-17-07-组件</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>
