@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>模型相关参数 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李沐课程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">视觉识别</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>模型相关参数</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-19">
+                                    2025-12-19
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h2 id="dual_buff">dual_buff</h2>
+<p>模型运行相关的的代码初始化时有一个参数<code>dual_buff=True</code>, 使能这个功能后运行的效率会提升，即帧率会提升（以上代码假设摄像头的帧率没有限制的情况下，在 MaixCAM 上会减少循环一半的时间即帧率翻倍）</p>
+<p>但是也有缺点，<code>detect</code>函数返回的结果是上一次调用<code>detect</code>函数的图的结果，所以结果和输入会有一帧的时间差, 另外由于准备了双份缓冲区，也会加大内存的使用</p>
+<h3 id="%E5%8E%9F%E7%90%86">原理</h3>
+<p>模型检测物体分为了几步：</p>
+<ul>
+<li>获取图像</li>
+<li>图像预处理</li>
+<li>模型运行</li>
+<li>结果后处理</li>
+</ul>
+<p>其中只有模型运行这一步是硬件NPU 上运行的，其它步骤都在 CPU 运行</p>
+<p>如果<code>dual_buff</code>设置为<code>False</code>，在<code>detect</code>的时候，CPU 先预处理（此时 NPU 空闲）， 然后给 NPU 运算（此时 CPU 空闲等待 NPU 运算结束），然后 CPU 后处理（NPU 空闲）， 整过过程是线性的，比较简单。<br />
+但是这里发现了问题，就是 CPU 和 NPU 两者总有一个空闲着的，当加了<code>dual_buff=True</code>， CPU 预处理后交给 NPU 运算，此时 CPU 不再等待 NPU 出结果，二是直接退出<code>detect</code>函数进行下一次摄像头读取和预处理，等 NPU 运算完成后， CPU 已经准备好了下一次的数据直接交给 NPU 继续运算，不给 NPU 喘息的机会，这样就充分利用了 CPU 和 NPU 高效地同时进行运算</p>
+<h2 id="%E6%A8%A1%E5%9E%8B%E8%BD%AC%E6%8D%A2">模型转换</h2>
+<p><a href="https://github.com/sophgo/tpu-mlir/blob/master/README_cn.md"  target="_blank">tpu-mlir/README_cn.md at master · sophgo/tpu-mlir</a></p>
+<p>实际运行的模型文件需要是使用算能的TPU框架, 所以需要一个专门的格式bmodel, 算能提供专门的转换工具</p>
+<h3 id="%E5%A4%A7%E6%A8%A1%E5%9E%8B">大模型</h3>
+<p>按照文档按照对应的docker环境, 使用以下的命令进行转换</p>
+
+<pre class="language-bash"><code class="language-bash">llm_convert.py -m /workspace/Qwen2.5-VL-3B-Instruct-AWQ -s 2048 -q w4bf16  -c bm1684x  --max_pixels 672,896 -o qwen2.5vl_3b
+</code></pre>
+<table>
+<thead>
+<tr>
+  <th><strong>参数名</strong></th>
+  <th><strong>简写</strong></th>
+  <th>必选？</th>
+  <th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>model_path</td>
+  <td>m</td>
+  <td>是</td>
+  <td>指定权重路径, 下载的源文件</td>
+</tr>
+<tr>
+  <td>seq_length</td>
+  <td>s</td>
+  <td>是</td>
+  <td>指定模型推理时支持的<strong>最大序列长度（上下文长度）</strong> 为 2048, 序列长度决定模型能处理的文本 Token 总数上限（输入 prompt + 生成的回复 Token 数之和不能超过 2048）</td>
+</tr>
+<tr>
+  <td>quantize</td>
+  <td>q</td>
+  <td>是</td>
+  <td>指定量化类型, w4bf16/w4f16/bf16/f16等等, <code>w4</code>：模型权重（weight）采用 4bit 量化, <code>bf16</code>：模型激活值（activation）采用 bfloat16（脑浮点数）精度</td>
+</tr>
+<tr>
+  <td>q_group_size</td>
+  <td>g</td>
+  <td>否</td>
+  <td>指定每组量化的组大小, 默认64</td>
+</tr>
+<tr>
+  <td>chip</td>
+  <td>c</td>
+  <td>是</td>
+  <td>指定平台, 如bm1684x/bm1688/cv186ah</td>
+</tr>
+<tr>
+  <td>max_pixels</td>
+  <td>-</td>
+  <td>否</td>
+  <td>多模态参数, 指定最大尺寸, 可以是<code>672,896</code>,也可以是<code>602112</code>, 672,896 表示图像高 672 像素、宽 896 像素（也可直接写总像素数 602112，即 672×896），限制图像分辨率上限，适配模型的视觉处理能力</td>
+</tr>
+<tr>
+  <td>out_dir</td>
+  <td>o</td>
+  <td>是</td>
+  <td>指定输出目录</td>
+</tr>
+</tbody>
+</table>
+<h4 id="%E6%A8%A1%E5%9E%8B%E6%9D%83%E9%87%8D">模型权重</h4>
+<p>首先要明确：<strong>大模型本质是超大规模的神经网络</strong>，这两个概念是神经网络运行的核心 —— 权重是 “静态的知识参数”，激活值是 “动态的计算中间结果”</p>
+<p>权重是神经网络中<strong>神经元之间连接的 “强度系数”</strong>，是模型从海量数据中 “学” 到的核心参数：</p>
+<ul>
+<li>训练阶段：模型通过反向传播不断调整权重，让权重适配任务（比如理解语义、识别图像特征）；</li>
+<li>推理阶段：权重一旦训练完成就固定不变（静态），是模型 “记住” 的所有知识的载体。</li>
+</ul>
+<p>这些权重是模型体积的主要构成 —— 比如 “3B 模型” 指权重参数总量约 30 亿个，权重文件通常占 GB 级存储空间（未量化的 Qwen2.5-VL-3B 权重约 6GB，bf16 精度下每个参数占 2 字节）</p>
+<p>权重是<strong>静态数据</strong>，对量化的容忍度相对高（低比特量化后精度损失可控），因此是模型压缩的核心目标：</p>
+<p>之前命令中的<code>w4</code>即 “权重 4bit 量化”：把原本用 16bit/32bit 存储的权重，压缩到 4bit 存储，能大幅降低显存占用、提升推理速度（比如 4bit 量化后权重体积仅为 16bit 的 1/4）。</p>
+<h4 id="%E6%BF%80%E6%B4%BB%E5%80%BC">激活值</h4>
+<p>激活值是神经网络中<strong>神经元接收到输入后，经过计算输出的动态值</strong>：</p>
+<ul>
+<li>推理阶段：输入不同的文本 / 图像（比如问 “今天天气如何” vs “这张图里有什么”），激活值会完全不同；</li>
+<li>计算逻辑：某一层的激活值 = 上一层激活值 × 本层权重 + 偏置（Bias） → 经过激活函数（如 ReLU、SwiGLU）后的输出。</li>
+</ul>
+<p>整个过程中，激活值是 “流动的信号”，每一步计算都会产生新的激活值，且仅在推理时临时生成（用完即释放，不长期存储）</p>
+<p>激活值是<strong>动态计算数据</strong>，对精度极其敏感：如果用过低比特（比如 4bit）量化激活值，会导致计算误差快速累积，模型输出完全失真（比如答非所问、图像识别错误）</p>
+<table>
+<thead>
+<tr>
+  <th>维度</th>
+  <th>模型权重（Weight）</th>
+  <th>模型激活值（Activation）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>性质</td>
+  <td>静态（训练后固定，推理时不变）</td>
+  <td>动态（推理时随输入变化，临时生成）</td>
+</tr>
+<tr>
+  <td>存储方式</td>
+  <td>长期存储在硬盘 / 显存（模型文件的核心）</td>
+  <td>仅推理时临时存在显存（用完释放）</td>
+</tr>
+<tr>
+  <td>数量规模</td>
+  <td>固定（如 3B 模型约 30 亿个）</td>
+  <td>随输入长度 / 图像尺寸变化（比如序列 2048 时，激活值规模远大于权重）</td>
+</tr>
+<tr>
+  <td>量化容忍度</td>
+  <td>高（4bit 量化仍能保持核心精度）</td>
+  <td>低（需 16bit 以上精度，否则误差累积）</td>
+</tr>
+<tr>
+  <td>核心作用</td>
+  <td>决定模型 “知道什么”（核心知识）</td>
+  <td>决定模型 “如何处理当前输入”（实时计算）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="%E6%AF%8F%E7%BB%84%E9%87%8F%E5%8C%96%E7%9A%84%E7%BB%84%E5%A4%A7%E5%B0%8F">每组量化的组大小</h4>
+<p>组大小（也叫量化分组尺寸，对应参数<code>-g</code>）是<strong>低比特量化模型权重时的核心粒度参数</strong>：在对权重做 4bit/8bit 等低比特量化时，不会把整个权重矩阵当成一个整体处理，而是将连续的权重值划分成若干个 “小组”（每组包含<code>q_group_size</code>个权重值），<strong>以 “组” 为单位计算量化所需的缩放因子（scale）、零点（zero point）</strong>，再基于这些参数对组内的每个权重值做低比特编码</p>
+<p>把权重量化比作 “给商品定价打包”：</p>
+<ul>
+<li><p>权重值 = 不同价格的商品（比如 10 元、25 元、18 元、30 元…）；</p>
+</li>
+<li><p>低比特量化 = 用 “区间标签” 代替具体价格（比如用 1bit 表示 “≤20 元”/“＞20 元”，用 4bit 表示 16 个价格区间）；</p>
+</li>
+<li><p>组大小 = 每次打包的商品数量（比如每组 64 件）：</p>
+<p>如果不分组（整矩阵算），商品价格跨度太大（10 元～1000 元），用 4bit 标签会完全失真；</p>
+</li>
+</ul>
+<p>推理时，用每组的 scale 和 zero point，把 4bit 编码值还原成接近原始 32bit 的数值（保证计算精度）。</p>
+<table>
+<thead>
+<tr>
+  <th>组大小取值</th>
+  <th>量化精度</th>
+  <th>推理速度 / 显存占用</th>
+  <th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>小（如 32）</td>
+  <td>更高</td>
+  <td>稍慢 / 稍高</td>
+  <td>对精度敏感的场景（比如小模型、核心任务）</td>
+</tr>
+<tr>
+  <td>中（64，默认）</td>
+  <td>平衡（精度损失可控）</td>
+  <td>最优（速度 / 显存平衡）</td>
+  <td>绝大多数通用场景（如你用的 Qwen2.5-VL-3B）</td>
+</tr>
+<tr>
+  <td>大（如 128/256）</td>
+  <td>稍低</td>
+  <td>更快 / 更低</td>
+  <td>对速度要求高、精度要求低的场景（比如边缘端推理）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Yolo%E6%A8%A1%E5%9E%8B">Yolo模型</h2>
+<p>如果模型是图片输入，在转模型之前我们需要了解模型的预处理。如果模型用预处理后的npz文件做输入，则不需要考虑预处理。 预处理过程用公式表达如下（x代表输入) <code>y = （x - mean） \times scale</code></p>
+<p>官网yolov5的图片是rgb，每个值会乘以<code>1/255</code>，转换成mean和scale对应为<code>0.0,0.0,0.0</code>和<code>0.0039216,0.0039216,0.0039216</code></p>
+<blockquote>
+<p>因为 YOLOv5 没有做 “减均值” 的中心化操作（比如 ImageNet 预训练模型会减 (0.485,0.456,0.406)，但 YOLOv5 追求简洁，无需这一步）。三个通道均为<code>1/255 ≈ 0.0039215686</code>，四舍五入后就是<code>0.0039216</code></p>
+</blockquote>
+<h4 id="%E6%A8%A1%E5%9E%8B%E8%BD%ACF16">模型转F16</h4>
+<p>这个命令是<strong>YOLOv5s 模型部署流程的 “前置转换步骤”</strong> —— 核心是把「ONNX 格式的 YOLOv5s 模型」转换成「跨框架 / 跨硬件的 MLIR 通用中间表示格式」，同时完成模型输入的标准化预处理、指定输出节点、生成浮点模型的基准输出（用于后续量化精度验证），为后续的校准、量化生成 bmodel 打下基础</p>
+<blockquote>
+<p>ONNX 是 “框架级” 中间格式（比如 PyTorch→ONNX），但不同硬件厂商（如比特大陆、英伟达）的部署工具链难以直接适配；而 MLIR 是 “硬件无关” 的底层中间表示，能统一处理不同框架的模型，还能方便地插入量化、优化等操作，是连接 “框架模型” 和 “硬件专用模型（bmodel）” 的桥梁</p>
+</blockquote>
+
+<pre class="language-bash"><code class="language-bash">model_transform.py \
+    --model_name yolov5s \
+    --model_def ../yolov5s.onnx \
+    --input_shapes [[1,3,640,640]] \
+    --mean 0.0,0.0,0.0 \
+    --scale 0.0039216,0.0039216,0.0039216 \
+    --keep_aspect_ratio \
+    --pixel_format rgb \
+    --output_names 350,498,646 \
+    --test_input ../image/dog.jpg \
+    --test_result yolov5s_top_outputs.npz \
+    --mlir yolov5s.mlir
+</code></pre>
+<table>
+<thead>
+<tr>
+  <th><strong>参数名</strong></th>
+  <th>必选？</th>
+  <th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>model_name</td>
+  <td>是</td>
+  <td>指定模型名称, 用于标记, 之后方便使用</td>
+</tr>
+<tr>
+  <td>model_def</td>
+  <td>是</td>
+  <td>指定模型定义文件，比如<code>.onnx</code>或<code>.pt</code>或<code>.tflite</code>或<code>.prototxt</code>文件, ONNX 是跨框架的标准化模型格式，这里是 YOLOv5s 导出的 ONNX 模型文件，包含模型的网络结构和权重</td>
+</tr>
+<tr>
+  <td>model_data</td>
+  <td>否</td>
+  <td>指定模型权重文件，caffe模型需要，对应<code>.caffemodel</code>文件</td>
+</tr>
+<tr>
+  <td>input_shapes</td>
+  <td>否</td>
+  <td>指定输入的shape，例如<code>[[1,3,640,640]]</code>；二维数组，可以支持多输入情况, 指定模型输入张量的形状（shape），二维数组格式（支持多输入，此处为单输入）：</td>
+</tr>
+<tr>
+  <td>resize_dims</td>
+  <td>否</td>
+  <td><code>1</code>= 批大小（batch_size），表示一次处理 1 张图片；原始图片需要resize之后的尺寸；如果不指定，则resize成模型的输入尺寸</td>
+</tr>
+<tr>
+  <td>keep_aspect_ratio</td>
+  <td>否</td>
+  <td><code>3</code>= 通道数（RGB）；在Resize时是否保持长宽比，默认为false；设置时会对不足部分补0, 否则进行直接拉伸</td>
+</tr>
+<tr>
+  <td>mean</td>
+  <td>否</td>
+  <td><code>640,640</code>= 输入图片的高 / 宽（YOLOv5 默认输入尺寸）；图像每个通道的均值，默认为0.0,0.0,0.0, 指定图像三个通道（RGB）的预处理均值，与 YOLOv5 的预处理逻辑一致</td>
+</tr>
+<tr>
+  <td>scale</td>
+  <td>否</td>
+  <td>整体表示模型接收<code>1×3×640×640</code>的张量输入图片每个通道的比值，默认为1.0,1.0,1.0</td>
+</tr>
+<tr>
+  <td>pixel_format</td>
+  <td>否</td>
+  <td>图片类型，可以是rgb、bgr、gray、rgbd四种情况</td>
+</tr>
+<tr>
+  <td>output_names</td>
+  <td>否</td>
+  <td>指定输出的名称，如果不指定，则用模型的输出；指定后用该指定名称做输出</td>
+</tr>
+<tr>
+  <td>test_input</td>
+  <td>否</td>
+  <td>指定输入文件用于验证，可以是图片或npy或npz；可以不指定，则不会正确性验证</td>
+</tr>
+<tr>
+  <td>test_result</td>
+  <td>否</td>
+  <td>指定验证后的输出文件</td>
+</tr>
+<tr>
+  <td>excepts</td>
+  <td>否</td>
+  <td>指定需要排除验证的网络层的名称，多个用,隔开</td>
+</tr>
+<tr>
+  <td>debug</td>
+  <td>否</td>
+  <td>指定后保留中间临时文件；否则会清理掉中间临时文件</td>
+</tr>
+<tr>
+  <td>mlir</td>
+  <td>是</td>
+  <td>指定输出的mlir文件路径</td>
+</tr>
+</tbody>
+</table>
+<h4 id="%E8%BE%93%E5%87%BA%E8%8A%82%E7%82%B9%E9%80%89%E6%8B%A9">输出节点选择</h4>
+<p>YOLOv8/YOLO11 的推理流程是「特征提取→多尺度融合→输出解码」，文档中选择的节点都是模型「最终可解码的输出层」，不同节点对应不同的输出阶段</p>
+<p><strong>Concat 类节点</strong>（方案一核心）：是「多尺度特征融合后的原始输出」。YOLO 模型为了检测不同大小的目标（大 / 中 / 小），会在多个尺度上提取特征，Concat 节点就是将这些不同尺度的特征图拼接后的结果（如 Concat_1/2/3 对应 3 个尺度）。CPU 可以直接对这些原始特征图进行解码（计算边界框、类别置信度、关键点坐标等）</p>
+<p><strong>dfl/conv/Conv_output_0</strong>：是「分布焦点损失（DFL）的卷积输出」。DFL 是 YOLO 用于边界框回归的核心模块，该节点输出的是边界框坐标的预测特征，NPU 对卷积运算有硬件优化，能快速处理</p>
+<p><strong>Sigmoid_output_0</strong>：是「类别 / 置信度的激活输出」。Sigmoid 函数将模型预测的原始分数映射到 0-1 之间（表示置信度），NPU 可直接处理激活运算，减少 CPU 负担</p>
+<p><strong>额外节点（如 output1、Concat_output_0）</strong>：对应扩展任务的输出。例如：</p>
+<ul>
+<li>分割（seg）模型的「output1」：是分割掩码的预测输出（分割任务需要同时输出边界框和掩码，因此多一个节点）；</li>
+<li>关键点（pose）模型的「Concat_output_0」：是关键点坐标的特征输出（除了边界框，还需预测关键点，因此增加该节点）</li>
+</ul>
+<p>实际是CPU以及NPU的工作分配问题</p>
+<ul>
+<li><p>方案一（CPU 多干活）</p>
+<ul>
+<li>输出节点是「原始 Concat 特征」，后续的解码（边界框回归、类别判断、关键点计算）全部交给 CPU 处理；</li>
+<li>优势：CPU 处理的解码逻辑更灵活，量化时（将模型权重从浮点转整型，适配边缘设备）不容易出现精度损失（量化失败风险低）；</li>
+<li>劣势：CPU 运算速度比 NPU 慢，整体推理速度略逊于方案二。</li>
+</ul>
+</li>
+<li><p>方案二（NPU 多干活）</p>
+<ul>
+<li>输出节点是「DFL 卷积 + Sigmoid 激活后的结果」，这些是模型推理中计算量最大的部分（卷积、激活），直接交给 NPU 处理（NPU 擅长并行计算，速度远快于 CPU）；</li>
+<li>优势：NPU 承担核心计算，整体推理速度更快（MaixCAM 推荐方案）；</li>
+<li>劣势：NPU 参与量化时，部分硬件（如 MaixCAM2）对 DFL+Sigmoid 的量化兼容性不好，容易出现量化失败（模型无法运行或精度暴跌）。</li>
+</ul>
+<blockquote>
+<p><strong>绝对不可以随便选输出节点</strong>—— 随便选的结果大概率是「模型无法运行」「输出结果完全错误（如无检测框、关键点 / 分割掩码丢失）」「量化失败」，甚至直接触发硬件推理报错。</p>
+<p>核心原因在于：输出节点的选择不是 “任选”，而是<strong>和模型结构、硬件能力、MaixPy 的后处理逻辑强绑定</strong>，每一个节点都对应 YOLO 推理的核心维度，少选、错选、乱选都会破坏完整的推理链路</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="%E9%80%89%E6%8B%A9%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98">选择测试问题</h5>
+<p>测试直接使用output0作为输出, 实际结果失败</p>
+<p>MaixPy 运行的硬件（MaixCAM/MaixCAM2）依赖 “模型量化”（将浮点权重转整型）才能高效运行，而原生 output0 有两个致命问题：</p>
+<ul>
+<li>量化精度损失：output0 是 “浮点型端到端输出”，直接量化会导致框坐标、置信度的精度暴跌（比如目标置信度从 0.9 量化后变成 0.1，漏检 / 错检严重）；</li>
+<li>量化兼容性：文档中的方案一 / 二节点（Concat/dfl/Sigmoid）是 “低维度、易量化的中间特征”（比如 Concat 节点输出的是特征图，而非最终锚框），量化时数值波动小、稳定性高；而 output0 是高维度张量，量化时极易触发硬件兼容问题（比如 MaixCAM2 直接量化失败）。</li>
+</ul>
+<h4 id="MLIR%E8%BD%ACInt8">MLIR转Int8</h4>
+<p>这段操作的核心是<strong>将 YOLOv5s 浮点模型量化为适配 BM1684x 芯片的 INT8 低精度模型</strong>，目的是在保证精度损失可控的前提下，提升模型在专用 AI 硬件上的推理速度、降低存储开销和功耗。</p>
+<blockquote>
+<p>深度学习模型默认是 FP32（32 位浮点）格式，精度高但计算 / 存储成本大；而边缘端 / 专用 AI 芯片（如比特大陆 BM1684x）对低精度（INT8）计算的支持更高效 ——INT8 的计算量仅为 FP32 的 1/4，存储占用仅为 1/4，推理速度能提升 3~5 倍（甚至更高）</p>
+</blockquote>
+<p>转INT8模型前需要跑calibration，得到量化表；输入数据的数量根据情况准备100~1000张左右。</p>
+<blockquote>
+<p>用一批真实数据（COCO2017）跑模型，统计模型各层张量的数值分布（比如最大值 / 最小值、数据分布规律），计算出<strong>浮点值→INT8 值的最优映射参数</strong>（即 “量化表”）</p>
+</blockquote>
+<p>然后用量化表，生成对称或非对称bmodel。如果对称符合需求，一般不建议用非对称，因为非对称的性能会略差与对称模型</p>
+
+<pre class="language-none"><code class="language-none">run_calibration.py yolov5s.mlir \
+  --dataset ../COCO2017 \
+  --input_num 100 \
+  -o yolov5s_cali_table
+</code></pre>
+<blockquote>
+<p><code>yolov5s.mlir</code>：输入的模型文件（MLIR 是跨框架 / 跨硬件的通用模型中间表示，解决不同框架（PyTorch/TensorFlow）和硬件的适配问题）</p>
+<p><code>--dataset ../COCO2017</code>：校准用的数据集（选 COCO2017 是因为 YOLOv5 的训练 / 测试基于该数据集，数据分布匹配，校准结果更可靠）；</p>
+<p><code>--input_num 100</code>：用 100 张图做校准（100~1000 是经验值，数量太少统计不准，太多耗时）；</p>
+<p><code>-o yolov5s_cali_table</code>：输出量化表（核心文件，包含各层的缩放因子（scale）、量化范围等关键参数）</p>
+</blockquote>
+<p>转成INT8对称量化模型，执行如下命令：</p>
+
+<pre class="language-none"><code class="language-none">model_deploy.py \
+  --mlir yolov5s.mlir \
+  --quantize INT8 \
+  --calibration_table yolov5s_cali_table \
+  --processor bm1684x \
+  --test_input yolov5s_in_f32.npz \
+  --test_reference yolov5s_top_outputs.npz \
+  --tolerance 0.85,0.45 \
+  --model yolov5s_1684x_int8.bmodel
+</code></pre>
+<p>基于第一步的量化表，将 MLIR 格式的浮点模型转换成<strong>BM1684x 芯片专用的 INT8 量化模型（bmodel 格式）</strong></p>
+<table>
+<thead>
+<tr>
+  <th>参数</th>
+  <th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>--mlir yolov5s.mlir</code></td>
+  <td>原始的 FP32 浮点模型（MLIR 格式）</td>
+</tr>
+<tr>
+  <td><code>--quantize INT8</code></td>
+  <td>指定量化类型为 INT8（对比 FP32/FP16，优先选 INT8 平衡性能和精度）</td>
+</tr>
+<tr>
+  <td><code>--calibration_table yolov5s_cali_table</code></td>
+  <td>加载第一步生成的量化表（确定浮点→INT8 的映射关系）</td>
+</tr>
+<tr>
+  <td><code>--processor bm1684x</code></td>
+  <td>指定目标硬件为比特大陆 BM1684x 芯片（bmodel 会适配该芯片的指令集）</td>
+</tr>
+<tr>
+  <td><code>--test_input yolov5s_in_f32.npz</code></td>
+  <td>测试用输入数据（FP32 格式，npz 是 numpy 压缩格式，模拟真实推理输入）</td>
+</tr>
+<tr>
+  <td><code>--test_reference yolov5s_top_outputs.npz</code></td>
+  <td>浮点模型的输出结果（作为 “标准答案”，用于对比量化后模型的精度）</td>
+</tr>
+<tr>
+  <td><code>--tolerance 0.85,0.45</code></td>
+  <td>精度容忍度（量化后模型与浮点模型的精度差异阈值，比如第一个值可能是 mAP 容忍度，第二个是分类精度容忍度；若差异超过该值，量化失败）</td>
+</tr>
+<tr>
+  <td><code>--model yolov5s_1684x_int8.bmodel</code></td>
+  <td>输出最终的 INT8 量化模型（bmodel 是 BM 系列芯片的专用格式，可直接在 BM1684x 上推理）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>对称量化</strong>：将浮点的正负范围对称映射到 INT8 的 [-127,127]（舍去 - 128），计算逻辑简单（仅需缩放因子 scale），硬件执行效率最高；</li>
+<li><strong>非对称量化</strong>：映射到 [0,255]（无符号）或 [-128,127]（有符号），需额外计算偏移量（zero point），精度可能略高但计算步骤多，性能略差；</li>
+<li>因此优先选对称量化，仅当对称量化精度不达标时才用非对称</li>
+</ul>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-12-17-09-APP</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html">
+                            <span class="label">2025-12-19-07-AI编译器</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

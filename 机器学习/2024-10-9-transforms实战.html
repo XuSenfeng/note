@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>Transformers实战 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["AI 机器学习"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李沐课程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">视觉识别</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>Transformers实战</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>AI 机器学习</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/2024-10-9-transforms实战.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="Transformers%E5%AE%9E%E6%88%98">Transformers实战</h1>
+<h2 id="%E5%9F%BA%E4%BA%8ETransforms%E7%9A%84NLP%E8%A7%A3%E5%86%B3">基于Transforms的NLP解决</h2>
+<blockquote>
+<p>NLP自然语言处理, *ModelForSequenceClassification</p>
+</blockquote>
+<ul>
+<li>导入相关的包 General</li>
+<li>加载数据集 Dataset</li>
+<li>数据集划分 Dataset</li>
+<li>数据集预处理 Tokenizer + Dataset</li>
+<li>构建模型 Model</li>
+<li>设置评估函数 Evaluate</li>
+<li>设置训练参数 TrainingArguments</li>
+<li>创建训练器 trainer + Data Collator</li>
+<li>评估模型, 预测数据集 Trainer</li>
+<li>模型预测, 单条 Pipe</li>
+</ul>
+<h2 id="%E6%98%BE%E5%AD%98%E4%BC%98%E5%8C%96">显存优化</h2>
+<h3 id="%E5%8D%A0%E7%94%A8%E5%88%86%E6%9E%90">占用分析</h3>
+<ul>
+<li>模型的权重</li>
+</ul>
+<p>4Bytes * 模型的参数量</p>
+<blockquote>
+<p>大模型权重是指模型中每个神经元连接的参数。这些权重在训练过程中不断调整，以使模型能够更准确地预测输出。简单来说，权重决定了输入数据如何通过模型被处理和转换。</p>
+</blockquote>
+<ul>
+<li>优化器状态optimizer state</li>
+</ul>
+<p>adam的momentum + variance 占 2*4Byte 冲量和方差</p>
+<p>混合精度的实现中，需要复制一份fp32的参数作为被optimizer更新的参数， 1*4Byte</p>
+<blockquote>
+<p>这些数据包括模型每个参数的梯度、学习率、动量等信息，通过这些数据，优化器能够帮助模型逐步收敛到最优解。</p>
+<ol>
+<li>梯度更新：优化器能够根据每个参数的梯度来更新参数值，通过不断迭代优化参数，使模型逐渐收敛到最优解。</li>
+<li>学习率调整：优化器可以根据模型当前的性能表现动态调整学习率，使模型在训练过程中更加稳定和高效。</li>
+<li>动量计算：优化器还可以通过记录的动量信息，帮助模型在更新参数时更好地跳出局部最优解，避免陷入局部最优解。</li>
+<li>过拟合避免：优化器还可以通过记录的数据帮助模型避免过拟合，通过正则化等技术来保持模型的泛化能力。</li>
+</ol>
+</blockquote>
+<ul>
+<li>梯度</li>
+</ul>
+<p>4 Byte * 模型参数量</p>
+<blockquote>
+<p>梯度数据是指每个参数对应的梯度值，表示了目标函数在当前参数值处的变化率。</p>
+</blockquote>
+<ul>
+<li>向前激活量</li>
+</ul>
+<p>序列长度, 隐层维度, Batch大小等</p>
+<blockquote>
+<p>从输入层开始向前传播的激活值。在深度神经网络中，每个神经元都有一个激活函数，激活函数对输入的加权和进行非线性变换并产生输出，这个输出就是激活值。</p>
+<p>在模型的向前传播过程中，输入数据经过多层神经元进行加权和激活操作，逐层传递并产生新的激活值，最终在输出层产生预测或分类结果。这一系列激活值相互传递，并在各层之间反映了模型对数据的理解和提取的特征。</p>
+<p>隐层（或隐藏层）维度是指神经网络中的中间层的维度大小。隐层是介于输入层和输出层之间的一层或多层神经元层，负责对输入数据进行特征提取和表示学习。隐层的维度决定了神经网络可以学习到的特征的复杂度和丰富性。</p>
+</blockquote>
+<h3 id="%E5%AE%9E%E9%99%85%E4%BC%98%E5%8C%96">实际优化</h3>
+<p>使用模型是<code>hfl/chinese-macbert-large</code></p>
+<p>使用的参数为bach=32, maxlength=128</p>
+<ul>
+<li>开始前</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410111800477.png" alt="image-20241011180016774" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410111801981.png" alt="image-20241011180107925" /></p>
+<p>实际的训练非常的慢预估一个多小时<img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410111829757.png" alt="image-20241011182919692" /></p>
+<ul>
+<li>使用bach size为1, 但是gradient accumulation为32, 也就是每计算32次更新一下参数, 优化向前激活值</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">gradient_accumulation_steps=32,
+</code></pre>
+<p>使用这一个的时候使用的内存下降, 但是训练使用的时间大大加长(我的电脑的显存还是全部占用), 下降了一半</p>
+<p>GPU一般比较擅长并行的计算, 所以这一个没有充分利用</p>
+<ul>
+<li>在计算的时候有很多中间的结果, 可以不记录, 使用的时候再次计算Gradient Checkpoints</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">gradient_checkpointing=True
+</code></pre>
+<ul>
+<li>使用内存占用比较小的优化器, 默认使用的是adamw_torch这一个优化器</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">optim=&quot;adafactor&quot;
+</code></pre>
+<p>GPU内存使用的再次下降, 时间加长</p>
+<ul>
+<li>在训练的时候只训练一部分的参数, 比如只训练全连接层, 不训练bert</li>
+</ul>
+<blockquote>
+<p>在分类任务中，全连接层通常作为网络的最后一层，直接将全连接层的维度设为类别数量或通过Softmax函数输出每个类别的概率分布，从而实现对输入数据的分类。如果说卷积层、池化层和激活函数等操作是将原始数据映射到隐层特征空间的话，全连接层则起到将学到的“分布式特征表示”映射到样本标记空间的作用。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/403495863"  target="_blank">读懂BERT，看这一篇就够了 - 知乎 (zhihu.com)</a></p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">for name, param in model.bert.named_parameters():
+    param.requires_grad = False
+</code></pre>
+<h2 id="%E5%91%BD%E5%90%8D%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB">命名实体识别</h2>
+<p>NER Named Entity(实体) Recognition用于识别文本里面的特定意义的实体, 人名地名, 机构名, 专有名词等, 主要是包括两部分(1)实体边界识别(2)确定实体识别(人名, 地名, 机构名)</p>
+<blockquote>
+<p>*ModelForTokenClassification</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410120958515.png" alt="image-20241012095849325" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121000892.png" alt="image-20241012100051830" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121009651.png" alt="image-20241012100903586" /></p>
+<h3 id="%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84">模型结构</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121014290.png" alt="image-20241012101417218" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121020584.png" alt="image-20241012102025517" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121023968.png" alt="image-20241012102319901" /></p>
+<h3 id="%E5%AE%9E%E9%99%85%E8%AE%AD%E7%BB%83">实际训练</h3>
+<p>使用的数据集是<code>peoples_daily_ner</code>, 使用的模型是<code>hfl/chinese-macbert-base</code></p>
+<ul>
+<li>导包</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">import evaluate 
+from datasets import load_dataset
+from transformers import AutoTokenizer, AutoModelForTokenClassification, TrainingArguments, Trainer, DataCollatorForTokenClassification
+</code></pre>
+<ul>
+<li>获取数据集</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">ner_dataset = load_dataset(&quot;peoples_daily_ner&quot;, trust_remote_code=True)
+ner_dataset[&quot;train&quot;][0]
+</code></pre>
+<blockquote>
+
+<pre class="language-python"><code class="language-python">{'id': '0',
+ 'tokens':['海','钓','比','赛','地','点','在','厦','门','与',
+           '金','门','之','间','的','海','域','。'],
+ 'ner_tags': [0, 0, 0, 0, 0, 0, 0, 5, 6, 0, 5, 6, 0, 0, 0, 0, 0, 0]}
+</code></pre>
+
+<pre class="language-python"><code class="language-python">ner_dataset[&quot;train&quot;].features
+&quot;&quot;&quot;
+{'id': Value(dtype='string', id=None),
+ 'tokens': Sequence(feature=Value(dtype='string', id=None), length=-1, id=None),
+ 'ner_tags': Sequence(feature=ClassLabel(names=['O', 'B-PER', 'I-PER', 'B-ORG', 'I-ORG', 'B-LOC', 'I-LOC'], id=None), length=-1, id=None)}
+ PER: 人名 ORG: 组织名 LOC: 地名
+&quot;&quot;&quot;
+</code></pre>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">label_list = ner_dataset[&quot;train&quot;].features[&quot;ner_tags&quot;].feature.names
+</code></pre>
+<ul>
+<li>处理数据集</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">tokenizer = AutoTokenizer.from_pretrained(&quot;hfl/chinese-macbert-base&quot;)
+# 在处理的时候由于已经分词, 所以需要使用这一个参数
+tokenizer(ner_dataset[&quot;train&quot;][0][&quot;tokens&quot;], is_split_into_words=True) 
+</code></pre>
+<blockquote>
+<p>但是这一个拆分可能不是分词器使用的拆分方式, 可以使用获取信息word_ids区分哪几个Token_ids是一个词的</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121106150.png" alt="image-20241012110603090" /></p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">def process_function(examples):
+    tokenized_examples = tokenizer(examples[&quot;tokens&quot;], max_length=128, truncation=True, is_split_into_words=True)
+    labels = []
+    for i, label in enumerate(examples[&quot;ner_tags&quot;]):
+        # 获取一个标签
+        word_ids = tokenized_examples.word_ids(batch_index=i)
+        label_ids = []
+        for word_idx in word_ids:
+            # 获取当前 token 是否是一个 word 的第一个 token
+            if word_idx is None:
+                label_ids.append(-100) # -100 代表不是一个 token
+            else:
+                label_ids.append(label[word_idx])
+        labels.append(label_ids)
+    tokenized_examples[&quot;labels&quot;] = labels
+    return tokenized_examples
+
+tokenized_datasets = ner_dataset.map(process_function, batched=True, remove_columns=ner_dataset[&quot;train&quot;].column_names)
+</code></pre>
+<blockquote>
+
+<pre class="language-python"><code class="language-python">tokenized_datasets[&quot;train&quot;][0]
+</code></pre>
+
+<pre class="language-python"><code class="language-python">{'input_ids': [101,3862,7157,3683,
+  ...,
+  1818,511,102],
+ 'token_type_ids': [0,0,0,
+  ...,
+  0,0],
+ 'attention_mask': [1,1,
+  ...,
+  1],
+ 'labels': [-100, 0, 0, 0, 0, 0, 0, 0, 5, 6, 0, 5, 6, 0, 0, 0, 0, 0, 0, -100]}
+</code></pre>
+</blockquote>
+<ul>
+<li>模型</li>
+</ul>
+
+<pre class="language-pyrhon"><code class="language-pyrhon">model = AutoModelForTokenClassification.from_pretrained(&quot;hfl/chinese-macbert-base&quot;)
+</code></pre>
+<ul>
+<li>评估函数</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">seqeval = evaluate.load(&quot;seqeval&quot;)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121131311.png" alt="image-20241012113140256" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121135608.png" alt="image-20241012113533547" /></p>
+
+<pre class="language-python"><code class="language-python">import numpy as np
+def eval_metric(pred):
+    predictions, labels = pred
+    predictions = np.argmax(predictions, axis=-1) # 获取实际的预测值
+
+    # Remove ignored index (special tokens)
+    true_predictions = [
+        [label_list[p] for (p, l) in zip(prediction, label) if l != -100] # 对应每一个数据
+        for prediction, label in zip(predictions, labels) # 遍历一个batch
+    ]
+    true_labels = [
+        [label_list[l] for (p, l) in zip(prediction, label) if l != -100]
+        for prediction, label in zip(predictions, labels)
+    ]
+
+    results = seqeval.compute(true_predictions, true_labels, mode=&quot;strict&quot;, scheme=&quot;BIO2&quot;)
+
+    return {
+        &quot;f1&quot;: results[&quot;overall_f1&quot;]
+    }
+</code></pre>
+<ul>
+<li>参数</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">args = TrainingArguments(
+    output_dir=&quot;model_for_ner&quot;,
+    per_device_eval_batch_size=64,
+    per_device_train_batch_size=128,
+    evaluation_strategy=&quot;epoch&quot;,
+    save_strategy=&quot;epoch&quot;,
+    metric_for_best_model=&quot;f1&quot;,
+    load_best_model_at_end=True,
+    logging_steps=50
+)
+</code></pre>
+
+<pre class="language-python"><code class="language-python">trainer.train()
+trainer.evaluate(eval_dataset=tokenized_datasets[&quot;test&quot;])
+</code></pre>
+<ul>
+<li>测试</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">from transformers import pipeline
+model.config.id2label = {idx: label for idx, label in enumerate(label_list)} # 修改一下映射
+&quot;&quot;&quot;默认的映射是
+  &quot;id2label&quot;: {
+    &quot;0&quot;: &quot;LABEL_0&quot;,
+    &quot;1&quot;: &quot;LABEL_1&quot;,
+    &quot;2&quot;: &quot;LABEL_2&quot;,
+    &quot;3&quot;: &quot;LABEL_3&quot;,
+    &quot;4&quot;: &quot;LABEL_4&quot;,
+    &quot;5&quot;: &quot;LABEL_5&quot;,
+    &quot;6&quot;: &quot;LABEL_6&quot;
+  },
+&quot;&quot;&quot;
+ner_pipe = pipeline(&quot;token-classification&quot;, 
+                    model=model, tokenizer=tokenizer, 
+                    device=0, 
+                    aggregation_strategy=&quot;simple&quot;) # 使用聚合的模式输出
+
+&quot;&quot;&quot;
+[{'entity_group': 'PER',
+  'score': 0.99990124,
+  'word': '史 凯 歌',
+  'start': 0,
+  'end': 3},
+ {'entity_group': 'LOC',
+  'score': 0.9998995,
+  'word': '北 京',
+  'start': 4,
+  'end': 6}]
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p><a href="https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.TokenClassificationPipeline"  target="_blank">Pipelines (huggingface.co)</a></p>
+<ul>
+<li>“none” : Will simply not do any aggregation and simply return raw results from the model</li>
+<li>“simple” : Will attempt to group entities following the default schema. (A, B-TAG), (B, I-TAG), (C, I-TAG), (D, B-TAG2) (E, B-TAG2) will end up being [{“word”: ABC, “entity”: “TAG”}, {“word”: “D”, “entity”: “TAG2”}, {“word”: “E”, “entity”: “TAG2”}] Notice that two consecutive B tags will end up as different entities. On word based languages, we might end up splitting words undesirably : Imagine Microsoft being tagged as [{“word”: “Micro”, “entity”: “ENTERPRISE”}, {“word”: “soft”, “entity”: “NAME”}]. Look for FIRST, MAX, AVERAGE for ways to mitigate that and disambiguate words (on languages that support that meaning, which is basically tokens separated by a space). These mitigations will only work on real words, “New york” might still be tagged with two different entities.</li>
+<li>“first” : (works only on word based models) Will use the <code>SIMPLE</code> strategy except that words, cannot end up with different tags. Words will simply use the tag of the first token of the word when there is ambiguity.</li>
+<li>“average” : (works only on word based models) Will use the <code>SIMPLE</code> strategy except that words, cannot end up with different tags. scores will be averaged first across tokens, and then the maximum label is applied.</li>
+<li>“max” : (works only on word based models) Will use the <code>SIMPLE</code> strategy except that words, cannot end up with different tags. Word entity will simply be the token with the maximum score.</li>
+</ul>
+</blockquote>
+<ul>
+<li>去空格</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">x = &quot;史凯歌在北京吃屎&quot;
+res = ner_pipe(x)
+ner_result = {}
+for r in res:
+    if r[&quot;entity_group&quot;] not in ner_result:
+        ner_result[r[&quot;entity_group&quot;]] = []
+    ner_result[r[&quot;entity_group&quot;]].append(x[r[&quot;start&quot;]:r[&quot;end&quot;]])
+ner_result
+</code></pre>
+<h2 id="%E6%9C%BA%E5%99%A8%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3">机器阅读理解</h2>
+<p>Machine Reading Comprehension 简称MRC, 是一个让机器回答给定的上下文的来测试机器阅读理解自然语言的程度的任务</p>
+<p>它的形式是比较多样化的, 常见的有完形填空, 答案选择, 片段抽取, 自由生成</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121933591.png" alt="image-20241012193301378" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121935736.png" alt="image-20241012193555638" /></p>
+<h3 id="%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86">数据预处理</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121942295.png" alt="image-20241012194222195" /></p>
+<h3 id="%E5%8E%9F%E7%90%86">原理</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410121949249.png" alt="image-20241012194951132" /></p>
+<p><a href="https://zhuanlan.zhihu.com/p/368920094"  target="_blank">#彻底理解# pytorch 中的 squeeze() 和 unsqueeze()函数 - 知乎 (zhihu.com)</a></p>
+<blockquote>
+<p>在PyTorch中，torch.squeeze函数的参数为-1时表示移除维度为1的维度。具体来说，当使用torch.squeeze(-1)时，会将张量的最后一个维度为1的维度移除，使得张量的维度减少1。</p>
+<p>例如，如果有一个维度为（2，1，3）的张量，使用torch.squeeze(-1)后会得到一个维度为（2，3）的张量。</p>
+<p>总的来说，torch.squeeze(-1)的作用就是移除张量中维度为1的维度。</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410131039811.png" alt="image-20241013103939723" /></p>
+<p>限幅。将input的值限制在[min, max]之间，并返回结果。out (<a href="https://so.csdn.net/so/search?q=Tensor&amp;spm=1001.2101.3001.7020"  target="_blank">Tensor</a>, optional) – 输出张量，一般用不到该参数。</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410131050644.png" alt="image-20241013105032554" /></p>
+<h3 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h3>
+<ul>
+<li>导包</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">from datasets import load_dataset
+from transformers import AutoTokenizer, AutoModelForQuestionAnswering, Trainer, TrainingArguments, DefaultDataCollator
+</code></pre>
+<ul>
+<li>获取数据</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">dataset = load_dataset(&quot;cmrc2018&quot;, trust_remote_code=True)
+</code></pre>
+<ul>
+<li>数据处理</li>
+</ul>
+<p>首先从answer里面获取数据的起始位置, 之后通过数据的长度计算结束的位置, 这个时候获取的数据是在字符里面的位置, 需要进行转换获取他在token里面的数据, 可以使用offset_mapping(记录每一个token的起始以及结束的char的位置)进行转换, 把得到的结果判断一下是不是在截取的数据里面, 如果是的话获取一下对应的token, 记录在返回值里面</p>
+
+<pre class="language-python"><code class="language-python">tokenizer = AutoTokenizer.from_pretrained(&quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;)
+</code></pre>
+<blockquote>
+<p>测试:</p>
+
+<pre class="language-python"><code class="language-python">sample_dataset = dataset[&quot;train&quot;].select([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+tokenized_example = tokenizer(text=sample_dataset[&quot;question&quot;], text_pair=sample_dataset[&quot;context&quot;]) # 使用分词器处理, 同时进行分类
+print(tokenized_example[&quot;input_ids&quot;][0])
+print(len(tokenized_example[&quot;input_ids&quot;][0]))
+
+&quot;&quot;&quot;
+[101, 5745, 2455, 7563,...]
+767
+&quot;&quot;&quot;
+
+print(list(zip(tokenized_example[&quot;input_ids&quot;][0], tokenized_example[&quot;token_type_ids&quot;][0])))
+
+&quot;&quot;&quot;
+[(101, 0), (5745, 0), (2455, 0), (7563, 0), ...(5745, 1), (2455, 1), (7563, 1), ...]
+&quot;&quot;&quot;
+</code></pre>
+<p>可以吧问题以及数据合并在一起</p>
+
+<pre class="language-python"><code class="language-python"># 合并问题和文本，最大长度384，截断文本，填充到最大长度，返回offsets_mapping(用于后续处理答案的位置, 可以对应Token的字符offset位置)
+tokenized_example = tokenizer(text=sample_dataset[&quot;question&quot;],
+                              text_pair=sample_dataset[&quot;context&quot;], 
+                              max_length=384, truncation=&quot;only_second&quot;,
+                              padding=&quot;max_length&quot;, 
+                              return_offsets_mapping=True) 
+</code></pre>
+</blockquote>
+<ul>
+<li>实际获取目标的结果的起始以及结束token</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">for idx, offsets in enumerate(offset_mapping):
+    # 'answers': {'text': ['1963年'], 'answer_start': [30]}}
+    answer = sample_dataset[idx][&quot;answers&quot;] # 获取答案
+    start_char = answer[&quot;answer_start&quot;][0] # 真实答案在字符里面的位置
+    end_char = start_char + len(answer[&quot;text&quot;][0])
+    print(answer, start_char, end_char)
+    # 之后定位答案在token中的位置
+    # 获取context的起始结束, 之后根据答案的起始结束位置，找到对应的token位置
+    context_start = tokenized_example.sequence_ids(idx).index(1)
+    context_end = tokenized_example.sequence_ids(idx).index(None, context_start) -1
+    print(context_start, context_end)
+
+    # 评断文本的起始位置结束(字符)是否在context中, 使用offset进行token到char的转换
+    if offsets[context_end][1] &lt;= start_char or offsets[context_start][0] &gt;= end_char:
+        # print(&quot;答案不在context中&quot;)
+        start_token_pos = 0
+        end_token_pos = 0
+    else:
+        token_id = context_start
+        while token_id &lt;= context_end and offsets[token_id][0] &lt; start_char:
+            token_id += 1
+        start_token_pos = token_id
+        token_id = context_end
+        while token_id &gt;= context_start and offsets[token_id][1] &gt; end_char:
+            token_id -= 1
+        end_token_pos = token_id
+
+    print(start_token_pos, end_token_pos)
+    print(&quot;token answer decode: &quot;, tokenizer.decode(tokenized_example[&quot;input_ids&quot;][idx][start_token_pos:end_token_pos+1]))
+</code></pre>
+<blockquote>
+<p>进行封装可以获得</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">def process_func(examples):
+    # 合并问题和文本，最大长度384，截断文本，填充到最大长度，返回offsets_mapping(用于后续处理答案的位置, 可以对应Token的字符offset位置)
+    tokenized_examples = tokenizer(examples[&quot;question&quot;], examples[&quot;context&quot;], 
+                                   max_length=512, truncation=&quot;only_second&quot;,
+                                   padding=&quot;max_length&quot;, 
+                                   return_offsets_mapping=True)
+
+    # 保存答案的token位置
+    offset_mapping = tokenized_examples.pop(&quot;offset_mapping&quot;)
+    # 'answers': {'text': ['1963年'], 'answer_start': [30]}}
+    start_positions = []
+    end_positions = []
+    for idx, offsets in enumerate(offset_mapping):    
+        answer = examples[&quot;answers&quot;][idx] # 获取答案
+        start_char = answer[&quot;answer_start&quot;][0] # 真实答案在字符里面的位置
+        end_char = start_char + len(answer[&quot;text&quot;][0])
+        # 之后定位答案在token中的位置
+        # 获取context的起始结束, 之后根据答案的起始结束位置，找到对应的token位置
+        context_start = tokenized_examples.sequence_ids(idx).index(1)
+        context_end = tokenized_examples.sequence_ids(idx).index(None, context_start) -1
+
+        # 评断文本的起始位置结束(字符)是否在context中, 使用offset进行token到char的转换
+        if offsets[context_end][1] &lt;= start_char or offsets[context_start][0] &gt;= end_char:
+            # print(&quot;答案不在context中&quot;)
+            start_token_pos = 0
+            end_token_pos = 0
+        else:
+            token_id = context_start
+            while token_id &lt;= context_end and offsets[token_id][0] &lt; start_char:
+                token_id += 1
+            start_token_pos = token_id
+            token_id = context_end
+            while token_id &gt;= context_start and offsets[token_id][1] &gt; end_char:
+                token_id -= 1
+            end_token_pos = token_id
+        start_positions.append(start_token_pos)
+        end_positions.append(end_token_pos)
+    # 保存答案的token位置
+    tokenized_examples[&quot;start_positions&quot;] = start_positions
+    tokenized_examples[&quot;end_positions&quot;] = end_positions
+    return tokenized_examples
+
+tokenized_dataset = dataset.map(process_func, batched=True, remove_columns=dataset[&quot;train&quot;].column_names)
+</code></pre>
+<ul>
+<li>训练</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">model = AutoModelForQuestionAnswering.from_pretrained(&quot;E:/JHY/python/2024-10-5-transforms/hlfrbt3&quot;)
+args = TrainingArguments(
+    output_dir=&quot;model_for_qa&quot;,
+    per_device_eval_batch_size=32,
+    per_device_train_batch_size=32,
+    evaluation_strategy=&quot;epoch&quot;,
+    save_strategy=&quot;epoch&quot;,
+    load_best_model_at_end=True,
+    logging_steps=50
+)
+trainer = Trainer(
+    model=model,
+    args=args,
+    train_dataset=tokenized_dataset[&quot;train&quot;],
+    eval_dataset=tokenized_dataset[&quot;validation&quot;],
+    data_collator=DefaultDataCollator(),
+    tokenizer=tokenizer
+)
+trainer.train()
+</code></pre>
+<ul>
+<li>预测</li>
+</ul>
+
+<pre class="language-python"><code class="language-python"># 模型预测
+from transformers import pipeline
+
+pipe = pipeline(&quot;question-answering&quot;, model=model, tokenizer=tokenizer, device=0)
+pipe({
+    &quot;question&quot;: &quot;什么时候成立的&quot;,
+    &quot;context&quot;: &quot;中华人民共和国成立于1949年10月1日。&quot;
+})
+
+</code></pre>
+<h3 id="%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3">滑动窗口</h3>
+<p>用于处理数据比较长的时候, 如果只是简单的截断, 会出现答案被截断的问题, 所以在截断的时候一般会有一部分的重叠, 重叠的长短会使得使用这一种的时候会导致数据的数量增大, 重叠部分比较小的时候会出现长下文丢失以及答案不完整</p>
+<p>最后获取到多个数据的预测结果进行聚合</p>
+<h4 id="%E5%AE%9E%E9%99%85%E5%AE%9E%E7%8E%B0">实际实现</h4>
+<p>使用一个nltk库</p>
+<blockquote>
+<p>nltk库是自然语言处理领域最为知名且广泛使用的Python库之一，其功能包括文本分析、标注、分词、句法分析、语义分析、语料库管理等。nltk库还提供了丰富的语言处理工具和资源，可以帮助用户进行文本挖掘、信息检索、文本分类、语言模型等任务。通过nltk库，用户可以轻松地处理文本数据，进行文本分析和挖掘，从而实现自然语言处理相关的各种应用和研究。</p>
+</blockquote>
+
+<pre class="language-bash"><code class="language-bash">pip install nltk
+</code></pre>
+
+<pre class="language-python"><code class="language-python">import nltk
+nltk.download(&quot;punkt&quot;)
+</code></pre>
+<ul>
+<li>tokenizer处理函数改变</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">sample_dataset = dataset[&quot;train&quot;].select([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+# 合并问题和文本，最大长度384，截断文本，填充到最大长度，返回offsets_mapping(用于后续处理答案的位置, 可以对应Token的字符offset位置)
+tokenized_example = tokenizer(text=sample_dataset[&quot;question&quot;],
+                              text_pair=sample_dataset[&quot;context&quot;], 
+                              max_length=384,
+                              truncation=&quot;only_second&quot;, 
+                              padding=&quot;max_length&quot;, 
+                              return_offsets_mapping=True,
+                              return_overflowing_tokens=True) 
+tokenized_example.keys()
+</code></pre>
+<blockquote>
+<p>加入参数return_overflowing_tokens, 默认的时候是没有进行重叠操作的, 可以使用stride参数指定</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410151919615.png" alt="image-20241015191930969" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410151922391.png" alt="image-20241015192230343" /></p>
+</blockquote>
+<ul>
+<li>与处理函数, 对数据进行处理, 获取需要的数据</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">def process_func(examples):
+    # 合并问题和文本，最大长度384，截断文本，填充到最大长度，返回
+    # offsets_mapping(用于后续处理答案的位置, 
+    # 可以对应Token的字符offset位置)
+    tokenized_examples = tokenizer(examples[&quot;question&quot;],
+                                   examples[&quot;context&quot;], 
+                                   max_length=384, 
+                                   truncation=&quot;only_second&quot;, 
+                                   padding=&quot;max_length&quot;, 
+                                   return_offsets_mapping=True,
+                                   return_overflowing_tokens=True, 
+                                   stride=128)
+    sample_mapping = tokenized_examples.get(&quot;overflow_to_sample_mapping&quot;)
+    # 保存答案的token位置
+    # offset_mapping = tokenized_examples.pop(&quot;offset_mapping&quot;)
+    # 'answers': {'text': ['1963年'], 'answer_start': [30]}}
+    start_positions = []
+    end_positions = []
+    example_ids = []
+    for idx,_ in enumerate(sample_mapping):
+        # 获取答案, 一个答案可能对应多个数据
+        answer = examples[&quot;answers&quot;][sample_mapping[idx]] 
+        # 真实答案在字符里面的位置
+        start_char = answer[&quot;answer_start&quot;][0] 
+        end_char = start_char + len(answer[&quot;text&quot;][0])
+        # 之后定位答案在token中的位置
+        # 获取context的起始结束, 之后根据答案的起始结束位置
+        # 找到对应的token位置, 使用index函数获取第一个1的位置
+        context_start = tokenized_examples.sequence_ids(idx).index(1)
+        context_end = tokenized_examples.sequence_ids(idx).index(None, context_start) - 1
+        offsets = tokenized_examples.get(&quot;offset_mapping&quot;)[idx]
+        # 评断文本的起始位置结束(字符)是否在context中, 使用offset进行token到char的转换
+        if offsets[context_end][1] &lt;= start_char or offsets[context_start][0] &gt;= end_char:
+            # print(&quot;答案不在context中&quot;)
+            start_token_pos = 0
+            end_token_pos = 0
+        else:
+            token_id = context_start
+            while token_id &lt;= context_end and offsets[token_id][0] &lt; start_char:
+                # 使用遍历的方法获取一下数据的起始位置
+                token_id += 1
+            start_token_pos = token_id
+            token_id = context_end
+            while token_id &gt;= context_start and offsets[token_id][1] &gt; end_char:
+                # 反向遍历获取结束位置
+                token_id -= 1
+            end_token_pos = token_id
+        start_positions.append(start_token_pos)
+        end_positions.append(end_token_pos)
+        # 记录每一个数据的id用于对应
+        example_ids.append(examples[&quot;id&quot;][sample_mapping[idx]])
+        tokenized_examples[&quot;offset_mapping&quot;][idx] = [
+            # 记录一下有效数据的token对应的offset(非问题数据的位置)
+            (o if tokenized_examples.sequence_ids(idx)[k] == 1 else None)
+            for k, o in enumerate(tokenized_examples[&quot;offset_mapping&quot;][idx])
+        ]
+
+    tokenized_examples[&quot;example_ids&quot;] = example_ids
+    # 保存答案的token位置
+    tokenized_examples[&quot;start_positions&quot;] = start_positions
+    tokenized_examples[&quot;end_positions&quot;] = end_positions
+    return tokenized_examples
+</code></pre>
+
+<pre class="language-python"><code class="language-python">tokenized_dataset = dataset.map(process_func, batched=True, remove_columns=dataset[&quot;train&quot;].column_names)
+</code></pre>
+<ul>
+<li>获取数据的预测以及真实的数据</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">import numpy as np
+import collections
+
+def get_result(start_logits, end_logits, examples, features):
+    &quot;&quot;&quot;_summary_
+
+    Args:
+        start_logits (_type_): 模型预测的结果起始位置
+        end_logits (_type_): 结束位置的预测结果
+        examples (_type_): 原始的数据集
+        features (_type_): tokenizer获取到的mapping
+    &quot;&quot;&quot;
+    predictions = {}
+    references = {}
+
+    example_to_features = collections.defaultdict(list) # 保存每一个example对应的feature编号
+    for idx, example_id in enumerate(features[&quot;example_ids&quot;]):
+        example_to_features[example_id].append(idx) # 记录一下每一个example对应的被分割以后的编号
+
+    # 最优答案候选数
+    n_best = 20
+    max_answer_length = 30
+    for example in examples:
+        example_id = example[&quot;id&quot;]
+        context = example[&quot;context&quot;]
+        answers = []
+        for feature_idx in example_to_features[example_id]:
+             # 获取对应的feature的预测结果, 这个结果搓是一个数组
+            start_logit = start_logits[feature_idx]
+            end_logit = end_logits[feature_idx]
+            # 获取对应的offset_mapping
+            offset = features[feature_idx][&quot;offset_mapping&quot;] 
+            # 从大到小排序，取前n_best
+            start_indexs = np.argsort(start_logit)[::-1][:n_best].tolist() 
+            # 从大到小排序，取前n_best
+            end_indexs = np.argsort(end_logit)[::-1][:n_best].tolist() 
+            for start_index in start_indexs:
+                for end_index in end_indexs:
+                    # 如果预测的位置不在offset中，或者结束位置在开始位置之前，或者长度超过最大长度，都不要
+                    if offset[start_index] is None or offset[end_index] is None:
+                        continue
+                    if start_index &gt; end_index or end_index - start_index + 1 &gt; max_answer_length:
+                        continue
+                    answers.append({
+                        &quot;score&quot;: start_logit[start_index] + end_logit[end_index],
+                        &quot;text&quot;: context[offset[start_index][0]:offset[end_index][1]]
+                    })
+        if len(answers) &gt; 0:
+            # 获取评分最高的预测结果
+            best_answer = max(answers, key=lambda x: x[&quot;score&quot;])
+            predictions[example_id] = best_answer[&quot;text&quot;]
+        else:
+            predictions[example_id] = &quot;&quot;
+        references[example_id] = example[&quot;answers&quot;][&quot;text&quot;]
+
+    return predictions, references
+</code></pre>
+<ul>
+<li>实际的预测函数</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">from cmrc_eval import evaluate_cmrc
+def metric(pred):
+    start_logits, end_logits = pred[0]
+    if start_logits.shape[0] == len(tokenized_dataset[&quot;validation&quot;]):
+        p, r = get_result(start_logits, end_logits, dataset[&quot;validation&quot;], tokenized_dataset[&quot;validation&quot;])
+    else:
+        p, r = get_result(start_logits, end_logits, dataset[&quot;test&quot;], tokenized_dataset[&quot;test&quot;])
+    return evaluate_cmrc(p, r)
+</code></pre>
+<h2 id="%E5%A4%9A%E9%A1%B9%E9%80%89%E6%8B%A9">多项选择</h2>
+<p>机器阅读理解里面的一个分支, 给定一个文档, 一个问题以及多个答案, 从里面获取正确的答案</p>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86">数据处理</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222302906.png" alt="image-20241022230218638" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222303371.png" alt="image-20241022230335193" /></p>
+<blockquote>
+<p>在实际处理的时候需要把数据进行一个聚合</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222305087.png" alt="image-20241022230548880" /></p>
+<blockquote>
+<p>这里使用的view函数会按照最里面一层的大小展开为二维数组</p>
+
+<pre class="language-python"><code class="language-python">import torch
+
+tensor1 = torch.tensor([[[1, 2], [2, 3], [3, 4]], [[5, 6], [6, 7], [7, 8]]])
+
+print(tensor1.size(-1))
+tensor1 = tensor1.view(-1, tensor1.size(-1))
+print(tensor1.size())
+&quot;&quot;&quot;
+2
+torch.Size([6, 2])
+&quot;&quot;&quot;
+</code></pre>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410222326874.png" alt="image-20241022232644703" /></p>
+<h3 id="%E5%AE%9E%E9%99%85%E8%AE%AD%E7%BB%83">实际训练</h3>
+<p>这里使用的数据集clue下面的C3数据集</p>
+<p><a href="https://huggingface.co/datasets/clue/clue"  target="_blank">https://huggingface.co/datasets/clue/clue</a></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202410242259476.png" alt="image-20241024225949337" /></p>
+<blockquote>
+<p>这里的context可能是一个对话, 是对话的时候这一个的数据是一个列表,这里面的数据由于test数据集没有answer, 所以需要去除</p>
+</blockquote>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/2024-10-7-Pandas库.html">
+                            <span class="icon"></span>
+                            <span class="label">2024-10-7-Pandas库</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/2024-9-21-LLM.html">
+                            <span class="label">2024-9-21-LLM</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

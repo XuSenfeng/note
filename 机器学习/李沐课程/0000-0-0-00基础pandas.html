@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>pandas - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">李沐课程</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">视觉识别</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>pandas</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/李沐课程/0000-0-0-00基础pandas.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <p>通常使用<code>import pandas as pd</code>, 这是一个标签库, 在numpy的基础上给予行列标签, 在这里面所有数组的特性依旧存在, 数据以numPy的格式存储</p>
+<h2 id="%E4%B8%80%E7%BB%B4%E5%AF%B9%E8%B1%A1%E5%BB%BA%E7%AB%8B">一维对象建立</h2>
+<p>可以通过<code>pd.Series</code>把字典转换为一个Series对象, 这里的对象是一个列对象</p>
+
+<pre class="language-python"><code class="language-python">dict_v = {'a': 0, 'b': 1, 'c': 2, 'd': 3}
+sr = pandas.Series(dict_v)
+&quot;&quot;&quot;
+a    0
+b    1
+c    2
+d    3
+dtype: int64
+&quot;&quot;&quot;
+</code></pre>
+<p>也可以使用数组的方式进行建立, 使用两个数组, 第一个数组是一个列表/数组/张量, 第二个是index索引</p>
+
+<pre class="language-python"><code class="language-python">v = [0, 0.25, 0.5, 0.75]
+k = ['a', 'b', 'c', 'd']
+sr = pd.Series(v, index=k)
+&quot;&quot;&quot;
+a    0.00
+b    0.25
+c    0.50
+d    0.75
+dtype: float64
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>index可以省略, 省略以后这一个参数是从0开始的一系列数字</p>
+</blockquote>
+<h2 id="Series%E5%B1%9E%E6%80%A7">Series属性</h2>
+<p>有两个属性, 一个是values, 另一个是index, 最终的valus都是一个numPy的数组</p>
+<h2 id="%E5%BB%BA%E7%AB%8B%E4%BA%8C%E7%BB%B4">建立二维</h2>
+<p>有行标签index以及列标签columns</p>
+<h3 id="%E5%AD%97%E5%85%B8%E5%BB%BA%E7%AB%8B">字典建立</h3>
+<p>使用字典建立的时候, 必须基于多个Series对象, 每一个Series就是一个列对象</p>
+<p>建立Series的时候键是index, 竖向延展, 建立DataFrame的时候键是columns, 水平延伸</p>
+
+<pre class="language-python"><code class="language-python">v1 = [53, 64, 75, 86]
+i = ['1号', '2号', '3号', '4号']
+sr1 = pd.Series(v1, index=i)
+v2 = ['男', '女', '男', '女']
+sr2 = pd.Series(v2, index=i)
+df = pd.DataFrame({'分数': sr1, '性别': sr2})
+&quot;&quot;&quot;
+    分数 性别
+1号	53	男
+2号	64	女
+3号	75	男
+4号	86	女
+&quot;&quot;&quot;
+</code></pre>
+<p>如果两个sr的标签是不一样的, 实际会使用两个的交集并产生一定数量的NaN</p>
+<h3 id="%E6%95%B0%E7%BB%84%E5%BB%BA%E7%AB%8B">数组建立</h3>
+<p>第一个参数是values(数组), 第二个是行标签index, 第三个是列标签columns, index和columns可以省略</p>
+
+<pre class="language-python"><code class="language-python">import numpy as np
+v = np.array([[53, '女'], [64, '男'], [75, 女], [86, '男']])
+i = ['1号', '2号', '3号', '4号']
+c = ['分数', '性别']
+df = pd.DataFrame(v, index=i, columns=c)
+
+&quot;&quot;&quot;
+    分数  性别
+1号	53	女
+2号	64	男
+3号	75	女
+4号	86	男
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>这里的数字会被转化为字符串</p>
+</blockquote>
+<h3 id="%E5%B1%9E%E6%80%A7">属性</h3>
+<p>有三个属性, values, index和columns</p>
+
+<pre class="language-python"><code class="language-python">df.index, df.columns, df.values
+&quot;&quot;&quot;
+(Index(['1号', '2号', '3号', '4号'], dtype='object'),
+ Index(['分数', '性别'], dtype='object'),
+ array([['53', '女'],
+        ['64', '男'],
+        ['75', '女'],
+        ['86', '男']], dtype=object))
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>只提取values的时候这一个会退化为数组, 可以提取出来一列然后改变类型, 进行数字操作</p>
+
+<pre class="language-python"><code class="language-python">df.values[:, 0].astype(np.int32)
+&quot;&quot;&quot;
+df.values[:, 0].astype(np.int32)
+&quot;&quot;&quot;
+</code></pre>
+</blockquote>
+<h2 id="%E5%AF%B9%E8%B1%A1%E7%B4%A2%E5%BC%95">对象索引</h2>
+<p>可以使用显式的以及隐式的索引, 显式的是pandas提供的索引, 隐式的是使用数组的索引, 如果一个显示的索引是int会出现冲突, 所以Pandas使用索引器loc(显式)以及iloc(隐式)手动选择</p>
+<h3 id="%E4%B8%80%E7%BB%B4">一维</h3>
+
+<pre class="language-python"><code class="language-python">v = [53, 64, 75, 86]
+k = ['1号', '2号', '3号', '4号']
+sr = pd.Series(v, index=k)
+sr['1号'], sr[0], sr.loc['1号'], sr.iloc[0]
+&quot;&quot;&quot;
+(53, 53, 53, 53)
+&quot;&quot;&quot;
+</code></pre>
+<ul>
+<li>切片</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">sr['1号':'3号'], sr[0:2], sr.loc['1号':'3号'], sr.iloc[0:2]
+&quot;&quot;&quot;
+(1号    53
+ 2号    64
+ 3号    75
+ dtype: int64,
+ 1号    53
+ 2号    64
+ dtype: int64,
+ 1号    53
+ 2号    64
+ 3号    75
+ dtype: int64,
+ 1号    53
+ 2号    64
+ dtype: int64)
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>使用显式切片的时候索引包含最后一个</p>
+</blockquote>
+<h3 id="%E4%BA%8C%E7%BB%B4">二维</h3>
+<p>在二维里面, 索引器是不可以去掉的</p>
+
+<pre class="language-python"><code class="language-python">df.loc['1号'], df.iloc[0]
+&quot;&quot;&quot;
+(分数    53
+ 性别     女
+ Name: 1号, dtype: object,
+ 分数    53
+ 性别     女
+ Name: 1号, dtype: object)
+&quot;&quot;&quot;
+</code></pre>
+
+<pre class="language-python"><code class="language-python">df.loc['1号', '分数'], df.iloc[0, 0]
+&quot;&quot;&quot;
+('53', '53')
+&quot;&quot;&quot;
+</code></pre>
+
+<pre class="language-python"><code class="language-python">df.loc[['1号', '3号'], ['性别', '分数']]
+&quot;&quot;&quot;
+    性别	分数
+1号	女	53
+3号	女	75
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>在Pandas里面花式索引输出的是一个向量, 在Pandas里面行列标签的信息不可以丢失, 只输出一个向量不可以, 所以实际输出的是一个二维对象</p>
+</blockquote>
+<p>实际提取的时候如果提取一行可以使用<code>df.loc['3号']</code>一列可以只使用<code>df[年龄]</code>, 因为在Pandas里面列标签实际就是二维字典的键</p>
+<h2 id="%E5%AF%B9%E8%B1%A1%E5%8F%98%E5%BD%A2">对象变形</h2>
+<p>实际使用时候有的需要对行列进行转置</p>
+
+<pre class="language-python"><code class="language-python">v = np.array([[53, 64, 75, 86], ['男', '女', '男', '女']])
+c = ['1号', '2号', '3号', '4号']
+i = ['分数', '性别']
+df = pd.DataFrame(v, index=i, columns=c)
+df
+&quot;&quot;&quot;
+    1号	2号	3号	4号
+分数	53	64	75	86
+性别	男	女	男	女
+&quot;&quot;&quot;
+df.T
+&quot;&quot;&quot;
+    分数	性别
+1号	53	男
+2号	64	女
+3号	75	男
+4号	86	女
+&quot;&quot;&quot;
+</code></pre>
+<ul>
+<li>左右翻转</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">df.iloc[:, ::-1]
+&quot;&quot;&quot;
+4号	3号	2号	1号
+分数	86	75	64	53
+性别	女	男	女	男
+&quot;&quot;&quot;
+</code></pre>
+
+<pre class="language-python"><code class="language-python">df.iloc[::-1, :]
+&quot;&quot;&quot;
+    性别	分数
+4号	女	86
+3号	男	75
+2号	女	64
+1号	男	53
+&quot;&quot;&quot;
+</code></pre>
+<h3 id="%E9%87%8D%E5%A1%91">重塑</h3>
+<p>不可以直接使用reshape, 但是可以使用把sr插入df以及从df里面割出来sr</p>
+
+<pre class="language-python"><code class="language-python">i = ['1号', '2号', '3号', '4号']
+v1 = [53, 64, 75, 86]
+v2 = ['男', '女', '男', '女']
+v3 = [1, 2, 3, 4]
+sr1 = pd.Series(v1, index=i)
+sr2 = pd.Series(v2, index=i)
+sr3 = pd.Series(v3, index=i)
+sr1, sr2, sr3
+&quot;&quot;&quot;
+(1号    53
+ 2号    64
+ 3号    75
+ 4号    86
+ dtype: int64,
+ 1号    男
+ 2号    女
+ 3号    男
+ 4号    女
+ dtype: object,
+ 1号    1
+ 2号    2
+ 3号    3
+ 4号    4
+ dtype: int64)
+&quot;&quot;&quot;
+df = pd.DataFrame({'分数': sr1, '性别': sr2})
+df['年级'] = sr3
+df
+&quot;&quot;&quot;
+    分数	性别	年级
+1号	53	男	1
+2号	64	女	2
+3号	75	男	3
+4号	86	女	4
+&quot;&quot;&quot;
+sr4 = df['分数']
+&quot;&quot;&quot;
+1号    53
+2号    64
+3号    75
+4号    86
+Name: 分数, dtype: int64
+&quot;&quot;&quot;
+</code></pre>
+<h3 id="%E5%90%88%E5%B9%B6">合并</h3>
+
+<pre class="language-python"><code class="language-python">v1 = [10, 20, 30, 40]
+v2 = [50, 60, 70]
+k1 = ['a', 'b', 'c', 'd']
+k2 = ['e', 'e', 'f']
+sr1 = pd.Series(v1, index=k1)
+sr2 = pd.Series(v2, index=k2)
+pd.concat([sr1, sr2])
+&quot;&quot;&quot;
+a    10
+b    20
+c    30
+d    40
+e    50
+e    60
+f    70
+dtype: int64
+&quot;&quot;&quot;
+</code></pre>
+<blockquote>
+<p>这一个变量的key可以是重复的, 出现重复的时候可以使用属性<code>.index</code>或<code>.columns</code>使用<code>.is_unique</code>检查</p>
+
+<pre class="language-python"><code class="language-python">sr3.index.is_unique
+</code></pre>
+</blockquote>
+<h3 id="%E4%B8%80%E7%BB%B4%E4%BA%8C%E7%BB%B4%E7%9A%84%E5%90%88%E5%B9%B6">一维二维的合并</h3>
+<p>可以理解为给二维的对象添加一个行或者列</p>
+
+<pre class="language-python"><code class="language-python">v1 = [10, 20, 30]
+v2 = ['男', '女', '男']
+sr1 = pd.Series(v1, index=['a', 'b', 'c'])
+sr2 = pd.Series(v2, index=['a', 'b', 'c'])
+df = pd.DataFrame({'分数': sr1, '性别': sr2})
+# 加一列
+df['名字'] = ['张三', '李四', '王五']
+&quot;&quot;&quot;
+    分数	性别	名字
+a	10	男	张三
+b	20	女	李四
+c	30	男	王五
+&quot;&quot;&quot;
+# 加一列
+df.loc['4号'] = [40, '女', '赵六']
+&quot;&quot;&quot;
+    分数	性别	名字
+a	10	男	张三
+b	20	女	李四
+c	30	男	王五
+4号	40	女	赵六
+&quot;&quot;&quot;
+
+</code></pre>
+
+<pre class="language-python"><code class="language-python">v1 = [[10, '男'], [20, '女'], [30, '男']]
+v2 = [[1, '张三'], [2, '李四'], [3, '王五']]
+v3 = [[10, '男', 4, '张三'], [20, '女', 5,'李四'], [30, '男', 6, '王五']]
+i1 = ['1号', '2号', '3号']
+i2 = ['1号', '2号', '3号']
+i3 = ['4号', '5号', '6号']
+c1 = ['分数', '性别']
+c2 = ['年级', '名字']
+c3 = ['分数', '性别', '年级', '名字']
+df1 = pd.DataFrame(v1, index=i1, columns=c1)
+df2 = pd.DataFrame(v2, index=i2, columns=c2)
+df3 = pd.DataFrame(v3, index=i3, columns=c3)
+&quot;&quot;&quot;
+    分数 性别
+ 1号  10  男
+ 2号  20  女
+ 3号  30  男
+     年级  名字
+ 1号   1  张三
+ 2号   2  李四
+ 3号   3  王五
+     分数 性别  年级  名字
+ 7号  10  男   4  张三
+ 8号  20  女   5  李四
+ 9号  30  男   6  王五
+&quot;&quot;&quot;
+df = pd.concat([df1, df2], axis=1)
+&quot;&quot;&quot;
+    分数	性别	年级	名字
+1号	10	男	1	张三
+2号	20	女	2	李四
+3号	30	男	3	王五
+&quot;&quot;&quot;
+df = pd.concat([df, df3])
+&quot;&quot;&quot;
+
+    分数	性别	年级	名字
+1号	10	男	1	张三
+2号	20	女	2	李四
+3号	30	男	3	王五
+4号	10	男	4	张三
+5号	20	女	5	李四
+6号	30	男	6	王五
+&quot;&quot;&quot;
+
+
+</code></pre>
+<h2 id="%E8%BF%90%E7%AE%97">运算</h2>
+<p>一维的对象可以直接使用基础的运算, 实际进行和数组是一样的, 在实际处理的时候, 如果数组里面有多种不同的类型, 会按照object进行存储, 但是每一列的存储是独立的, 所以可以达到数值和字符串同时成立的效果</p>
+
+<pre class="language-python"><code class="language-python">v1 = [10, 20, 30]
+v2 = ['男', '女', '男']
+sr1 = pd.Series(v1, index=['a', 'b', 'c'])
+sr2 = pd.Series(v2, index=['a', 'b', 'c'])
+df = pd.DataFrame({'分数': sr1, '性别': sr2})
+df['分数'].values, df.values
+&quot;&quot;&quot;
+array([10, 20, 30], dtype=int64),
+array([[10, '男'],
+        [20, '女'],
+        [30, '男']], dtype=object)
+&quot;&quot;&quot;
+</code></pre>
+<p>两个对象之间的运算必须都是数字类型之间的运算, 两个对象的个数可以不同</p>
+
+<pre class="language-python"><code class="language-python">v1 = [10, 20, 30, 40]
+k1 = ['a', 'b', 'c', 'd']
+sr1 = pd.Series(v1, index=k1)
+v2 = [1, 2, 3]
+k2 = ['a', 'b', 'c']
+sr2 = pd.Series(v2, index=k2)
+&quot;&quot;&quot;
+a    10
+ b    20
+ c    30
+ d    40
+ dtype: int64,
+ a    1
+ b    2
+ c    3
+ dtype: int64
+&quot;&quot;&quot;
+sr1+sr2, sr1-sr2, sr1*sr2, sr1/sr2
+&quot;&quot;&quot;
+ a    11.0
+ b    22.0
+ c    33.0
+ d     NaN
+ dtype: float64,
+ a     9.0
+ b    18.0
+ c    27.0
+ d     NaN
+ dtype: float64,
+ a    10.0
+ b    40.0
+ c    90.0
+ d     NaN
+ dtype: float64,
+ a    10.0
+ b    10.0
+ c    10.0
+ d     NaN
+ dtype: float64
+&quot;&quot;&quot;
+</code></pre>
+<ul>
+<li>二维的计算</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">v1 = [[10, '男'], [20, '女'], [30, '男'], [40, '女']]
+v2 = [1, 2, 3, 6]
+i1 = ['a', 'b', 'c', 'd']
+i2 = ['a', 'b', 'c', 'e']
+c1 = ['分数', '性别']
+c2 = ['年级']
+df1 = pd.DataFrame(v1, index=i1, columns=c1)
+df2 = pd.DataFrame(v2, index=i2, columns=c2)
+&quot;&quot;&quot;
+   分数 性别
+ a  10  男
+ b  20  女
+ c  30  男
+ d  40  女,
+    年级
+ a   1
+ b   2
+ c   3
+ e   6
+&quot;&quot;&quot;
+df1['加法'] = df1['分数'] + df2['年级']
+df1['减法'] = df1['分数'] - df2['年级']
+df1['乘法'] = df1['分数'] * df2['年级']
+df1['除法'] = df1['分数'] / df2['年级']
+&quot;&quot;&quot;
+    分数	性别	加法	减法	乘法	除法
+a	10	男	11.0	9.0	10.0	10.0
+b	20	女	22.0	18.0	40.0	10.0
+c	30	男	33.0	27.0	90.0	10.0
+d	40	女	NaN	NaN	NaN	NaN
+&quot;&quot;&quot;
+</code></pre>
+<p>可以对每一列使用<code>np.abs()</code>, <code>np.cos()</code>之类的函数, 会保留索引, 同时可以使用比较符号获取一个bool的数组, 可以用于作为掩码</p>
+
+<pre class="language-python"><code class="language-python">v = [[53, '女'], [64, '男'], [75, '女'], [86, '男']]
+i = ['1号', '2号', '3号', '4号']
+c = ['分数', '性别']
+df = pd.DataFrame(v, index=i, columns=c)
+df['分数'] &gt; 60
+&quot;&quot;&quot;
+1号    False
+2号     True
+3号     True
+4号     True
+Name: 分数, dtype: bool
+&quot;&quot;&quot;
+(df['分数'] &gt; 30) &amp; (df['分数'] &lt; 80) # 可以使用sum函数获取总数
+&quot;&quot;&quot;
+1号     True
+2号     True
+3号     True
+4号    False
+Name: 分数, dtype: bool
+&quot;&quot;&quot;
+df[df['分数'] &gt; 60]
+&quot;&quot;&quot;
+    分数	性别
+2号	64	男
+3号	75	女
+4号	86	男
+&quot;&quot;&quot;
+df['性别'][df['分数'] &gt; 60]
+
+&quot;&quot;&quot;
+2号    男
+3号    女
+4号    男
+Name: 性别, dtype: object
+&quot;&quot;&quot;
+</code></pre>
+<h2 id="%E7%BC%BA%E5%A4%B1%E5%80%BC">缺失值</h2>
+<h3 id="%E4%B8%80%E7%BB%B4">一维</h3>
+
+<pre class="language-python"><code class="language-python">v = [53, None, 75, 86]
+i = ['1号', '2号', '3号', '4号']
+sr = pd.Series(v, index=i)
+&quot;&quot;&quot;
+1号    53.0
+2号     NaN
+3号    75.0
+4号    86.0
+dtype: float64
+&quot;&quot;&quot;
+</code></pre>
+<p>可以使用函数<code>isnull()</code>进行寻找, 也可以使用<code>notnull()</code></p>
+
+<pre class="language-python"><code class="language-python">sr.isnull()
+&quot;&quot;&quot;
+1号    False
+2号     True
+3号    False
+4号    False
+dtype: bool
+&quot;&quot;&quot;
+</code></pre>
+<p>可以对缺失的值进行剔除, 一维的时候可以直接剔除, 二维的时候需要决定剔除的是行还是列<code>dropna()</code>, 使用参数<code>axis='cloumns'</code>剔除列, 建议不要使用, 使用参数<code>how='all'</code>只有所有的数据都是Nan的时候剔除, 也可以传入一个数字, 大于这一个阈值的输出后进行剔除</p>
+<p>可以使用<code>fillna()</code>进行填充, 实际使没有统一的方法, 里面的参数是填充值, 可以使用<code>method='ffill'</code>使用前一个数字进行填充, 以及使用<code>method='bfill'</code>进行填充</p>
+<h3 id="%E4%BA%8C%E7%BB%B4">二维</h3>
+
+<pre class="language-python"><code class="language-python">v = [[None, 1], [64, None], [75, 3], [86, 4]]
+i = ['1号', '2号', '3号', '4号']
+c = ['分数', '年级']
+df = pd.DataFrame(v, index=i, columns=c)
+&quot;&quot;&quot;
+    分数	年级
+1号	NaN	1.0
+2号	64.0	NaN
+3号	75.0	3.0
+4号	86.0	4.0
+&quot;&quot;&quot;
+df.isnull()
+</code></pre>
+<h2 id="%E5%AF%BC%E5%85%A5Excel">导入Excel</h2>
+<p>第一列是index, 第一行是columns, 如果没有这两个, 只想使用一个数组, 也加上这两列, 之后使用<code>.values</code>属性可以获取实际的数据, 存为csv文件</p>
+
+<pre class="language-python"><code class="language-python">df = pd.read_csv('../data/house_thiny.csv', index_col=0)
+</code></pre>
+<p>可以使用函数<code>.head(n)</code>查看前n行</p>
+<p>numPy的所有聚合函数对这一个都适用, 可以直接<code>.</code>即可使用, 比如<code>.max() .mean()</code>这一部分的方法在使用的时候默认省略缺失值</p>
+<blockquote>
+<p>可以使用<code>.describe()</code>查看所有的聚合函数的信息</p>
+
+<pre class="language-python"><code class="language-python">df.describe()
+&quot;&quot;&quot;
+
+   NumberRoom	Price
+count	5.000000	7.000000
+mean	4.600000	343.285714
+std	2.073644	168.993801
+min	2.000000	120.000000
+25%	3.000000	226.500000
+50%	5.000000	330.000000
+75%	6.000000	450.000000
+max	7.000000	600.000000	
+&quot;&quot;&quot;
+</code></pre>
+</blockquote>
+<h3 id="%E6%95%B0%E6%8D%AE%E9%80%8F%E8%A7%86">数据透视</h3>
+<p>使用<code>.pivot_table('', index='', columns='')</code>可以查看第二个项对于第一个的影响, 默认使用的是mean求均值, 获取index里面每一个属性的实际均值, 使用aggfunc可以改变默认的函数, 默认<code>mean</code></p>
+<p>如果一个数据的分类很多不便于观看可以使用<code>pd.cut()</code>以及<code>pd.qcut(n)</code>进行分类, 前一个手动的, 第二个自动的把数据分为n个</p>
+
+<pre class="language-python"><code class="language-python">pd.cut(df['年龄'], [0, 25, 120])
+df.pivot_table('是否生还', index=[age, '性别'], columns='船舱等级')
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html">
+                            <span class="icon"></span>
+                            <span class="label">0000-0-0-00基础numpy</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/李沐课程/2024-10-31-01.html">
+                            <span class="label">2024-10-31-01</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

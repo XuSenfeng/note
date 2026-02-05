@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>训练 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李沐课程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">视觉识别</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">yolo</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>训练</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/视觉识别/yolo/2025-12-13-05-训练.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <p><a href="https://docs.ultralytics.com/zh/modes/train/#augmentation-settings-and-hyperparameters"  target="_blank">https://docs.ultralytics.com/zh/modes/train/#augmentation-settings-and-hyperparameters</a></p>
+<h2 id="%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87">数据准备</h2>
+<ul>
+<li>images: 存放使用的图片</li>
+<li><ul>
+<li>train: 训练集的图片</li>
+<li>val: 验证集的图片</li>
+</ul>
+</li>
+<li>labels: 标签</li>
+<li><ul>
+<li>train: 训练集的标签, 和训练集的图片一一对应</li>
+<li>val: 验证集的标签</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20251213113717556.png" alt="image-20251213113717556" /></p>
+<p>需要放在datasets文件夹下面</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20251213115145922.png" alt="image-20251213115145922" /></p>
+<p>还需要一个配置文件可以参考ultralytics/ultralytics/cfg/datasets下面的文件</p>
+
+<pre class="language-yaml"><code class="language-yaml"># Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: bvn # dataset root dir
+train: images/train # train images (relative to 'path') 训练集
+val: images/val # val images (relative to 'path') 验证集
+test: # test images (relative to 'path') 测试集可选
+
+# Classes
+names:
+  0: man
+  1: girl
+  2: carbvn
+</code></pre>
+<p>之后即可使用命令行进行训练</p>
+
+<pre class="language-bash"><code class="language-bash">yolo task=detect mode=train model=./yolov8n.pt data=./bvn.yaml epochs=30 workers=1 batch=16
+</code></pre>
+<p>也可以使用代码进行</p>
+
+<pre class="language-python"><code class="language-python">from ultralytics import YOLO
+module = YOLO('yolov8n.pt')  # load a pretrained model (recommended for training)
+module.train(data='bvn.yaml', epochs=100, imgsz=640, batch=16, , device=&quot;mps&quot;) # 使用Apple的mps进行训练
+</code></pre>
+<h3 id="%E5%9F%BA%E6%9C%AC%E5%8F%82%E6%95%B0">基本参数</h3>
+<blockquote>
+<p>默认参数记录在文件<code>ultralytics/ultralytics/cfg/default.yaml</code>里面</p>
+</blockquote>
+<p>YOLO 模型的训练设置包括训练过程中使用的各种超参数和配置。这些设置会影响模型的性能、速度和<a href="https://www.ultralytics.com/glossary/accuracy"  target="_blank">准确性</a>。关键训练设置包括批量大小、学习率、动量和权重衰减。此外，优化器的选择、<a href="https://www.ultralytics.com/glossary/loss-function"  target="_blank">损失函数</a>和训练数据集组成会影响训练过程</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">参数</th>
+  <th style="text-align:left">类型</th>
+  <th style="text-align:left">默认值</th>
+  <th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>model</code></td>
+  <td style="text-align:left"><code>str</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">指定用于训练的模型文件。接受指向 <code>.pt</code> 预训练模型或 <code>.yaml</code> 配置文件的路径。对于定义模型结构或初始化权重至关重要。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>data</code></td>
+  <td style="text-align:left"><code>str</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">数据集配置文件的路径（例如， <code>coco8.yaml</code>）。此文件包含数据集特定的参数，包括训练和 <a href="https://www.ultralytics.com/glossary/validation-data"  target="_blank">验证数据的路径</a>，类别名称和类别数量。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>epochs</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>100</code></td>
+  <td style="text-align:left">训练的总轮数。每个<a href="https://www.ultralytics.com/glossary/epoch"  target="_blank">epoch</a>代表对整个数据集的一次完整遍历。调整此值会影响训练时长和模型性能。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>time</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">最长训练时间（以小时为单位）。如果设置此参数，它将覆盖 <code>epochs</code> 参数，允许训练在指定时长后自动停止。适用于时间受限的训练场景。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>patience</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>100</code></td>
+  <td style="text-align:left">在验证指标没有改善的情况下，等待多少个epoch后提前停止训练。通过在性能停滞时停止训练，有助于防止<a href="https://www.ultralytics.com/glossary/overfitting"  target="_blank">过拟合</a>。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>batch</code></td>
+  <td style="text-align:left"><code>int</code> 或 <code>float</code></td>
+  <td style="text-align:left"><code>16</code></td>
+  <td style="text-align:left"><a href="https://www.ultralytics.com/glossary/batch-size"  target="_blank">批次大小</a>，具有三种模式：设置为整数（例如， <code>batch=16</code>），自动模式，GPU 内存利用率为 60%（<code>batch=-1</code>），或具有指定利用率分数的自动模式（<code>batch=0.70</code>）。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>imgsz</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>640</code></td>
+  <td style="text-align:left">用于训练的目标图像大小。图像被调整为边长等于指定值的正方形（如果 <code>rect=False</code>），为 YOLO 模型保留宽高比，但不为 RT-DETR 保留。影响模型 <a href="https://www.ultralytics.com/glossary/accuracy"  target="_blank">准确性</a> 和计算复杂度。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>save</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>True</code></td>
+  <td style="text-align:left">启用保存训练检查点和最终模型权重。可用于恢复训练或<a href="https://www.ultralytics.com/glossary/model-deployment"  target="_blank">模型部署</a>。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>save_period</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>-1</code></td>
+  <td style="text-align:left">保存模型检查点的频率，以 epoch 为单位指定。值为 -1 时禁用此功能。适用于在长时间训练期间保存临时模型。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>cache</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">启用在内存中缓存数据集图像（<code>True</code>/<code>ram</code>），在磁盘上缓存（<code>disk</code>），或禁用缓存（<code>False</code>）。通过减少磁盘 I/O 来提高训练速度，但会增加内存使用量。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>device</code></td>
+  <td style="text-align:left"><code>int</code> 或 <code>str</code> 或 <code>list</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">指定用于训练的计算设备：单个 GPU（<code>device=0</code>），多个 GPU（<code>device=[0,1]</code>），CPU（<code>device=cpu</code>），适用于 Apple 芯片的 MPS（<code>device=mps</code>），或自动选择最空闲的 GPU（<code>device=-1</code>）或多个空闲 GPU （<code>device=[-1,-1]</code>)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>workers</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>8</code></td>
+  <td style="text-align:left">用于数据加载的工作线程数（每个 <code>RANK</code> ，如果是多 GPU 训练）。影响数据预处理和输入模型的速度，在多 GPU 设置中尤其有用。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>project</code></td>
+  <td style="text-align:left"><code>str</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">项目目录的名称，训练输出保存在此目录中。允许有组织地存储不同的实验。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>name</code></td>
+  <td style="text-align:left"><code>str</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">训练运行的名称。用于在项目文件夹中创建一个子目录，训练日志和输出存储在该子目录中。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>exist_ok</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">如果为 True，则允许覆盖现有的 project/name 目录。适用于迭代实验，无需手动清除之前的输出。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>pretrained</code></td>
+  <td style="text-align:left"><code>bool</code> 或 <code>str</code></td>
+  <td style="text-align:left"><code>True</code></td>
+  <td style="text-align:left">确定是否从预训练模型开始训练。可以是一个布尔值，也可以是加载权重的特定模型的字符串路径。增强训练效率和模型性能。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>optimizer</code></td>
+  <td style="text-align:left"><code>str</code></td>
+  <td style="text-align:left"><code>'auto'</code></td>
+  <td style="text-align:left">训练优化器的选择。选项包括 <code>SGD</code>, <code>Adam</code>, <code>AdamW</code>, <code>NAdam</code>, <code>RAdam</code>, <code>RMSProp</code> 等等，或者 <code>auto</code> 用于基于模型配置自动选择。影响收敛速度和稳定性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>seed</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>0</code></td>
+  <td style="text-align:left">设置训练的随机种子，确保在相同配置下运行结果的可重复性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>deterministic</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>True</code></td>
+  <td style="text-align:left">强制使用确定性算法，确保可重复性，但由于限制了非确定性算法，可能会影响性能和速度。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>single_cls</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">在多类别数据集中，将所有类别视为单个类别进行训练。适用于二元分类任务或侧重于对象是否存在而非分类时。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>classes</code></td>
+  <td style="text-align:left"><code>list[int]</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">指定要训练的类 ID 列表。可用于在训练期间过滤掉并仅关注某些类。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>rect</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">启用最小填充策略——批量中的图像被最小程度地填充以达到一个共同的大小，最长边等于 <code>imgsz</code>。可以提高效率和速度，但可能会影响模型精度。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>multi_scale</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">通过增加/减少来启用多尺度训练 <code>imgsz</code> 高达 <code>0.5</code> 在训练期间。训练模型，使其在多次迭代中更加准确 <code>imgsz</code> 在推理过程中。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>cos_lr</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">使用余弦<a href="https://www.ultralytics.com/glossary/learning-rate"  target="_blank">学习率</a>调度器，在 epochs 上按照余弦曲线调整学习率。有助于管理学习率，从而实现更好的收敛。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>close_mosaic</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>10</code></td>
+  <td style="text-align:left">在最后 N 个 epochs 中禁用 mosaic <a href="https://www.ultralytics.com/glossary/data-augmentation"  target="_blank">数据增强</a>，以在完成前稳定训练。设置为 0 可禁用此功能。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>resume</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">从上次保存的检查点恢复训练。自动加载模型权重、优化器状态和 epoch 计数，无缝继续训练。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>amp</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>True</code></td>
+  <td style="text-align:left">启用自动<a href="https://www.ultralytics.com/glossary/mixed-precision"  target="_blank">混合精度</a>（AMP）训练，减少内存使用，并可能在对准确性影响最小的情况下加快训练速度。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>fraction</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>1.0</code></td>
+  <td style="text-align:left">指定用于训练的数据集比例。允许在完整数据集的子集上进行训练，这在实验或资源有限时非常有用。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>profile</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">在训练期间启用 ONNX 和 TensorRT 速度的分析，有助于优化模型部署。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>freeze</code></td>
+  <td style="text-align:left"><code>int</code> 或 <code>list</code></td>
+  <td style="text-align:left"><code>None</code></td>
+  <td style="text-align:left">冻结模型的前 N 层或按索引指定的层，从而减少可训练参数的数量。适用于微调或<a href="https://www.ultralytics.com/glossary/transfer-learning"  target="_blank">迁移学习</a>。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>lr0</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.01</code></td>
+  <td style="text-align:left">初始学习率（即 <code>SGD=1E-2</code>, <code>Adam=1E-3</code>)。调整此值对于优化过程至关重要，它会影响模型权重更新的速度。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>lrf</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.01</code></td>
+  <td style="text-align:left">最终学习率作为初始速率的一部分 = (<code>lr0 * lrf</code>），与调度器结合使用以随时间调整学习率。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>momentum</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.937</code></td>
+  <td style="text-align:left">用于SGD 的动量因子，或用于<a href="https://www.ultralytics.com/glossary/adam-optimizer"  target="_blank">Adam 优化器</a>的 beta1，用于将过去的梯度纳入当前更新。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>weight_decay</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0005</code></td>
+  <td style="text-align:left">L2 <a href="https://www.ultralytics.com/glossary/regularization"  target="_blank">正则化</a>项，惩罚大权重以防止过拟合。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>warmup_epochs</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>3.0</code></td>
+  <td style="text-align:left">学习率预热的 epochs 数，将学习率从低值逐渐增加到初始学习率，以在早期稳定训练。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>warmup_momentum</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.8</code></td>
+  <td style="text-align:left">预热阶段的初始动量，在预热期间逐渐调整到设定的动量。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>warmup_bias_lr</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.1</code></td>
+  <td style="text-align:left">预热阶段偏差参数的学习率，有助于稳定初始 epochs 中的模型训练。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>box</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>7.5</code></td>
+  <td style="text-align:left"><a href="https://www.ultralytics.com/glossary/loss-function"  target="_blank">损失函数</a>中框损失分量的权重，影响对准确预测<a href="https://www.ultralytics.com/glossary/bounding-box"  target="_blank">边界框</a>坐标的重视程度。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>cls</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.5</code></td>
+  <td style="text-align:left">分类损失在总损失函数中的权重，影响正确类别预测相对于其他成分的重要性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>dfl</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>1.5</code></td>
+  <td style="text-align:left">分布焦点损失的权重，在某些 YOLO 版本中用于细粒度分类。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>pose</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>12.0</code></td>
+  <td style="text-align:left">在为姿势估计训练的模型中，姿势损失的权重会影响对准确预测姿势关键点的强调。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>kobj</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>2.0</code></td>
+  <td style="text-align:left">姿势估计模型中关键点对象性损失的权重，用于平衡检测置信度和姿势准确性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>nbs</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>64</code></td>
+  <td style="text-align:left">用于损失归一化的标称批量大小。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>overlap_mask</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>True</code></td>
+  <td style="text-align:left">确定是否应将对象掩码合并为单个掩码以进行训练，还是为每个对象保持分离。如果发生重叠，则在合并期间，较小的掩码会覆盖在较大的掩码之上。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>mask_ratio</code></td>
+  <td style="text-align:left"><code>int</code></td>
+  <td style="text-align:left"><code>4</code></td>
+  <td style="text-align:left">分割掩码的下采样率，影响训练期间使用的掩码分辨率。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>dropout</code></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left">分类任务中用于正则化的 Dropout 率，通过在训练期间随机省略单元来防止过拟合。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>val</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>True</code></td>
+  <td style="text-align:left">在训练期间启用验证，从而可以定期评估模型在单独数据集上的性能。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>plots</code></td>
+  <td style="text-align:left"><code>bool</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">生成并保存训练和验证指标的图表，以及预测示例，从而提供对模型性能和学习进度的可视化见解。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>compile</code></td>
+  <td style="text-align:left"><code>bool</code> 或 <code>str</code></td>
+  <td style="text-align:left"><code>False</code></td>
+  <td style="text-align:left">启用 PyTorch 2.x <code>torch.compile</code> 使用以下方式进行图形编译 <code>backend='inductor'</code>。接受 <code>True</code> → <code>&quot;default&quot;</code>, <code>False</code> → 禁用，或字符串模式，例如 <code>&quot;default&quot;</code>, <code>&quot;reduce-overhead&quot;</code>, <code>&quot;max-autotune-no-cudagraphs&quot;</code>。如果不支持，则会发出警告并回退到 Eager 模式。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E5%A2%9E%E5%BC%BA%E5%8F%82%E6%95%B0">增强参数</h3>
+<p>数据增强技术对于提高 YOLO 模型的鲁棒性和性能至关重要，它通过在<a href="https://www.ultralytics.com/glossary/training-data"  target="_blank">训练数据</a>中引入变异性，帮助模型更好地泛化到未见过的数据。下表概述了每个数据增强参数的目的和效果</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">参数</th>
+  <th style="text-align:left">类型</th>
+  <th style="text-align:left">默认值</th>
+  <th style="text-align:left">支持的任务</th>
+  <th style="text-align:left">范围</th>
+  <th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#translation-translate"  target="_blank"><code>translate</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.1</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">将图像横向和纵向平移一小部分，帮助学习detect 部分可见的物体。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#shear-shear"  target="_blank"><code>shear</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>-180 - +180</code></td>
+  <td style="text-align:left">按指定的角度错切图像，模仿从不同角度观察物体的效果。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#scale-scale"  target="_blank"><code>scale</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.5</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code>, <code>classify</code></td>
+  <td style="text-align:left"><code>0 - 1</code></td>
+  <td style="text-align:left">通过增益因子缩放图像，模拟物体与相机的不同距离。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#perspective-perspective"  target="_blank"><code>perspective</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>0.0 - 0.001</code></td>
+  <td style="text-align:left">对图像应用随机透视变换，增强模型理解 3D 空间中物体的能力。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#mosaic-mosaic"  target="_blank"><code>mosaic</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>1.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">将四个训练图像组合成一个，模拟不同的场景组成和物体交互。对于复杂的场景理解非常有效。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#mixup-mixup"  target="_blank"><code>mixup</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">混合两个图像及其标签，创建一个合成图像。通过引入标签噪声和视觉变化，增强模型的泛化能力。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#brightness-adjustment-hsv_v"  target="_blank"><code>hsv_v</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.4</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code>, <code>classify</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">通过一小部分修改图像的明度（亮度），帮助模型在各种光照条件下表现良好。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#saturation-adjustment-hsv_s"  target="_blank"><code>hsv_s</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.7</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code>, <code>classify</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">通过一小部分改变图像的饱和度，从而影响颜色的强度。可用于模拟不同的环境条件。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#hue-adjustment-hsv_h"  target="_blank"><code>hsv_h</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.015</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code>, <code>classify</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">通过色轮的一小部分调整图像的色调，从而引入颜色变化。帮助模型在不同的光照条件下进行泛化。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#flip-up-down-flipud"  target="_blank"><code>flipud</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code>, <code>classify</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">以指定的概率将图像上下翻转，增加数据变化，而不影响物体的特征。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#flip-left-right-fliplr"  target="_blank"><code>fliplr</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.5</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code>, <code>classify</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">以指定的概率将图像左右翻转，有助于学习对称物体并增加数据集的多样性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#random-erasing-erasing"  target="_blank"><code>erasing</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.4</code></td>
+  <td style="text-align:left"><code>classify</code></td>
+  <td style="text-align:left"><code>0.0 - 0.9</code></td>
+  <td style="text-align:left">在训练期间随机擦除图像区域，以鼓励模型关注不太明显的特征。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#rotation-degrees"  target="_blank"><code>degrees</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>0.0 - 180</code></td>
+  <td style="text-align:left">在指定的角度范围内随机旋转图像，提高模型识别各种方向物体的能力。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#cutmix-cutmix"  target="_blank"><code>cutmix</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">组合两张图像的部分区域，创建局部混合，同时保持清晰的区域。通过创建遮挡场景来增强模型的鲁棒性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#copy-paste-mode-copy_paste_mode"  target="_blank"><code>copy_paste_mode</code></a></td>
+  <td style="text-align:left"><code>str</code></td>
+  <td style="text-align:left"><code>flip</code></td>
+  <td style="text-align:left"><code>segment</code></td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">指定 <code>copy-paste</code> 要使用的策略。选项包括 <code>'flip'</code> 和 <code>'mixup'</code>.</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#copy-paste-copy_paste"  target="_blank"><code>copy_paste</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>segment</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">跨图像复制和粘贴对象以增加对象实例。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#bgr-channel-swap-bgr"  target="_blank"><code>bgr</code></a></td>
+  <td style="text-align:left"><code>float</code></td>
+  <td style="text-align:left"><code>0.0</code></td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left"><code>0.0 - 1.0</code></td>
+  <td style="text-align:left">以指定的概率将图像通道从 RGB 翻转到 BGR，有助于提高对不正确通道排序的鲁棒性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#auto-augment-auto_augment"  target="_blank"><code>auto_augment</code></a></td>
+  <td style="text-align:left"><code>str</code></td>
+  <td style="text-align:left"><code>randaugment</code></td>
+  <td style="text-align:left"><code>classify</code></td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">应用预定义的增强策略（<code>'randaugment'</code>, <code>'autoaugment'</code>或 <code>'augmix'</code>）通过视觉多样性来增强模型性能。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><a href="https://docs.ultralytics.com/zh/guides/yolo-data-augmentation//#custom-albumentations-transforms-augmentations"  target="_blank"><code>augmentations</code></a></td>
+  <td style="text-align:left"><code>list</code></td>
+  <td style="text-align:left">``</td>
+  <td style="text-align:left"><code>detect</code>, <code>segment</code>, <code>pose</code>, <code>obb</code></td>
+  <td style="text-align:left">-</td>
+  <td style="text-align:left">用于高级数据增强的自定义 Albumentations 转换Python 仅限Python API）。接受转换对象列表，以满足专门的增强需求。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E8%87%AA%E5%AE%9A%E4%B9%89%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE">自定义默认配置</h3>
+<p>使用命令<code>yolo copy-cfg</code>这个命令会复制一个配置文件到当前的工程目录里面</p>
+<p>之后即可使用<code>yolo cfg=defult_copy.yaml</code>执行</p>
+<h2 id="%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C">输出结果</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20251213130551523.png" alt="image-20251213130551523" /></p>
+<h2 id="%E4%BD%BF%E7%94%A8%E9%A2%84%E6%B5%8B">使用预测</h2>
+
+<pre class="language-bash"><code class="language-bash">yolo detect predict model=../ultralytics/runs/detect/train4/weights/best.pt source=./calling20221009.mp4 show=True
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20251213130907816.png" alt="image-20251213130907816" /></p>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-12-12-04-预测</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html">
+                            <span class="label">2025-12-13-06-yolov5基础使用</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

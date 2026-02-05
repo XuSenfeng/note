@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>进程、协程、线程 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["Linux"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class="active"><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/使用软件/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">ARM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/ARM/2023-6-26-1ARM汇编.html"><span class="label">2023-6-26-1ARM汇编</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">BambuStudio</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/BambuStudio/2024-8-14-01软件.html"><span class="label">2024-8-14-01软件</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Docker</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/Docker/2023-6-16-Docker.html"><span class="label">2023-6-16-Docker</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/Docker/2025-12-16-02-创建使用.html"><span class="label">2025-12-16-02-创建使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/Docker/2025-12-16-03-网络.html"><span class="label">2025-12-16-03-网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/Docker/2025-12-16-04-分层.html"><span class="label">2025-12-16-04-分层</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/Docker/2025-12-16-05-多个网络.html"><span class="label">2025-12-16-05-多个网络</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Stable-diffusion</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/Stable-diffusion/2023-5-2-ai图生图.html"><span class="label">2023-5-2-ai图生图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/Stable-diffusion/2023-5-2-ai绘画.html"><span class="label">2023-5-2-ai绘画</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">WSL</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/WSL/2024-10-14-WSL.html"><span class="label">2024-10-14-WSL</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">ai-jupyter</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/ai-jupyter/2024-9-10-Jupyter.html"><span class="label">2024-9-10-Jupyter</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">ffmpeg</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/ffmpeg/2025-12-21-01-FFMPEG.html"><span class="label">2025-12-21-01-FFMPEG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/ffmpeg/2025-12-21-02-属性以及查询命令.html"><span class="label">2025-12-21-02-属性以及查询命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/ffmpeg/2025-12-21-03-ffplay控制.html"><span class="label">2025-12-21-03-ffplay控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/ffmpeg/2025-12-26-04-ffmpeg.html"><span class="label">2025-12-26-04-ffmpeg</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">git</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/git/2025-1-9-Git.html"><span class="label">2025-1-9-Git</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/git/Untitled.html"><span class="label">Untitled</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">inventor建模</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/inventor建模/2023-9-13-001工作界面.html"><span class="label">2023-9-13-001工作界面</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/inventor建模/2023-9-13-001绘制草图.html"><span class="label">2023-9-13-001绘制草图</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">qemu</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/qemu/2025-2-26-qemu.html"><span class="label">2025-2-26-qemu</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">qt</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/qt/0000-0-00-lambda表达式.html"><span class="label">0000-0-00-lambda表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-12-QT简介.html"><span class="label">2022-9-12-QT简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-13-01-QT项目.html"><span class="label">2022-9-13-01-QT项目</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-13-02-信号槽.html"><span class="label">2022-9-13-02-信号槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-13-03-对象树.html"><span class="label">2022-9-13-03-对象树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-13-04-样式表以及资源文件.html"><span class="label">2022-9-13-04-样式表以及资源文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-14-05-Button.html"><span class="label">2022-9-14-05-Button</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-14-06-菜单栏工具栏.html"><span class="label">2022-9-14-06-菜单栏工具栏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-15-07-控件.html"><span class="label">2022-9-15-07-控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-15-08-界面布局.html"><span class="label">2022-9-15-08-界面布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-15-事件.html"><span class="label">2022-9-15-事件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-15-对话框.html"><span class="label">2022-9-15-对话框</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-15-添加自定义控件.html"><span class="label">2022-9-15-添加自定义控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-15-绘图.html"><span class="label">2022-9-15-绘图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-16-动画.html"><span class="label">2022-9-16-动画</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/qt/2022-9-16-文件读写.html"><span class="label">2022-9-16-文件读写</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">quicker</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/quicker/2023-12-20-入门.html"><span class="label">2023-12-20-入门</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">solidworks-3D建模</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/solidworks-3D建模/2024-7-25-安装.html"><span class="label">2024-7-25-安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/solidworks-3D建模/2024-7-26-01基础介绍.html"><span class="label">2024-7-26-01基础介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/solidworks-3D建模/2024-7-26-02草图绘制.html"><span class="label">2024-7-26-02草图绘制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/solidworks-3D建模/2024-7-28-03特征.html"><span class="label">2024-7-28-03特征</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/solidworks-3D建模/2024-7-29-04装配体.html"><span class="label">2024-7-29-04装配体</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/solidworks-3D建模/2024-7-31-工程图.html"><span class="label">2024-7-31-工程图</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">teedoc</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/teedoc/2025-12-16-00-基础使用.html"><span class="label">2025-12-16-00-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/teedoc/2025-12-16-01-github脚本.html"><span class="label">2025-12-16-01-github脚本</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vim</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/vim/2024-4-10-ctags.html"><span class="label">2024-4-10-ctags</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vscode</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/vscode/2024-2-2-使用.html"><span class="label">2024-2-2-使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/vscode/2024-8-5-快捷键.html"><span class="label">2024-8-5-快捷键</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">基础软件命令语法</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/使用软件/基础软件命令语法/2022-7-21-Linux相关指令.html"><span class="label">2022-7-21-Linux相关指令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/基础软件命令语法/2022-7-21-Markdown标记语言的使用.html"><span class="label">2022-7-21-Markdown标记语言的使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/基础软件命令语法/2022-7-21-git相关指令.html"><span class="label">2022-7-21-git相关指令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/基础软件命令语法/2022-7-21-typedef.html"><span class="label">2022-7-21-typedef</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/基础软件命令语法/2022-7-21-vim相关指令.html"><span class="label">2022-7-21-vim相关指令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/基础软件命令语法/2022-7-21-正则表达式.html"><span class="label">2022-7-21-正则表达式</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/使用软件/基础软件命令语法/2022-8-3-进程线程协程.html"><span class="label">2022-8-3-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">微信小程序</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/微信小程序/2025-7-22-01-入门.html"><span class="label">2025-7-22-01-入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/微信小程序/2025-7-24-02-升级.html"><span class="label">2025-7-24-02-升级</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/微信小程序/2025-8-12-04-上线.html"><span class="label">2025-8-12-04-上线</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/微信小程序/2025-8-9-03-第三方UI库.html"><span class="label">2025-8-9-03-第三方UI库</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">数据库</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/使用软件/数据库/2023-1-20-安装.html"><span class="label">2023-1-20-安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/数据库/2023-1-20-数据库管理.html"><span class="label">2023-1-20-数据库管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/数据库/2023-1-20-概述.html"><span class="label">2023-1-20-概述</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/数据库/2023-1-21-数据行.html"><span class="label">2023-1-21-数据行</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/数据库/2023-1-23-使用代码进行控制.html"><span class="label">2023-1-23-使用代码进行控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/数据库/2025-2-21-Redis.html"><span class="label">2025-2-21-Redis</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/使用软件/数据库/2025-2-6-语句.html"><span class="label">2025-2-6-语句</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>进程、协程、线程</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>Linux</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/使用软件/基础软件命令语法/2022-8-3-进程线程协程.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B%E7%BA%BF%E7%A8%8B">线程协程线程</h1>
+<p>进程&gt;=线程&gt;=进程</p>
+<p>类比一个进程可以拥有多个线程，一个线程也可以拥有多个协程，因此协程又称微线程和纤程</p>
+<h2 id="%3Cstrong%3E%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C%3C/strong%3E"><strong>并发与并行</strong></h2>
+<p>并发：在操作系统中，某一时间段，几个程序在同一个CPU上运行，但在任意一个时间点上，只有一个程序在CPU上运行。<br />
+并行：当操作系统有多个CPU时，一个CPU处理A线程，另一个CPU处理B线程，两个线程互相不抢占CPU资源，可以同时进行，这种方式成为并行。<br />
+<strong>区别</strong></p>
+<ol>
+<li>并发只是在宏观上给人感觉有多个程序在同时运行，但在实际的单CPU系统中，每一时刻只有一个程序在运行，微观上这些程序是分时交替执行。</li>
+<li>在多CPU系统中，将这些并发执行的程序分配到不同的CPU上处理，每个CPU用来处理一个程序，这样多个程序便可以实现同时执行。</li>
+</ol>
+<p>例子：</p>
+<ul>
+<li>你吃饭吃到一半，电话来了，你一直到吃完了以后才去接，这就说明你不支持并发也不支持并行。</li>
+<li>你吃饭吃到一半，电话来了，你停了下来接了电话，接完后继续吃饭，这说明你支持并发。</li>
+<li>你吃饭吃到一半，电话来了，你一边打电话一边吃饭，这说明你支持并行。</li>
+</ul>
+<p>并发的关键是你有处理多个任务的能力，不一定要同时。并行的关键是你有同时处理多个任务的能力。所以我认为它们最关键的点就是：是否是<strong>『同时』</strong>。</p>
+<h2 id="%3Cstrong%3E%E8%BF%9B%E7%A8%8B%3C/strong%3E"><strong>进程</strong></h2>
+<p>一个进程好比是一个程序，它是 <strong>资源分配的最小单位</strong> 。同一时刻执行的进程数不会超过核心数。不过如果问单核CPU能否运行多进程？答案又是肯定的。单核CPU也可以运行多进程，只不过不是同时的，而是极快地在进程间来回切换实现的多进程。举个简单的例子，就算是十年前的单核CPU的电脑，也可以聊QQ的同时看视频。</p>
+<p>电脑中有许多进程需要处于「同时」开启的状态，而利用CPU在进程间的快速切换，可以实现「同时」运行多个程序。而进程切换则意味着需要保留进程切换前的状态，以备切换回去的时候能够继续接着工作。所以进程拥有自己的地址空间，全局变量，文件描述符，各种硬件等等资源。操作系统通过调度CPU去执行进程的记录、回复、切换等等。</p>
+<h2 id="%3Cstrong%3E%E7%BA%BF%E7%A8%8B%3C/strong%3E"><strong>线程</strong></h2>
+<p>它是 <strong>程序执行过程中的最小单元</strong> 。来回切换的<strong>内容保存在内核</strong>之中， 切换需要内核的参与</p>
+<p>一个程序内包含了多种任务。打个比方，用播放器看视频的时候，视频输出的画面和声音可以认为是两种任务。当你拖动进度条的时候又触发了另外一种任务。拖动进度条会导致画面和声音都发生变化，如果进程里没有线程的话，那么可能发生的情况就是：</p>
+<p>拖动进度条-&gt;画面更新-&gt;声音更新。你会明显感到画面和声音和进度条不同步。</p>
+<p>但是加上了线程之后，<strong>线程能够共享进程的大部分资源</strong>，并参与CPU的调度。意味着它能够在进程间进行切换，实现「并发」，从而反馈到使用上就是拖动进度条的同时，画面和声音都同步了。所以我们经常能听到的一个词是「多线程」，就是把一个程序分成多个任务去跑，让任务更快处理。不过线程和线程之间由于某些资源是独占的，会导致锁的问题。例如Python的GIL多线程锁。</p>
+<h2 id="%3Cstrong%3E%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB%3C/strong%3E"><strong>进程与线程的区别</strong></h2>
+<ol>
+<li>进程是CPU资源分配的基本单位，线程是独立运行和独立调度的基本单位（CPU上真正运行的是线程）。</li>
+<li>进程拥有自己的资源空间，一个进程包含若干个线程，线程与CPU资源分配无关，多个线程共享同一进程内的资源。</li>
+<li>线程的调度与切换比进程快很多。</li>
+</ol>
+<p><strong>CPU密集型代码(各种循环处理、计算等等)：使用多进程。IO密集型代码(文件处理、网络爬虫等)：使用多线程</strong></p>
+<h2 id="%3Cstrong%3E%E9%98%BB%E5%A1%9E%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9E%3C/strong%3E"><strong>阻塞与非阻塞</strong></h2>
+<p>阻塞是指调用线程或者进程被操作系统挂起。<br />
+非阻塞是指调用线程或者进程不会被操作系统挂起。</p>
+<h2 id="%3Cstrong%3E%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5%3C/strong%3E"><strong>同步与异步</strong></h2>
+<p>同步是阻塞模式，异步是非阻塞模式。</p>
+<ul>
+<li>同步就是指一个进程在执行某个请求的时候，若该请求需要一段时间才能返回信息，那么这个进程将会一直等待下去，知道收到返回信息才继续执行下去；</li>
+<li>异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态。当有消息返回式系统会通知进程进行处理，这样可以提高执行的效率。</li>
+</ul>
+<p>由调用方盲目主动问询的方式是同步调用，由被调用方主动通知调用方任务已完成的方式是异步调用。看下图</p>
+<p><img src="https://pic4.zhimg.com/80/v2-f1118cbd6283a2626e6d4b9e7477b21b_720w.jpg" alt="img" /></p>
+<h2 id="%3Cstrong%3E%E5%8D%8F%E7%A8%8B%3C/strong%3E"><strong>协程</strong></h2>
+<p>一句话说明什么是线程：协程是一种用户态的轻量级线程。</p>
+<p>协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈。<strong>保存的位置位于内核之外</strong>，由程序实现协程的切换, 所以不用来回切换到内核, 由程序自己控制切换协程的好处：</p>
+<ol>
+<li>无需线程上下文切换的开销</li>
+<li>无需原子操作锁定及同步的开销</li>
+<li>方便切换控制流，简化编程模型</li>
+</ol>
+<p>高并发+高扩展性+低成本：一个CPU支持上万的协程都不是问题。所以很适合用于高并发处理。</p>
+<p>缺点：</p>
+<ol>
+<li>无法利用多核资源：协程的本质是个单线程,它不能同时将 单个CPU 的多个核用上,协程需要和进程配合才能运行在多CPU上.当然我们日常所编写的绝大部分应用都没有这个必要，除非是cpu密集型应用。</li>
+<li>进行阻塞（Blocking）操作（如IO时）会阻塞掉整个程序</li>
+</ol>
+<h2 id="%3Cstrong%3E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%3C/strong%3E"><strong>最佳实践</strong></h2>
+<ol>
+<li>线程和协程推荐在IO密集型的任务(比如网络调用)中使用，而在CPU密集型的任务中，表现较差。</li>
+<li>对于CPU密集型的任务，则需要多个进程，绕开GIL的限制，利用所有可用的CPU核心，提高效率。</li>
+<li>所以大并发下的最佳实践就是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能。</li>
+</ol>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/使用软件/基础软件命令语法/2022-7-21-正则表达式.html">
+                            <span class="icon"></span>
+                            <span class="label">2022-7-21-正则表达式</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/使用软件/微信小程序/2025-7-22-01-入门.html">
+                            <span class="label">2025-7-22-01-入门</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

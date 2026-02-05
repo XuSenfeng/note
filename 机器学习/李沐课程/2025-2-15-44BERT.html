@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>BERT - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">李沐课程</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">视觉识别</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>BERT</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/李沐课程/2025-2-15-44BERT.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h2 id="NLP%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0">NLP迁移学习</h2>
+<p>使用预训练的模型抽取词和句子特征, 比如word2vec, 不更新训练好的模型, 需要构建新的网络抓取新任务使用的信息</p>
+<blockquote>
+<p>替换掉embed层</p>
+</blockquote>
+<p>BERT是一个基于微调的NLP模型, 预训练了足够多的信息, 新的任务只需要加一个简单的输出层, 实际是一个只有编码器的Transformer</p>
+<p><img src="https://pic1.zhimg.com/v2-bf3ee1a496cde5b6707d2ca2ffaccdda_1440w.jpg" alt="img" /></p>
+<p>这个模型有两个版本, 改变的是block的数量以及hidden size, head的大小和参数的数量</p>
+<h2 id="%E5%AF%B9%E8%BE%93%E5%85%A5%E7%9A%84%E4%BF%AE%E6%94%B9">对输入的修改</h2>
+<p>每个输入的句子是一个句子对(原来的两个句子需要分别进输入和输出), 句子的开头和分割加入一个分隔符</p>
+<p>Embedding由三种Embedding求和而成：</p>
+<p><img src="https://pica.zhimg.com/v2-86cc5ff7f5295dbf9587371034ba7abe_1440w.jpg" alt="img" /></p>
+<ul>
+<li>Token Embeddings是词向量，第一个单词是CLS标志，可以用于之后的分类任务</li>
+</ul>
+<p>通过建立字向量表将每个字转换成一个一维向量，作为模型输入。特别的，英文词汇会做更细粒度的切分，比如playing 或切割成 play 和 ##ing，中文目前尚未对输入文本进行分词，直接对单子构成为本的输入单位。将词切割成更细粒度的 Word Piece 是为了解决未登录词的常见方法。</p>
+<p>假如输入文本 ”I like dog“。下图则为 Token Embeddings 层实现过程。输入文本在送入 Token Embeddings 层之前要先进性 tokenization 处理，且两个特殊的 Token 会插入在文本开头 [CLS] 和结尾 [SEP]。[CLS]表示该特征用于分类模型，对非分类模型，该符号可以省去。[SEP]表示分句符号，用于断开输入语料中的两个句子。</p>
+<blockquote>
+<p>使用这两个是为了处理一个NSP分类任务, 使用[CLS]的标志, 其表示整个文本序列的分类信息。在训练过程中，将该[CLS]标志的输出向量传输到一个分类器（如softmax层），从而使BERT模型能够应用于文本分类任务</p>
+<p>通过将文本序列的输出向量与分类器进行连接，BERT模型可以对输入文本进行分类，并根据不同任务对[CLS]标志的输出进行微调。这种方式使得BERT模型可以适应各种分类任务，如情感分析、文本分类、问题回答等。</p>
+<p>这个向量不可以用于作为整个句子的语义</p>
+</blockquote>
+<p>Bert 在处理英文文本时只需要 30522 个词，Token Embeddings 层会将每个词转换成 768 维向量，例子中 5 个Token 会被转换成一个 (6, 768) 的矩阵或 (1, 6, 768) 的张量。</p>
+<p><img src="https://pic2.zhimg.com/v2-817b0e44f9afe2d3db8672c1cfbcb809_1440w.jpg" alt="img" /></p>
+<ul>
+<li>Segment Embeddings用来区别两种句子，因为预训练不光做LM还要做以两个句子为输入的分类任务</li>
+</ul>
+<p>Bert 能够处理句子对的分类任务，这类任务就是判断两个文本是否是语义相似的。句子对中的两个句子被简单的拼接在一起后送入模型中，Bert 如何区分一个句子对是两个句子呢？答案就是 Segment Embeddings。</p>
+<p>Segement Embeddings 层有两种向量表示，前一个向量是把 0 赋值给第一个句子的各个 Token，后一个向量是把1赋值给各个 Token，问答系统等任务要预测下一句，因此输入是有关联的句子。而文本分类只有一个句子，那么 Segement embeddings 就全部是 0。</p>
+<p><img src="https://pic1.zhimg.com/v2-888e81eea8ec993cbf676c9dd6750b50_1440w.jpg" alt="img" /></p>
+<ul>
+<li>Position Embeddings和之前文章中的Transformer不一样，不是三角函数而是学习出来的</li>
+</ul>
+<p>由于出现在文本不同位置的字/词所携带的语义信息存在差异(如 ”你爱我“ 和 ”我爱你“)，你和我虽然都和爱字很接近，但是位置不同，表示的含义不同。</p>
+<p>在 RNN 中，第二个 ”I“ 和 第一个 ”I“ 表达的意义不一样，因为它们的隐状态不一样。对第二个 ”I“ 来说，隐状态经过 ”I think therefore“ 三个词，包含了前面三个词的信息，而第一个 ”I“ 只是一个初始值。因此，RNN 的隐状态保证在不同位置上相同的词有不同的输出向量表</p>
+<p><img src="https://pic2.zhimg.com/v2-bcba030285047b347d73721e415d3dad_1440w.jpg" alt="img" /></p>
+<p>Transformer 中通过植入关于 Token 的相对位置或者绝对位置信息来表示序列的顺序信息。作者测试用学习的方法来得到 Position Embeddings，最终发现固定位置和相对位置效果差不多，所以最后用的是固定位置的，而正弦可以处理更长的 Sequence，且可以用前面位置的值线性表示后面的位置。</p>
+<p>BERT 中处理的最长序列是 512 个 Token，长度超过 512 会被截取，BERT 在各个位置上学习一个向量来表示序列顺序的信息编码进来，这意味着 Position Embeddings 实际上是一个 (512, 768) 的 lookup 表，表第一行是代表第一个序列的每个位置，第二行代表序列第二个位置。</p>
+<h2 id="%E9%A2%84%E8%AE%AD%E7%BB%83">预训练</h2>
+<p>分为两个部分, MLM和NSP两个任务, 同时进行</p>
+<p>在进行自训练的时候主要有两种方式</p>
+<ul>
+<li>MLM是指Masked Language Model</li>
+</ul>
+<p>AR（AutoRegressive）模型是一种时间序列模型，它依赖于过去时间步的输入来预测未来的输出。AR模型通常用于时间序列数据的预测和建模，其中当前时间步的输出与前面若干个时间步的输入相关。</p>
+<blockquote>
+<p>只使用单侧的信息</p>
+</blockquote>
+<p>AE（AutoEncoder）是一种神经网络模型，用于学习数据的隐藏表示或特征。自编码器包括编码器和解码器两部分，通过将输入数据压缩成低维编码然后重构原始数据来学习数据的有效表示。AE广泛应用于特征提取、降维、去噪和生成模型等任务。在自然语言处理领域，自编码器也经常用于学习文本的表示和特征。</p>
+<blockquote>
+<p>可以使用两侧的信息, 但是mask的部分可能选取以后可以的输出不唯一</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202502171642363.png" alt="image-20250217164217268" /></p>
+<p>实际使用的是AE的方式, mask15%的单词, 这里面10%被替换, 10%不动, 80%被替换为mask</p>
+<blockquote>
+<p>这么做主要的原因是为了使得微调的时候任务不出现mask也可以进行</p>
+</blockquote>
+<ul>
+<li>NLP是Natural Language Processin, 实际是对文本二分类</li>
+</ul>
+<p>使用从同一个文档里面的相邻的句子是正样本, 不同的文档里面的句子负样本, 区分两个句子是不是有关</p>
+<blockquote>
+<p>主题和连贯性预测合并为同一个单项任务, 对CLS的输出进行使用</p>
+</blockquote>
+<h2 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h2>
+<p><img src="https://pica.zhimg.com/v2-8cbd2f07c18b85db855b32c424d5177e_1440w.jpg" alt="img" /></p>
+<blockquote>
+<p>分类任务使用的cls标志的输出, 问答使用的是最好的输出, 成分划分使用的是出来CLS以外的输出</p>
+</blockquote>
+<p>微调使用</p>
+<ol>
+<li>大量数据进行预训练Pertrain</li>
+<li>相同的领域继续训练, Domain trasfer</li>
+<li>任务相关的小数据集里面继续训练 Task transfer</li>
+<li>任务相关数据训练Fine-tune</li>
+</ol>
+<h2 id="%E5%AE%9E%E7%8E%B0">实现</h2>
+<p>抽取特征的位置</p>
+
+<pre class="language-python"><code class="language-python">#@save
+class BERTEncoder(nn.Module):
+    &quot;&quot;&quot;BERT编码器&quot;&quot;&quot;
+    def __init__(self, vocab_size, num_hiddens, norm_shape, ffn_num_input,
+            ffn_num_hiddens, num_heads, num_layers, dropout,
+            max_len=1000, key_size=768, query_size=768, value_size=768,
+            **kwargs):
+        super(BERTEncoder, self).__init__(**kwargs)
+        self.token_embedding = nn.Embedding(vocab_size, num_hiddens)
+        self.segment_embedding = nn.Embedding(2, num_hiddens) # 两个片段的嵌入
+        self.blks = nn.Sequential() # 创建多个BERT块
+        for i in range(num_layers):
+            self.blks.add_module(f&quot;{i}&quot;, d2l.EncoderBlock(
+                key_size, query_size, value_size, num_hiddens, norm_shape,
+                ffn_num_input, ffn_num_hiddens, num_heads, dropout, True))
+        # 在BERT中，位置嵌入是可学习的，因此我们创建一个足够长的位置嵌入参数
+        self.pos_embedding = nn.Parameter(torch.randn(1, max_len,
+            num_hiddens))
+
+    def forward(self, tokens, segments, valid_lens):
+        # 在以下代码段中，X的形状保持不变：（批量大小，最大序列长度，num_hiddens）
+        X = self.token_embedding(tokens) + self.segment_embedding(segments)
+        X = X + self.pos_embedding.data[:, :X.shape[1], :]
+        for blk in self.blks:
+            X = blk(X, valid_lens)
+        return X
+
+vocab_size, num_hiddens, ffn_num_hiddens, num_heads = 10000, 768, 1024, 4
+norm_shape, ffn_num_input, num_layers, dropout = [768], 768, 2, 0.2
+encoder = BERTEncoder(vocab_size, num_hiddens, norm_shape, ffn_num_input,
+        ffn_num_hiddens, num_heads, num_layers, dropout)
+
+tokens = torch.randint(0, vocab_size, (2, 8)) # 两个样本的词元
+# 两个样本的片段标记
+segments = torch.tensor([[0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 1, 1, 1, 1, 1]])
+encoded_X = encoder(tokens, segments, None)
+encoded_X.shape
+&quot;&quot;&quot;
+torch.Size([2, 8, 768])
+&quot;&quot;&quot;
+</code></pre>
+<p>用于计算mask的位置</p>
+
+<pre class="language-python"><code class="language-python">#@save
+class MaskLM(nn.Module):
+    &quot;&quot;&quot;BERT的掩蔽语言模型任务&quot;&quot;&quot;
+    def __init__(self, vocab_size, num_hiddens, num_inputs=768, **kwargs):
+        super(MaskLM, self).__init__(**kwargs)
+        self.mlp = nn.Sequential(
+                        nn.Linear(num_inputs, num_hiddens),
+                        nn.ReLU(),
+                        nn.LayerNorm(num_hiddens), # 通过层归一化
+                        nn.Linear(num_hiddens, vocab_size))
+    # 它需要两个输入：BERTEncoder的编码结果和用于预测的词元位置。
+    # 输出是这些位置的预测结果
+    def forward(self, X, pred_positions):
+        num_pred_positions = pred_positions.shape[1] # 预测的词元数
+        pred_positions = pred_positions.reshape(-1) # 展平
+        batch_size = X.shape[0]
+        batch_idx = torch.arange(0, batch_size)
+        # 假设batch_size=2，num_pred_positions=3(2行, 每行3个位置)
+        # 那么batch_idx是np.array（[0,0,0,1,1,1]）是一个2x3的数量, 和pred_positions配合获取六个位置的词元
+        batch_idx = torch.repeat_interleave(batch_idx, num_pred_positions) # 重复batch_idx
+        masked_X = X[batch_idx, pred_positions] # 先按batch取行，再按pred_positions取列
+        masked_X = masked_X.reshape((batch_size, num_pred_positions,-1))
+        mlm_Y_hat = self.mlp(masked_X)
+        return mlm_Y_hat
+</code></pre>
+
+<pre class="language-python"><code class="language-python"># 对vocab_size个词元的预测
+mlm = MaskLM(vocab_size, num_hiddens)
+mlm_positions = torch.tensor([[1, 5, 2], [6, 1, 5]])
+# 输入的X是编码器的输出，形状为(2, 8, 768), 输出是对应位置的预测结果(每一行三个)
+mlm_Y_hat = mlm(encoded_X, mlm_positions)
+# batch 2, 预测3个值, 输出的大小是vocab_size个词的预测
+mlm_Y_hat.shape
+&quot;&quot;&quot;
+torch.Size([2, 3, 10000])
+&quot;&quot;&quot;
+</code></pre>
+<p>可以使用交叉熵计算损失函数</p>
+
+<pre class="language-python"><code class="language-python">mlm_Y = torch.tensor([[7, 8, 9], [10, 20, 30]])
+loss = nn.CrossEntropyLoss(reduction='none')
+mlm_l = loss(mlm_Y_hat.reshape((-1, vocab_size)), mlm_Y.reshape(-1))
+mlm_l.shape
+&quot;&quot;&quot;
+torch.Size([6])
+&quot;&quot;&quot;
+</code></pre>
+<p>使用cls的输出判断是不是连续的</p>
+
+<pre class="language-python"><code class="language-python">#@save
+class NextSentencePred(nn.Module):
+    &quot;&quot;&quot;BERT的下一句预测任务&quot;&quot;&quot;
+    def __init__(self, num_inputs, **kwargs):
+        super(NextSentencePred, self).__init__(**kwargs)
+        self.output = nn.Linear(num_inputs, 2)
+    def forward(self, X):
+        # X的形状：(batchsize,num_hiddens)
+        return self.output(X)
+</code></pre>
+<p>两个batch输出的是两个预期的预测值</p>
+
+<pre class="language-python"><code class="language-python">encoded_X = torch.flatten(encoded_X, start_dim=1)
+# NSP的输入形状:(batchsize，num_hiddens)
+nsp = NextSentencePred(encoded_X.shape[-1])
+nsp_Y_hat = nsp(encoded_X)
+nsp_Y_hat.shape
+</code></pre>
+<p>建立完整的模型</p>
+
+<pre class="language-python"><code class="language-python">class BERTModel(nn.Module):
+    &quot;&quot;&quot;BERT模型&quot;&quot;&quot;
+    def __init__(self, vocab_size, num_hiddens, norm_shape, ffn_num_input,
+        ffn_num_hiddens, num_heads, num_layers, dropout,
+        max_len=1000, key_size=768, query_size=768, value_size=768,
+        hid_in_features=768, mlm_in_features=768,
+        nsp_in_features=768):
+        super(BERTModel, self).__init__()
+        self.encoder = BERTEncoder(vocab_size, num_hiddens, norm_shape,
+        ffn_num_input, ffn_num_hiddens, num_heads, num_layers,
+            dropout, max_len=max_len, key_size=key_size,
+            query_size=query_size, value_size=value_size)
+        self.hidden = nn.Sequential(nn.Linear(hid_in_features, num_hiddens),
+            nn.Tanh())
+        self.mlm = MaskLM(vocab_size, num_hiddens, mlm_in_features)
+        self.nsp = NextSentencePred(nsp_in_features)
+    def forward(self, tokens, segments, valid_lens=None,
+    pred_positions=None):
+        encoded_X = self.encoder(tokens, segments, valid_lens)
+        if pred_positions is not None:
+            mlm_Y_hat = self.mlm(encoded_X, pred_positions)
+        else:
+            mlm_Y_hat = None
+        # 用于下一句预测的多层感知机分类器的隐藏层，0是“&lt;cls&gt;”标记的索引
+        nsp_Y_hat = self.nsp(self.hidden(encoded_X[:, 0, :]))
+        return encoded_X, mlm_Y_hat, nsp_Y_hat
+</code></pre>
+
+<pre class="language-python"><code class="language-python">net = d2l.BERTModel(len(vocab), num_hiddens=128, norm_shape=[128],
+        ffn_num_input=128, ffn_num_hiddens=256, num_heads=2,
+        num_layers=2, dropout=0.2, key_size=128, query_size=128,
+        value_size=128, hid_in_features=128, mlm_in_features=128,
+        nsp_in_features=128)
+devices = d2l.try_all_gpus()
+loss = nn.CrossEntropyLoss()
+</code></pre>
+<p>一个计算损失的函数</p>
+
+<pre class="language-python"><code class="language-python">#@save
+def _get_batch_loss_bert(net, loss, vocab_size, tokens_X,
+        segments_X, valid_lens_x,
+        pred_positions_X, mlm_weights_X,
+        mlm_Y, nsp_y):
+    # 前向传播
+    _, mlm_Y_hat, nsp_Y_hat = net(tokens_X, segments_X,
+    valid_lens_x.reshape(-1),
+    pred_positions_X)
+    # 计算遮蔽语言模型损失
+    mlm_l = loss(mlm_Y_hat.reshape(-1, vocab_size), mlm_Y.reshape(-1)) *\
+    mlm_weights_X.reshape(-1, 1)
+    mlm_l = mlm_l.sum() / (mlm_weights_X.sum() + 1e-8)
+    # 计算下一句子预测任务的损失
+    nsp_l = loss(nsp_Y_hat, nsp_y)
+    l = mlm_l + nsp_l
+    return mlm_l, nsp_l, l
+</code></pre>
+<p>训练函数</p>
+
+<pre class="language-python"><code class="language-python">def train_bert(train_iter, net, loss, vocab_size, devices, num_steps):
+    net = nn.DataParallel(net, device_ids=devices).to(devices[0])
+    trainer = torch.optim.Adam(net.parameters(), lr=0.01)
+    step, timer = 0, d2l.Timer()
+    animator = d2l.Animator(xlabel='step', ylabel='loss',
+    xlim=[1, num_steps], legend=['mlm', 'nsp'])
+    # 遮蔽语言模型损失的和，下一句预测任务损失的和，句子对的数量，计数
+    metric = d2l.Accumulator(4)
+    num_steps_reached = False
+    while step &lt; num_steps and not num_steps_reached:
+        for tokens_X, segments_X, valid_lens_x, pred_positions_X,\
+            mlm_weights_X, mlm_Y, nsp_y in train_iter:
+            tokens_X = tokens_X.to(devices[0])
+            segments_X = segments_X.to(devices[0])
+            valid_lens_x = valid_lens_x.to(devices[0])
+            pred_positions_X = pred_positions_X.to(devices[0])
+            mlm_weights_X = mlm_weights_X.to(devices[0])
+            mlm_Y, nsp_y = mlm_Y.to(devices[0]), nsp_y.to(devices[0])
+            trainer.zero_grad()
+            timer.start()
+            mlm_l, nsp_l, l = _get_batch_loss_bert(
+                net, loss, vocab_size, tokens_X, segments_X, valid_lens_x,
+                pred_positions_X, mlm_weights_X, mlm_Y, nsp_y)
+            l.backward()
+            trainer.step()
+            metric.add(mlm_l, nsp_l, tokens_X.shape[0], 1)
+            timer.stop()
+            animator.add(step + 1,
+            (metric[0] / metric[3], metric[1] / metric[3]))
+            step += 1
+            if step == num_steps:
+                num_steps_reached = True
+                break
+    print(f'MLM loss {metric[0] / metric[3]:.3f}, '
+    f'NSP loss {metric[1] / metric[3]:.3f}')
+    print(f'{metric[2] / timer.sum():.1f} sentence pairs/sec on '
+    f'{str(devices)}')
+</code></pre>
+<p>一个获取encode的结果的函数</p>
+
+<pre class="language-python"><code class="language-python">def get_bert_encoding(net, tokens_a, tokens_b=None):
+    tokens, segments = d2l.get_tokens_and_segments(tokens_a, tokens_b)
+    token_ids = torch.tensor(vocab[tokens], device=devices[0]).unsqueeze(0)
+    segments = torch.tensor(segments, device=devices[0]).unsqueeze(0)
+    valid_len = torch.tensor(len(tokens), device=devices[0]).unsqueeze(0)
+    encoded_X, _, _ = net(token_ids, segments, valid_len)
+    return encoded_X
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-2-15-43Transformer</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html">
+                            <span class="label">2025-2-5-28样式迁移</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

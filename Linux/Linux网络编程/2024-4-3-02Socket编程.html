@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>Socket编程 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["Linux 网络"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class="active"><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/Linux/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">Linux命令行与shell脚本编程大全</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-初认识Linux_shell.html"><span class="label">2022-8-1-初认识Linux_shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-基本bashshell命令.html"><span class="label">2022-8-1-基本bashshell命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-走进shell.html"><span class="label">2022-8-1-走进shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-10-sed进阶.html"><span class="label">2022-8-10-sed进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-gawk进阶.html"><span class="label">2022-8-11-gawk进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-使用其他shell.html"><span class="label">2022-8-11-使用其他shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-实例.html"><span class="label">2022-8-11-实例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-12-邮件相关.html"><span class="label">2022-8-12-邮件相关</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-2-更多命令.html"><span class="label">2022-8-2-更多命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-2-理解shell.html"><span class="label">2022-8-2-理解shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-3-使用Linux环境变量.html"><span class="label">2022-8-3-使用Linux环境变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-3-理解Linux的文件权限.html"><span class="label">2022-8-3-理解Linux的文件权限</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-4-安装软件程序.html"><span class="label">2022-8-4-安装软件程序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-4-管理文件系统.html"><span class="label">2022-8-4-管理文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-5-使用编辑器.html"><span class="label">2022-8-5-使用编辑器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-5-构建基本脚本.html"><span class="label">2022-8-5-构建基本脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-使用结构初始化.html"><span class="label">2022-8-6-使用结构初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-处理用户输入.html"><span class="label">2022-8-6-处理用户输入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-更多结构化命令.html"><span class="label">2022-8-6-更多结构化命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-7-呈现数据.html"><span class="label">2022-8-7-呈现数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-7-控制脚本.html"><span class="label">2022-8-7-控制脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-8-创建函数.html"><span class="label">2022-8-8-创建函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-图形化桌面环境中的脚本编程.html"><span class="label">2022-8-9-图形化桌面环境中的脚本编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-正则表达式.html"><span class="label">2022-8-9-正则表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-认识sed和gawk.html"><span class="label">2022-8-9-认识sed和gawk</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux就该这么学</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/2022-8-23-.html"><span class="label">2022-8-23-</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">鸟哥的linux私房菜</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-10-计算机概论.html"><span class="label">2022-9-10-计算机概论</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-主机规划与磁盘分区.html"><span class="label">2022-9-20-主机规划与磁盘分区</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-安装CentOS.html"><span class="label">2022-9-20-安装CentOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-首次登录.html"><span class="label">2022-9-20-首次登录</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-25-文件权限以及目录.html"><span class="label">2022-9-25-文件权限以及目录</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux源码趣读</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux源码趣读/2024-1-26-01最开始的代码.html"><span class="label">2024-1-26-01最开始的代码</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux系统编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-2-14-01文件IO.html"><span class="label">2024-2-14-01文件IO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-19-02文件系统.html"><span class="label">2024-3-19-02文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-21-03程序和进程.html"><span class="label">2024-3-21-03程序和进程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-23-04进程间通信.html"><span class="label">2024-3-23-04进程间通信</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-25-05信号.html"><span class="label">2024-3-25-05信号</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-28-06守护进程、线程.html"><span class="label">2024-3-28-06守护进程、线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-31-07线程同步.html"><span class="label">2024-3-31-07线程同步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">Linux网络编程</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-10-04线程池.html"><span class="label">2024-4-10-04线程池</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-13-05本地套接字.html"><span class="label">2024-4-13-05本地套接字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-14-06libevent库.html"><span class="label">2024-4-14-06libevent库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-16-07简单的Web服务器.html"><span class="label">2024-4-16-07简单的Web服务器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-16-08html入门.html"><span class="label">2024-4-16-08html入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-17-09CSS.html"><span class="label">2024-4-17-09CSS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-17-09HTTP协议.html"><span class="label">2024-4-17-09HTTP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-2-01网络基础.html"><span class="label">2024-4-2-01网络基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-20-10telnet调试.html"><span class="label">2024-4-20-10telnet调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-20-11服务器.html"><span class="label">2024-4-20-11服务器</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/Linux/Linux网络编程/2024-4-3-02Socket编程.html"><span class="label">2024-4-3-02Socket编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-6-03高并发服务器.html"><span class="label">2024-4-6-03高并发服务器</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">原子Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-10-Linux常用命令.html"><span class="label">2022-8-10-Linux常用命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-压缩解压缩.html"><span class="label">2022-8-11-压缩解压缩</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-文件系统结构.html"><span class="label">2022-8-11-文件系统结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-磁盘管理.html"><span class="label">2022-8-11-磁盘管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-LinuxC.html"><span class="label">2022-8-12-LinuxC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-Makefile书.html"><span class="label">2022-8-12-Makefile书</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-make和Makefile.html"><span class="label">2022-8-12-make和Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-开发环境搭建.html"><span class="label">2022-8-12-开发环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-用户和用户组.html"><span class="label">2022-8-12-用户和用户组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-链接文件.html"><span class="label">2022-8-12-链接文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-IMX启动方式.html"><span class="label">2022-8-13-IMX启动方式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-vscode.html"><span class="label">2022-8-13-vscode</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-开发板简介.html"><span class="label">2022-8-13-开发板简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-汇编LED驱动.html"><span class="label">2022-8-13-汇编LED驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-C语言点灯.html"><span class="label">2022-8-14-C语言点灯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-按键检测.html"><span class="label">2022-8-14-按键检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-模仿stm32编程.html"><span class="label">2022-8-14-模仿stm32编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-15-中断.html"><span class="label">2022-8-15-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-15-主频时钟配置.html"><span class="label">2022-8-15-主频时钟配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-16-EPIT定时器.html"><span class="label">2022-8-16-EPIT定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-16-GPT时钟.html"><span class="label">2022-8-16-GPT时钟</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-DDR3.html"><span class="label">2022-8-17-DDR3</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-RGBLED.html"><span class="label">2022-8-17-RGBLED</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-串口.html"><span class="label">2022-8-17-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-18-I2C.html"><span class="label">2022-8-18-I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-18-RTC.html"><span class="label">2022-8-18-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-PWM.html"><span class="label">2022-8-19-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-SPI.html"><span class="label">2022-8-19-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-多点电容触摸屏.html"><span class="label">2022-8-19-多点电容触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-20-uBoot.html"><span class="label">2022-8-20-uBoot</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-20-系统烧写.html"><span class="label">2022-8-20-系统烧写</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-22-源码目录分析.html"><span class="label">2022-8-22-源码目录分析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-22-顶层Makefile.html"><span class="label">2022-8-22-顶层Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-Linux内核.html"><span class="label">2022-8-23-Linux内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-uboot图形化配置界面.html"><span class="label">2022-8-23-uboot图形化配置界面</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-启动流程.html"><span class="label">2022-8-23-启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-移植.html"><span class="label">2022-8-23-移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-24-驱动开发.html"><span class="label">2022-8-24-驱动开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-26-linux点灯.html"><span class="label">2022-8-26-linux点灯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-27-设备树.html"><span class="label">2022-8-27-设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-28-led设备树.html"><span class="label">2022-8-28-led设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-29-Linux的并发与竞争.html"><span class="label">2022-8-29-Linux的并发与竞争</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-29-pinclt和gpio.html"><span class="label">2022-8-29-pinclt和gpio</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-30-Linux中断.html"><span class="label">2022-8-30-Linux中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-30-Linux内核定时器.html"><span class="label">2022-8-30-Linux内核定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-31-异步通知.html"><span class="label">2022-8-31-异步通知</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-31-阻塞非阻塞.html"><span class="label">2022-8-31-阻塞非阻塞</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-1-platform设备驱动.html"><span class="label">2022-9-1-platform设备驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-10-WIFI.html"><span class="label">2022-9-10-WIFI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-10-网络驱动.html"><span class="label">2022-9-10-网络驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-4G.html"><span class="label">2022-9-11-4G</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-IIO.html"><span class="label">2022-9-11-IIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-PWM.html"><span class="label">2022-9-11-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-RGBtoHDMI.html"><span class="label">2022-9-11-RGBtoHDMI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-Regmap.html"><span class="label">2022-9-11-Regmap</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-INPUT子系统.html"><span class="label">2022-9-2-INPUT子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-LCD屏幕.html"><span class="label">2022-9-2-LCD屏幕</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-Linux自带的led.html"><span class="label">2022-9-2-Linux自带的led</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-MISC.html"><span class="label">2022-9-2-MISC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-I2C.html"><span class="label">2022-9-3-I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-RTC.html"><span class="label">2022-9-3-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-SPI.html"><span class="label">2022-9-3-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-4-串口.html"><span class="label">2022-9-4-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-5-触摸屏.html"><span class="label">2022-9-5-触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-5-音频驱动.html"><span class="label">2022-9-5-音频驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-6-CAN协议.html"><span class="label">2022-9-6-CAN协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-7-USB.html"><span class="label">2022-9-7-USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-7-块设备驱动.html"><span class="label">2022-9-7-块设备驱动</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">操作系统原理</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-1操作系统.html"><span class="label">2023-6-17-1操作系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-2操作系统目标和作用.html"><span class="label">2023-6-17-2操作系统目标和作用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-3操作系统特征.html"><span class="label">2023-6-17-3操作系统特征</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-4操作系统的发展.html"><span class="label">2023-6-17-4操作系统的发展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-5运行机制.html"><span class="label">2023-6-17-5运行机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-18-6中断异常.html"><span class="label">2023-6-18-6中断异常</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-18-7系统调用.html"><span class="label">2023-6-18-7系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-19-8体系结构.html"><span class="label">2023-6-19-8体系结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-10虚拟机.html"><span class="label">2023-6-20-10虚拟机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-11进程.html"><span class="label">2023-6-20-11进程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-9操作系统的引导.html"><span class="label">2023-6-20-9操作系统的引导</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-22-12线程.html"><span class="label">2023-6-22-12线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-23-13调度.html"><span class="label">2023-6-23-13调度</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-27-14进程同步进程互斥.html"><span class="label">2023-6-27-14进程同步进程互斥</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-28-15锁.html"><span class="label">2023-6-28-15锁</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-28-16信号量机制.html"><span class="label">2023-6-28-16信号量机制</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">服务器</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/服务器/2023-6-12-代理.html"><span class="label">2023-6-12-代理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/服务器/2023-6-12-新服务器搭建.html"><span class="label">2023-6-12-新服务器搭建</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李述铜手写操作系统</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-10-26-05中断和异常处理.html"><span class="label">2023-10-26-05中断和异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-11-10-06日志与printf输出.html"><span class="label">2023-11-10-06日志与printf输出</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-23-03引导程序接管控制权.html"><span class="label">2023-9-23-03引导程序接管控制权</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-28-04加载器loader的实现.html"><span class="label">2023-9-28-04加载器loader的实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-01补充知识2.html"><span class="label">2023-9-6-01补充知识2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-0补充知识.html"><span class="label">2023-9-6-0补充知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-1操作系统准备.html"><span class="label">2023-9-6-1操作系统准备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-7-2x86保护模式下的编程.html"><span class="label">2023-9-7-2x86保护模式下的编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17-07进程切换.html"><span class="label">2024-2-17-07进程切换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17-08链表.html"><span class="label">2024-2-17-08链表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17添加任务管理器.html"><span class="label">2024-2-17添加任务管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-18-内存管理.html"><span class="label">2024-2-18-内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-24-系统调用.html"><span class="label">2024-2-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-26-移植Newlib库.html"><span class="label">2024-2-26-移植Newlib库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-27-屏幕显示信息.html"><span class="label">2024-2-27-屏幕显示信息</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-29-键盘初始化.html"><span class="label">2024-2-29-键盘初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-1-设备管理.html"><span class="label">2024-3-1-设备管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-3-Shell.html"><span class="label">2024-3-3-Shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-4-文件系统.html"><span class="label">2024-3-4-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-5-磁盘.html"><span class="label">2024-3-5-磁盘</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-7-Fat16.html"><span class="label">2024-3-7-Fat16</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">树莓派</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-01开始使用.html"><span class="label">2024-2-1-01开始使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-02-使用命令了解树莓派.html"><span class="label">2024-2-1-02-使用命令了解树莓派</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-03-安装mysql.html"><span class="label">2024-2-1-03-安装mysql</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-3-04网络连接.html"><span class="label">2024-2-3-04网络连接</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-8-时钟设置.html"><span class="label">2024-2-8-时钟设置</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">泰山派</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-20-05-lvgl程序.html"><span class="label">2025-12-20-05-lvgl程序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-24-06-二维码识别.html"><span class="label">2025-12-24-06-二维码识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-24-07-yolo部署.html"><span class="label">2025-12-24-07-yolo部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-25-08-OpenCV.html"><span class="label">2025-12-25-08-OpenCV</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-26-09-拍照.html"><span class="label">2025-12-26-09-拍照</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-26-10-Qt.html"><span class="label">2025-12-26-10-Qt</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-11-01环境搭建.html"><span class="label">2025-5-11-01环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-11-02设备树.html"><span class="label">2025-5-11-02设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-14-03屏幕驱动.html"><span class="label">2025-5-14-03屏幕驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-17-04触摸驱动.html"><span class="label">2025-5-17-04触摸驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2026-1-27-ROS.html"><span class="label">2026-1-27-ROS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2026-1-30-Ubuntu22.html"><span class="label">2026-1-30-Ubuntu22</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">瑞芯微Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-10-Cpp提供C接口.html"><span class="label">2025-12-10-Cpp提供C接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-5-01-EchoAI编译代码.html"><span class="label">2025-12-5-01-EchoAI编译代码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-5-02-EchoAI代码.html"><span class="label">2025-12-5-02-EchoAI代码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-7-03-添加板子.html"><span class="label">2025-12-7-03-添加板子</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-8-04-内核.html"><span class="label">2025-12-8-04-内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-9-05-模型.html"><span class="label">2025-12-9-05-模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/配置网络.html"><span class="label">配置网络</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">野火Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-11-55-buildroot.html"><span class="label">2025-10-11-55-buildroot</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-11-56-裸机汇编开发.html"><span class="label">2025-10-11-56-裸机汇编开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-12-57-Uboot编译脚本.html"><span class="label">2025-10-12-57-Uboot编译脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-47-镜像构建.html"><span class="label">2025-10-2-47-镜像构建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-48-systemd.html"><span class="label">2025-10-2-48-systemd</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-49-deb包.html"><span class="label">2025-10-2-49-deb包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-50-修改img文件.html"><span class="label">2025-10-2-50-修改img文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-51-备份量产.html"><span class="label">2025-10-2-51-备份量产</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-52-Uboot启动.html"><span class="label">2025-10-2-52-Uboot启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-28-58-Uboot移植.html"><span class="label">2025-10-28-58-Uboot移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-30-59-Uboot图形配置界面语法.html"><span class="label">2025-10-30-59-Uboot图形配置界面语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-30-60-Linux编译脚本.html"><span class="label">2025-10-30-60-Linux编译脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-31-61-Linux启动流程.html"><span class="label">2025-10-31-61-Linux启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-9-53-Uboot启动(二).html"><span class="label">2025-10-9-53-Uboot启动(二)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-9-54-Uboot启动(三).html"><span class="label">2025-10-9-54-Uboot启动(三)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-1-62-linux移植.html"><span class="label">2025-11-1-62-linux移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-1-63-Busybox.html"><span class="label">2025-11-1-63-Busybox</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-10-65-定时器.html"><span class="label">2025-11-10-65-定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-12-66-信号.html"><span class="label">2025-11-12-66-信号</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-14-67-MISC设备.html"><span class="label">2025-11-14-67-MISC设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-15-68-RTC.html"><span class="label">2025-11-15-68-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-16-69-串口.html"><span class="label">2025-11-16-69-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-18-70-中断线程化.html"><span class="label">2025-11-18-70-中断线程化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-18-71-音频.html"><span class="label">2025-11-18-71-音频</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-19-72-CAN.html"><span class="label">2025-11-19-72-CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-19-73-USB.html"><span class="label">2025-11-19-73-USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-2-64-mfgtool.html"><span class="label">2025-11-2-64-mfgtool</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-20-74-块设备.html"><span class="label">2025-11-20-74-块设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-21-75-网络设备.html"><span class="label">2025-11-21-75-网络设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-76-Wifi.html"><span class="label">2025-11-22-76-Wifi</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-77-PWM.html"><span class="label">2025-11-22-77-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-78-Regmap通用寄存器.html"><span class="label">2025-11-22-78-Regmap通用寄存器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-79-IIO驱动框架.html"><span class="label">2025-11-22-79-IIO驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-25-80-ADC驱动.html"><span class="label">2025-11-25-80-ADC驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-12-6-81-音频驱动.html"><span class="label">2025-12-6-81-音频驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-12-8-82-DRM显示设备.html"><span class="label">2025-12-8-82-DRM显示设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-6-11-01-入门.html"><span class="label">2025-6-11-01-入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-6-22-02-开发板下载启动.html"><span class="label">2025-6-22-02-开发板下载启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-12-04-镜像文件.html"><span class="label">2025-7-12-04-镜像文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-13-06-GPIO.html"><span class="label">2025-7-13-06-GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-13-07-中断.html"><span class="label">2025-7-13-07-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-05-ARMv7汇编.html"><span class="label">2025-7-14-05-ARMv7汇编</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-08-时钟控制模块.html"><span class="label">2025-7-14-08-时钟控制模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-09-串口.html"><span class="label">2025-7-14-09-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-10-内核模块.html"><span class="label">2025-7-15-10-内核模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-11-字符设备.html"><span class="label">2025-7-15-11-字符设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-12-驱动设备模型.html"><span class="label">2025-7-15-12-驱动设备模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-13-Kset.html"><span class="label">2025-7-19-13-Kset</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-14-uevent消息.html"><span class="label">2025-7-19-14-uevent消息</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-15-class设备管理.html"><span class="label">2025-7-19-15-class设备管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-16-17-总结.html"><span class="label">2025-7-19-16-17-总结</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-16-xbus和platform.html"><span class="label">2025-7-19-16-xbus和platform</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-2-03-控制设备.html"><span class="label">2025-7-2-03-控制设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-20-18-DTS设备树.html"><span class="label">2025-7-20-18-DTS设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-20-19-DeviceTreeOverlay.html"><span class="label">2025-7-20-19-DeviceTreeOverlay</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-16-21-iomux节点(中).html"><span class="label">2025-9-16-21-iomux节点(中)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-16-22-iomux节点(下).html"><span class="label">2025-9-16-22-iomux节点(下)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-23-iomux节点(应用).html"><span class="label">2025-9-17-23-iomux节点(应用)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-24-GPIO子系统.html"><span class="label">2025-9-17-24-GPIO子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-25-并发硬件同步原语.html"><span class="label">2025-9-17-25-并发硬件同步原语</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-18-26-IIC驱动框架.html"><span class="label">2025-9-18-26-IIC驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-20-27-IIC驱动框架使用.html"><span class="label">2025-9-20-27-IIC驱动框架使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-28-阻塞和非阻塞IO.html"><span class="label">2025-9-25-28-阻塞和非阻塞IO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-29-POLL机制.html"><span class="label">2025-9-25-29-POLL机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-30-Completion.html"><span class="label">2025-9-25-30-Completion</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-31-kthread_worker.html"><span class="label">2025-9-25-31-kthread_worker</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-26-32-SPI.html"><span class="label">2025-9-26-32-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-26-33-SPI使用.html"><span class="label">2025-9-26-33-SPI使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-34-中断.html"><span class="label">2025-9-27-34-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-35-软中断和tasklet.html"><span class="label">2025-9-27-35-软中断和tasklet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-36-工作队列.html"><span class="label">2025-9-27-36-工作队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-37-Input子系统.html"><span class="label">2025-9-27-37-Input子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-38-电容触摸屏.html"><span class="label">2025-9-28-38-电容触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-39-PWM.html"><span class="label">2025-9-28-39-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-40-LCD-FB设备.html"><span class="label">2025-9-28-40-LCD-FB设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-41-Linux系统构成.html"><span class="label">2025-9-29-41-Linux系统构成</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-42-Uboot基础使用.html"><span class="label">2025-9-29-42-Uboot基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-43-Linux.html"><span class="label">2025-9-29-43-Linux</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-44-添加驱动(设备树).html"><span class="label">2025-9-29-44-添加驱动(设备树)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-30-45-图标.html"><span class="label">2025-9-30-45-图标</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-30-46-根文件系统.html"><span class="label">2025-9-30-46-根文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-4-20-iomux节点(上).html"><span class="label">2025-9-4-20-iomux节点(上)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/Untitled.html"><span class="label">Untitled</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">问题处理</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-11-20-Linux图形界面.html"><span class="label">2022-11-20-Linux图形界面</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-24-tftp下载.html"><span class="label">2022-8-24-tftp下载</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-26-uboot设置.html"><span class="label">2022-8-26-uboot设置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-27-根文件系统被删除.html"><span class="label">2022-8-27-根文件系统被删除</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-5-没有release文件.html"><span class="label">2022-8-5-没有release文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-9-7-备份根文件.html"><span class="label">2022-9-7-备份根文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-9-9-ubuntu移植问题处理.html"><span class="label">2022-9-9-ubuntu移植问题处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-11-11-树莓派.html"><span class="label">2023-11-11-树莓派</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-6-14-打不开gpedit-msc.html"><span class="label">2023-6-14-打不开gpedit-msc</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-6-28-vscode配置.html"><span class="label">2023-6-28-vscode配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-8-27-开发板网络设置.html"><span class="label">2023-8-27-开发板网络设置</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">韦东山Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/韦东山Linux/2025-3-4-基础.html"><span class="label">2025-3-4-基础</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>Socket编程</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>Linux 网络</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/Linux/Linux网络编程/2024-4-3-02Socket编程.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="Socket%E7%BC%96%E7%A8%8B">Socket编程</h1>
+<h2 id="%E7%BD%91%E7%BB%9C%E5%A5%97%E6%8E%A5%E5%AD%97">网络套接字</h2>
+<p>socket: （电源）插座（电器上的）插口，插孔，管座</p>
+<p>在通信过程中, 套接字是成对存在的, 一个客户端的套接字, 一个服务器的套接字</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404032054051.jpg" alt="img" /></p>
+<blockquote>
+<p><strong>在网络通信中，套接字一定是成对出现的。</strong>一端的发送缓冲区对应对端的接收缓冲区。我们使用同一个文件描述符索发送缓冲区和接收缓冲区。</p>
+<p>为TCP/IP协议设计的应用层编程接口称为socket API。</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404032106960.jpg" alt="img" /></p>
+<h3 id="%E7%BD%91%E7%BB%9C%E5%AD%97%E8%8A%82%E5%BA%8F">网络字节序</h3>
+<p>我们已经知道，内存中的多字节数据相对于内存地址有大端和小端之分，磁盘文件中的多字节数据相对于文件中的偏移地址也有大端小端之分。网络数据流同样有大端小端之分，那么如何定义网络数据流的地址呢？发送主机通常将发送缓冲区中的数据按内存地址从低到高的顺序发出，接收主机把从网络上接到的字节依次保存在接收缓冲区中，也是按内存地址从低到高的顺序保存，因此，网络数据流的地址应这样规定：先发出的数据是低地址，后发出的数据是高地址。</p>
+<blockquote>
+<p>小段法: 高位的数据在高地址, 低位的数据在低地址(计算机本地使用)</p>
+<p>大端法: 高位在地地址, 低位在高地址(网络使用)</p>
+</blockquote>
+<p>TCP/IP协议规定，网络数据流应采用大端字节序，即低地址高字节。例如上一节的UDP段格式，地址0-1是16位的源端口号，如果这个端口号是1000（0x3e8），则地址0是0x03，地址1是0xe8，也就是先发0x03，再发0xe8，这16位在发送主机的缓冲区中也应该是低地址存0x03，高地址存0xe8。但是，如果发送主机是小端字节序的，这16位被解释成0xe803，而不是1000。因此，发送主机把1000填到发送缓冲区之前需要做字节序的转换。同样地，接收主机如果是小端字节序的，接到16位的源端口号也要做字节序的转换。如果主机是大端字节序的，发送和接收都不需要做转换。同理，32位的IP地址也要考虑网络字节序和主机字节序的问题。</p>
+<p>为使网络程序具有可移植性，使同样的C代码在大端和小端计算机上编译后都能正常运行，可以调用以下库函数做<strong>网络字节序和主机字节序的转换</strong>。</p>
+
+<pre class="language-c"><code class="language-c">#include &lt;arpa/inet.h&gt;
+
+uint32_t htonl(uint32_t hostlong); //本地到网络, 主要是IP
+uint16_t htons(uint16_t hostshort);//本地到网络, 这一个主要是端口
+uint32_t ntohl(uint32_t netlong);
+uint16_t ntohs(uint16_t netshort);
+</code></pre>
+<blockquote>
+<p>h表示host，n表示network，l表示32位长整数，s表示16位短整数。</p>
+<p>如果主机是小端字节序，这些函数将参数做相应的大小端转换然后返回，如果主机是大端字节序，这些函数不做转换，将参数原封不动地返回。</p>
+</blockquote>
+<h3 id="IP%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0">IP地址转换函数</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;arpa/inet.h&gt;
+int inet_pton(int af, const char *src, void *dst);
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+</code></pre>
+<blockquote>
+<p>支持IPv4和IPv6</p>
+<p>This  function  converts  the  character  string src into a network address structure in the af address family, then copies the network address  struc‐ture  to  dst.  The af argument must be either AF_INET or AF_INET6.  dst is written in network byte order.</p>
+<p>af : 使用的协议, 可以使用两个宏定义</p>
+<p>AF_INET: IPV4</p>
+<p>AF_INET6: IPV6</p>
+<p>src: 源字符串</p>
+<p>dst: 获取到的转换后的网络字节序的IP地址</p>
+<p>返回值: 1成功, 0:这一个src不是一个有效的ip地址</p>
+</blockquote>
+<h2 id="%E7%BD%91%E7%BB%9C%E5%A5%97%E6%8E%A5%E5%AD%97%E5%87%BD%E6%95%B0">网络套接字函数</h2>
+<h3 id="socket%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B%E5%9B%BE">socket模型创建流程图</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404032133459.jpg" alt="img" /></p>
+<h3 id="sockaddr%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">sockaddr数据结构</h3>
+<p>strcut sockaddr 很多网络编程函数诞生早于IPv4协议，那时候都使用的是sockaddr结构体,为了向前兼容，现在sockaddr退化成了（void *）的作用，传递一个地址给函数，至于这个函数是sockaddr_in还是sockaddr_in6，由地址族确定，然后函数内部再强制类型转化为所需的地址类型。</p>
+<p><strong>可参看 man 7 ip</strong></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404032141315.png" alt="img" /></p>
+<blockquote>
+<p>从左向右依次进化</p>
+</blockquote>
+<p>sockaddr数据结构</p>
+
+<pre class="language-c"><code class="language-c">struct sockaddr {
+
+  sa_family_t sa_family;   /* address family, AF_xxx */
+
+  char sa_data[14];     /* 14 bytes of protocol address */
+
+};
+</code></pre>
+<p>使用 sudo grep -r &quot;struct sockaddr_in {&quot;  /usr 命令可查看到struct sockaddr_in结构体的定义。一般其默认的存储位置：/usr/include/linux/in.h 文件中。</p>
+<blockquote>
+<p>这一个<code>struct sockaddr_in</code>这一个是实际使用的参数, 使用的时候需要进行一个强制转换, 这是因为这一个函数设计的时间比较早, 为了兼容早期的程序</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">struct sockaddr_in {
+
+  __kernel_sa_family_t sin_family;      /* Address family   地址结构类型, 可以使用AF_INET表示ipv4 */
+
+  __be16 sin_port;               /* Port number    端口号 使用函数htons*/
+
+  struct in_addr sin_addr;          /* Internet address  IP地址, 这一个需要使用inet_pton进行转换 , 这一个可以使用宏定义INADDR_ANY获取当前的有效的IP地址, 之后使用htonl转换一下*/
+
+  /* Pad to size of `struct sockaddr'. */
+
+  unsigned char __pad[__SOCK_SIZE__ - sizeof(short int) -
+
+  sizeof(unsigned short int) - sizeof(struct in_addr)];
+
+};
+
+
+struct in_addr {            /* Internet address. */
+
+  __be32 s_addr;
+
+};
+
+
+struct sockaddr_in6 {
+
+  unsigned short int sin6_family;     /* AF_INET6 */
+
+  __be16 sin6_port;          /* Transport layer port # */
+
+  __be32 sin6_flowinfo;        /* IPv6 flow information */
+
+  struct in6_addr sin6_addr;     /* IPv6 address */
+
+  __u32 sin6_scope_id;        /* scope id (new in RFC2553) */
+
+};
+
+
+
+struct in6_addr {
+
+  union {
+
+    __u8 u6_addr8[16];
+
+    __be16 u6_addr16[8];
+
+    __be32 u6_addr32[4];
+
+  } in6_u;
+
+  #define s6_addr     in6_u.u6_addr8
+
+  #define s6_addr16    in6_u.u6_addr16
+
+  #define s6_addr32    in6_u.u6_addr32
+
+};
+
+
+
+#define UNIX_PATH_MAX 108
+
+  struct sockaddr_un {
+
+  __kernel_sa_family_t sun_family;  /* AF_UNIX */
+
+  char sun_path[UNIX_PATH_MAX];  /* pathname */
+
+};
+</code></pre>
+<p>Pv4和IPv6的地址格式定义在netinet/in.h中，IPv4地址用sockaddr_in结构体表示，包括16位端口号和32位IP地址，IPv6地址用sockaddr_in6结构体表示，包括16位端口号、128位IP地址和一些控制字段。UNIX Domain Socket的地址格式定义在sys/un.h中，用sock-addr_un结构体表示。各种socket地址结构体的开头都是相同的，前16位表示整个结构体的长度（并不是所有UNIX的实现都有长度字段，如Linux就没有），后16位表示地址类型。</p>
+<p>IPv4、IPv6和Unix Domain Socket的地址类型分别定义为常数AF_INET、AF_INET6、AF_UNIX。这样，只要取得某种sockaddr结构体的首地址，不需要知道具体是哪种类型的sockaddr结构体，就可以根据地址类型字段确定结构体中的内容。因此，socket API可以接受各种类型的sockaddr结构体指针做参数，例如bind、accept、connect等函数，这些函数的参数应该设计成void <em>类型以便接受各种类型的指针，但是sock API的实现早于ANSI C标准化，那时还没有void </em>类型，因此这些函数的参数都用struct sockaddr *类型表示，在传递参数之前要强制类型转换一下，例如：</p>
+
+<pre class="language-c"><code class="language-c">struct sockaddr_in servaddr;
+bind(listen_fd, (struct sockaddr *)&amp;servaddr, sizeof(servaddr));   /* initialize servaddr */
+</code></pre>
+<h2 id="%E7%BD%91%E7%BB%9C%E5%A5%97%E6%8E%A5%E5%AD%97%E5%87%BD%E6%95%B0">网络套接字函数</h2>
+<h3 id="socket%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E6%B5%81%E7%A8%8B%E5%9B%BE">socket模型创建流程图</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404032203769.jpg" alt="img" /></p>
+<blockquote>
+<p>实际使用的时候客户有一个套接字, 和服务器的一个套接字进行通讯, 服务器还有一个套接字用于监听</p>
+<p>这一个监听的客户端设置完成以后, 使用accept函数获取连接, 返回一个新的socket的描述符, 实际通信使用的是这一个新的socket描述符</p>
+</blockquote>
+<h3 id="socket%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%A5%97%E6%8E%A5%E5%AD%97">socket创建一个套接字</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/types.h&gt; /* See NOTES */
+
+#include &lt;sys/socket.h&gt;
+
+int socket(int domain, int type, int protocol);
+</code></pre>
+<blockquote>
+<ul>
+<li><p>domain:</p>
+<p>AF_INET 这是大多数用来产生socket的协议，使用TCP或UDP来传输，用IPv4的地址</p>
+<p>AF_INET6 与上面类似，不过是来用IPv6的地址</p>
+<p>AF_UNIX, AF_LOCAL本地协议，使用在Unix和Linux系统上，一般都是当客户端和服务器在同一台及其上的时候使用</p>
+</li>
+<li><p>type:</p>
+<p>SOCK_STREAM 这个协议是按照顺序的、可靠的、数据完整的基于字节流的连接。这是一个使用最多的socket类型，这个socket是使用TCP来进行传输。</p>
+<p>SOCK_DGRAM 这个协议是无连接的、固定长度的传输调用。该协议是不可靠的，使用UDP来进行它的连接。</p>
+<p>SOCK_SEQPACKET该协议是双线路的、可靠的连接，发送固定长度的数据包进行传输。必须把这个包完整的接受才能进行读取。</p>
+<p>SOCK_RAW socket类型提供单一的网络访问，这个socket类型使用ICMP公共协议。（ping、traceroute使用该协议）</p>
+<p>SOCK_RDM 这个类型是很少使用的，在大部分的操作系统上没有实现，它是提供给数据链路层使用，不保证数据包的顺序</p>
+</li>
+<li><p>protocol:</p>
+<p>传0 表示使用默认协议。</p>
+</li>
+<li><p>返回值：</p>
+<p>成功：返回指向新创建的socket的文件描述符，失败：返回-1，设置errno</p>
+</li>
+</ul>
+</blockquote>
+<p>socket()打开一个网络通讯端口，如果成功的话，就像open()一样返回一个文件描述符，应用程序可以像读写文件一样用read/write在网络上收发数据，如果socket()调用出错则返回-1。对于IPv4，domain参数指定为AF_INET。对于TCP协议，type参数指定为SOCK_STREAM，表示面向流的传输协议。如果是UDP协议，则type参数指定为SOCK_DGRAM，表示面向数据报的传输协议。protocol参数的介绍从略，指定为0即可。</p>
+<h3 id="bind%E7%BB%91%E5%AE%9Aip%E7%AB%AF%E5%8F%A3">bind绑定ip端口</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/types.h&gt; /* See NOTES */
+#include &lt;sys/socket.h&gt;
+int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+</code></pre>
+<blockquote>
+<p>sockfd：</p>
+<p>socket文件描述符</p>
+<p>addr:</p>
+<p>构造出IP地址加端口号, 这一个结构体实际使用的是sockaddr_in, 里面的协议要和socket一样, 实际传参的时候需要一个类型转换</p>
+<p>addrlen:</p>
+<p>sizeof(addr)长度</p>
+<p>返回值：</p>
+<p>成功返回0，失败返回-1, 设置errno</p>
+</blockquote>
+<p>​     服务器程序所监听的网络地址和端口号通常是固定不变的，客户端程序得知服务器程序的地址和端口号后就可以向服务器发起连接，因此服务器需要调用bind绑定一个固定的网络地址和端口号。</p>
+<p>bind()的作用是将参数sockfd和addr绑定在一起，使sockfd这个用于网络通讯的文件描述符监听addr所描述的地址和端口号。前面讲过，struct sockaddr *是一个通用指针类型，addr参数实际上可以接受多种协议的sockaddr结构体，而它们的长度各不相同，所以需要第三个参数addrlen指定结构体的长度。如：</p>
+
+<pre class="language-c"><code class="language-c">struct sockaddr_in servaddr;
+bzero(&amp;servaddr, sizeof(servaddr));
+servaddr.sin_family = AF_INET;
+servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+servaddr.sin_port = htons(6666);
+</code></pre>
+<p>首先将整个结构体清零，然后设置地址类型为AF_INET，网络地址为INADDR_ANY，这个宏表示本地的任意IP地址，因为服务器可能有多个网卡，每个网卡也可能绑定多个IP地址，这样设置可以在所有的IP地址上监听，直到与某个客户端建立了连接时才确定下来到底用哪个IP地址，端口号为6666。</p>
+<h3 id="listen%E8%AE%BE%E7%BD%AE%E7%9B%91%E5%90%AC%E4%B8%8A%E9%99%90">listen设置监听上限</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/types.h&gt; /* See NOTES */
+#include &lt;sys/socket.h&gt;
+int listen(int sockfd, int backlog);
+</code></pre>
+<blockquote>
+<p>sockfd:</p>
+<p>socket文件描述符</p>
+<p>backlog:</p>
+<p>排队建立3次握手队列和刚刚建立3次握手队列的链接数和, 这一个系统的默认最大值是128</p>
+</blockquote>
+<p>查看系统默认backlog</p>
+<p>cat /proc/sys/net/ipv4/tcp_max_syn_backlog</p>
+<p>典型的服务器程序可以同时服务于多个客户端，当有客户端发起连接时，服务器调用的accept()返回并接受这个连接，如果有大量的客户端发起连接而服务器来不及处理，尚未accept的客户端就处于连接等待状态，listen()声明sockfd处于监听状态，并且最多允许有backlog个客户端处于连接待状态，如果接收到更多的连接请求就忽略。listen()成功返回0，失败返回-1。</p>
+<h3 id="accept%E9%98%BB%E5%A1%9E%E7%9B%91%E5%90%AC%E5%AE%A2%E6%88%B7%E7%AB%AF">accept阻塞监听客户端</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/types.h&gt;   /* See NOTES */
+#include &lt;sys/socket.h&gt;
+int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+</code></pre>
+<blockquote>
+<p>sockdf:</p>
+<p>socket文件描述符</p>
+<p>addr:</p>
+<p>传出参数，返回链接客户端地址信息，含IP地址和端口号</p>
+<p>addrlen:</p>
+<p>传入传出参数（值-结果）,传入sizeof(addr)大小，函数返回时返回真正接收到地址结构体的大小</p>
+<p>返回值：</p>
+<p>成功返回一个新的socket文件描述符，用于和客户端通信，失败返回-1，设置errno</p>
+</blockquote>
+<p>三方握手完成后，服务器调用accept()接受连接，如果服务器调用accept()时还没有客户端的连接请求，就阻塞等待直到有客户端连接上来。addr是一个传出参数，accept()返回时传出客户端的地址和端口号。addrlen参数是一个传入传出参数（value-result argument），传入的是调用者提供的缓冲区addr的长度以避免缓冲区溢出问题，传出的是客户端地址结构体的实际长度（有可能没有占满调用者提供的缓冲区）。如果给addr参数传NULL，表示不关心客户端的地址。</p>
+<p>我们的服务器程序结构是这样的：</p>
+
+<pre class="language-c"><code class="language-c">while (1) {
+
+  cliaddr_len = sizeof(cliaddr);
+
+  connfd = accept(listenfd, (struct sockaddr *)&amp;cliaddr, &amp;cliaddr_len);
+
+  n = read(connfd, buf, MAXLINE);
+
+  ......
+
+  close(connfd);
+
+}
+</code></pre>
+<p>整个是一个while死循环，每次循环处理一个客户端连接。由于cliaddr_len是传入传出参数，每次调用accept()之前应该重新赋初值。accept()的参数listenfd是先前的监听文件描述符，而accept()的返回值是另外一个文件描述符connfd，之后与客户端之间就通过这个connfd通讯，最后关闭connfd断开连接，而不关闭listenfd，再次回到循环开头listenfd仍然用作accept的参数。accept()成功返回一个文件描述符，出错返回-1。</p>
+<h3 id="connect%E5%AE%A2%E6%88%B7%E8%BF%9E%E6%8E%A5">connect客户连接</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/types.h&gt;         /* See NOTES */
+#include &lt;sys/socket.h&gt;
+int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+</code></pre>
+<blockquote>
+<p>sockdf:</p>
+<p>socket文件描述符</p>
+<p>addr:</p>
+<p>传入参数，指定服务器端地址信息，含IP地址和端口号</p>
+<p>addrlen:</p>
+<p>传入参数,传入sizeof(addr)大小</p>
+<p>返回值：</p>
+<p>成功返回0，失败返回-1，设置errno</p>
+</blockquote>
+<p>客户端需要调用connect()连接服务器，connect和bind的参数形式一致，区别在于bind的参数是自己的地址，而connect的参数是对方的地址。connect()成功返回0，出错返回-1。</p>
+<blockquote>
+<p>之后就可以使用read和write函数进行读写, 进行数据的传递</p>
+<p>read的错误:</p>
+<ol>
+<li>errno = EINTR 这个被一个信号中断了, 需要再重新读取一次</li>
+<li>errno = EAGIN 或 EWOULDBLOCK 以一个非阻塞的模式进行读取, 需要再一次读取</li>
+<li>errno = ECONNRESET 连接被重置了需要close, 之后移除监听队列(这一个是服务器端三次握手只进行一般发生RET返回的情景)</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>如果不使用bind函数绑定客户端的ip和端口, 这一个会隐式绑定</p>
+</blockquote>
+<h4 id="%E7%AB%AF%E5%8F%A3%E5%A4%8D%E7%94%A8">端口复用</h4>
+<blockquote>
+<p><a href="https://blog.csdn.net/JMW1407/article/details/107321853"  target="_blank">socket 网络编程——端口复用技术（setsockopt（））（linux下多个进程监听同一个端口）_linux端口复用怎么区分不同的客户端-CSDN博客</a></p>
+<p><a href="https://blog.csdn.net/c_base_jin/article/details/94353956"  target="_blank">setsockopt函数的作用和说明-CSDN博客</a></p>
+</blockquote>
+<p>在server的TCP连接没有完全断开之前不允许重新监听是不合理的。因为，TCP连接没有完全断开指的是connfd（127.0.0.1:6666）没有完全断开，而我们重新监听的是lis-tenfd（0.0.0.0:6666），虽然是占用同一个端口，但IP地址不同，connfd对应的是与某个客户端通讯的一个具体的IP地址，而listenfd对应的是wildcard address。解决这个问题的方法是使用setsockopt()设置socket描述符的选项SO_REUSEADDR为1，表示允许创建端口号相同但IP地址不同的多个socket描述符。</p>
+
+<pre class="language-c"><code class="language-c">int setsockopt(int sockfd, int level, int optname,
+               const void *optval, socklen_t optlen);
+</code></pre>
+<blockquote>
+<p>optval : 1设置端口复用, 0:设置端口不复用</p>
+</blockquote>
+<p>在server代码的socket()和bind()调用之间插入如下代码：</p>
+
+<pre class="language-c"><code class="language-c">int opt = 1;
+setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (void *)&amp;opt, sizeof(opt));
+</code></pre>
+<blockquote>
+<p>重用本地地址, 这一个设置需要在bind之前</p>
+</blockquote>
+<blockquote>
+<p>SO_REUSEADDR提供如下四个功能：</p>
+<ul>
+<li>允许启动一个监听服务器并捆绑其众所周知端口，即使以前建立的将此端口用做他们的本地端口的连接仍存在。这通常是重启监听服务器时出现，若不设置此选项，则bind时将出错。</li>
+<li>允许在同一端口上启动同一服务器的多个实例，只要每个实例捆绑一个不同的本地IP地址即可。对于TCP，我们根本不可能启动捆绑相同IP地址和相同端口号的多个服务器。</li>
+<li>允许单个进程捆绑同一端口到多个套接口上，只要每个捆绑指定不同的本地IP地址即可。这一般不用于TCP服务器。</li>
+<li>允许完全重复的捆绑：当一个IP地址和端口绑定到某个套接口上时，还允许此IP地址和端口捆绑到另一个套接口上。一般来说，这个特性仅在支持多播的系统上才有，而且只对UDP套接口而言（TCP不支持多播）。</li>
+</ul>
+<p>SO_REUSEPORT有如下语义：</p>
+<ul>
+<li>此选项允许完全重复捆绑，但仅在想捆绑相同IP地址和端口的套接口都指定了此套接口选项才行。</li>
+<li>如果被捆绑的IP地址是一个多播地址，则SO_REUSEADDR和SO_REUSEPORT等效。</li>
+</ul>
+</blockquote>
+<p>有关setsockopt可以设置的其它选项请参考UNP第7章。</p>
+<h3 id="%E5%AE%9E%E9%99%85%E7%9A%84%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B">实际的使用流程</h3>
+<ul>
+<li>server</li>
+</ul>
+<p>socket: 获取一个socket用于监听</p>
+<p>bind: 绑定一下IP地址和端口号</p>
+<p>listen: 设置监听的上限</p>
+<p>accept: 阻塞监听客户端连接</p>
+<p>read: 读取信息</p>
+<blockquote>
+<p>NAME<br />
+       recv, recvfrom, recvmsg - receive a message from a socket</p>
+<p>SYNOPSIS</p>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+ssize_t recv(int sockfd, void *buf, size_t len, int flags);
+</code></pre>
+<p>这一个函数和read的区别只有flags参数的不同, 使用0的时候和read一样</p>
+</blockquote>
+<p>write:发送信息</p>
+<blockquote>
+<p>NAME<br />
+       send, sendto, sendmsg - send a message on a socket</p>
+<p>SYNOPSIS</p>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+ssize_t send(int sockfd, const void *buf, size_t len, int flags);
+</code></pre>
+</blockquote>
+<p>close</p>
+<ul>
+<li>client</li>
+</ul>
+<p>socket</p>
+<p>connect:创建数据</p>
+<p>write: 写入数据</p>
+<p>read: 读取数据</p>
+<p>close</p>
+<h3 id="%E7%A4%BA%E4%BE%8B">示例</h3>
+<h4 id="%E6%9C%8D%E5%8A%A1%E5%99%A8">服务器</h4>
+
+<pre class="language-c"><code class="language-c">#include &lt;ctype.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;arpa/inet.h&gt;
+
+#define SERV_PORT				9078
+
+int main(void){
+    int lfd = 0, cfd;
+    struct sockaddr_in serv_addr, clit_addr;
+    socklen_t clit_addr_len;
+    char buf[BUFSIZ];
+
+    lfd = socket(AF_INET, SOCK_STREAM, 0);
+    if(lfd == -1){
+    	perror(&quot;socket error\n&quot;);
+    	exit(0);
+    }
+
+    serv_addr.sin_family = AF_INET;				//使用IPV4
+    serv_addr.sin_port = htons(SERV_PORT);		//设置端口
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);//设置检测本地的所有ip
+    int ret = bind(lfd, (struct sockaddr *)&amp;serv_addr, sizeof(serv_addr));
+    if(ret != 0){
+    	perror(&quot;bind error\n&quot;);
+    	exit(0);
+    }
+    ret = listen(lfd, 128);						//设置最大的处理个数
+    if(ret != 0){
+    	perror(&quot;listen error\n&quot;);
+    	exit(0);
+    }
+
+    clit_addr_len = sizeof(clit_addr);
+    cfd = accept(lfd, (struct sockaddr *)&amp;clit_addr, &amp;clit_addr_len);	//设置阻塞
+    	if(cfd == -1){
+    		perror(&quot;sccept error\n&quot;);
+    		exit(1);
+    	}
+    while(1){
+    	ret = read(cfd, buf, sizeof(buf));
+    	if(ret &lt; 0){
+    		perror(&quot;read error\n&quot;);
+    		exit(1);
+    	}else if(ret == 0){
+    		break;
+    	}
+    	write(STDOUT_FILENO , buf, ret);
+
+    	for(int i = 0;i&lt;ret;i++){
+    		buf[i] = toupper(buf[i]);		//获取的数据转换为大写
+    	}
+    	write(cfd, buf, ret);
+
+    }
+    close(cfd);
+    close(lfd);
+    return 0;
+}
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404041147860.png" alt="image-20240404114734669" /></p>
+
+<pre class="language-c"><code class="language-c">cfd = accept(lfd, (struct sockaddr *)&amp;clit_addr, &amp;clit_addr_len);
+if(cfd == -1){
+    perror(&quot;sccept error\n&quot;);
+    exit(1);
+}
+printf(&quot;client ip: %s port %d\n&quot;, 
+       inet_ntop(AF_INET, &amp;clit_addr.sin_addr.s_addr, buf, sizeof(buf)), 
+       ntohs(clit_addr.sin_port));
+</code></pre>
+<blockquote>
+<p>可以使用这一个获取连接的客户端的信息</p>
+</blockquote>
+<h4 id="%E5%AE%A2%E6%88%B7%E7%AB%AF">客户端</h4>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;arpa/inet.h&gt;
+int main(void){
+    int cfd;	
+    cfd = socket(AF_INET, SOCK_STREAM, 0);
+    if(cfd == -1){
+    	perror(&quot;socket error&quot;);
+    	exit(1);
+    }
+    struct sockaddr_in c_sock;
+    int ip_addr;
+    inet_pton(AF_INET, &quot;127.0.0.1&quot;, &amp;ip_addr);//获取ip地址的二进制小端数据
+    c_sock.sin_addr.s_addr = ip_addr;
+    c_sock.sin_port = htons(9078);
+    c_sock.sin_family = AF_INET;
+    int ret = connect(cfd, (struct sockaddr *)&amp;c_sock, sizeof(c_sock));//连接
+    if(ret == -1){
+    	perror(&quot;connect error&quot;);
+    	exit(1);
+    }
+    char buf[1024];
+    while(1){
+    	int len = read(STDIN_FILENO, buf, sizeof(buf));//获取输入
+    	write(cfd, buf, len);//发送信息
+    	len = read(cfd, buf, sizeof(buf));//获取返回值
+    	write(STDOUT_FILENO, buf, len);//显示
+    }
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>这一个实现的功能是从stdin获取信息发送给服务器, 之后打印服务器的返回值</p>
+</blockquote>
+<h4 id="%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86">多进程处理</h4>
+
+<pre class="language-c"><code class="language-c">#include &lt;ctype.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;arpa/inet.h&gt;
+
+#define SERV_PORT				9078
+void deal_one_server(struct sockaddr_in *clit_addr, int cfd){
+    int ret;
+    char buf[1024];
+    printf(&quot;client ip: %s port %d\n&quot;, 
+    		inet_ntop(AF_INET, &amp;clit_addr-&gt;sin_addr.s_addr, buf, sizeof(buf)), 
+    		ntohs(clit_addr-&gt;sin_port));
+    while(1){
+    	ret = read(cfd, buf, sizeof(buf));
+    	if(ret &lt; 0){
+    		perror(&quot;read error\n&quot;);
+    		exit(1);
+    	}else if(ret == 0){
+    		break;
+    	}
+    	write(STDOUT_FILENO , buf, ret);
+
+    	for(int i = 0;i&lt;ret;i++){
+    		buf[i] = toupper(buf[i]);
+    	}
+
+    	write(cfd, buf, ret);
+
+    }
+}
+int main(void){
+    int lfd = 0, cfd;
+    struct sockaddr_in serv_addr, clit_addr;
+    socklen_t clit_addr_len;
+    char buf[BUFSIZ];
+
+    lfd = socket(AF_INET, SOCK_STREAM, 0);
+    if(lfd == -1){
+    	perror(&quot;socket error\n&quot;);
+    	exit(0);
+    }
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(SERV_PORT);
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    int ret = bind(lfd, (struct sockaddr *)&amp;serv_addr, sizeof(serv_addr));
+    if(ret != 0){
+    	perror(&quot;bind error\n&quot;);
+    	exit(0);
+    }
+    ret = listen(lfd, 128);
+    if(ret != 0){
+    	perror(&quot;listen error\n&quot;);
+    	exit(0);
+    }
+
+    clit_addr_len = sizeof(clit_addr);
+    pid_t pid;
+    while(1){
+    	printf(&quot;waiting connect\n&quot;);
+    	cfd = accept(lfd, (struct sockaddr *)&amp;clit_addr, &amp;clit_addr_len);
+
+    	if(cfd == -1){
+    		perror(&quot;sccept error\n&quot;);
+    		exit(1);
+    	}else
+    	{
+    		pid = fork();//创建一个子进程
+    		printf(&quot;pid = %d\n&quot;, pid);
+    		if(pid == -1){
+    			perror(&quot;fork error&quot;);
+    			exit(1);
+    		}
+    		if(pid == 0){
+                //使用子进程处理这一个连接
+                 close(lfd);
+    			printf(&quot;deal a connect %d %d\n&quot;, getpid(), getppid());
+    			deal_one_server(&amp;clit_addr, cfd);
+                 close(cfd);
+    			exit(1);
+    		}else{
+                //父进程继续捕获
+    			close(cfd);
+             }
+    	}
+    }
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404042111108.png" alt="image-20240404211134041" /></p>
+<blockquote>
+<p>可以使用信号机制回收子进程, 如果使用的线程, 可以使用一个detach把这一个线程分离出去, 也可以专门使用一个线程进行回收兄弟线程</p>
+</blockquote>
+</blockquote>
+<h4 id="%E5%A4%9A%E7%BA%BF%E7%A8%8B">多线程</h4>
+
+<pre class="language-c"><code class="language-c">#include &lt;ctype.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;pthread.h&gt;
+
+#define SERV_PORT				9078
+//子线程的处理函数
+void *deal_one_server(void * arg){
+    int ret;
+    int cfd = (int)arg;
+    char buf[1024];
+    while(1){
+    	ret = read(cfd, buf, sizeof(buf));
+    	if(ret &lt; 0){
+    		perror(&quot;read error\n&quot;);
+
+    		exit(1);
+    	}else if(ret == 0){
+    		break;
+    	}
+    	write(STDOUT_FILENO , buf, ret);
+    	for(int i = 0;i&lt;ret;i++){
+    		buf[i] = toupper(buf[i]);
+    	}
+
+    	write(cfd, buf, ret);
+
+    }
+    close(cfd);
+}
+int main(void){
+    int lfd = 0, cfd;
+    struct sockaddr_in serv_addr, clit_addr;
+    socklen_t clit_addr_len;
+    char buf[BUFSIZ];
+
+    lfd = socket(AF_INET, SOCK_STREAM, 0);
+    if(lfd == -1){
+    	perror(&quot;socket error\n&quot;);
+    	exit(0);
+    }
+    //设置一下服务器的接收
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(SERV_PORT);
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    int ret = bind(lfd, (struct sockaddr *)&amp;serv_addr, sizeof(serv_addr));
+    if(ret != 0){
+    	perror(&quot;bind error\n&quot;);
+    	exit(0);
+    }
+    ret = listen(lfd, 128);//设置可以接受的个数
+    if(ret != 0){
+    	perror(&quot;listen error\n&quot;);
+    	exit(0);
+    }
+
+    clit_addr_len = sizeof(clit_addr);
+    pid_t pid;
+
+    while(1){
+    	printf(&quot;waiting connect\n&quot;);
+sig_continue:
+    	cfd = accept(lfd, (struct sockaddr *)&amp;clit_addr, &amp;clit_addr_len);//开始接收
+    
+    	if(cfd == -1){
+    		if((errno == ECONNABORTED) || (errno == EINTR)){
+    			goto sig_continue;//处理一下信号打断
+    		}
+    		perror(&quot;sccept error\n&quot;);
+    		exit(1);
+    	}else
+    	{
+    		printf(&quot;client ip: %s port %d\n&quot;, 
+    			inet_ntop(AF_INET, &amp;clit_addr.sin_addr.s_addr, 
+    			buf, sizeof(buf)), 
+    			ntohs(clit_addr.sin_port));
+    		pthread_t pid;
+    		pthread_create(&amp;pid, NULL, deal_one_server, (void *)cfd);//使用一个线程接收
+    		pthread_detach(pid);//把这一个线程分离
+    	}
+    }
+    return 0;
+}
+</code></pre>
+<h3 id="%E5%92%8CTCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AF%B9%E5%BA%94">和TCP协议的对应</h3>
+<img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404051030791.png" alt="img" style="zoom:150%;" />
+<p>服务器调用socket()、bind()、listen()完成初始化后，调用accept()阻塞等待，处于监听端口的状态，客户端调用socket()初始化后，调用connect()发出SYN段并阻塞等待服务器应答，服务器应答一个SYN-ACK段，客户端收到后从connect()返回，同时应答一个ACK段，服务器收到后从accept()返回。</p>
+<blockquote>
+<p>这个时候三次握手已经完成了</p>
+</blockquote>
+<p>建立连接后，TCP协议提供全双工的通信服务，但是一般的客户端/服务器程序的流程是由客户端主动发起请求，服务器被动处理请求，一问一答的方式。因此，服务器从accept()返回后立刻调用read()，读socket就像读管道一样，如果没有数据到达就阻塞等待，这时客户端调用write()发送请求给服务器，服务器收到后从read()返回，对客户端的请求进行处理，在此期间客户端调用read()阻塞等待服务器的应答，服务器调用write()将处理结果发回给客户端，再次调用read()阻塞等待下一条请求，客户端收到后从read()返回，发送下一条请求，如此循环下去。</p>
+<p>如果客户端没有更多的请求了，就调用close()关闭连接，就像写端关闭的管道一样，服务器的read()返回0，这样服务器就知道客户端关闭了连接，也调用close()关闭连接。</p>
+<blockquote>
+<p>四次挥手</p>
+</blockquote>
+<p>注意，任何一方调用close()后，连接的两个传输方向都关闭，不能再发送数据了。如果一方调用shutdown()则连接处于半关闭状态，仍可接收对方发来的数据。</p>
+<blockquote>
+<p>半关闭</p>
+</blockquote>
+<p>在学习socket API时要注意应用程序和TCP协议层是如何交互的： 应用程序调用某个socket函数时TCP协议层完成什么动作，比如调用connect()会发出SYN段 应用程序如何知道TCP协议层的状态变化，比如从某个阻塞的socket函数返回就表明TCP协议收到了某些段，再比如read()返回0就表明收到了FIN段</p>
+<h3 id="%E4%BD%BF%E7%94%A8UDP%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93">使用UDP进行数据传输</h3>
+<p>在使用的时候accept以及connect函数不再使用</p>
+<p>实际接收的时候不能使用recv/send以及read/write函数, 需要使用函数recvfrom以及sendto函数</p>
+<h4 id="recvfrom%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE">recvfrom获取数据</h4>
+
+<pre class="language-c"><code class="language-c">ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
+                        struct sockaddr *src_addr, socklen_t *addrlen);
+</code></pre>
+<blockquote>
+<p>socket: socket返回的lfd</p>
+<p>buf: 数据</p>
+<p>len: 缓冲区大小</p>
+<p>flags: 0</p>
+<p>src_addr: 接收的地址, 这一个是一个传出参数</p>
+<p>addrlen :这一个结构体的大小</p>
+<p>返回值: 成功获取的数据的个数, -1失败, 0对端关闭</p>
+</blockquote>
+<h4 id="sendto%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE">sendto发送数据</h4>
+
+<pre class="language-c"><code class="language-c">ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
+                      const struct sockaddr *dest_addr, socklen_t addrlen);
+</code></pre>
+<blockquote>
+<p>socket: socket返回的lfd</p>
+<p>buf: 数据</p>
+<p>len: 缓冲区大小</p>
+<p>flags: 0</p>
+<p>dest_addr: 发送的目标地址</p>
+<p>addrlen :这一个结构体的大小</p>
+<p>返回值: 实际发送的字节数, 失败的时候返回-1</p>
+</blockquote>
+<ul>
+<li>server</li>
+</ul>
+<p>lfd = socket(AF_INET, SOCK_DGRAM, 0);</p>
+<p>bind();</p>
+<p>listen();  -- 不需要连接, 所以这一个函数可有可无</p>
+<p>while(1){</p>
+<p>​	recvfrom</p>
+<p>​	处理</p>
+<p>​	sendto</p>
+<p>}</p>
+<ul>
+<li>client</li>
+</ul>
+<p>lfd = socket(AF_INET, SOCK_DGRAM, 0);</p>
+<p>sendto</p>
+<p>recvfrom</p>
+<p>处理获取的数据</p>
+<h4 id="%E5%AE%9E%E9%99%85%E5%AE%9E%E7%8E%B0">实际实现</h4>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;sys/socket.h&gt;
+
+int main(void){
+    struct sockaddr_in serveraddr, clientaddr;
+    socklen_t addrlen = sizeof(struct sockaddr_in);
+    char buf[BUFSIZ];
+    char str[INET_ADDRSTRLEN]; // #define INET_ADDRSTRLEN 16
+    int i, n;
+
+    int sockfd;
+    int ret;
+    //获取套接字
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if(sockfd &lt; 0){
+    	perror(&quot;socket&quot;);
+    	exit(-1);
+    }
+    printf(&quot;sockfd = %d\n&quot;, sockfd);
+    
+    bzero(&amp;serveraddr, sizeof(serveraddr));
+    serveraddr.sin_family = AF_INET;
+    serveraddr.sin_port = htons(8000);
+    serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    bind(sockfd, (struct sockaddr *)&amp;serveraddr, addrlen);
+    
+    while(1){
+    	n = recvfrom(sockfd, buf, BUFSIZ, 0, (struct sockaddr *)&amp;clientaddr, &amp;addrlen);
+    	if(n == -1){
+    		perror(&quot;recvfrom&quot;);
+    		exit(-1);
+    	}
+    	printf(&quot;received from %s at PORT %d\n&quot;, 
+    			inet_ntop(AF_INET, &amp;clientaddr.sin_addr, str, sizeof(str)),
+    			ntohs(clientaddr.sin_port));
+
+    	for(i = 0; i &lt; n; i++){
+    		buf[i] = toupper(buf[i]);
+    	}
+    	n = sendto(sockfd, buf, n, 0, (struct sockaddr *)&amp;clientaddr, addrlen);
+    	if(n == -1){
+    		perror(&quot;sendto&quot;);
+    		exit(-1);
+    	}
+    }
+    close(sockfd);
+    return 0;
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;string.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;sys/socket.h&gt;
+int main(void){
+    struct sockaddr_in server_addr;
+    int sockfd, n;
+    char buf[1024];
+
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if(sockfd &lt; 0){
+    	perror(&quot;socket&quot;);
+    	exit(1);
+    }
+
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(8000);
+    inet_pton(AF_INET, &quot;127.0.0.1&quot;, &amp;server_addr.sin_addr);
+
+    while(fgets(buf, sizeof(buf), stdin) != NULL){
+    	n = sendto(sockfd, buf, strlen(buf), 0, 
+    			(struct sockaddr *)&amp;server_addr, sizeof(server_addr));
+    	if(n &lt; 0){
+    		perror(&quot;sendto&quot;);
+    		exit(1);
+    	}
+    	n = recvfrom(sockfd, buf, sizeof(buf), 0, NULL, NULL);
+    	write(STDOUT_FILENO, buf, n);
+    }
+    close(sockfd);
+    return 0;
+}
+</code></pre>
+<h2 id="%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0">出错处理封装函数</h2>
+<p>上面的例子不仅功能简单，而且简单到几乎没有什么错误处理，我们知道，系统调用不能保证每次都成功，必须进行出错处理，这样一方面可以保证程序逻辑正常，另一方面可以迅速得到故障信息。</p>
+<p>为使错误处理的代码不影响主程序的可读性，我们把与socket相关的一些系统函数加上错误处理代码包装成新的函数，做成一个模块wrap.c：</p>
+<blockquote>
+<p>这里只改变了一个字母的大小写不影响进入man手册</p>
+</blockquote>
+<h3 id="wrap.c">wrap.c</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;
+//一个错误信息打印函数
+void perr_exit(const char *s)
+{
+    perror(s);
+    exit(1);
+}
+
+int Accept(int fd, struct sockaddr *sa, socklen_t *salenptr)
+{
+  int n;
+  again:
+  if ( (n = accept(fd, sa, salenptr)) &lt; 0) {
+     if ((errno == ECONNABORTED) || (errno == EINTR))
+       goto again;//这一个系统调研被一个中断打断
+     else
+       perr_exit(&quot;accept error&quot;);
+  }
+  return n;
+}
+
+int Bind(int fd, const struct sockaddr *sa, socklen_t salen)
+{
+  int n;
+  if ((n = bind(fd, sa, salen)) &lt; 0)
+     perr_exit(&quot;bind error&quot;);
+  return n;
+}
+
+int Connect(int fd, const struct sockaddr *sa, socklen_t salen)
+{
+  int n;
+  if ((n = connect(fd, sa, salen)) &lt; 0)
+     perr_exit(&quot;connect error&quot;);
+  return n;
+}
+
+int Listen(int fd, int backlog)
+{
+  int n;
+  if ((n = listen(fd, backlog)) &lt; 0)
+     perr_exit(&quot;listen error&quot;);
+  return n;
+}
+
+int Socket(int family, int type, int protocol)
+{
+  int n;
+  if ( (n = socket(family, type, protocol)) &lt; 0)
+     perr_exit(&quot;socket error&quot;);
+  return n;
+}
+
+ssize_t Read(int fd, void *ptr, size_t nbytes)
+{
+  ssize_t n;
+again:
+  if ( (n = read(fd, ptr, nbytes)) == -1) {
+     if (errno == EINTR)
+       goto again;
+     else
+       return -1;
+  }
+  return n;
+}
+
+ssize_t Write(int fd, const void *ptr, size_t nbytes)
+{
+  ssize_t n;
+again:
+  if ( (n = write(fd, ptr, nbytes)) == -1) {
+     if (errno == EINTR)
+       goto again;
+     else
+       return -1;
+  }
+  return n;
+}
+
+int Close(int fd)
+{
+  int n;
+  if ((n = close(fd)) == -1)
+     perr_exit(&quot;close error&quot;);
+  return n;
+}
+//在socket编程里面没有文件描述符, 所以这一个读取的时候只能使用系统调用
+//在使用的时候封装一下会提高效率
+ssize_t Readn(int fd, void *vptr, size_t n)
+{
+  size_t nleft;
+  ssize_t nread;
+  char *ptr;
+  ptr = vptr;
+  nleft = n;
+
+  while (nleft &gt; 0) {
+     if ( (nread = read(fd, ptr, nleft)) &lt; 0) {
+       if (errno == EINTR)
+         nread = 0;
+       else
+         return -1;
+     } else if (nread == 0)
+       break;
+     nleft -= nread;
+     ptr += nread;
+  }
+  return n - nleft;
+
+}
+
+
+
+ssize_t Writen(int fd, const void *vptr, size_t n)
+{
+  size_t nleft;
+  ssize_t nwritten;
+  const char *ptr;
+
+  ptr = vptr;
+  nleft = n;
+
+  while (nleft &gt; 0) {
+     if ( (nwritten = write(fd, ptr, nleft)) &lt;= 0) {
+       if (nwritten &lt; 0 &amp;&amp; errno == EINTR)
+         nwritten = 0;
+       else
+         return -1;
+     }
+     nleft -= nwritten;
+     ptr += nwritten;
+  }
+  return n;
+}
+
+
+//以此获取一个字符, 这一个只能针对一个文件
+static ssize_t my_read(int fd, char *ptr)
+{
+  static int read_cnt;
+  static char *read_ptr;
+  static char read_buf[100];//一个静态的缓冲区
+
+  if (read_cnt &lt;= 0) {
+again:
+     if ((read_cnt = read(fd, read_buf, sizeof(read_buf))) &lt; 0) {
+       if (errno == EINTR)
+         goto again;
+       return -1; 
+     } else if (read_cnt == 0)
+       return 0;//没有数据了
+     read_ptr = read_buf;
+  }
+  read_cnt--;
+  *ptr = *read_ptr++;//读取一个数据
+  return 1;
+}
+
+
+ssize_t Readline(int fd, void *vptr, size_t maxlen)
+{
+  ssize_t n, rc;
+  char c, *ptr;
+  ptr = vptr;
+
+  for (n = 1; n &lt; maxlen; n++) {
+     if ( (rc = my_read(fd, &amp;c)) == 1) {
+       *ptr++ = c;
+       if (c == '\n')
+         break;
+    } else if (rc == 0) {
+       *ptr = 0;
+       return n - 1;
+     } else
+       return -1;
+  }
+  *ptr = 0;
+  return n;
+}
+</code></pre>
+<h3 id="wrap.h">wrap.h</h3>
+
+<pre class="language-c"><code class="language-c">#ifndef __WRAP_H_
+#define __WRAP_H_
+void perr_exit(const char *s);
+int Accept(int fd, struct sockaddr *sa, socklen_t *salenptr);
+int Bind(int fd, const struct sockaddr *sa, socklen_t salen);
+int Connect(int fd, const struct sockaddr *sa, socklen_t salen);
+int Listen(int fd, int backlog);
+int Socket(int family, int type, int protocol);
+ssize_t Read(int fd, void *ptr, size_t nbytes);
+ssize_t Write(int fd, const void *ptr, size_t nbytes);
+int Close(int fd);
+ssize_t Readn(int fd, void *vptr, size_t n);
+ssize_t Writen(int fd, const void *vptr, size_t n);
+ssize_t my_read(int fd, char *ptr);
+ssize_t Readline(int fd, void *vptr, size_t maxlen);
+#endif
+</code></pre>
+<h2 id="%E8%A1%A5%E5%85%85%E5%87%BD%E6%95%B0%28%E9%9D%9E%E5%B8%B8%E7%94%A8%29">补充函数(非常用)</h2>
+<h3 id="shutdown%E5%85%B3%E9%97%AD%E8%BF%9E%E6%8E%A5">shutdown关闭连接</h3>
+<p>当TCP链接中A发送FIN请求关闭，B端回应ACK后（A端进入FIN_WAIT_2状态），B没有立即发送FIN给A时，A方处在半链接状态，此时A可以接收B发送的数据，但是A已不能再向B发送数据。</p>
+<p>从程序的角度，可以使用API来控制实现半连接状态。</p>
+
+<pre class="language-c"><code class="language-c">#include &lt;sys/socket.h&gt;
+int shutdown(int sockfd, int how);
+</code></pre>
+<blockquote>
+<p>sockfd: 需要关闭的socket的描述符</p>
+<p>how:  允许为shutdown操作选择以下几种方式:</p>
+<p>SHUT_RD(0)：  关闭sockfd上的读功能，此选项将不允许sockfd进行读操作。</p>
+<p>​          该套接字<strong>不再接收数据</strong>，任何当前在套接字接受缓冲区的数据将被无声的丢弃掉。</p>
+<p>SHUT_WR(1):   关闭sockfd的写功能，此选项将不允许sockfd进行写操作。进程不能在对此套接字发出写操作。</p>
+<p>SHUT_RDWR(2):  关闭sockfd的读写功能。相当于调用shutdown两次：首先是以SHUT_RD,然后以SHUT_WR。</p>
+</blockquote>
+<p>使用close中止一个连接，但它只是减少描述符的引用计数，并不直接关闭连接，只有当描述符的引用计数为0时才关闭连接。</p>
+<p><strong>shutdown</strong>不考虑描述符的引用计数，直接关闭描述符。也可选择中止一个方向的连接，只中止读或只中止写。</p>
+<p>注意:</p>
+<ol>
+<li>如果有多个进程共享一个套接字，close每被调用一次，计数减1，直到计数为0时，也就是所用进程都调用了close，套接字将被释放。</li>
+<li>在多进程中如果一个进程调用了shutdown(sfd, SHUT_RDWR)后，其它的进程将无法进行通信。但，如果一个进程close(sfd)将不会影响到其它进程。</li>
+</ol>
+<h2 id="%E8%A1%A5%E5%85%85">补充</h2>
+<p>把文件上传服务器</p>
+
+<pre class="language-bash"><code class="language-bash">scp -r 文件名 服务器用户名@服务器ip:目录 
+scp -r ./socket.c root@110.41.39.131:/root/ 
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/Linux/Linux网络编程/2024-4-20-11服务器.html">
+                            <span class="icon"></span>
+                            <span class="label">2024-4-20-11服务器</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/Linux/Linux网络编程/2024-4-6-03高并发服务器.html">
+                            <span class="label">2024-4-6-03高并发服务器</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>ADC - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["stm32"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class="active"><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/嵌入式/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">PCB</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">立创eda</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-16-01入门.html"><span class="label">2024-7-16-01入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-17-02硬件基础.html"><span class="label">2024-7-17-02硬件基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-18-03立创eda.html"><span class="label">2024-7-18-03立创eda</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-18-04设计.html"><span class="label">2024-7-18-04设计</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-21-esp32设计.html"><span class="label">2024-7-21-esp32设计</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-23-触摸墨水屏时钟.html"><span class="label">2024-7-23-触摸墨水屏时钟</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">ROS</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">ROS1</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-12-01-基础介绍.html"><span class="label">2026-1-12-01-基础介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-02-命令行工具.html"><span class="label">2026-1-13-02-命令行工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-03-工作空间功能包.html"><span class="label">2026-1-13-03-工作空间功能包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-04-Publisher编程实现.html"><span class="label">2026-1-13-04-Publisher编程实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-05-Subscriber实现.html"><span class="label">2026-1-13-05-Subscriber实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-06-话题消息发布.html"><span class="label">2026-1-13-06-话题消息发布</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-07-同步Client实现.html"><span class="label">2026-1-13-07-同步Client实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-08-Server实现.html"><span class="label">2026-1-13-08-Server实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-09-自定义服务数据类型.html"><span class="label">2026-1-14-09-自定义服务数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-10-参数的使用.html"><span class="label">2026-1-14-10-参数的使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-11-坐标系管理系统.html"><span class="label">2026-1-14-11-坐标系管理系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-12-可视化工具.html"><span class="label">2026-1-14-12-可视化工具</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">ROS2</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-01-ROS2.html"><span class="label">2026-1-15-01-ROS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-02-命令行使用.html"><span class="label">2026-1-15-02-命令行使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-03-工作空间功能包.html"><span class="label">2026-1-15-03-工作空间功能包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-04-节点node.html"><span class="label">2026-1-15-04-节点node</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-05-话题topic.html"><span class="label">2026-1-15-05-话题topic</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-06-服务Server.html"><span class="label">2026-1-15-06-服务Server</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-07-通信接口.html"><span class="label">2026-1-15-07-通信接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-08-动作.html"><span class="label">2026-1-15-08-动作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-09-参数.html"><span class="label">2026-1-15-09-参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-10-分布式系统.html"><span class="label">2026-1-15-10-分布式系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-16-11-DDS通信QoS.html"><span class="label">2026-1-16-11-DDS通信QoS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-16-12-launch启动脚本.html"><span class="label">2026-1-16-12-launch启动脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-16-13-TF坐标系.html"><span class="label">2026-1-16-13-TF坐标系</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-17-14-机器人建模.html"><span class="label">2026-1-17-14-机器人建模</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-17-15-三维仿真.html"><span class="label">2026-1-17-15-三维仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-17-16-环境变量.html"><span class="label">2026-1-17-16-环境变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-19-17-电脑信息示例.html"><span class="label">2026-1-19-17-电脑信息示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-19-18-人脸识别.html"><span class="label">2026-1-19-18-人脸识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-19-rqt工具.html"><span class="label">2026-1-21-19-rqt工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-20-rviz.html"><span class="label">2026-1-21-20-rviz</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-21-bag记录工具.html"><span class="label">2026-1-21-21-bag记录工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-22-Gozebo仿真.html"><span class="label">2026-1-21-22-Gozebo仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-22--23-ros2_control驱动.html"><span class="label">2026-1-22--23-ros2_control驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-23-24-自主导航.html"><span class="label">2026-1-23-24-自主导航</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-24-25-slam_toolbox.html"><span class="label">2026-1-24-25-slam_toolbox</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-24-26-Navigation2自主导航.html"><span class="label">2026-1-24-26-Navigation2自主导航</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-24-27-导航应用开发.html"><span class="label">2026-1-24-27-导航应用开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-25-28-navigation2插件机制.html"><span class="label">2026-1-25-28-navigation2插件机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-25-29-自定义路径规划.html"><span class="label">2026-1-25-29-自定义路径规划</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-25-30-自定义导航控制器.html"><span class="label">2026-1-25-30-自定义导航控制器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-31-MicroROS.html"><span class="label">2026-1-26-31-MicroROS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-32-机器人搭建.html"><span class="label">2026-1-26-32-机器人搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-33-PID.html"><span class="label">2026-1-26-33-PID</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-34-运动学正逆解.html"><span class="label">2026-1-26-34-运动学正逆解</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-35-里程计计算.html"><span class="label">2026-1-26-35-里程计计算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-36-坐标系建图.html"><span class="label">2026-1-27-36-坐标系建图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-37-执行器回调组.html"><span class="label">2026-1-27-37-执行器回调组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-38-生命周期节点.html"><span class="label">2026-1-27-38-生命周期节点</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-39-执行器组织多个节点.html"><span class="label">2026-1-27-39-执行器组织多个节点</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-40-消息过滤器同步数据.html"><span class="label">2026-1-27-40-消息过滤器同步数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-41-不同DDS.html"><span class="label">2026-1-27-41-不同DDS</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">esp32</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-0-00CMake.html"><span class="label">2023-9-0-00CMake</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-15-01初识esp32.html"><span class="label">2023-9-15-01初识esp32</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-16-02ESP-IDE.html"><span class="label">2023-9-16-02ESP-IDE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-17-03延时函数点亮LED.html"><span class="label">2023-9-17-03延时函数点亮LED</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-17-04Flash和psram的配置.html"><span class="label">2023-9-17-04Flash和psram的配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-19-05多个文件编译.html"><span class="label">2023-9-19-05多个文件编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2025-1-16-服务器.html"><span class="label">2025-1-16-服务器</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">Arduino</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/Arduino/2024-12-30-03-w25q64b.html"><span class="label">2024-12-30-03-w25q64b</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/Arduino/2024-2-2-01Arduino框架.html"><span class="label">2024-2-2-01Arduino框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/Arduino/2025-1-1-04-WifiAP.html"><span class="label">2025-1-1-04-WifiAP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">esp-idf</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-10-4-28大语言模型.html"><span class="label">2024-10-4-28大语言模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-10-5-29文件系统.html"><span class="label">2024-10-5-29文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-10-5-30U8g2.html"><span class="label">2024-10-5-30U8g2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-11-9-31SD卡.html"><span class="label">2024-11-9-31SD卡</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-01ESP-IDF接口.html"><span class="label">2024-5-23-01ESP-IDF接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-02基础使用.html"><span class="label">2024-5-23-02基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-03GPIO.html"><span class="label">2024-5-23-03GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-安装.html"><span class="label">2024-5-23-安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-24-04I2C.html"><span class="label">2024-5-24-04I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-05I2S.html"><span class="label">2024-5-25-05I2S</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-06efuse.html"><span class="label">2024-5-25-06efuse</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-07lvgl.html"><span class="label">2024-5-25-07lvgl</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-07组件管理.html"><span class="label">2024-5-25-07组件管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-08触摸屏.html"><span class="label">2024-5-25-08触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-13-15蓝牙GAP.html"><span class="label">2024-6-13-15蓝牙GAP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-13-16蓝牙GATT.html"><span class="label">2024-6-13-16蓝牙GATT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-13-17SMP安全配对绑定.html"><span class="label">2024-6-13-17SMP安全配对绑定</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-22-18蓝牙HID控制.html"><span class="label">2024-6-22-18蓝牙HID控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-24-19分区表.html"><span class="label">2024-6-24-19分区表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-24-20OTA数据分区.html"><span class="label">2024-6-24-20OTA数据分区</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-25-21FreeRTOS.html"><span class="label">2024-6-25-21FreeRTOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-26-22错误处理.html"><span class="label">2024-6-26-22错误处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-26-23MQTT.html"><span class="label">2024-6-26-23MQTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-27-24睡眠模式.html"><span class="label">2024-6-27-24睡眠模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-27-25电源管理.html"><span class="label">2024-6-27-25电源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-28-26RTC.html"><span class="label">2024-6-28-26RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-3-09wifi.html"><span class="label">2024-6-3-09wifi</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-4-10事件循环库.html"><span class="label">2024-6-4-10事件循环库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-6-11HTTP库.html"><span class="label">2024-6-6-11HTTP库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-6-12cJSON.html"><span class="label">2024-6-6-12cJSON</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-8-13AI大语言模型.html"><span class="label">2024-6-8-13AI大语言模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-9-14蓝牙.html"><span class="label">2024-6-9-14蓝牙</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-8-1-27启动模式.html"><span class="label">2024-8-1-27启动模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-1-22-32cpp.html"><span class="label">2025-1-22-32cpp</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-3-27-33照相机.html"><span class="label">2025-3-27-33照相机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-6-6-34USB.html"><span class="label">2025-6-6-34USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-6-7-36存储器.html"><span class="label">2025-6-7-36存储器</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">micropython</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-4-22-01环境搭建.html"><span class="label">2024-4-22-01环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-4-22-02-GPIO.html"><span class="label">2024-4-22-02-GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-4-22-03-WIFI.html"><span class="label">2024-4-22-03-WIFI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-5-20-04SPI.html"><span class="label">2024-5-20-04SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2026-1-3-05-编译.html"><span class="label">2026-1-3-05-编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2026-1-6-06-自定义模块.html"><span class="label">2026-1-6-06-自定义模块</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">stc32</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stc32/2023-9-17-01.html"><span class="label">2023-9-17-01</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">stm32</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active no_link"><a><span class="label">HAL原子</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-11-05创建工程.html"><span class="label">2023-11-11-05创建工程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-11-06初识HAL库.html"><span class="label">2023-11-11-06初识HAL库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-12-07新建HAL库版本的工程.html"><span class="label">2023-11-12-07新建HAL库版本的工程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-12-08启动过程浅析.html"><span class="label">2023-11-12-08启动过程浅析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-12-09STM32CubeMX.html"><span class="label">2023-11-12-09STM32CubeMX</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-18-10SYSTEN文件介绍.html"><span class="label">2023-11-18-10SYSTEN文件介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-20-11GPIO.html"><span class="label">2023-11-20-11GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-21-12中断.html"><span class="label">2023-11-21-12中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-28-13USART.html"><span class="label">2023-11-28-13USART</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-30-14IWDG.html"><span class="label">2023-11-30-14IWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-30-15WWDG.html"><span class="label">2023-11-30-15WWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-5-原理图设计.html"><span class="label">2023-11-5-原理图设计</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-6-常用的开发工具.html"><span class="label">2023-11-6-常用的开发工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-9-03C语言知识.html"><span class="label">2023-11-9-03C语言知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-9-04stm32基础知识.html"><span class="label">2023-11-9-04stm32基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-1-16定时器.html"><span class="label">2023-12-1-16定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-13-17-FSMC.html"><span class="label">2023-12-13-17-FSMC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-19-18LTDC.html"><span class="label">2023-12-19-18LTDC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-21-19DMA2D.html"><span class="label">2023-12-21-19DMA2D</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-21-20USMART.html"><span class="label">2023-12-21-20USMART</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-22-21RTC.html"><span class="label">2023-12-22-21RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-25-23RNG.html"><span class="label">2023-12-25-23RNG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-26-24电源管理.html"><span class="label">2023-12-26-24电源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-28-25DMA.html"><span class="label">2023-12-28-25DMA</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-28-26ADC.html"><span class="label">2023-12-28-26ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-29-27DAC.html"><span class="label">2023-12-29-27DAC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-6-17MPU.html"><span class="label">2023-12-6-17MPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-1-28SPI.html"><span class="label">2024-1-1-28SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-3-29QSPI.html"><span class="label">2024-1-3-29QSPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-4-30CAN.html"><span class="label">2024-1-4-30CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-6-31内部Flash.html"><span class="label">2024-1-6-31内部Flash</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-7-32DCMI.html"><span class="label">2024-1-7-32DCMI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-8-33SDIO.html"><span class="label">2024-1-8-33SDIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-8-34SDMMC.html"><span class="label">2024-1-8-34SDMMC</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">HAL库</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-13-13SPIFlash.html"><span class="label">2023-10-13-13SPIFlash</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-16-14Fatfs.html"><span class="label">2023-10-16-14Fatfs</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-19-15FSMC扩展SRAM.html"><span class="label">2023-10-19-15FSMC扩展SRAM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-19-16LCD.html"><span class="label">2023-10-19-16LCD</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-2-01入门.html"><span class="label">2023-10-2-01入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-26-17电阻触摸屏.html"><span class="label">2023-10-26-17电阻触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-27-18ADC.html"><span class="label">2023-10-27-18ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-29-19-定时器.html"><span class="label">2023-10-29-19-定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-30-20电容按键.html"><span class="label">2023-10-30-20电容按键</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-4-02初识HAL固件库.html"><span class="label">2023-10-4-02初识HAL固件库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-03GPIO板级支持包的构建.html"><span class="label">2023-10-5-03GPIO板级支持包的构建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-04启动过程.html"><span class="label">2023-10-5-04启动过程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-05复位以及时钟控制.html"><span class="label">2023-10-5-05复位以及时钟控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-06异常和中断EXTI.html"><span class="label">2023-10-5-06异常和中断EXTI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-07Systick定时器.html"><span class="label">2023-10-6-07Systick定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-08HAL库驱动框架.html"><span class="label">2023-10-6-08HAL库驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-09Debug调试.html"><span class="label">2023-10-6-09Debug调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-10通讯原理-USART.html"><span class="label">2023-10-6-10通讯原理-USART</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-7-11DMA直接存储访问控制器.html"><span class="label">2023-10-7-11DMA直接存储访问控制器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-9-12常见的存储器-I2C-EEPROM.html"><span class="label">2023-10-9-12常见的存储器-I2C-EEPROM</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">固件库</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-11-29-27IWDG.html"><span class="label">2023-11-29-27IWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-11-30-28WWDG.html"><span class="label">2023-11-30-28WWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-18-31LTDC.html"><span class="label">2023-12-18-31LTDC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-20-32DMA2D.html"><span class="label">2023-12-20-32DMA2D</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-22-33-RTC.html"><span class="label">2023-12-22-33-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-25-34RNG.html"><span class="label">2023-12-25-34RNG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-29-35DAC.html"><span class="label">2023-12-29-35DAC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-5-29电容按键.html"><span class="label">2023-12-5-29电容按键</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-6-30MPU.html"><span class="label">2023-12-6-30MPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-19-1安装软件.html"><span class="label">2023-6-19-1安装软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-19-2初识stm32.html"><span class="label">2023-6-19-2初识stm32</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-20-3寄存器.html"><span class="label">2023-6-20-3寄存器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-20-4GPIO.html"><span class="label">2023-6-20-4GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-22-5使用固件库.html"><span class="label">2023-6-22-5使用固件库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-26-6启动文件.html"><span class="label">2023-6-26-6启动文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-26-7时钟.html"><span class="label">2023-6-26-7时钟</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-26-8中断.html"><span class="label">2023-6-26-8中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-30-10串口通讯.html"><span class="label">2023-6-30-10串口通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-30-9SysTick.html"><span class="label">2023-6-30-9SysTick</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-15-19ADC.html"><span class="label">2023-7-15-19ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-16-20定时器.html"><span class="label">2023-7-16-20定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-19-21SDIO.html"><span class="label">2023-7-19-21SDIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-2-11DMA.html"><span class="label">2023-7-2-11DMA</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-25-22电源管理.html"><span class="label">2023-7-25-22电源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-27-23MDK编译过程.html"><span class="label">2023-7-27-23MDK编译过程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-28-24读写内部Flash.html"><span class="label">2023-7-28-24读写内部Flash</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-29-25SRAM.html"><span class="label">2023-7-29-25SRAM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-3-12存储器(I2C).html"><span class="label">2023-7-3-12存储器(I2C)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-3-13Flash(SPI).html"><span class="label">2023-7-3-13Flash(SPI)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-5-14文件系统.html"><span class="label">2023-7-5-14文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-8-15FSMC(SRAM).html"><span class="label">2023-7-8-15FSMC(SRAM)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-9-16FSMC液晶屏8080时序.html"><span class="label">2023-7-9-16FSMC液晶屏8080时序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-9-14-26摄像头.html"><span class="label">2023-9-14-26摄像头</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-1-36QSPI.html"><span class="label">2024-1-1-36QSPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-10-41FPU.html"><span class="label">2024-1-10-41FPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-11-42USB.html"><span class="label">2024-1-11-42USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-4-37CAN.html"><span class="label">2024-1-4-37CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-7-38DCMI.html"><span class="label">2024-1-7-38DCMI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-8-39SDMMC.html"><span class="label">2024-1-8-39SDMMC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-9-40硬件JGEG.html"><span class="label">2024-1-9-40硬件JGEG</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">无人机</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/无人机/2025-2-1-01-基础知识.html"><span class="label">2025-2-1-01-基础知识</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">蓝桥杯备赛</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/蓝桥杯备赛/2024-3-10-01.html"><span class="label">2024-3-10-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/蓝桥杯备赛/2024-3-11-02理论题.html"><span class="label">2024-3-11-02理论题</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">基础知识</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">Cotex-M3权威指南</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-00快查.html"><span class="label">2024-1-16-00快查</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-01概览.html"><span class="label">2024-1-16-01概览</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-02基础(寄存器-栈-中断向量表).html"><span class="label">2024-1-16-02基础(寄存器-栈-中断向量表)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-03指令集.html"><span class="label">2024-1-16-03指令集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-04存储器.html"><span class="label">2024-1-17-04存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-05全景概况.html"><span class="label">2024-1-17-05全景概况</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-06异常.html"><span class="label">2024-1-17-06异常</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-07NVIC与中断控制.html"><span class="label">2024-1-17-07NVIC与中断控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-08中断的具体行为.html"><span class="label">2024-1-17-08中断的具体行为</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-09Cotex-M3低层编程.html"><span class="label">2024-1-18-09Cotex-M3低层编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-10系统异常.html"><span class="label">2024-1-18-10系统异常</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-11系统行为.html"><span class="label">2024-1-18-11系统行为</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-12其它特性.html"><span class="label">2024-1-18-12其它特性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-13MPU.html"><span class="label">2024-1-18-13MPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-19调试.html"><span class="label">2024-1-19调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-20-20Cotex-M3开发.html"><span class="label">2024-1-20-20Cotex-M3开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">RISC-V体系</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-6-26-01RISC-V体系.html"><span class="label">2024-6-26-01RISC-V体系</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-6-26-问题处理.html"><span class="label">2024-6-26-问题处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-6-30-02开发环境.html"><span class="label">2024-6-30-02开发环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-7-31-03内核.html"><span class="label">2024-7-31-03内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-1-04汇编.html"><span class="label">2024-8-1-04汇编</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-4-05异常处理机制.html"><span class="label">2024-8-4-05异常处理机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-5-06中断处理.html"><span class="label">2024-8-5-06中断处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-5-07-其他组件.html"><span class="label">2024-8-5-07-其他组件</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">外设</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-31-01环境传感器AP3216.html"><span class="label">2023-12-31-01环境传感器AP3216</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-31-02磁力计ST480MC.html"><span class="label">2023-12-31-02磁力计ST480MC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-31-03六轴传感器SH3001.html"><span class="label">2023-12-31-03六轴传感器SH3001</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-5-模块OLED.html"><span class="label">2023-12-5-模块OLED</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-7-13-18触摸屏.html"><span class="label">2023-7-13-18触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-1-Flash-W25Q64.html"><span class="label">2024-1-1-Flash-W25Q64</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-10-15音频编解码VS1053等.html"><span class="label">2024-1-10-15音频编解码VS1053等</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-4-05电阻触摸屏XPT2046.html"><span class="label">2024-1-4-05电阻触摸屏XPT2046</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-4-06电容触摸屏GT9147.html"><span class="label">2024-1-4-06电容触摸屏GT9147</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-5-07红外遥控.html"><span class="label">2024-1-5-07红外遥控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-5-08游戏手柄.html"><span class="label">2024-1-5-08游戏手柄</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-5-09温度传感器DS18B20.html"><span class="label">2024-1-5-09温度传感器DS18B20</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-10温湿度传感器DHT11.html"><span class="label">2024-1-6-10温湿度传感器DHT11</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-11-2.4G通信nrf24l01.html"><span class="label">2024-1-6-11-2.4G通信nrf24l01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-12摄像头OV7725.html"><span class="label">2024-1-6-12摄像头OV7725</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-13摄像头OV2640OV5640.html"><span class="label">2024-1-6-13摄像头OV2640OV5640</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-7-14SD卡.html"><span class="label">2024-1-7-14SD卡</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-9-11-4G DTU.html"><span class="label">2024-9-11-4G DTU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式Linux编程入门与实例开发</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/嵌入式Linux编程入门与实例开发/2022-8-24-嵌入式系统基础.html"><span class="label">2022-8-24-嵌入式系统基础</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">模拟器</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">RISC-V模拟器</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-19-02指令实现.html"><span class="label">2024-8-19-02指令实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-29-GDB调试.html"><span class="label">2024-8-29-GDB调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-5-00基础知识.html"><span class="label">2024-8-5-00基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-5-01模拟器.html"><span class="label">2024-8-5-01模拟器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-9-3-04外设.html"><span class="label">2024-9-3-04外设</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">第三方移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">MySTMOS</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-19-a所有文件的作用记录.html"><span class="label">2023-7-19-a所有文件的作用记录</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-19-day1.html"><span class="label">2023-7-19-day1</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-20-day2汇编指令以及Makefile.html"><span class="label">2023-7-20-day2汇编指令以及Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-21-day3进入32位系统以及C语言.html"><span class="label">2023-7-21-day3进入32位系统以及C语言</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-21-day4C语言以及显示.html"><span class="label">2023-7-21-day4C语言以及显示</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-23-day5结构体文字显示与GDTIDT初始化.html"><span class="label">2023-7-23-day5结构体文字显示与GDTIDT初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-25-day6分割编译与中断处理.html"><span class="label">2023-7-25-day6分割编译与中断处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-14-day7FIFO与鼠标控制.html"><span class="label">2023-8-14-day7FIFO与鼠标控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-17-day10叠加处理.html"><span class="label">2023-8-17-day10叠加处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-17-day8鼠标控制以及32位转换.html"><span class="label">2023-8-17-day8鼠标控制以及32位转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-17-day9内存管理.html"><span class="label">2023-8-17-day9内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-19-day11制作窗口.html"><span class="label">2023-8-19-day11制作窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-23-day12定时器.html"><span class="label">2023-8-23-day12定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-24-day13定时器.html"><span class="label">2023-8-24-day13定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-25-day14高分辨率以及键盘输入.html"><span class="label">2023-8-25-day14高分辨率以及键盘输入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-26-day15多任务.html"><span class="label">2023-8-26-day15多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-29-day16多任务.html"><span class="label">2023-8-29-day16多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-9-5-day17命令行窗口.html"><span class="label">2023-9-5-day17命令行窗口</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">RT-Thread</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-00速查手册.html"><span class="label">2024-1-26-00速查手册</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-00问题处理.html"><span class="label">2024-1-26-00问题处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-01简介.html"><span class="label">2024-1-26-01简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-02RT-Thread架构.html"><span class="label">2024-1-26-02RT-Thread架构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-03移植.html"><span class="label">2024-1-26-03移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-04内核框架.html"><span class="label">2024-1-26-04内核框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-27-05启动流程.html"><span class="label">2024-1-27-05启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-27-06线程管理.html"><span class="label">2024-1-27-06线程管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-27-07时钟管理.html"><span class="label">2024-1-27-07时钟管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-28-09系统间同步.html"><span class="label">2024-1-28-09系统间同步</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-28-10IO模型.html"><span class="label">2024-1-28-10IO模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-28-11串口设备.html"><span class="label">2024-1-28-11串口设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-29-12ADC.html"><span class="label">2024-1-29-12ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-30-13I2C.html"><span class="label">2024-1-30-13I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-30-14RT-Thread对象管理.html"><span class="label">2024-1-30-14RT-Thread对象管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-31-15线程管理(代码分析).html"><span class="label">2024-1-31-15线程管理(代码分析)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-31-16线程管理(源码分析02.html"><span class="label">2024-1-31-16线程管理(源码分析02</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-2-5-17线程间通信.html"><span class="label">2024-2-5-17线程间通信</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-2-7-18内存管理.html"><span class="label">2024-2-7-18内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2025-1-18-RTThreadEnv.html"><span class="label">2025-1-18-RTThreadEnv</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">freeRTOS</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/0000-0-0-00实际使用.html"><span class="label">0000-0-0-00实际使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-15-wds01使用.html"><span class="label">2023-11-15-wds01使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-17-wds02互斥量.html"><span class="label">2023-11-17-wds02互斥量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-19-wds03任务通知.html"><span class="label">2023-11-19-wds03任务通知</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-21-wds04计时器.html"><span class="label">2023-11-21-wds04计时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-22-wds05中断管理.html"><span class="label">2023-11-22-wds05中断管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-22-wds06资源管理.html"><span class="label">2023-11-22-wds06资源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-23-08wds优化.html"><span class="label">2023-11-23-08wds优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-23-wds07调试.html"><span class="label">2023-11-23-wds07调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-23-wds09内存管理.html"><span class="label">2023-11-23-wds09内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-18-1架构概念.html"><span class="label">2023-6-18-1架构概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-18-2堆栈.html"><span class="label">2023-6-18-2堆栈</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-20-3FreeRTOS.html"><span class="label">2023-6-20-3FreeRTOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-21-4修改.html"><span class="label">2023-6-21-4修改</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-10-fire4临界段.html"><span class="label">2023-7-10-fire4临界段</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-11-fire5空闲任务阻塞延时.html"><span class="label">2023-7-11-fire5空闲任务阻塞延时</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-11-fire6支持任务多优先级.html"><span class="label">2023-7-11-fire6支持任务多优先级</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-12-fire7任务延时列表实现.html"><span class="label">2023-7-12-fire7任务延时列表实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-12-fire8实现时间片.html"><span class="label">2023-7-12-fire8实现时间片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-12-fire9移植.html"><span class="label">2023-7-12-fire9移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-13-fire10创建任务.html"><span class="label">2023-7-13-fire10创建任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-19-fire11FreeRTOS启动任务管理.html"><span class="label">2023-7-19-fire11FreeRTOS启动任务管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-19-fire12任务状态.html"><span class="label">2023-7-19-fire12任务状态</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-5-fire1项目构建.html"><span class="label">2023-7-5-fire1项目构建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-5-fire2数据结构.html"><span class="label">2023-7-5-fire2数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-9-fire3任务创建切换.html"><span class="label">2023-7-9-fire3任务创建切换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2024-1-21-02实际使用CubeMX封装.html"><span class="label">2024-1-21-02实际使用CubeMX封装</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">homeassistant</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/homeassistant/2025-3-30-homeassistant.html"><span class="label">2025-3-30-homeassistant</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">libpeer</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/libpeer/2025-5-29-WebRTC.html"><span class="label">2025-5-29-WebRTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/libpeer/2025-6-2-MIPI.html"><span class="label">2025-6-2-MIPI</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">lvgl</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-1-11-02移植.html"><span class="label">2024-1-11-02移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-1-5-01入门.html"><span class="label">2024-1-5-01入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-26-03初始化.html"><span class="label">2024-5-26-03初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-26-04配置文件.html"><span class="label">2024-5-26-04配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-26-05lvgl模拟器.html"><span class="label">2024-5-26-05lvgl模拟器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-27-06基础部件.html"><span class="label">2024-5-27-06基础部件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-30-07部件使用.html"><span class="label">2024-5-30-07部件使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-31-08其他.html"><span class="label">2024-5-31-08其他</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-09实体按键.html"><span class="label">2024-6-3-09实体按键</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-10文件系统移植.html"><span class="label">2024-6-3-10文件系统移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-11-中文字库.html"><span class="label">2024-6-3-11-中文字库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-12屏幕切换.html"><span class="label">2024-6-3-12屏幕切换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2025-12-07-图层绘制.html"><span class="label">2025-12-07-图层绘制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2025-12-5-14-操作系统使用.html"><span class="label">2025-12-5-14-操作系统使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2025-2-24-13图片字体.html"><span class="label">2025-2-24-13图片字体</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">lwIP</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-6-3-LWIP.html"><span class="label">2024-6-3-LWIP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-6-30-02MAC简介.html"><span class="label">2024-6-30-02MAC简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-1-03移植.html"><span class="label">2024-7-1-03移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-1-04启动流程.html"><span class="label">2024-7-1-04启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-10-13RAW接口.html"><span class="label">2024-7-10-13RAW接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-12-14WebServer.html"><span class="label">2024-7-12-14WebServer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-12-15NETCONN.html"><span class="label">2024-7-12-15NETCONN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-13-16NTP获取时间.html"><span class="label">2024-7-13-16NTP获取时间</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-14-17Jpref测速.html"><span class="label">2024-7-14-17Jpref测速</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-14-18MQTT.html"><span class="label">2024-7-14-18MQTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-2-05内存管理.html"><span class="label">2024-7-2-05内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-3-06网络接口.html"><span class="label">2024-7-3-06网络接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-4-07网络数据包.html"><span class="label">2024-7-4-07网络数据包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-4-08超时定时器.html"><span class="label">2024-7-4-08超时定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-5-09ARP协议.html"><span class="label">2024-7-5-09ARP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-5-10IP协议.html"><span class="label">2024-7-5-10IP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-8-11ICMP协议.html"><span class="label">2024-7-8-11ICMP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-8-12传输协议.html"><span class="label">2024-7-8-12传输协议</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">u8g2</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/u8g2/2024-10-4-01U8G2.html"><span class="label">2024-10-4-01U8G2</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">文件系统</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/文件系统/2024-1-9-01FATFS.html"><span class="label">2024-1-9-01FATFS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">物联网</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-12-01网络基础知识.html"><span class="label">2023-11-12-01网络基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-13-02MQQT程序分层.html"><span class="label">2023-11-13-02MQQT程序分层</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-25-03移植到stm32.html"><span class="label">2023-11-25-03移植到stm32</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-26-04连接wifi.html"><span class="label">2023-11-26-04连接wifi</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">补充知识</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2023-11-7-IAP技术.html"><span class="label">2023-11-7-IAP技术</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2023-7-13-17液晶屏显示字符.html"><span class="label">2023-7-13-17液晶屏显示字符</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-10-03图片存储.html"><span class="label">2024-1-10-03图片存储</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-10-04视频解码.html"><span class="label">2024-1-10-04视频解码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-10-05手写识别.html"><span class="label">2024-1-10-05手写识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-11-06T9拼音输入法.html"><span class="label">2024-1-11-06T9拼音输入法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-11-07IAP原子.html"><span class="label">2024-1-11-07IAP原子</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-9-02图片显示.html"><span class="label">2024-1-9-02图片显示</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-9-14-08USB.html"><span class="label">2024-9-14-08USB</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>ADC</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>stm32</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/嵌入式/stm32/固件库/2023-7-15-19ADC.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="ADC">ADC</h1>
+<h2 id="%E7%AE%80%E4%BB%8B">简介</h2>
+<p>Analog-to-Digital-Converter模拟/数字转换器</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282001522.png" alt="image-20231228200121471" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282002598.png" alt="image-20231228200230557" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282003997.png" alt="image-20231228200313930" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282018436.png" alt="image-20231228201812373" /></p>
+<blockquote>
+<p>D/A会把数码寄存器里面的数字转换为对应的电压, 之后进行比较, 比较结果进行调整, 这个是STM32使用的模式</p>
+</blockquote>
+<h3 id="%E5%8F%82%E6%95%B0">参数</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282022091.png" alt="image-20231228202226037" /></p>
+<h2 id="STM32%E7%9A%84ADC">STM32的ADC</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282025640.png" alt="image-20231228202536592" /></p>
+<blockquote>
+<p>VREF+的电压要小于3.6V</p>
+</blockquote>
+<h3 id="%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86F1">工作原理F1</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059569.png" alt="image-20230715103243971" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282033946.png" alt="image-20231228203339871" /></p>
+<p>stm32f有三个ADC, 分辨率为12位, 每一个ADC有18个通道, 外部通道16个</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059570.png" alt="image-20230715103708556" /></p>
+<ol>
+<li>输入电压VREF-&lt;=VIM&lt;=VREF+, 设置电压的引脚, 还有VDDA, 模拟电压的电源, VSSA模拟的地, 这里链接的是3.3V和地</li>
+</ol>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059571.png" alt="image-20230715104441085" /></p>
+<blockquote>
+<p>超出电压: 使用分压电路</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059572.png" alt="image-20230715104658332" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059573.png" alt="image-20230715104803913" /></p>
+</blockquote>
+<ol start="2">
+<li>确定输入通道</li>
+</ol>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059574.png" alt="image-20230715105150119" /></p>
+<blockquote>
+<p>使用的引脚有重复</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059575.png" alt="image-20230715132058177" /></p>
+<ol start="3">
+<li>规则通道有16个, 注入通道只有4个</li>
+</ol>
+<p>规则通道(常规转换组): 很规矩, 一般使用的</p>
+<p>注入通道(注入转换组), 可以理解为插入, 是一种不安分的通道, 在规则通道转换的时候强行插入, 类似于中断, 有规则通道的时候才可以使用, 它是一种在规则通道转换的时候强 行插入要转换的一种通道。</p>
+<blockquote>
+<p>如果在规则通道转换过程中，有注入通道插队，那么就要先转换完注 入通道，等注入通道转换完成后，再回到规则通道的转换流程。</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282121936.png" alt="image-20231228212152876" /></p>
+<ol start="3">
+<li>转换的顺序, 有专门的寄存器, SQR123, 四个位一个通道的转换顺序, 从SQR3优先级最高</li>
+</ol>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059576.png" alt="image-20230715133122240" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282124838.png" alt="image-20231228212434770" /></p>
+<p>注入序列寄存器</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059577.png" alt="image-20230715133429284" /></p>
+<blockquote>
+<p>有1个的时候使用JSQ4, 两个的时候使用JSQ3, 4以此类推</p>
+</blockquote>
+<ol start="4">
+<li>触发源, 开始转换的信号</li>
+</ol>
+<p>有两种,  第一种外部事件触发, 触发又分为规则组和注入组 第二种ADON位触发转换(仅限于F1系列)</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282130814.png" alt="image-20231228213001759" /></p>
+<p>软件触发ADC_CR2: ADON/SWST/ART/JSWSTART</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059578.png" alt="image-20230715134212636" /></p>
+<blockquote>
+<p>开始的信号</p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059579.png" alt="image-20230715134226763" /></p>
+<blockquote>
+<p>打开电源</p>
+</blockquote>
+<ul>
+<li>外部事件触发</li>
+</ul>
+<p>定时器ADC_CR2: EXTSEL[2:0]</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059580.png" alt="image-20230715134526971" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059581.png" alt="image-20230715134634866" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059582.png" alt="image-20230715134727079" /></p>
+<p>外部GPIO</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059583.png" alt="image-20230715143148416" /></p>
+<p>ADC3控制的有一些不一样</p>
+<ol start="5">
+<li>转换时间, 等于采样时间加上12.5个时钟, 时钟的频率最大是14M, PCLK2提供, 可以设置分频, RCC_CFGR的ADCCPRE位</li>
+</ol>
+<p>采样时间, 需要一定的周期进行采样最小是1.5个周期, 通过设置SMPx[2:0]位进行设置</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282139007.png" alt="image-20231228213954949" /></p>
+<ol start="6">
+<li>数据寄存器</li>
+</ol>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282150747.png" alt="image-20231228215007690" /></p>
+<p>ADC_DR: <img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059584.png" alt="image-20230715144036095" /></p>
+<p>16位有效, 独立模式(只使用一个ADC)有效, ADR_CR2控制, 双ADC模式下使用上面的寄存器, 多通道的时候最好使用DMA, 只能使用DMA1, 2, DMA2没有DMA</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059585.png" alt="image-20230715144235478" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059586.png" alt="image-20230715150256227" /></p>
+<blockquote>
+<p>模式选择, 一般使用第一种</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059587.png" alt="image-20230715150806464" /></p>
+</blockquote>
+<p>ADC_JDRx, 有四个, 存放注入通道的数据</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059588.png" alt="image-20230715144757588" /></p>
+<ol start="7">
+<li>中断</li>
+</ol>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282153664.png" alt="image-20231228215302606" /></p>
+<p>EOC: 转换完成, 规则通道</p>
+<p>JEOC: 注入通道转换结束</p>
+<p>AWD: 模拟看门狗, 模拟量超过一个阈值, ADC_HTR, ADC_LTR</p>
+<p>溢出中断, 在CPU读取的时候还没有转换完成或者丢失了的时候会进入溢出中断</p>
+<h3 id="%E8%BD%AC%E6%8D%A2">转换</h3>
+<p>输出的数据是12位</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282157476.png" alt="image-20231228215753401" /></p>
+<blockquote>
+<p>在规则组使用连续转换的时候使用使用注入组需要把JAUTO</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282201778.png" alt="image-20231228220159741" /></p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282202772.png" alt="image-20231228220240713" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282204916.png" alt="image-20231228220407855" /></p>
+<blockquote>
+<p>间断模式: 在转换的时候规则组不会一次性转换完</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282208493.png" alt="image-20231228220812457" /></p>
+</blockquote>
+<h3 id="%E6%A0%A1%E5%87%86">校准</h3>
+<p>在刚上电的时候需要进行一次校准ADC_CR2寄存器</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282251588.png" alt="image-20231228225135530" /></p>
+<blockquote>
+<p>首先位0上电, 之后设置为3为1, 然后设置位2为1, 之后查询这一个位是否清零</p>
+</blockquote>
+<h3 id="%E5%8D%95%E9%80%9A%E9%81%93%E8%BF%87%E9%87%87%E6%A0%B7">单通道过采样</h3>
+<p>有时候ADC的分辨率不够高</p>
+<ol>
+<li>提高芯片的等级, 使用H7</li>
+<li>购买专门的ADC芯片</li>
+<li>单通道过采样和求均值</li>
+</ol>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312291709056.png" alt="image-20231229170938962" /></p>
+<blockquote>
+<p>实际上还是在求平均值</p>
+</blockquote>
+<ul>
+<li>H7</li>
+</ul>
+<p>内部集成了过采样器, 采样率在2x到1024x之间进行调整, 可以控制左移右移, 在初始化的时候结构体里面有一个专门设置过采样的部分</p>
+<h2 id="%E5%86%85%E9%83%A8%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8">内部温度传感器</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312291938157.png" alt="image-20231229193811104" /></p>
+<blockquote>
+<p>默认的时候适不使用的</p>
+<ol>
+<li>上电</li>
+<li>进行采集电压, 通过数字量进行计算电压然后计算温度</li>
+</ol>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312291940344.png" alt="image-20231229194023295" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312291952361.png" alt="image-20231229195243316" /></p>
+<h2 id="%E5%9B%BA%E4%BB%B6%E5%BA%93%E4%BD%BF%E7%94%A8">固件库使用</h2>
+
+<pre class="language-c"><code class="language-c">typedef struct
+{
+  uint32_t ADC_Mode;                      /*!&lt; Configures the ADC to operate in independent or
+                                               dual mode. 
+                                               This parameter can be a value of @ref ADC_mode
+                                               工作的模式*/
+
+  FunctionalState ADC_ScanConvMode;       /*!&lt; Specifies whether the conversion is performed in
+                                               Scan (multichannels) or Single (one channel) mode.
+                                               This parameter can be set to ENABLE or DISABLE
+                                               扫描模式, 多通道或者单通道*/
+
+  FunctionalState ADC_ContinuousConvMode; /*!&lt; Specifies whether the conversion is performed in
+                                               Continuous or Single mode.
+                                               This parameter can be set to ENABLE or DISABLE. 
+                                               单次转换或者多次转换*/
+
+  uint32_t ADC_ExternalTrigConv;          /*!&lt; Defines the external trigger used to start the analog
+                                               to digital conversion of regular channels. This parameter
+                                               can be a value of @ref 
+                                               ADC_external_trigger_sources_for_regular_channels_conversion
+                                               触发信号的选择*/
+
+  uint32_t ADC_DataAlign;                 /*!&lt; Specifies whether the ADC data alignment is left or right.
+                                               This parameter can be a value of @ref ADC_data_align 
+                                               数据寄存器对齐方式的选择*/
+
+  uint8_t ADC_NbrOfChannel;               /*!&lt; Specifies the number of ADC channels that will be converted
+                                               using the sequencer for regular channel group.
+                                               This parameter must range from 1 to 16. 采集的通道数*/
+}ADC_InitTypeDef;
+</code></pre>
+<h3 id="%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0">常用函数</h3>
+<p>ADC_Init();</p>
+<p>RCC_ADCCLKConifg();控制时钟分频</p>
+<p>ADC_RegularChannelConfig();选择通道时钟的时间, 优先级</p>
+<p>ADC_Cmd();</p>
+<p>ADC_SoftwareStartConvCmd();软件触发是否使能</p>
+<p>ADC_ExternalTrigConcCmd();外部触发是否使能</p>
+<p>ADC_DMACmd();</p>
+<h2 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059589.png" alt="image-20230715160544028" /></p>
+<ul>
+<li>初始化引脚</li>
+</ul>
+
+<pre class="language-c"><code class="language-c">static void ADCx_GPIO_Config(void)
+{
+    GPIO_InitTypeDef GPIO_InitStructure;
+    
+    // 打开 ADC IO端口时钟
+    ADC_GPIO_APBxClock_FUN ( ADC_GPIO_CLK, ENABLE );
+    
+    // 配置 ADC IO 引脚模式
+    // 必须为模拟输入
+    GPIO_InitStructure.GPIO_Pin = ADC_PIN;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+    
+    // 初始化 ADC IO
+    GPIO_Init(ADC_PORT, &amp;GPIO_InitStructure);				
+}
+</code></pre>
+<ul>
+<li><p>初始化时钟以及结构体</p>
+</li>
+<li><p>配置时钟分频</p>
+</li>
+<li><p>配置通道</p>
+</li>
+<li><p>使能中断</p>
+</li>
+<li><p>使能ADC</p>
+</li>
+<li><p>校准</p>
+</li>
+</ul>
+
+<pre class="language-c"><code class="language-c">static void ADCx_Mode_Config(void)
+{
+    ADC_InitTypeDef ADC_InitStructure;	
+
+    // 打开ADC时钟
+    ADC_APBxClock_FUN ( ADC_CLK, ENABLE );
+    
+    // ADC 模式配置
+    // 只使用一个ADC，属于独立模式
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+    
+    // 禁止扫描模式，多通道才要，单通道不需要
+    ADC_InitStructure.ADC_ScanConvMode = DISABLE ; 
+
+    // 连续转换模式
+    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+
+    // 不用外部触发转换，软件开启即可
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+
+    // 转换结果右对齐
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+    
+    // 转换通道1个
+    ADC_InitStructure.ADC_NbrOfChannel = 1;	
+    	
+    // 初始化ADC
+    ADC_Init(ADCx, &amp;ADC_InitStructure);
+    
+    // 配置ADC时钟为PCLK2的8分频，即9MHz
+    RCC_ADCCLKConfig(RCC_PCLK2_Div8); 
+    
+    // 配置 ADC 通道转换顺序和采样时间
+    ADC_RegularChannelConfig(ADCx, ADC_CHANNEL, 1, 
+                             ADC_SampleTime_55Cycles5);
+    
+    // ADC 转换结束产生中断，在中断服务程序中读取转换值
+    ADC_ITConfig(ADCx, ADC_IT_EOC, ENABLE);
+    
+    // 开启ADC ，并开始转换
+    ADC_Cmd(ADCx, ENABLE);
+    
+    // 初始化ADC 校准寄存器  
+    ADC_ResetCalibration(ADCx);
+    // 等待校准寄存器初始化完成
+    while(ADC_GetResetCalibrationStatus(ADCx));
+    
+    // ADC开始校准
+    ADC_StartCalibration(ADCx);
+    // 等待校准完成
+    while(ADC_GetCalibrationStatus(ADCx));
+    
+    // 由于没有采用外部触发，所以使用软件触发ADC转换 
+    ADC_SoftwareStartConvCmd(ADCx, ENABLE);
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">static void ADC_NVIC_Config(void)
+{
+  NVIC_InitTypeDef NVIC_InitStructure;
+    // 优先级分组
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+
+  // 配置中断优先级
+  NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&amp;NVIC_InitStructure);
+}
+</code></pre>
+<ul>
+<li>初始化中断函数</li>
+</ul>
+<p>void ADC_IRQHandler()<br />
+{</p>
+
+<pre class="language-none"><code class="language-none">if(ADC_GetITStatus(ADC_x, ADC_IT_EOC) == SET)
+{
+	ADC_ClearFlag(ADC_x, ADC_FLAG_EOC);
+	ADC_ConvertedValue = ADC_GetConversionValue(ADC_x);
+	
+}
+</code></pre>
+<p>}</p>
+<h3 id="DMA%E8%AF%BB%E5%8F%96">DMA读取</h3>
+
+<pre class="language-c"><code class="language-c">#if ADC_DMA_Enable
+static void ADCx_DMA_Config(void)
+{
+    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+
+    DMA_InitTypeDef DMA_InitStructure;
+    DMA_DeInit(ADC_DMA_CHANNEL);
+    
+    DMA_InitStructure.DMA_PeripheralBaseAddr = ( uint32_t ) ( &amp; ( ADC_x-&gt;DR ) );
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&amp;ADC_ConvertedValue;
+    DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+    DMA_InitStructure.DMA_BufferSize = 1;
+    DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable; 
+    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+    DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;	
+    DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+    DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+
+    DMA_Init(ADC_DMA_CHANNEL, &amp;DMA_InitStructure);
+    
+    // 使能 DMA 通道
+    DMA_Cmd(ADC_DMA_CHANNEL , ENABLE);
+
+}
+#endif
+</code></pre>
+
+<pre class="language-c"><code class="language-c">void ADCx_Mode_Conifg()
+{
+
+    ADC_InitTypeDef ADC_InitStructure;	
+
+    ADC_APBxClock_FUN(ADC_CLK, ENABLE);
+    
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+    ADC_InitStructure.ADC_ScanConvMode = DISABLE;	//使用一个通道
+    ADC_InitStructure.ADC_NbrOfChannel = 1;
+    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+    
+    ADC_Init( ADC_x, &amp;ADC_InitStructure);
+    //配置时钟
+    RCC_ADCCLKConfig(RCC_PCLK2_Div8);
+    
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL, 1, ADC_SampleTime_55Cycles5);
+#if ADC_DMA_Enable
+    ADC_DMACmd(ADC_x, ENABLE);
+#endif
+    
+#if ITConfig_Enable	
+    //使能中断
+    ADC_ITConfig(ADC_x ,ADC_IT_EOC, ENABLE);
+#endif
+    ADC_Cmd(ADC_x, ENABLE);
+    //校准
+    ADC_ResetCalibration(ADC_x);
+    
+    while(ADC_GetCalibrationStatus(ADC_x));
+    // ADC开始校准
+    ADC_StartCalibration(ADC_x);
+    // 等待校准完成
+    while(ADC_GetCalibrationStatus(ADC_x));
+
+
+    //使用软件触发
+    ADC_SoftwareStartConvCmd(ADC_x, ENABLE);
+}
+
+#if ITConfig_Enable	
+static void ADC_NVIC_Config(void)
+{
+  NVIC_InitTypeDef NVIC_InitStructure;
+    // 优先级分组
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+
+  // 配置中断优先级
+  NVIC_InitStructure.NVIC_IRQChannel = ADC_IRQ;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&amp;NVIC_InitStructure);
+}
+#endif
+</code></pre>
+<h3 id="%E5%A4%9A%E9%80%9A%E9%81%93">多通道</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202310281059590.png" alt="image-20230717102211056" /></p>
+
+<pre class="language-c"><code class="language-c">static void ADCx_DMA_Config(void)
+{
+    RCC_AHBPeriphClockCmd(ADC_DMA_CLK, ENABLE);
+
+    DMA_InitTypeDef DMA_InitStructure;
+    DMA_DeInit(ADC_DMA_CHANNEL);
+#if	MULTIPLE_CHANNEL
+    //多通道
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)ADC_ConvertedValue;
+    DMA_InitStructure.DMA_BufferSize = 6;
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable; 
+
+#else
+    //普通
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&amp;ADC_ConvertedValue;
+    DMA_InitStructure.DMA_BufferSize = 1;
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable; 
+
+#endif
+    
+    
+    DMA_InitStructure.DMA_PeripheralBaseAddr = ( uint32_t ) ( &amp; ( ADC_x-&gt;DR ) );
+    DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+    DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+    DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;	
+    DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+    DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+    	
+    DMA_Init(ADC_DMA_CHANNEL, &amp;DMA_InitStructure);
+    
+    // 使能 DMA 通道
+    DMA_Cmd(ADC_DMA_CHANNEL , ENABLE);
+
+}
+void ADCx_Mode_Conifg()
+{
+
+    ADC_InitTypeDef ADC_InitStructure;	
+
+    ADC_APBxClock_FUN(ADC_CLK, ENABLE);
+
+
+#if	MULTIPLE_CHANNEL
+    ADC_InitStructure.ADC_ScanConvMode = ENABLE;	//使用多个个通道
+    ADC_InitStructure.ADC_NbrOfChannel = NOFCHANEL;
+
+#else
+    ADC_InitStructure.ADC_ScanConvMode = DISABLE;	//使用一个通道
+    ADC_InitStructure.ADC_NbrOfChannel = 1;
+
+#endif
+    
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+    
+    ADC_Init( ADC_x, &amp;ADC_InitStructure);
+    //配置时钟
+    RCC_ADCCLKConfig(RCC_PCLK2_Div8);	
+    
+#if	MULTIPLE_CHANNEL
+    // 配置ADC 通道的转换顺序和采样时间
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL1, 1, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL2, 2, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL3, 3, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL4, 4, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL5, 5, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL6, 6, ADC_SampleTime_55Cycles5);
+#else
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL, 1, ADC_SampleTime_55Cycles5);
+#endif		
+    
+#if ADC_DMA_Enable
+    ADC_DMACmd(ADC_x, ENABLE);
+#endif
+    
+#if ITConfig_Enable	
+    //使能中断
+    ADC_ITConfig(ADC_x ,ADC_IT_EOC, ENABLE);
+#endif
+
+    ADC_Cmd(ADC_x, ENABLE);
+    //校准
+    ADC_ResetCalibration(ADC_x);
+    
+    while(ADC_GetCalibrationStatus(ADC_x));
+    // ADC开始校准
+    ADC_StartCalibration(ADC_x);
+    // 等待校准完成
+    while(ADC_GetCalibrationStatus(ADC_x));
+
+    //使用软件触发
+    ADC_SoftwareStartConvCmd(ADC_x, ENABLE);
+}
+</code></pre>
+<h3 id="%E5%8F%8C%E9%87%8D%E6%A8%A1%E5%BC%8F">双重模式</h3>
+<p>由于ADC2, 没有DMA, 所以使用ADC1的DMA</p>
+
+<pre class="language-c"><code class="language-c">#include &quot;bsp_adc.h&quot;
+
+
+//存放原始变量的地方
+#if	MULTIPLE_CHANNEL
+extern __IO uint16_t ADC_ConvertedValue[NOFCHANEL];
+#elif DOUBLE_PATTERN
+extern __IO uint32_t ADC_ConvertedValue[NOFCHANEL];
+#else
+extern __IO uint16_t ADC_ConvertedValue;
+#endif
+
+
+#if (ADC_DMA_Enable|MULTIPLE_CHANNEL|DOUBLE_PATTERN)
+static void ADCx_DMA_Config(void)
+{
+    RCC_AHBPeriphClockCmd(ADC_DMA_CLK, ENABLE);
+
+    DMA_InitTypeDef DMA_InitStructure;
+    DMA_DeInit(ADC_DMA_CHANNEL);
+#if	MULTIPLE_CHANNEL
+    //多通道
+    DMA_InitStructure.DMA_PeripheralBaseAddr = ( uint32_t ) ( &amp; ( ADC_x-&gt;DR ) );
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)ADC_ConvertedValue;
+    DMA_InitStructure.DMA_BufferSize = NOFCHANEL;
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable; 
+    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+
+#elif DOUBLE_PATTERN
+    DMA_InitStructure.DMA_PeripheralBaseAddr = ( uint32_t ) ( &amp; ( ADCx_1-&gt;DR ) );
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)ADC_ConvertedValue;
+    DMA_InitStructure.DMA_BufferSize = NOFCHANEL;
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable; 
+    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
+    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
+
+#else
+    //普通
+    DMA_InitStructure.DMA_PeripheralBaseAddr = ( uint32_t ) ( &amp; ( ADC_x-&gt;DR ) );
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&amp;ADC_ConvertedValue;
+    DMA_InitStructure.DMA_BufferSize = 1;
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable; 
+    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+
+#endif
+    
+    DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+    DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+    DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;	
+    DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+    DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+    
+    
+    DMA_Init(ADC_DMA_CHANNEL, &amp;DMA_InitStructure);
+    
+    // 使能 DMA 通道
+    DMA_Cmd(ADC_DMA_CHANNEL , ENABLE);
+
+}
+#endif
+static void ADCx_GPIO_Config(void)
+{
+
+
+    GPIO_InitTypeDef GPIO_InitStructure;
+    
+    // 打开 ADC IO端口时钟
+    ADC_GPIO_APBxClock_FUN ( ADC_GPIO_CLK, ENABLE );
+    
+    // 配置 ADC IO 引脚模式
+    // 必须为模拟输入
+#if MULTIPLE_CHANNEL	
+    	// 配置 ADC IO 引脚模式
+    GPIO_InitStructure.GPIO_Pin = 	ADC_PIN1|
+    																	ADC_PIN2|
+    																	ADC_PIN3|
+    																	ADC_PIN4|
+    																	ADC_PIN5|
+    																	ADC_PIN6;
+#elif DOUBLE_PATTERN
+    GPIO_InitStructure.GPIO_Pin = ADCx_2_PIN | ADCx_1_PIN;	
+#else
+    GPIO_InitStructure.GPIO_Pin = ADC_PIN;
+#endif	
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;	
+    // 初始化 ADC IO
+    GPIO_Init(ADC_PORT, &amp;GPIO_InitStructure);
+    
+}
+
+void ADCx_Mode_Conifg()
+{
+
+    ADC_InitTypeDef ADC_InitStructure;	
+/*****ADC时钟*****/
+    ADC_APBxClock_FUN(ADC_CLK, ENABLE);
+#if DOUBLE_PATTERN
+    //使用DMA2
+    ADCx_2_APBxClock_FUN(ADCx_2_CLK, ENABLE);
+#endif	
+
+#if	MULTIPLE_CHANNEL
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+    ADC_InitStructure.ADC_ScanConvMode = ENABLE;	//使用多个个通道
+    ADC_InitStructure.ADC_NbrOfChannel = NOFCHANEL;
+#elif DOUBLE_PATTERN
+    ADC_InitStructure.ADC_Mode = ADC_Mode_RegSimult;
+    ADC_InitStructure.ADC_ScanConvMode = ENABLE;	//使用一个通道
+    ADC_InitStructure.ADC_NbrOfChannel = NOFCHANEL;	
+#else
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+    ADC_InitStructure.ADC_ScanConvMode = DISABLE;	//使用一个通道
+    ADC_InitStructure.ADC_NbrOfChannel = 1;
+#endif
+    
+    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+    
+    ADC_Init( ADC_x, &amp;ADC_InitStructure);
+    
+    //配置时钟
+    RCC_ADCCLKConfig(RCC_PCLK2_Div8);
+
+#if DOUBLE_PATTERN
+    //使用DMA2
+    ADC_Init( ADCx_2, &amp;ADC_InitStructure);
+    RCC_ADCCLKConfig(RCC_PCLK2_Div8);
+
+#endif
+
+
+#if	MULTIPLE_CHANNEL
+    // 配置ADC 通道的转换顺序和采样时间
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL1, 1, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL2, 2, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL3, 3, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL4, 4, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL5, 5, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL6, 6, ADC_SampleTime_55Cycles5);
+#elif DOUBLE_PATTERN
+    ADC_RegularChannelConfig(ADCx_1, ADCx_1_CHANNEL, 1, ADC_SampleTime_239Cycles5);
+    ADC_RegularChannelConfig(ADCx_2, ADCx_2_CHANNEL, 1, ADC_SampleTime_239Cycles5);
+#else
+    ADC_RegularChannelConfig(ADC_x, ADC_CHANNEL, 1, ADC_SampleTime_55Cycles5);
+#endif
+    
+#if (ADC_DMA_Enable | DOUBLE_PATTERN | MULTIPLE_CHANNEL)
+    ADC_DMACmd(ADC_x, ENABLE);
+#endif
+    
+#if ITConfig_Enable	
+    //使能中断
+    ADC_ITConfig(ADC_x ,ADC_IT_EOC, ENABLE);
+#endif
+
+    ADC_Cmd(ADC_x, ENABLE);
+    //校准
+    ADC_ResetCalibration(ADC_x);
+    
+    while(ADC_GetCalibrationStatus(ADC_x));
+    // ADC开始校准
+    ADC_StartCalibration(ADC_x);
+    // 等待校准完成
+    while(ADC_GetCalibrationStatus(ADC_x));
+
+    //使用软件触发
+#if DOUBLE_PATTERN
+
+    ADC_Cmd(ADCx_2, ENABLE);
+    //校准
+
+    ADC_ResetCalibration(ADCx_2);
+    
+    while(ADC_GetCalibrationStatus(ADCx_2));
+    // ADC开始校准
+    ADC_StartCalibration(ADCx_2);
+    // 等待校准完成
+    while(ADC_GetCalibrationStatus(ADCx_2));
+    /*************
+    这里的信号顺序不能变
+    ************/
+    //使能DMA2的外部触发
+    ADC_ExternalTrigConvCmd(ADCx_2, ENABLE);
+#endif
+    ADC_SoftwareStartConvCmd(ADC_x, ENABLE);
+}
+
+</code></pre>
+
+<pre class="language-c"><code class="language-c">void ADC_SoftwareStartConvCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+  {
+    /* Enable the selected ADC conversion on external event and start the selected
+       ADC conversion */
+    ADCx-&gt;CR2 |= CR2_EXTTRIG_SWSTART_Set;
+  }
+  else
+  {
+    /* Disable the selected ADC conversion on external event and stop the selected
+       ADC conversion */
+    ADCx-&gt;CR2 &amp;= CR2_EXTTRIG_SWSTART_Reset;
+  }
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">void ADC_ExternalTrigConvCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+  {
+    /* Enable the selected ADC conversion on external event */
+    ADCx-&gt;CR2 |= CR2_EXTTRIG_Set;
+  }
+  else
+  {
+    /* Disable the selected ADC conversion on external event */
+    ADCx-&gt;CR2 &amp;= CR2_EXTTRIG_Reset;
+  }
+}
+</code></pre>
+<h3 id="%E9%97%AE%E9%A2%98">问题</h3>
+
+<pre class="language-c"><code class="language-c">    /*************
+    这里的信号顺序不能变
+    ************/
+    //使能DMA2的外部触发
+    ADC_ExternalTrigConvCmd(ADCx_2, ENABLE);
+#endif
+    ADC_SoftwareStartConvCmd(ADC_x, ENABLE);
+</code></pre>
+<h2 id="F4/F7/H7">F4/F7/H7</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282035329.png" alt="image-20231228203527250" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282035063.png" alt="image-20231228203544981" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282037074.png" alt="image-20231228203735984" /></p>
+<ul>
+<li>触发源</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282132176.png" alt="image-20231228213232118" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282134961.png" alt="image-20231228213437897" /></p>
+<ul>
+<li>时钟</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282140695.png" alt="image-20231228214052630" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282141404.png" alt="image-20231228214124343" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282145835.png" alt="image-20231228214552775" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282146269.png" alt="image-20231228214612213" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282147541.png" alt="image-20231228214751466" /></p>
+<ul>
+<li>中断</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312282156221.png" alt="image-20231228215632159" /></p>
+<h2 id="%E5%85%89%E6%95%8F%E4%BA%8C%E6%9E%81%E7%AE%A1">光敏二极管</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312292026395.png" alt="image-20231229202609329" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202312292026638.png" alt="image-20231229202627592" /></p>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/嵌入式/stm32/固件库/2023-6-30-9SysTick.html">
+                            <span class="icon"></span>
+                            <span class="label">2023-6-30-9SysTick</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/嵌入式/stm32/固件库/2023-7-16-20定时器.html">
+                            <span class="label">2023-7-16-20定时器</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

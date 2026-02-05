@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>经典抽象数据类型《C和指针》 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["C和指针 C语言"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class="active"><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">C#</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/no_translate.html?ref=C.html&from=/编程基础/C.html"><span class="label">2023-6-24-1.C#</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">C和指针</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-C语言环境.html"><span class="label">2022-7-25-C语言环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-字符串操作.html"><span class="label">2022-7-25-字符串操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-操作符和表达式.html"><span class="label">2022-7-25-操作符和表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-数据.html"><span class="label">2022-7-25-数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-词法规则.html"><span class="label">2022-7-25-词法规则</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-语句.html"><span class="label">2022-7-25-语句</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-函数.html"><span class="label">2022-7-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-指针.html"><span class="label">2022-7-26-指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-数组.html"><span class="label">2022-7-26-数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-表达式.html"><span class="label">2022-7-26-表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-动态内存分配.html"><span class="label">2022-7-27-动态内存分配</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-字符串字符字节.html"><span class="label">2022-7-27-字符串字符字节</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构体和指针.html"><span class="label">2022-7-27-结构体和指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构和联合.html"><span class="label">2022-7-27-结构和联合</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-预处理器.html"><span class="label">2022-7-28-预处理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-高级指针.html"><span class="label">2022-7-28-高级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-29-输入输出函数.html"><span class="label">2022-7-29-输入输出函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html"><span class="label">2022-7-30-标准库函数</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/编程基础/C和指针/2022-7-30-经典抽象数据类型.html"><span class="label">2022-7-30-经典抽象数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html"><span class="label">2022-7-31-运行时环境</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C陷阱与缺陷</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-27-语义陷阱.html"><span class="label">2022-8-27-语义陷阱</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">c</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-16-c监控.html"><span class="label">2023-6-16-c监控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-19-C语言程序设计.html"><span class="label">2023-6-19-C语言程序设计</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">cpp</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-01C++.html"><span class="label">2025-1-1-01C++</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-02内存.html"><span class="label">2025-1-1-02内存</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-22-其他扩展语法.html"><span class="label">2025-1-22-其他扩展语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-26-多线程.html"><span class="label">2025-1-26-多线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-6-03模板和STL.html"><span class="label">2025-1-6-03模板和STL</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">go</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">python</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">基础语法</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html"><span class="label">2023-6-15-修饰器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-23-01基础运算.html"><span class="label">2023-9-23-01基础运算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html"><span class="label">2023-9-24-02函数及变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-03虚拟环境.html"><span class="label">2024-4-23-03虚拟环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-04常用函数.html"><span class="label">2024-4-23-04常用函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-24-05程序获取参数.html"><span class="label">2024-4-24-05程序获取参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-06推导式和拆包.html"><span class="label">2024-4-25-06推导式和拆包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-07引入.html"><span class="label">2024-4-25-07引入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-08匿名函数.html"><span class="label">2024-4-25-08匿名函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-09面向对象.html"><span class="label">2024-4-25-09面向对象</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-26-10文件基本操作.html"><span class="label">2024-4-26-10文件基本操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-11OS模块.html"><span class="label">2024-4-27-11OS模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-12迭代器.html"><span class="label">2024-4-27-12迭代器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-13异常处理.html"><span class="label">2024-4-27-13异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-14生成器.html"><span class="label">2024-4-27-14生成器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-28-15闭包.html"><span class="label">2024-4-28-15闭包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-30-16深拷贝浅拷贝.html"><span class="label">2024-4-30-16深拷贝浅拷贝</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-1-17With和上下文管理器.html"><span class="label">2024-5-1-17With和上下文管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-18GIL.html"><span class="label">2024-5-4-18GIL</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-19垃圾回收.html"><span class="label">2024-5-4-19垃圾回收</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-1-31-多任务.html"><span class="label">2025-1-31-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html"><span class="label">2025-12-19-CPP交互使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-打包whl文件.html"><span class="label">2025-12-19-打包whl文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html"><span class="label">2025-2-25-yaml</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-3-21-包导入.html"><span class="label">2025-3-21-包导入</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">C语言-Cpp接轨</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/C语言-Cpp接轨/2025-12-10-01-struct.html"><span class="label">2025-12-10-01-struct</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">django</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-01-Django.html"><span class="label">2025-7-24-01-Django</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-02-创建.html"><span class="label">2025-7-24-02-创建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-03-路由.html"><span class="label">2025-7-24-03-路由</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-04-视图.html"><span class="label">2025-7-24-04-视图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-05-配置文件.html"><span class="label">2025-7-24-05-配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-26-04-模版.html"><span class="label">2025-7-26-04-模版</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-28-05-静态文件.html"><span class="label">2025-7-28-05-静态文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html"><span class="label">2025-7-29-06-中间件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html"><span class="label">2025-7-29-07-数据库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html"><span class="label">2025-7-30-08-进阶数据查询</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html"><span class="label">2025-8-1-09-ORM优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-10-模型扩展.html"><span class="label">2025-8-2-10-模型扩展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-11-组件.html"><span class="label">2025-8-2-11-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-3-12-异步.html"><span class="label">2025-8-3-12-异步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">pyQT</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-11-08界面容器.html"><span class="label">2024-5-11-08界面容器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-01介绍以及安装.html"><span class="label">2024-5-6-01介绍以及安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-02控件.html"><span class="label">2024-5-6-02控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-03布局.html"><span class="label">2024-5-7-03布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-04窗口.html"><span class="label">2024-5-7-04窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-05信号与槽.html"><span class="label">2024-5-8-05信号与槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-06QTDesigner.html"><span class="label">2024-5-8-06QTDesigner</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-07线程.html"><span class="label">2024-5-8-07线程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">简单模块使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2024-5-4-01logging日志模块.html"><span class="label">2024-5-4-01logging日志模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2025-3-15-02fastapi.html"><span class="label">2025-3-15-02fastapi</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">线程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-10-01多任务.html"><span class="label">2024-5-10-01多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-14-02队列.html"><span class="label">2024-5-14-02队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2025-2-20-async.html"><span class="label">2025-2-20-async</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-01网络编程.html"><span class="label">2024-5-10-01网络编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-02Socket.html"><span class="label">2024-5-10-02Socket</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-12-03软件.html"><span class="label">2024-5-12-03软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-8-20-04MQTT.html"><span class="label">2024-8-20-04MQTT</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">前端</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-12-04CSS2.html"><span class="label">2024-8-12-04CSS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-01基础知识.html"><span class="label">2024-8-5-01基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-02HTML.html"><span class="label">2024-8-5-02HTML</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-6-03CSS.html"><span class="label">2024-8-6-03CSS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式C语言</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-__attribute__.html"><span class="label">2022-7-21-__attribute__</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-内联函数内置内存函数.html"><span class="label">2022-7-21-内联函数内置内存函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-变量指针.html"><span class="label">2022-7-21-变量指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-大小端数据对齐size_t.html"><span class="label">2022-7-21-大小端数据对齐size_t</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-存储器.html"><span class="label">2022-7-21-存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-语句表达式define.html"><span class="label">2022-7-21-语句表达式define</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-Linux中的面向对象思想-封装.html"><span class="label">2022-7-22-Linux中的面向对象思想-封装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-main函数的参数.html"><span class="label">2022-7-22-main函数的参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-二级指针.html"><span class="label">2022-7-22-二级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-代码复用分层思想.html"><span class="label">2022-7-22-代码复用分层思想</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数参数的本质.html"><span class="label">2022-7-22-函数参数的本质</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数指针.html"><span class="label">2022-7-22-函数指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-指针和数组.html"><span class="label">2022-7-22-指针和数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-面向对象编程基础.html"><span class="label">2022-7-22-面向对象编程基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-goto关键字.html"><span class="label">2022-7-23-goto关键字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-可重入函数.html"><span class="label">2022-7-23-可重入函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-多任务.html"><span class="label">2022-7-23-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-头文件剖析.html"><span class="label">2022-7-23-头文件剖析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-异步通信模式.html"><span class="label">2022-7-23-异步通信模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-操作系统基本原理.html"><span class="label">2022-7-23-操作系统基本原理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块化编程.html"><span class="label">2022-7-23-模块化编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块进阶.html"><span class="label">2022-7-23-模块进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块间通讯.html"><span class="label">2022-7-23-模块间通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-MMU内存管理单元.html"><span class="label">2022-7-24-MMU内存管理单元</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-中断.html"><span class="label">2022-7-24-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-寄存器操作.html"><span class="label">2022-7-24-寄存器操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-嵌入式启动.html"><span class="label">2022-7-24-嵌入式启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-文件系统.html"><span class="label">2022-7-24-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-系统调用.html"><span class="label">2022-7-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-进程线程协程.html"><span class="label">2022-7-24-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">算法基础</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2022-7-31-高级数据结构.html"><span class="label">2022-7-31-高级数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-01快速排序.html"><span class="label">2024-12-31-01快速排序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-02哈希表.html"><span class="label">2024-12-31-02哈希表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-03贪心算法.html"><span class="label">2024-12-31-03贪心算法</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>经典抽象数据类型《C和指针》</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>C和指针 C语言</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/编程基础/C和指针/2022-7-30-经典抽象数据类型.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="%E7%BB%8F%E5%85%B8%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">经典抽象数据类型</h1>
+<p>有些抽象数据类型(ADT)是不可或缺的工具,链表,堆栈, 队列, 树等</p>
+<h2 id="%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D">内存分配</h2>
+<p>所有的ADT都必须确定一件事情,如何获取内存来存储值</p>
+<ul>
+<li>静态数组: 固定的长度,编译的时候确定</li>
+<li>动态分配数组: 运行时候决定</li>
+<li>动态分配链式结构: 最灵活</li>
+</ul>
+<h2 id="%E5%A0%86%E6%A0%88">堆栈</h2>
+<h3 id="%E6%8E%A5%E5%8F%A3">接口</h3>
+<p>传统的堆栈有三种接口, push, top, pop</p>
+<blockquote>
+<p>top: 查看顶层</p>
+<p>push: 入栈</p>
+<p>pop: 移出但是不返回</p>
+</blockquote>
+<p>还需要一个判断栈是不是为空的函数, 以及一个判断是不是满了的函数</p>
+<h3 id="%E5%AE%9E%E7%8E%B0">实现</h3>
+<ul>
+<li><code>stack.h</code></li>
+</ul>
+
+<pre class="language-C"><code class="language-C">  1 #define STACK_TYPE int                                                                
+  2 #include &lt;stddef.h&gt;
+  3 void push(STACK_TYPE value);
+  4 STACK_TYPE pop(void);
+  5 STACK_TYPE top(void);
+  6 int is_empty(void);
+  7 int is_full(void);
+  8 void create_stack(size_t size);
+  9 void destory_stack(void);
+
+</code></pre>
+<ul>
+<li><code>stack.c</code></li>
+</ul>
+
+<pre class="language-C"><code class="language-C">  1 #include &quot;stack.h&quot;                                                                    
+  2 #include &lt;stdlib.h&gt;
+  3 #include &lt;stdio.h&gt;
+  4 #include &lt;assert.h&gt;
+  5 
+  6 static size_t stack_size;
+  7 static STACK_TYPE *stack;
+  8 static int top_element = -1;
+  9 
+ 10 void create_stack(size_t size)
+ 11 {
+ 12     assert(stack_size == 0);
+ 13     stack_size = size;
+ 14     stack = malloc(stack_size * sizeof(STACK_TYPE));
+ 15     assert(stack != NULL);
+ 16 }
+ 17 
+ 18 void destory_stack(void)
+ 19 {
+ 20     assert(stack_size &gt; 0);
+ 21     stack_size = 0;
+ 22     free(stack);
+ 23     stack = NULL;
+ 24 }
+ 25 
+ 26 void push(STACK_TYPE value)
+ 27 {   
+ 28     assert(!is_full());
+ 29     top_element += 1;
+ 30     stack[top_element] = value;
+ 31 }
+ 32 
+ 33 STACK_TYPE pop(void)
+ 34 {
+ 35     STACK_TYPE temp;
+ 36     assert(!is_empty());
+ 37     temp = stack[top_element];
+ 38     top_element -= 1;
+ 39     return temp;
+ 40 }
+ 41 
+ 42 STACK_TYPE top(void)
+ 43 {
+ 44     assert(!is_empty());
+ 45     return stack[top_element];
+ 46 }
+ 47 int is_empty(void)
+ 48 {
+ 49     assert(stack_size &gt; 0);
+ 50     return top_element == -1;
+ 51 }
+ 52 int is_full(void)
+ 53 {
+ 54     assert(stack_size &gt; 0);
+ 55     return top_element == stack_size - 1;
+ 56 }
+
+</code></pre>
+<ul>
+<li>链表实现</li>
+</ul>
+
+<pre class="language-C"><code class="language-C">  1 #include &lt;stdio.h&gt;                                                                    
+  2 #include &lt;stdlib.h&gt;
+  3 #include &quot;stack.h&quot;
+  4 #include &lt;assert.h&gt;
+  5 
+  6 #define FALSE 0
+  7 
+  8 typedef struct STACK_NODE{
+  9     STACK_TYPE value;
+ 10     struct STACK_NODE *next;
+ 11 }StackNode;
+ 12 
+ 13 static StackNode *stack = NULL;
+ 14 
+ 15 void create_stack(size_t size){
+ 16 }
+ 17 
+ 18 void destory_stack(void)
+ 19 {
+ 20     while(!is_empty())
+ 21         pop();
+ 22 }
+ 23 void push(STACK_TYPE value)
+ 24 {
+ 25     StackNode *new_node;
+ 26     
+ 27     new_node = malloc(sizeof(StackNode));
+ 28     assert(new_node != NULL);
+ 29     new_node-&gt;value = value;
+ 30     new_node-&gt;next = stack;
+ 31     stack = new_node;
+ 32 }
+ 33 
+ 34 STACK_TYPE pop(void)
+ 35 {
+ 36     StackNode *first_node;
+ 37     STACK_TYPE temp;
+ 38     if(!is_empty()){
+ 39         first_node = stack;
+ 40         temp = first_node-&gt;value;
+ 41         stack = first_node-&gt;next;
+ 42         free(first_node);
+ 43     
+ 44         return temp;
+ 45     }
+ 46     return -1;
+ 47 }
+ 48 
+ 49 STACK_TYPE top(void)
+ 50 {
+ 51     assert(!is_empty());
+ 52     return stack-&gt;value;
+ 53 }
+ 54 int is_empty(void){
+ 55     return stack == NULL;
+ 56 }
+ 57 int is_full(void){
+ 58     return FALSE;
+ 59 }
+
+</code></pre>
+<h2 id="%E9%98%9F%E5%88%97FIFO">队列FIFO</h2>
+<ul>
+<li>循环数组</li>
+</ul>
+<blockquote>
+<p>当用一个指针指向头部,一个指向尾部的时候, 在为空的时候,需要把尾部放在比头部小一个的位置,这时候和数组满了的时候的格式一样</p>
+</blockquote>
+<blockquote>
+<p><strong>解决方法:</strong>重新定义数组满的概念, 数组中有一个元素一直不使用</p>
+<p><strong>满:</strong><code>(rear + 2) % QUERE_SIZE == front</code></p>
+<p><strong>空:</strong> <code>(rear + 1) % QUERE_SIZE == front</code></p>
+</blockquote>
+
+<pre class="language-C"><code class="language-C">  1 #include &quot;queue.h&quot;                                                                    
+  2 #include &lt;stdio.h&gt;
+  3 #include &lt;assert.h&gt;
+  4 #define QUEUE_SIZE 100
+  5 #define ARRAY_SIZE (QUEUE_SIZE + 1)
+  6 
+  7 static QUEUE_TYPE queue[ARRAY_SIZE];
+  8 static size_t front = 1;
+  9 static size_t  rear = 0;
+ 10 
+ 11 void insert(QUEUE_TYPE value){
+ 12     assert(!is_full());
+ 13     rear = (rear+1) % ARRAY_SIZE;
+ 14     queue[rear] = value;
+ 15 }
+ 16 void delect(void)
+ 17 {
+ 18     assert(!is_empty());
+ 19     front = (front + 1) % ARRAY_SIZE;
+ 20 }
+ 21 
+ 22 QUEUE_TYPE first(void)
+ 23 {
+ 24     assert(!is_empty());
+ 25     return queue[front];
+ 26 }
+ 27 
+ 28 int is_empty(void)
+ 29 {
+ 30     return (rear + 1) % ARRAY_SIZE == front;
+ 31 }
+ 32 int is_full(void)
+ 33 {
+ 34     return (rear + 2) % ARRAY_SIZE == front;
+ 35 }
+
+</code></pre>
+<h2 id="%E6%A0%91">树</h2>
+<p>要么为空,要么具有零个或多个孩子, 每个孩子本身也是树, 递归的设置提示了树的高度没有内在的限制</p>
+<h3 id="%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91">二叉搜索树</h3>
+<p>树的特殊形式</p>
+<ul>
+<li>每个节点最多有两个孩子, 左孩子, 右孩子</li>
+<li>每个节点比他所有的左子树的值要大, 但是比右子树的值要小</li>
+<li>排除了相等的可能性</li>
+</ul>
+<p>没有孩子的节点被称为叶节点</p>
+<h3 id="%E5%9C%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B9%8B%E4%B8%AD%E6%8F%92%E5%85%A5">在二叉树之中插入</h3>
+
+<pre class="language-none"><code class="language-none">树为空:
+    新的值作为根节点插入
+否则:
+    小于当前:
+    	插入左侧
+    否则:
+    	右侧
+</code></pre>
+<h3 id="%E5%9C%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%88%A0%E9%99%A4">在二叉树中删除</h3>
+<ul>
+<li>删除没有孩子的节点</li>
+<li>删除有一个孩子</li>
+<li>删除有两个: 删除左侧最的大一个值把他替换这个值</li>
+</ul>
+<h3 id="%E5%9C%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E6%9F%A5%E6%89%BE">在二叉树中查找</h3>
+
+<pre class="language-none"><code class="language-none">树为空:
+    不存在
+否则:
+    和根节点相等:
+    	成功
+    否则:
+    	小于:
+    		左侧
+    	否则:
+    		右侧
+</code></pre>
+<h3 id="%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86">树的遍历</h3>
+<p>有几种不同的次序</p>
+<ul>
+<li>前序: 检查节点然后递归的遍历左子树右子树</li>
+<li>中序: 先遍历左侧然后检测当前节点, 最后右侧</li>
+<li>后序: 首先遍历左右然后当前节点</li>
+<li>层次遍历: 处理根节点, 然后他的儿子, 然后孙子</li>
+</ul>
+<h3 id="%E5%AE%9E%E7%8E%B0">实现</h3>
+<h4 id="%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B">数组类型</h4>
+<ul>
+<li>节点N的双亲节点是N/2</li>
+<li>节点N左孩子是2N</li>
+<li>节点右孩子是2N+1</li>
+</ul>
+<p>问题: 数组是从零开始的</p>
+<ol>
+<li>忽略第一个元素</li>
+<li>更改规则</li>
+</ol>
+<ul>
+<li>节点N的双亲节点是(N+1)/2-1</li>
+<li>节点N左孩子是2N+1</li>
+<li>节点右孩子是2N+2</li>
+</ul>
+<p>数组存在的问题:</p>
+<ul>
+<li>不能够随意插入, 会导致浪费,</li>
+<li>分配不同元素利用率不同</li>
+</ul>
+
+<pre class="language-C"><code class="language-C">  1 #include &lt;stdio.h&gt;                                                                    
+  2 #include &lt;assert.h&gt;
+  3 #include &quot;tree.h&quot;
+  4 
+  5 #define TREE_SIZE 100
+  6 #define ARRAY_SIZE (TREE_SIZE + 1)
+  7 
+  8 static TREE_TYPE tree[ARRAY_SIZE];
+  9 //查询分支的位置
+ 10 static int left_child(int current)
+ 11 {
+ 12     return current * 2;
+ 13 }
+ 14 
+ 15 static int right_child(int current)
+ 16 {
+ 17     return current * 2 + 1;
+ 18 }
+ 19 //插入一个元素
+ 20 void insert(TREE_TYPE value)
+ 21 {
+ 22     int current;
+ 23     assert(value != 0);
+ 24     current = 1;
+ 25     while(tree[current] != 0){//根据数值寻找位置所在
+ 26         if(value &lt; tree[current])
+ 27             current = left_child(current);
+ 28         else{
+ 29             assert(value != tree[current]);//保证不会有重复的元素
+ 30             current = right_child(current);
+ 31         }
+ 32         assert(current&lt;ARRAY_SIZE);
+ 33     }
+ 34     tree[current] = value;
+ 35 }
+ 36 
+ 37 TREE_TYPE *find(TREE_TYPE value)
+ 38 {   
+ 39     int current;
+ 40     current = 1;
+ 41     while(current &lt; ARRAY_SIZE &amp;&amp; tree[current] != value){
+ 42         if(value &lt; tree[current])
+ 43             current = left_child(current);
+ 44         else
+ 45             current = right_child(current);
+ 46     }
+ 47     if(current &lt; ARRAY_SIZE)
+ 48         return tree + current;
+ 49     else
+ 50         return 0;
+ 51 }
+ 52 static void do_per_order_traverse(int current, void (*callback)(TREE_TYPE value))
+ 53 {//遍历到每一个元素并进行一定的处理
+ 54     if(current &lt; ARRAY_SIZE &amp;&amp; tree[current] != 0)
+ 55     {
+ 56         callback(tree[current]);
+ 57         do_per_order_traverse(left_child(current), callback);
+ 58         do_per_order_traverse(right_child(current), callback);
+ 59     }
+ 60 }
+ 61 //外部可以使用的
+ 62 void pre_order_traverse(void (*callback)(TREE_TYPE value))
+ 63 {
+ 64     do_per_order_traverse(1, callback);
+ 65 }                                
+</code></pre>
+<h4 id="%E9%93%BE%E8%A1%A8%E7%B1%BB%E5%9E%8B">链表类型</h4>
+<p>由于每一个节点必须有左右两个孩子, 所以用两个指针</p>
+
+<pre class="language-C"><code class="language-C">  1 #include &quot;tree.h&quot;                                                                     
+  2 #include &lt;assert.h&gt;
+  3 #include &lt;stdio.h&gt;
+  4 #include &lt;malloc.h&gt;
+  5 
+  6 typedef struct TREE_NODE{//用于存储数据的结构体
+  7     TREE_TYPE value;
+  8     struct TREE_NODE *left;
+  9     struct TREE_NODE *right;
+ 10 }TreeNode;
+ 11 
+ 12 static TreeNode *tree;//建立一个指向根部的指针
+ 13 
+ 14 void insert(TREE_TYPE value)
+ 15 {
+ 16     TreeNode *current;
+ 17     TreeNode **link;//用来指向上一级的指针的指针
+ 18 
+ 19     link = &amp;tree;//初始化为根部
+ 20     while((current = *link) != NULL)
+ 21     {
+ 22         if(value &lt; current-&gt;value)
+ 23             link = &amp;current-&gt;left;
+ 24         else{
+ 25             assert(value != current-&gt;value);
+ 26             link = &amp;current-&gt;right;
+ 27         }
+ 28     }
+ 29 
+ 30     current = malloc(sizeof(TreeNode));
+ 31     assert(current != NULL);
+ 32     current-&gt;value = value;
+ 33     current-&gt;left = NULL;
+ 34     current-&gt;right = NULL;
+ 35     *link = current;//创建与上一级的链接
+ 36 }
+ 37 
+ 38 TREE_TYPE *find(TREE_TYPE value)
+ 39 {
+ 40     TreeNode *current;
+ 41     current = tree;//指向根部
+ 42     while(current != NULL &amp;&amp; current-&gt;value != value)
+ 43     {
+ 44         if(value&lt;current-&gt;value)
+ 45             current = current-&gt;left;
+ 46         else      
+ 47             current = current-&gt;right;                                                 
+ 48     }
+ 49     if(current != NULL)
+ 50         return &amp;current-&gt;value;//返回一个指向数据的指针
+ 51     else
+ 52         return NULL;
+ 53 }   
+ 54 
+ 55 static void do_pre_order_traverse(TreeNode *current,
+ 56     void (*callback)(TREE_TYPE value))
+ 57 {
+ 58     if(current != NULL)
+ 59     {
+ 60         callback(current-&gt;value);//对每一个数据进行处理
+ 61         do_pre_order_traverse(current-&gt;left, callback);//对左侧进行遍历
+ 62         do_pre_order_traverse(current-&gt;right, callback);//右侧
+ 63     }
+ 64 }
+ 65 
+ 66 void pre_order_traverse(void (*callback)(TREE_TYPE value))
+ 67 {
+ 68     do_pre_order_traverse(tree, callback);//外部调用
+ 69 }
+</code></pre>
+<h2 id="%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%94%B9%E8%BF%9B">实现的改进</h2>
+<h3 id="%E6%8B%A5%E6%9C%89%E8%B6%85%E8%BF%87%E4%B8%80%E4%B8%AA%E5%A0%86%E6%A0%88">拥有超过一个堆栈</h3>
+<p>由用户进行对堆栈的创建,再通过参数进行访问, 用户可以创建任意数量的堆栈, 然后进行访问</p>
+<h3 id="%E6%8B%A5%E6%9C%89%E8%B6%85%E8%BF%87%E4%B8%80%E7%A7%8D%E7%9A%84%E7%B1%BB%E5%9E%8B">拥有超过一种的类型</h3>
+<ul>
+<li>为每一种类型写代码</li>
+<li>实现#define的宏</li>
+<li>使用void *类型</li>
+</ul>
+<h3 id="%E5%90%8D%E5%AD%97%E5%86%B2%E7%AA%81">名字冲突</h3>
+<p>不同的结构之间可能有相同的函数名字</p>
+<h3 id="%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84ADT">标准库的ADT</h3>
+<p>C语言暂时没有提供,但是可以用#define模拟</p>
+<ul>
+<li><code>g_atck.h</code></li>
+</ul>
+
+<pre class="language-C"><code class="language-C">  1 #include &lt;assert.h&gt;                                                                   
+  2 /*建立一个栈初始化的声明,数据类型,标记,大小*/
+  3 #define GENERIC_STACK(STACK_TYPE, SUFFIX, STACK_SIZE)   \
+  4     static STACK_TYPE stack##SUFFIX[STACK_SIZE];        \
+  5     static int top_element##SUFFIX = -1;                \
+  6     int is_empty##SUFFIX(void)                          \
+  7     {                                                   \
+  8         return top_element##SUFFIX == -1;               \
+  9     }                                                   \
+ 10     int is_full##SUFFIX(void)                           \
+ 11     {                                                   \
+ 12         return top_element##SUFFIX == STACK_SIZE -1;    \
+ 13     }                                                   \
+ 14     void push##SUFFIX(STACK_TYPE value)                 \
+ 15     {                                                   \
+ 16         assert(!is_full##SUFFIX());                     \
+ 17         top_element##SUFFIX += 1;                       \
+ 18         stack##SUFFIX[top_element##SUFFIX] = value;     \
+ 19     }                                                   \
+ 20     void pop##SUFFIX(void)                              \
+ 21     {                                                   \
+ 22         assert(!is_empty##SUFFIX());                    \
+ 23         top_element##SUFFIX -= 1;                       \
+ 24     }                                                   \
+ 25     STACK_TYPE top##SUFFIX(void)                        \
+ 26     {                                                   \
+ 27         assert(!is_empty##SUFFIX());                    \
+ 28         return stack##SUFFIX[top_element##SUFFIX];      \
+ 29     }
+
+</code></pre>
+<ul>
+<li><code>g_atck.c</code></li>
+</ul>
+
+<pre class="language-C"><code class="language-C">  2 #include &lt;stdio.h&gt;
+  3 #include &quot;g_atck.h&quot;
+  4 
+  5 GENERIC_STACK(int, _int, 10)//建立第一个栈
+  6 GENERIC_STACK(float, _float, 10)
+  7 int main(){
+  8     push_int(5);
+  9     push_int(22);
+ 10     push_int(15);
+ 11     push_float(25.4);
+ 12     push_float(-40.5);
+ 13     
+ 14     while(!is_empty_int()){
+ 15         printf(&quot;*Popping %d\n&quot;, top_int());
+ 16         pop_int();
+ 17     }   
+ 18     while(!is_empty_float()){
+ 19         printf(&quot;*Popping %f\n&quot;, top_float());
+ 20         pop_float();
+ 21     }
+ 22     return EXIT_SUCCESS;
+ 23 }
+
+result:
+*Popping 15
+*Popping 22
+*Popping 5
+*Popping -40.500000
+*Popping 25.400000
+
+
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html">
+                            <span class="icon"></span>
+                            <span class="label">2022-7-30-标准库函数</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html">
+                            <span class="label">2022-7-31-运行时环境</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

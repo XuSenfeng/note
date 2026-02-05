@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>数据库 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class="active"><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">C#</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/no_translate.html?ref=C.html&from=/编程基础/C.html"><span class="label">2023-6-24-1.C#</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C和指针</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-C语言环境.html"><span class="label">2022-7-25-C语言环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-字符串操作.html"><span class="label">2022-7-25-字符串操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-操作符和表达式.html"><span class="label">2022-7-25-操作符和表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-数据.html"><span class="label">2022-7-25-数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-词法规则.html"><span class="label">2022-7-25-词法规则</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-语句.html"><span class="label">2022-7-25-语句</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-函数.html"><span class="label">2022-7-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-指针.html"><span class="label">2022-7-26-指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-数组.html"><span class="label">2022-7-26-数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-表达式.html"><span class="label">2022-7-26-表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-动态内存分配.html"><span class="label">2022-7-27-动态内存分配</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-字符串字符字节.html"><span class="label">2022-7-27-字符串字符字节</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构体和指针.html"><span class="label">2022-7-27-结构体和指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构和联合.html"><span class="label">2022-7-27-结构和联合</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-预处理器.html"><span class="label">2022-7-28-预处理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-高级指针.html"><span class="label">2022-7-28-高级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-29-输入输出函数.html"><span class="label">2022-7-29-输入输出函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html"><span class="label">2022-7-30-标准库函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-经典抽象数据类型.html"><span class="label">2022-7-30-经典抽象数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html"><span class="label">2022-7-31-运行时环境</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C陷阱与缺陷</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-27-语义陷阱.html"><span class="label">2022-8-27-语义陷阱</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">c</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-16-c监控.html"><span class="label">2023-6-16-c监控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-19-C语言程序设计.html"><span class="label">2023-6-19-C语言程序设计</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">cpp</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-01C++.html"><span class="label">2025-1-1-01C++</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-02内存.html"><span class="label">2025-1-1-02内存</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-22-其他扩展语法.html"><span class="label">2025-1-22-其他扩展语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-26-多线程.html"><span class="label">2025-1-26-多线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-6-03模板和STL.html"><span class="label">2025-1-6-03模板和STL</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">go</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">python</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active no_link"><a><span class="label">基础语法</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html"><span class="label">2023-6-15-修饰器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-23-01基础运算.html"><span class="label">2023-9-23-01基础运算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html"><span class="label">2023-9-24-02函数及变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-03虚拟环境.html"><span class="label">2024-4-23-03虚拟环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-04常用函数.html"><span class="label">2024-4-23-04常用函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-24-05程序获取参数.html"><span class="label">2024-4-24-05程序获取参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-06推导式和拆包.html"><span class="label">2024-4-25-06推导式和拆包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-07引入.html"><span class="label">2024-4-25-07引入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-08匿名函数.html"><span class="label">2024-4-25-08匿名函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-09面向对象.html"><span class="label">2024-4-25-09面向对象</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-26-10文件基本操作.html"><span class="label">2024-4-26-10文件基本操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-11OS模块.html"><span class="label">2024-4-27-11OS模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-12迭代器.html"><span class="label">2024-4-27-12迭代器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-13异常处理.html"><span class="label">2024-4-27-13异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-14生成器.html"><span class="label">2024-4-27-14生成器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-28-15闭包.html"><span class="label">2024-4-28-15闭包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-30-16深拷贝浅拷贝.html"><span class="label">2024-4-30-16深拷贝浅拷贝</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-1-17With和上下文管理器.html"><span class="label">2024-5-1-17With和上下文管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-18GIL.html"><span class="label">2024-5-4-18GIL</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-19垃圾回收.html"><span class="label">2024-5-4-19垃圾回收</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-1-31-多任务.html"><span class="label">2025-1-31-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html"><span class="label">2025-12-19-CPP交互使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-打包whl文件.html"><span class="label">2025-12-19-打包whl文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html"><span class="label">2025-2-25-yaml</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-3-21-包导入.html"><span class="label">2025-3-21-包导入</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">进阶使用</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active no_link"><a><span class="label">C语言-Cpp接轨</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/C语言-Cpp接轨/2025-12-10-01-struct.html"><span class="label">2025-12-10-01-struct</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">django</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-01-Django.html"><span class="label">2025-7-24-01-Django</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-02-创建.html"><span class="label">2025-7-24-02-创建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-03-路由.html"><span class="label">2025-7-24-03-路由</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-04-视图.html"><span class="label">2025-7-24-04-视图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-05-配置文件.html"><span class="label">2025-7-24-05-配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-26-04-模版.html"><span class="label">2025-7-26-04-模版</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-28-05-静态文件.html"><span class="label">2025-7-28-05-静态文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html"><span class="label">2025-7-29-06-中间件</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html"><span class="label">2025-7-29-07-数据库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html"><span class="label">2025-7-30-08-进阶数据查询</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html"><span class="label">2025-8-1-09-ORM优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-10-模型扩展.html"><span class="label">2025-8-2-10-模型扩展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-11-组件.html"><span class="label">2025-8-2-11-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-3-12-异步.html"><span class="label">2025-8-3-12-异步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">pyQT</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-11-08界面容器.html"><span class="label">2024-5-11-08界面容器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-01介绍以及安装.html"><span class="label">2024-5-6-01介绍以及安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-02控件.html"><span class="label">2024-5-6-02控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-03布局.html"><span class="label">2024-5-7-03布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-04窗口.html"><span class="label">2024-5-7-04窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-05信号与槽.html"><span class="label">2024-5-8-05信号与槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-06QTDesigner.html"><span class="label">2024-5-8-06QTDesigner</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-07线程.html"><span class="label">2024-5-8-07线程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">简单模块使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2024-5-4-01logging日志模块.html"><span class="label">2024-5-4-01logging日志模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2025-3-15-02fastapi.html"><span class="label">2025-3-15-02fastapi</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">线程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-10-01多任务.html"><span class="label">2024-5-10-01多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-14-02队列.html"><span class="label">2024-5-14-02队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2025-2-20-async.html"><span class="label">2025-2-20-async</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-01网络编程.html"><span class="label">2024-5-10-01网络编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-02Socket.html"><span class="label">2024-5-10-02Socket</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-12-03软件.html"><span class="label">2024-5-12-03软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-8-20-04MQTT.html"><span class="label">2024-8-20-04MQTT</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">前端</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-12-04CSS2.html"><span class="label">2024-8-12-04CSS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-01基础知识.html"><span class="label">2024-8-5-01基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-02HTML.html"><span class="label">2024-8-5-02HTML</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-6-03CSS.html"><span class="label">2024-8-6-03CSS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式C语言</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-__attribute__.html"><span class="label">2022-7-21-__attribute__</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-内联函数内置内存函数.html"><span class="label">2022-7-21-内联函数内置内存函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-变量指针.html"><span class="label">2022-7-21-变量指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-大小端数据对齐size_t.html"><span class="label">2022-7-21-大小端数据对齐size_t</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-存储器.html"><span class="label">2022-7-21-存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-语句表达式define.html"><span class="label">2022-7-21-语句表达式define</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-Linux中的面向对象思想-封装.html"><span class="label">2022-7-22-Linux中的面向对象思想-封装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-main函数的参数.html"><span class="label">2022-7-22-main函数的参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-二级指针.html"><span class="label">2022-7-22-二级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-代码复用分层思想.html"><span class="label">2022-7-22-代码复用分层思想</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数参数的本质.html"><span class="label">2022-7-22-函数参数的本质</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数指针.html"><span class="label">2022-7-22-函数指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-指针和数组.html"><span class="label">2022-7-22-指针和数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-面向对象编程基础.html"><span class="label">2022-7-22-面向对象编程基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-goto关键字.html"><span class="label">2022-7-23-goto关键字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-可重入函数.html"><span class="label">2022-7-23-可重入函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-多任务.html"><span class="label">2022-7-23-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-头文件剖析.html"><span class="label">2022-7-23-头文件剖析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-异步通信模式.html"><span class="label">2022-7-23-异步通信模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-操作系统基本原理.html"><span class="label">2022-7-23-操作系统基本原理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块化编程.html"><span class="label">2022-7-23-模块化编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块进阶.html"><span class="label">2022-7-23-模块进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块间通讯.html"><span class="label">2022-7-23-模块间通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-MMU内存管理单元.html"><span class="label">2022-7-24-MMU内存管理单元</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-中断.html"><span class="label">2022-7-24-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-寄存器操作.html"><span class="label">2022-7-24-寄存器操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-嵌入式启动.html"><span class="label">2022-7-24-嵌入式启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-文件系统.html"><span class="label">2022-7-24-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-系统调用.html"><span class="label">2022-7-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-进程线程协程.html"><span class="label">2022-7-24-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">算法基础</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2022-7-31-高级数据结构.html"><span class="label">2022-7-31-高级数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-01快速排序.html"><span class="label">2024-12-31-01快速排序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-02哈希表.html"><span class="label">2024-12-31-02哈希表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-03贪心算法.html"><span class="label">2024-12-31-03贪心算法</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>数据库</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/编程基础/python/进阶使用/django/2025-7-29-07-数据库.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            
+<pre class="language-none"><code class="language-none">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<p>常用数据库有2大阵营：</p>
+<ol>
+<li><p>关系型数据库[RDB]: 数据库中存储数据的表之间存在某种内在的关联关系，因为这种关系，所以我们称这一类型的数据为关系型数据库。<br />
+ 常见的数据库：mysql[MariaDB]，PostgreSQL（简称PG），Oracle，MSSQLServer，DB2，sqlite，Access，SequoiaDB<br />
+ 共同的特点：都使用了SQL语句进行数据库操作。</p>
+</li>
+<li><p>非关系型数据库[NOSQL（Not Only SQL）]：泛指那些不适用SQL语句进行数据库操作的所有其他数据库。<br />
+常见的数据库：Redis，MongoDB， Memcached，Elasticsearch，HBase/CouchDB, Neo4j、FlockDB、AllegroGrap，rethinkDB</p>
+</li>
+</ol>
+<h2 id="ORM%E6%A1%86%E6%9E%B6">ORM框架</h2>
+<p>django中内置了一个基于面向对象的强大的ORM框架给开发者对数据库进行操作的。</p>
+<p>O是Object，也就<strong>类对象</strong>的意思。</p>
+<p>R是Relational，翻译成中文是<strong>关系</strong>，也就是关系型数据库中<strong>数据表</strong>的意思。</p>
+<p>M是mapping，是<strong>映射</strong>的意思，表示类对象和数据表之间的映射关系。</p>
+<p>ORM框架会帮我们把类对象和数据表进行了一对一的映射，让我们可以<strong>通过类对象来操作对应的数据表</strong>。</p>
+<p>ORM框架还可以<strong>根据我们设计的类自动帮我们生成数据库中的数据表</strong>，也就是使用代码生成数据库建表语句，省去了我们自己建表的过程。</p>
+<p>django中内嵌了ORM框架，不需要直接编写SQL语句进行数据库操作，而是通过定义模型类，操作模型类来完成对数据库中数据的增删改查和数据表的创建删除等操作。</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507291810035.png" alt="image-20250729181017944" /></p>
+<h3 id="ORM%E7%9A%84%E4%BC%98%E7%82%B9">ORM的优点</h3>
+<ul>
+<li>数据模型类都在一个地方定义，更容易更新和维护，也利于重用代码。</li>
+<li>ORM 有现成的工具，很多功能都可以自动完成，比如数据消除、预处理、事务等等。</li>
+<li>ORM迫使开发人员使用 MVC 架构，ORM 就是天然的 Model，最终使代码结构更清晰易懂。</li>
+<li>基于 ORM 的业务代码比较简单，代码量少，语义性好，容易理解。</li>
+<li>新手对于复杂业务容易写出性能不佳的 SQL,有了ORM不必编写复杂的SQL语句, 只需要通过操作模型对象即可同步修改数据表中的数据.</li>
+<li>开发中应用ORM将来如果要切换数据库.只需要切换ORM底层对接数据库的驱动【修改配置文件的连接地址即可】</li>
+</ul>
+<h3 id="ORM-%E4%B9%9F%E6%9C%89%E7%BC%BA%E7%82%B9">ORM 也有缺点</h3>
+<ul>
+<li>ORM 库不是轻量级工具，需要花很多精力学习和设置，甚至不同的项目框架会存在不同操作的ORM。</li>
+<li>对于复杂的业务查询，ORM表达起来比原生的SQL要更加困难和复杂。ORM并非万能的，总有些功能需要我们使用原生SQL语句，当然ORM也提供执行原生SQL语句的功能</li>
+<li>ORM操作数据库的性能要比使用原生pymysql执行SQL差。[ORM内部要拼接SQL语句]</li>
+<li>ORM 抽象掉了数据库层，开发者无法了解底层的数据库操作，也无法定制一些特殊的 SQL。【自己使用pymysql另外操作即可，用了ORM并不表示当前项目不能使用别的数据库操作工具。】</li>
+</ul>
+<h2 id="%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5">配置数据库连接</h2>
+<p>在settings.py中保存了数据库的连接配置信息，Django默认初始配置使用<strong>sqlite</strong>数据库。</p>
+<p>我们可以通过以下步骤来使用django的数据库操作</p>
+<ol>
+<li>settings.py配置数据库连接信息</li>
+<li>在目标子应用下的models.py中定义模型类</li>
+<li>生成数据库迁移文件并执行迁移文件[注意：数据迁移是一个独立的用于创建数据表的功能，这个功能在其他web框架未必和ORM一块的]<br />
+第3步非必要，有些公司直接由DBA（数据库管理员）设计与管理数据表的，那么就不需要在django中数据迁移了。直接开撸代码</li>
+<li>通过模型类对象提供的方法或属性完成数据表的增删改查操作</li>
+</ol>
+<h2 id="%E5%AE%89%E8%A3%85">安装</h2>
+<p>需要使用python的MQL库</p>
+
+<pre class="language-bash"><code class="language-bash">pip install PyMySQL
+pip install cryptography
+</code></pre>
+<p>在Django的主应用目录的<code>__init__.py</code>文件中添加如下语句，<code>djdemo/__init__.py</code>，代码：</p>
+
+<pre class="language-python"><code class="language-python">from pymysql import install_as_MySQLdb
+
+install_as_MySQLdb()  # 让pymysql以MySQLDB的运行模式和Django的ORM对接运行
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301050058.png" alt="image-20250730105035989" /></p>
+<p>启动数据库</p>
+
+<pre class="language-none"><code class="language-none">mysql.exe -h 127.0.0.1 -P 3306 -u root -p
+</code></pre>
+<p>创建数据库</p>
+
+<pre class="language-sql"><code class="language-sql">create database school charset=utf8mb4;
+</code></pre>
+<p>修改<strong>DATABASES</strong>配置信息，settings.py配置文件配置数据库的连接信息</p>
+
+<pre class="language-python"><code class="language-python">
+# Database
+# https://docs.djangoproject.com/zh-hans/4.2/ref/settings/#databases
+# 数据库配置
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # ORM的底层对接pymysql的核心引擎类
+        'NAME': 'school',          # 数据库名
+        'PORT': 3306,              # 端口
+        'HOST': '127.0.0.1',       # 数据库IP
+        'USER': 'root',            # 账号
+        'PASSWORD': '123',         # 密码
+        'POOL_OPTIONS': {  # pool表示数据库连接池配置，主要为了节省连接数据库的开销，临时存储数据库连接对象
+            'POOL_SIZE': 10,     # 默认情况下，打开的数据库连接对象的数量 [1,2,3,4,5,6,7,8,9,10]
+            'MAX_OVERFLOW': 30,  # 负载情况下，允许溢出的连接数量  [11,12,13,14,15,16,17,18,19,20]
+        }
+    }
+}
+</code></pre>
+<h2 id="%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B%E7%B1%BB">定义模型类</h2>
+<ul>
+<li>模型类被定义在&quot;子应用/models.py&quot;文件中。</li>
+<li>模型类必须直接或者间接继承于django.db.models.Model类【Model相当于我们之前学习mysql基础时封装的DB类一样，里面提供了大量对数据库的操作方法】。</li>
+</ul>
+<p>接下来以学校的学生管理为例进行演示。[系统大概3-4表，学生信息，课程信息，老师信息]，之前我们在mysql基础时直接使用SQL来建表，现在我们可以使用django提供的数据迁移来生成建表SQL语句，并创建数据表。使用数据迁移，必须先定义模型。</p>
+<p>再次强调，工作中并非每个公司都使用数据迁移的</p>
+
+<pre class="language-python"><code class="language-python">from django.db import models
+&quot;&quot;&quot;
+    学生表, 继承自models.Model, 表示是一个模型类, 用于定义数据库表结构
+    create table 'student' (
+        id int auto_increment primary key,
+        name varchar(15) not null,
+        age int default 18,
+        gender boolean default true,
+        class_id int not null,
+        description text,
+    )
+&quot;&quot;&quot;
+class Student(models.Model):
+    # 姓名, 最大长度15, 索引(db_index=True)用于快速查询, 字段名name, 字段描述verbose_name='姓名'
+    name = models.CharField(max_length=15, verbose_name='姓名', db_index=True) 
+    # 年龄, 整数类型, 默认值为18, 字段名age, 字段描述verbose_name='年龄'
+    age = models.IntegerField(default=18, verbose_name='年龄')
+    # 性别, 字符串类型, 最大长度10, 字段名gender, 字段描述verbose_name='性别'
+    gender = models.BooleanField(default=True, verbose_name='性别')
+    # 创建时间, 自动获取当前时间, 字段名create_time, 字段描述verbose_name='创建时间'
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    # 描述, 文本类型, 字段名description, 字段描述verbose_name='描述', 允许为空(null=True)
+    # 允许为空字符串(blank=True)
+    description = models.TextField(verbose_name='描述', null=True, blank=True)
+    class Meta:
+        db_table = 'student' # 指定表名
+        verbose_name = '学生' # 指定表的别名
+        verbose_name_plural = '学生' # 指定表的别名复数
+</code></pre>
+
+<pre class="language-python"><code class="language-python">from django.db import models
+&quot;&quot;&quot;
+1. django中所有的模型，必须直接或间接继承models.Model模型基类
+&quot;&quot;&quot;
+
+&quot;&quot;&quot;
+-- auto-generated definition
+create table student
+(
+    id           bigint auto_increment
+        primary key,
+    name         varchar(15) not null,
+    age          smallint    not null,
+    sex          tinyint(1)  not null,
+    class        varchar(50) not null,
+    mobile       varchar(20) not null,
+    description  longtext    null,
+    status       int         null,
+    created_time datetime(6) null,
+    updated_time datetime(6) null,
+    constraint mobile
+        unique (mobile)
+);
+
+create index student_class_ad9a3931
+    on student (class);
+
+create index student_name_68e26583
+    on student (name);
+&quot;&quot;&quot;
+
+
+class BaseModel(models.Model):
+    # auto_now_add 设置新建数据时，把当前时间戳作为默认值保存到当前字段中
+    created_time = models.DateTimeField(auto_now_add=True, null=True, verbose_name=&quot;创建时间&quot;)
+    # auto_now 设置更新数据时，把当前时间戳作为默认值保存到当前字段中
+    updated_time = models.DateTimeField(auto_now=True, null=True, verbose_name=&quot;更新时间&quot;)
+
+    class Meta:
+        # 设置当前类为抽象模型，表示当前模型并不是一个真正的表，django就不会跟踪识别这个模型了。
+        abstract = True
+
+
+# Create your models here.
+class Student(BaseModel):
+    STATUS = (
+        # (数据库值, &quot;程序显示给外界看的文本&quot;),
+        (0, &quot;正常&quot;),
+        (1, &quot;未入学&quot;),
+        (2, &quot;已毕业&quot;),
+    )
+    # django模型中不需要自己单独声明主键，模型会自动创建主键ID，将来直接可以通过模型对象.id 或者 模型对象.pk就可以调用主键了。
+    name = models.CharField(max_length=15, db_index=True, verbose_name=&quot;姓名&quot;)
+    age = models.SmallIntegerField(default=0, verbose_name=&quot;年龄&quot;)
+    sex = models.BooleanField(default=True, verbose_name=&quot;性别&quot;)
+    classmate = models.CharField(max_length=50, db_column=&quot;class&quot;, default=&quot;&quot;, db_index=True, verbose_name=&quot;班级编号&quot;)
+    mobile = models.CharField(max_length=20, unique=True, verbose_name=&quot;手机号码&quot;)
+    description = models.TextField(blank=True, null=True, verbose_name=&quot;个性签名&quot;)
+    status = models.IntegerField(choices=STATUS, default=1, null=True, verbose_name=&quot;毕业状态&quot;)
+
+    class Meta:
+        db_table = &quot;student&quot;
+        verbose_name = &quot;学生信息&quot;
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        # 当使用print打印django模型对象时的输出内容，返回值必须是字符串，方法名固定
+        return self.name
+</code></pre>
+<blockquote>
+<p>主键不需要自己声明, 会自己创建, 可以使用<code>.id</code>或者<code>.pk</code>获取</p>
+</blockquote>
+<ol>
+<li>数据库表名</li>
+</ol>
+<p>可通过<strong>Meta.db_table</strong> 指明数据库表名。</p>
+<p>模型类如果未指明表名Meta.db_table，Django默认以 <strong>小写子应用目录名_小写模型类名</strong> 为数据库表名。</p>
+<ol start="2">
+<li>关于主键</li>
+</ol>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301353519.png" alt="image-20250730135337437" /></p>
+<p>django会为模型自动声明一个自动增长的主键列，每个模型只能有一个主键列。</p>
+<p>如果使用选项设置某个字段的约束属性为主键列(primary_key)后，django不会再创建自动增长的主键列。</p>
+
+<pre class="language-python"><code class="language-python">class Student(models.Model):
+    # django会自动在创建数据表的时候生成id主键/还设置了一个调用别名 pk
+    id = models.BigAutoField(primary_key=True, verbose_name=&quot;主键&quot;) # 设置主键
+</code></pre>
+<p>默认创建的主键列属性名为id，也可以使用pk代替id，pk全拼为primary key。</p>
+<ol start="3">
+<li>性命名限制</li>
+</ol>
+<ul>
+<li>不能是python的关键字或保留字。</li>
+<li>不允许使用连续的2个下划线，这是因为django的查询方式提供了很多以<code>__xx</code>开头的方法或属性，所以<code>__xx</code>是django的模型内部的关键字，不能使用！</li>
+<li>定义属性时需要指定字段类型，通过字段类型的参数指定选项，语法如下：</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">属性名 = models.字段类型(约束选项, verbose_name=&quot;注释&quot;)
+
+# 在mysql数据表中的字段名如果在python是一个关键字/保留字。则选项中需要通过db_column()来进行关联绑定
+class_name = models.SmallIntegerField(db_column=&quot;class&quot;, verbose_name=&quot;班级&quot;)
+# class就是实际上在mysql数据表中的真实字段名
+# class_name 就是python中将来用于操作数据的属性名 
+</code></pre>
+<ol start="4">
+<li>字段类型</li>
+</ol>
+<p>文档：<a href="https://docs.djangoproject.com/zh-hans/4.2/ref/models/fields/#field-types"  target="_blank">https://docs.djangoproject.com/zh-hans/4.2/ref/models/fields/#field-types</a></p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">类型</th>
+  <th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">AutoField</td>
+  <td style="text-align:left">自动增长的IntegerField，通常不用指定，不指定时Django会自动创建属性名为id的自动增长属性，并且提供了一个pk属性与主键进行关联。django3.0以后，系统默认采用了<strong>BigAutoField</strong>，从原来的int类型变成了bigint类型，其他不变。</td>
+</tr>
+<tr>
+  <td style="text-align:left">BigAutoField</td>
+  <td style="text-align:left">一个 64 位整数，与 <a href="https://docs.djangoproject.com/zh-hans/4.2/ref/models/fields/#django.db.models.AutoField"  target="_blank"><code>AutoField</code></a> 很相似，但保证适合 <code>1</code> 到 <code>9223372036854775807</code> 的数字。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>BooleanField</strong></td>
+  <td style="text-align:left">布尔字段，值为True或False，实际上在数据库中存储的是smallint，采用0/1表示False/True</td>
+</tr>
+<tr>
+  <td style="text-align:left">NullBooleanField</td>
+  <td style="text-align:left">支持None、True、False三种值，在4.0版本的django中已经被声明废弃了。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>CharField</strong></td>
+  <td style="text-align:left">字符串，参数max_length表示最大字符个数，对应mysql中的varchar</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>TextField</strong></td>
+  <td style="text-align:left">大文本字段，一般大段文本（超过4000个字符）才使用，对应mysql中的bigtext。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>IntegerField</strong></td>
+  <td style="text-align:left">整数，对应mysql中的int</td>
+</tr>
+<tr>
+  <td style="text-align:left">BigIntegerField</td>
+  <td style="text-align:left">大整型，对应mysql的bitint</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>DecimalField</strong></td>
+  <td style="text-align:left">十进制定点数， 参数max_digits表示总位数， 参数decimal_places表示小数位数，常用于表示分数和价格 Decimal(max_digits=7, decimal_places=2) ==&gt; 99999.99~ 0.00</td>
+</tr>
+<tr>
+  <td style="text-align:left">FloatField</td>
+  <td style="text-align:left">浮点数</td>
+</tr>
+<tr>
+  <td style="text-align:left">DateField</td>
+  <td style="text-align:left">日期，年-月-日 参数auto_now表示每次创建/更新对象时，自动设置该字段的值为当前时间。 参数auto_now_add表示当对象第一次被创建时自动设置该字段的值为当前时间。 参数auto_now_add和auto_now是相互排斥的，一起使用会发生错误。</td>
+</tr>
+<tr>
+  <td style="text-align:left">TimeField</td>
+  <td style="text-align:left">时间，时分秒，参数同DateField</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>DateTimeField</strong></td>
+  <td style="text-align:left">日期时间，年月日时分秒，参数同DateField</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>FileField</strong></td>
+  <td style="text-align:left">继承于CharField，上传文件字段类型，但是django在FileField中内置了文件上传保存类, django可以通过模型的字段存储自动保存上传文件, 但是在数据库中本质上保存的仅仅是文件在项目中的<code>存储路径</code>!! 参数upload_to，表示设置当前上传文件的存储路径位置，当前路径如果不存在，django会自动生成路径。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>ImageField</strong></td>
+  <td style="text-align:left">继承于FileField，对上传的内容进行校验，确保是有效的图片</td>
+</tr>
+<tr>
+  <td style="text-align:left">EmailField</td>
+  <td style="text-align:left">继承于CharField，邮件字段类型，但是增加字段值的验证是否为邮件格式</td>
+</tr>
+<tr>
+  <td style="text-align:left">UUIDField</td>
+  <td style="text-align:left">继承于CharField，UUID字段类型，保存内容格式字符串，但是会验证当前字段是否是UUID格式。</td>
+</tr>
+</tbody>
+</table>
+<ol start="5">
+<li><strong>约束选项</strong></li>
+</ol>
+<p>文档：<a href="https://docs.djangoproject.com/zh-hans/4.2/ref/models/fields/#field-options"  target="_blank">https://docs.djangoproject.com/zh-hans/4.2/ref/models/fields/#field-options</a></p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">选项</th>
+  <th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>null</strong></td>
+  <td>如果为True，表示允许为空，默认值是False。相当于python的None</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>blank</strong></td>
+  <td>如果为True，则该字段允许为空白，默认值是False。 相当于python的空字符串：&quot;&quot;</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>db_column</strong></td>
+  <td>数据表中真实的字段名称，如果未指定，则使用模型类属性的名称。防止数据字段是python的关键字。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>db_index</strong></td>
+  <td>若值为True, 则在表中会为此字段创建索引，默认值是False。 相当于SQL语句中的key</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>default</strong></td>
+  <td>默认值，当不填写数据时，使用该选项的值作为字段的默认值。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>primary_key</strong></td>
+  <td>如果为True，则该字段在表中设置为主键，默认值是False，一般不用设置，django会自动默认设置id作为主键。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>unique</strong></td>
+  <td>如果为True，则该字段在表中创建唯一索引，默认值是False。相当于SQL语句中的unique</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>choices</strong></td>
+  <td>设置当前字段值的候选值选项，必须是二维序列，子序列必须是2个成员。用于限定可以使用的数值</td>
+</tr>
+<tr>
+  <td style="text-align:left">help_text</td>
+  <td>设置当前字段的辅助提示文本信息，是一个人类可读的文本信息。一般显示给客户端（前台）的。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>verbose_name</strong></td>
+  <td>设置当前字段的提示字段名，是一个人类可读的名称，一般显示给服务端（后台）的。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E5%BB%BA%E7%AB%8B%E8%A1%A8">建立表</h3>
+<p>-- 完成上面的步骤以后，建表有2种方式：手动SQL语句建表与数据迁移<br />
+-- 数据迁移</p>
+
+<pre class="language-bash"><code class="language-bash">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<blockquote>
+<ol>
+<li><code>python manage.py makemigrations</code></li>
+</ol>
+<p><strong>作用</strong>：检测模型变化并生成迁移脚本</p>
+<ul>
+<li>扫描所有已安装应用的模型 (<code>models.py</code>)</li>
+<li>将检测到的模型变化（新增模型、修改字段、删除字段等）转换为数据库操作指令</li>
+<li>在应用的 <code>migrations/</code> 目录下生成新的迁移文件（如 <code>0002_auto_20210730.py</code>）</li>
+<li><strong>不修改实际数据库</strong>，只创建变更记录文件</li>
+</ul>
+<p>使用场景：</p>
+<ul>
+<li>修改模型后首次运行</li>
+<li>添加新模型时</li>
+<li>字段增删改时</li>
+<li>修改模型关系时</li>
+</ul>
+<ol start="2">
+<li><code>python manage.py migrate</code></li>
+</ol>
+<p><strong>作用</strong>：将迁移脚本应用到实际数据库</p>
+<ul>
+<li>检查 <code>django_migrations</code> 表（记录已应用的迁移）</li>
+<li>按顺序执行所有未应用的迁移文件中的操作</li>
+<li>修改实际数据库结构（创建表/字段/索引等）</li>
+<li>更新 <code>django_migrations</code> 表记录</li>
+</ul>
+<p><strong>使用场景</strong>：</p>
+<ul>
+<li>首次初始化数据库</li>
+<li>应用新的迁移文件后</li>
+<li>同步团队成员的数据库变更</li>
+</ul>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301434610.png" alt="image-20250730143441552" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301437204.png" alt="image-20250730143746102" /></p>
+<h2 id="%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">数据操作</h2>
+<h3 id="%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">查询数据</h3>
+<h4 id="get%E8%8E%B7%E5%8F%96%E7%AC%A6%E5%90%88%E7%9A%84">get获取符合的</h4>
+<p><strong>查询单一结果</strong>，如果不存在或者返回多个结果会抛出异常。主要是基于唯一的索引进行的</p>
+<p>查询不到, 则返回<strong>模型类.DoesNotExist</strong>异常。</p>
+<p>查询多个, 则返回<strong>模型类.MultipleObjectsReturned</strong>异常。</p>
+
+<pre class="language-python"><code class="language-python">def get(self,request):
+    &quot;&quot;&quot;基本查询数据&quot;&quot;&quot;
+    &quot;&quot;&quot;get 获取一条数据&quot;&quot;&quot;
+    try:
+        # student = Student.objects.get(name=&quot;小黄人4号&quot;)
+        # student = Student.objects.get(name=&quot;小白&quot;)
+        student = Student.objects.get(name=&quot;小黄人&quot;)
+        print(student, type(student))
+        print(student.name)
+        print(student.description)
+    except Student.DoesNotExist:
+        print(&quot;没有查询结果！&quot;)
+    except Student.MultipleObjectsReturned:
+        print(&quot;当前数据不是唯一的结果！&quot;)
+
+    return HttpResponse(&quot;OK&quot;)
+</code></pre>
+<h4 id="first">first</h4>
+<p><strong>查询一个结果</strong>, 查询不到，则返回None，查询多个，返回查询结果列表的第一个。</p>
+<p>django还提供了last方法，可以获取结果列表中最后一个成员。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;基于first来查询第一条数据&quot;&quot;&quot;
+# first不会报错！
+# 当查询结果为多个结果时，只会返回查询到的第一个结果，作为模型对象返回
+# 当查询结果为0个结果时，则返回None
+student = Student.objects.first()
+# SQL: select * from tb_student limit 1;
+print(student)
+if student:  # 判断如果student不是None
+    print(student.pk, student.id)  # pk是id的别名
+    print(student.description)
+
+&quot;&quot;&quot;使用filter来过滤数据，并返回一条&quot;&quot;&quot;
+# student = Student.objects.filter(classmate=301).first()
+student = Student.objects.filter(classmate=333).first()
+print(student, type(student))  # None &lt;class 'NoneType'&gt;  对于没有结果的查询，使用first则会返回一个None
+</code></pre>
+<h4 id="all%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89">all查询所有</h4>
+<p>查询所有结果。查询不到,则返回空列表对象</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;all 获取所有数据&quot;&quot;&quot;
+student_list = Student.objects.all()
+print(student_list)       # 获取结果列表
+print(len(student_list))  # 获取结果列表的长度
+
+# 把结果列表中的所有模型对象转化成字典结构
+student_list = Student.objects.all().values()
+print(student_list)
+
+# 把结果列表中的所有模型对象转换成元组结构
+student_list = Student.objects.all().values_list()
+print(student_list)
+
+&quot;&quot;&quot;
+使用filter查询过滤数据，并返回所有符合条件的结果
+filter(字段名=条件值)
+filter(字段名=条件值, 字段名=条件值)  # 相当于and
+&quot;&quot;&quot;
+student_list = Student.objects.filter(classmate=302).all()
+print(student_list)
+# &lt;QuerySet [&lt;Student: 王天歌&gt;, &lt;Student: 王天龙&gt;, &lt;Student: 祝华生&gt;]&gt;
+</code></pre>
+<h4 id="count%E8%BF%94%E5%9B%9E%E6%80%BB%E6%95%B0">count返回总数</h4>
+<p>查询结果数量。实际上是一个聚合函数来的</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;count 获取结果总数&quot;&quot;&quot;
+# 没有任何条件的统计当前数据表的结果
+total = Student.objects.count()
+print(f&quot;学生总人数：{total}&quot;)
+
+# 也可以添加where条件
+total = Student.objects.filter(classmate=&quot;301&quot;).count()
+print(f&quot;学生总人数：{total}&quot;)
+</code></pre>
+<h4 id="%E7%A4%BA%E4%BE%8B">示例</h4>
+<p>可以使用以下的代码获取所有的数据</p>
+
+<pre class="language-python"><code class="language-python">from .models import Student
+students = Student.objects.all()
+</code></pre>
+<blockquote>
+<p>获取的是一个<code>Queryset</code>的数组, 这个数组是ORM里面提供的查询使用的对象集合, 可以使用索引限定一下索引的数量但是不可以使用负数(伪列表)</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">def get(self, request):
+    student_list = []
+    students = Student.objects.all()
+    for student in students:
+        student_list.append({
+            'id': student.id,
+            'name': student.name,
+            'age': student.age,
+            'sex': student.sex,
+            'status': student.get_status_display(), # 获取status的文字描述
+        })
+    return JsonResponse(student_list, safe=False)
+</code></pre>
+<h4 id="value%E8%8E%B7%E5%8F%96%E5%AD%97%E5%85%B8%E6%89%80%E6%9C%89">value获取字典所有</h4>
+<p>all返回的是模型对象列表, 如果需要获取字典的列表可以使用<code>list(Student.objects.values())</code>, 这个函数的才参数是可以选择获取的字段, 默认是获取所有的字段</p>
+<h4 id="%E8%8E%B7%E5%8F%96choice%E5%AF%B9%E5%BA%94%E4%BF%A1%E6%81%AF">获取choice对应信息</h4>
+<p>使用<code>模型对象.get__字段名__display()</code>即可获取提示文本</p>
+<h4 id="%E6%8E%A7%E5%88%B6%E5%8F%B0">控制台</h4>
+<p>在admin.py文件里面添加</p>
+
+<pre class="language-python"><code class="language-python">from django.contrib import admin
+
+# Register your models here.
+from .models import Student
+
+admin.site.register(Student)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301610566.png" alt="image-20250730161056458" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301612003.png" alt="image-20250730161238943" /></p>
+<blockquote>
+<p>之前设置的<code>verbose_net</code>在这里进行显示</p>
+</blockquote>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%9B%9E%E6%BB%9A">数据回滚</h3>
+<p><code>python manage.py migrate 子应用名 数据记录</code>例如 <code>python manage.py migrate test1 0001_initial</code></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301549662.png" alt="image-20250730154905617" /></p>
+<p>可以使用zero把表都删了</p>
+<h3 id="%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE">添加数据</h3>
+<h4 id="save">save</h4>
+<p>通过创建模型类对象，执行对象的save()方法保存到数据库中。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;添加一条数据&quot;&quot;&quot;
+# ORM对于数据的所有操作都是有子类objects来提供的。objects，可以被修改，开发中一般叫objects为&quot;模型管理器&quot;
+student = Student(
+    name=&quot;刘德华&quot;,
+    age=17,
+    xingbie=True,
+    classmate=301,
+    description=&quot;一杯忘情水&quot;,
+)
+# 自动执行添加数据
+student.save()
+# 添加后的模型会多出一个主键数据，可以通过id或者pk来读取
+print(student.id) # print(student.pk)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507301657426.png" alt="image-20250730165759324" /></p>
+<h4 id="create">create</h4>
+<p>通过模型类.objects.create()保存。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;使用create来完成添加一条数据&quot;&quot;&quot;
+# 返回值就是添加后的模型对象，会有ID主键的
+student = Student.objects.create(
+    name=&quot;赵本山&quot;,
+    age=50,
+    xingbie=True,
+    classmate=301,
+    description=&quot;一段小品&quot;
+)
+print(student)
+print(student.pk)  # print(student.id)
+</code></pre>
+<h4 id="bulk_create%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0">bulk_create批量添加</h4>
+<p>通过<code>模型类.objects.bulk_create()</code>批量添加数据</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;基于bulk_create添加多条数据&quot;&quot;&quot;
+stu1 = Student(name=&quot;小黄人1号&quot;, age=17, xingbie=True, classmate=301, description=&quot;卜乃奈&quot;)
+stu2 = Student(name=&quot;小黄人2号&quot;, age=17, xingbie=False, classmate=301, description=&quot;卜乃奈&quot;)
+stu3 = Student(name=&quot;小黄人3号&quot;, age=17, xingbie=True, classmate=301, description=&quot;卜乃奈&quot;)
+stu4 = Student(name=&quot;小黄人3号&quot;, age=17, xingbie=True, classmate=301, description=&quot;卜乃奈&quot;)
+stu_list = [stu1,stu2,stu3,stu4]
+ret = Student.objects.bulk_create(stu_list)
+print(ret)
+return HttpResponse(&quot;ok&quot;)
+</code></pre>
+<h3 id="%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE">更新数据</h3>
+<h4 id="save%E4%B8%80%E6%9D%A1">save一条</h4>
+<p>修改模型类对象的属性，然后执行save()方法同步到数据库中</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;save 更新一条数据&quot;&quot;&quot;
+# 先把要更新的数据查询出来，得到一个模型类对象
+student = Student.objects.filter(name=&quot;小白&quot;).first()
+# SQL: select * from tb_student where name='小白' limit1;
+if student:
+    student.name = &quot;小黑&quot;
+    student.age = 18
+    student.save()  # 把当前模型的中字段值同步到数据库
+    # SQL: update student set name='小黑', age=18, sex=True, description='xxx' where id=103;
+</code></pre>
+<h4 id="update%E6%9B%B4%E6%96%B0%E5%A4%9A%E6%9D%A1">update更新多条</h4>
+<p>使用<code>模型类.objects.filter().update()</code>，基于update来完成更新满足条件的所有数据，结果是受影响的行数</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;update 更新多条数据&quot;&quot;&quot;
+# 基于update这种操作在数据库操作中，一般称之为&quot;乐观锁&quot;
+# update操作的执行效率比save要高！
+# update如果条件设置宽松，可以修改多条数据
+Student.objects.filter(name=&quot;刘德华&quot;).update(name=&quot;刘福荣&quot;)
+# SQL: update tb_student set name=&quot;刘福荣&quot; where name=&quot;刘德华&quot;;
+</code></pre>
+<h3 id="%E5%88%A0%E9%99%A4">删除</h3>
+<p>删除有两种方法，分别是删一条或删多条数据。</p>
+<h4 id="%E6%A8%A1%E5%9E%8B%E7%B1%BB%E5%AF%B9%E8%B1%A1.delete%28%29">模型类对象.delete()</h4>
+
+<pre class="language-none"><code class="language-none">    def get(self,request):
+        &quot;&quot;&quot;删除数据&quot;&quot;&quot;
+        &quot;&quot;&quot;删除一条数据&quot;&quot;&quot;
+        # 先查询要删除的数据
+        student = Student.objects.filter(name=&quot;小白&quot;).first()
+        if student:
+            # 调用模型对象的delete方法进行删除
+            student.delete()
+        return HttpResponse(&quot;Ok&quot;)
+</code></pre>
+<h4 id="%E6%A8%A1%E5%9E%8B%E7%B1%BB.objects.filter%28%29.delete%28%29">模型类.objects.filter().delete()</h4>
+
+<pre class="language-none"><code class="language-none">        &quot;&quot;&quot;删除多条&quot;&quot;&quot;
+        # 把符合条件的数据全部删除，注意：这种删除操作务必加上filter过滤条件，否则会变成全表删除
+        # 返回值是删除的数量
+        Student.objects.filter(name=&quot;小黄人&quot;).delete()
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-7-29-06-中间件</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html">
+                            <span class="label">2025-7-30-08-进阶数据查询</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

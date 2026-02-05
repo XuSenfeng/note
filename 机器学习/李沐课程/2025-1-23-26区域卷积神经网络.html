@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>区域卷积神经网络 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">李沐课程</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">视觉识别</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>区域卷积神经网络</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h2 id="R-CNN">R-CNN</h2>
+<p>使用启发式搜索算法选择锚框, 预训练模型对每一个锚框抽取特征</p>
+<p>训练一个SVM对类别分类, 再训练一个线性回归模型预测边缘框偏移</p>
+<h3 id="Rol%E5%85%B4%E8%B6%A3%E5%8C%BA%E5%9F%9F%E6%B1%A0%E5%8C%96%E5%B1%82">Rol兴趣区域池化层</h3>
+<p>其目的是对非均匀尺寸的输入执行最大池化以获得固定尺寸的特征图</p>
+<p>给定一个锚框, 均匀的进行分割为n x m块, 输出每一个块里面的最大值(最大池化)</p>
+<p>不管这一个锚框多大, 总输出一个nm的值</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501232243010.png" alt="image-20250123224349974" /></p>
+<h2 id="Fast-RCNN">Fast-RCNN</h2>
+<p>使用CNN对图像进行抽取特征, 之后使用比较好的锚框进行拟合, 而不是使用所有的锚框, 选择锚框的算法是图像识别里面的算法</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501232243728.png" alt="image-20250123224313652" /></p>
+<h2 id="Faster-RCNN">Faster RCNN</h2>
+<p>图像识别的算法速度比较慢, 所以使用一个神经网络进行选择</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501232245636.png" alt="image-20250123224558588" /></p>
+<h2 id="Mask-RCNN">Mask RCNN</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501232247571.png" alt="image-20250123224720530" /></p>
+<p>进行像素级别的预测, 提高一个图片边缘的质量, 因为之前使用的Rol pool会使得输出有偏移(不能整除的时候向一侧取整)</p>
+<h2 id="%E5%8D%95%E5%8F%91%E5%A4%9A%E6%A1%86%E6%A3%80%E6%B5%8BSSD">单发多框检测SSD</h2>
+<h3 id="%E5%A4%9A%E5%B0%BA%E5%BA%A6%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B">多尺度目标检测</h3>
+<p>如果为每个像素都生成的锚框，我们最终可能会得到太多需要计算的锚框。我们可以在输入图像中均匀采样一小部分像素，并以它们为中心生成锚框。</p>
+
+<pre class="language-python"><code class="language-python">def display_anchors(fmap_w, fmap_h, s):
+    d2l.set_figsize()
+    # 前两个维度上的值不影响输出
+    fmap = torch.zeros((1, 10, fmap_h, fmap_w))
+    anchors = multibox_prior(fmap, sizes=s, ratios=[1, 2, 0.5])
+    bbox_scale = torch.tensor((w, h, w, h))
+    show_bboxes(d2l.plt.imshow(img).axes,
+        anchors[0] * bbox_scale) # 显示一下
+
+display_anchors(fmap_w=4, fmap_h=4, s=[0.15]) # 按照4*4的生成
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501242254605.png" alt="image-20250124225408398" /></p>
+
+<pre class="language-python"><code class="language-python">display_anchors(fmap_w=2, fmap_h=2, s=[0.4])
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501242257099.png" alt="image-20250124225737928" /></p>
+<h3 id="%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">实现原理</h3>
+<p>对每一个像素生成多个锚框, 对锚框进行计算</p>
+<p>此模型主要由基础网络组成，其后是几个多尺度特征块。基本网 络用于从输入图像中提取特征，因此它可以使用深度卷积神经网络。</p>
+<p>每个多尺度特征块 将上一层提供的特征图的高和宽缩小（如减半），并使特征图中每个单元在输入图像上的感受野变得更广阔。</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501242308903.png" alt="image-20250124230844742" /></p>
+<h3 id="%E7%B1%BB%E5%88%AB%E9%A2%84%E6%B5%8B%E5%B1%82">类别预测层</h3>
+<p>设目标类别的数量为q。这样一来，锚框有q + 1个类别，其中0类是背景。</p>
+<p>设特征图的高和宽 分别为h和w。如果以其中每个单元为中心生成a个锚框，那么我们需要对hwa个锚框进行分类。如果使用全 连接层作为输出，很容易导致模型参数过多。</p>
+<p>类别预测层使用一个保持输入高和宽的卷积层。这样一来，输出和输入在特征图宽和高上的空间 坐标一一对应。考虑输出和输入同一空间坐标（、）（𝑥、𝑦）：输出特征图上（x、y）坐标的通道里包含了以输入特征图（、）（𝑥、𝑦）坐标为中心生成的所有锚框的类别预测。因此输出通道数为𝑎(𝑞+1)，其中索引为（）𝑖(𝑞+1)+𝑗（0≤𝑗≤𝑞）的通道代表了索引为i的锚框有关类别索引为j的预测。</p>
+
+<pre class="language-python"><code class="language-python">def cls_predictor(num_inputs, num_anchors, num_classes):
+    return nn.Conv2d(num_inputs, 
+                     num_anchors * (num_classes +
+                     1),kernel_size=3, padding=1)
+</code></pre>
+<h3 id="%E8%BE%B9%E6%A1%86%E9%A2%84%E6%B5%8B%E5%B1%82">边框预测层</h3>
+<p>和上面的比较类似, 但是为每一个锚框预测出四个偏移量</p>
+
+<pre class="language-python"><code class="language-python">def bbox_predictor(num_inputs, num_anchors):
+    return nn.Conv2d(num_inputs, num_anchors * 4, kernel_size=3, padding=1)
+</code></pre>
+<h3 id="%E8%BF%9E%E7%BB%93%E5%A4%9A%E5%B0%BA%E5%BA%A6%E7%9A%84%E9%A2%84%E6%B5%8B">连结多尺度的预测</h3>
+<p>实际的输出大小和每一个图片的锚框数, 批量大小, 类别数, 图片的大小, 有关</p>
+
+<pre class="language-python"><code class="language-python">def forward(x, block):
+    return block(x)
+Y1 = forward(torch.zeros((2, 8, 20, 20)), cls_predictor(8, 5, 10))
+Y2 = forward(torch.zeros((2, 16, 10, 10)), cls_predictor(16, 3, 10))
+Y1.shape, Y2.shape
+&quot;&quot;&quot;
+(torch.Size([2, 55, 20, 20]), torch.Size([2, 33, 10, 10]))
+第二维的大小是输出的(种类+1)*锚框的大小, 后面的是图片的大小
+&quot;&quot;&quot;
+</code></pre>
+<p>到这一步的时候, 由于图片的大小不同的原因, 所以把图片进行展平</p>
+
+<pre class="language-python"><code class="language-python">def flatten_pred(pred):
+    # permute变化把输出的通道数放在最后, 展平以后实际的相同位置的不同通道是在一起的
+    return torch.flatten(pred.permute(0, 2, 3, 1), start_dim=1)
+def concat_preds(preds):
+    # 把第二维拼接起来
+    return torch.cat([flatten_pred(p) for p in preds], dim=1)
+
+</code></pre>
+<h3 id="%E9%AB%98%E5%AE%BD%E5%87%8F%E5%8D%8A%E5%9D%97">高宽减半块</h3>
+<p>每个高和宽减 半块由两个填充为1的3 × 3的卷积层、以及步幅为2的2 × 2最大汇聚层组成。高和宽减半块会扩大每个单元在其输出特征图中的感受野。</p>
+
+<pre class="language-python"><code class="language-python">def down_sample_blk(in_channels, out_channels):
+    blk = []
+    for _ in range(2):
+        blk.append(nn.Conv2d(in_channels, out_channels,
+            kernel_size=3, padding=1))
+        blk.append(nn.BatchNorm2d(out_channels)) // 归一化
+        blk.append(nn.ReLU())
+        in_channels = out_channels
+    blk.append(nn.MaxPool2d(2))
+    return nn.Sequential(*blk)
+</code></pre>
+<h3 id="%E5%9F%BA%E6%9C%AC%E7%BD%91%E7%BB%9C%E5%BF%AB">基本网络快</h3>
+<p>用于从图像里面抽取特征, 该网络串联3个高和 宽减半块，并逐步将通道数翻倍。给定输入图像的形状为256×256，此基本网络块输出的特征图形状为32×32 （256/23 = 32）。</p>
+
+<pre class="language-python"><code class="language-python">def base_net():
+    blk = []
+    num_filters = [3, 16, 32, 64]
+    for i in range(len(num_filters) - 1):
+        blk.append(down_sample_blk(num_filters[i], num_filters[i+1]))
+    return nn.Sequential(*blk)
+
+forward(torch.zeros((2, 3, 256, 256)), base_net()).shape
+</code></pre>
+<h3 id="%E5%AE%8C%E6%95%B4%E7%9A%84%E6%A8%A1%E5%9E%8B">完整的模型</h3>
+<p>完整的单发多框检测模型由五个模块组成。每个块生成的特征图既用于生成锚框，又用于预测这些锚框的类 别和偏移量。在这五个模块中，第一个是基本网络块，第二个到第四个是高和宽减半块，最后一个模块使用 全局最大池将高度和宽度都降到1。</p>
+
+<pre class="language-python"><code class="language-python">def get_blk(i):
+    if i == 0:
+        blk = base_net()
+    elif i == 1:
+        blk = down_sample_blk(64, 128)
+    elif i == 4:
+        blk = nn.AdaptiveMaxPool2d((1,1))
+    else:
+        blk = down_sample_blk(128, 128)
+    return blk
+</code></pre>
+<p>现在我们为每个块定义前向传播。与图像分类任务不同，此处的输出包括：CNN特征图Y；在当前尺度下根 据Y生成的锚框；预测的这些锚框的类别和偏移量（基于Y）。</p>
+
+<pre class="language-python"><code class="language-python">def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
+    Y = blk(X)
+    # 生成多个锚框
+    anchors = d2l.multibox_prior(Y, sizes=size, ratios=ratio)
+    cls_preds = cls_predictor(Y) # 卷积预测每一个框的输出种类
+    bbox_preds = bbox_predictor(Y) # 预测一下偏移
+    return (Y, anchors, cls_preds, bbox_preds)
+
+</code></pre>
+<p>一个较接近顶部的多尺度特征块是用于检测较大目标的，因此需要生成更大的锚框。 在上面的前向传播中，在每个多尺度特征块上，我们通过调用的multibox_prior函数的sizes参 数传递两个比例值的列表。</p>
+<p>在下面，0.2和1.05之间的区间被均匀分成五个部分，以确定五个模块的在不同尺度 下的较小值：0.2、0.37、0.54、0.71和0.88。之后，他们较大的值由√ 0.2 × 0.37 = 0.272、 √ 0.37 × 0.54 = 0.447等 给出。</p>
+
+<pre class="language-python"><code class="language-python">sizes = [[0.2, 0.272], [0.37, 0.447], [0.54, 0.619], [0.71, 0.79],
+[0.88, 0.961]]
+ratios = [[1, 2, 0.5]] * 5
+num_anchors = len(sizes[0]) + len(ratios[0]) - 1
+</code></pre>
+<p>构建模型, 每一层都有一个输出, 最后把输出合并起来</p>
+
+<pre class="language-python"><code class="language-python">class TinySSD(nn.Module):
+    def __init__(self, num_classes, **kwargs):
+        super(TinySSD, self).__init__(**kwargs)
+        self.num_classes = num_classes
+        idx_to_in_channels = [64, 128, 128, 128, 128]
+        for i in range(5):
+            # 即赋值语句self.blk_i=get_blk(i)
+            setattr(self, f'blk_{i}', get_blk(i)) # 五个不同的块
+            setattr(self, f'cls_{i}', cls_predictor(idx_to_in_channels[i],
+                num_anchors, num_classes)) # 预测每一个框的输出种类
+            setattr(self, f'bbox_{i}', bbox_predictor(idx_to_in_channels[i],
+                num_anchors)) # 预测每一个框的输出坐标偏移量
+
+    def forward(self, X):
+        anchors, cls_preds, bbox_preds = [None] * 5, [None] * 5, [None] * 5
+        for i in range(5):
+            # getattr(self,'blk_%d'%i)即访问self.blk_i
+            X, anchors[i], cls_preds[i], bbox_preds[i] = blk_forward(
+                X, getattr(self, f'blk_{i}'), sizes[i], ratios[i],
+                getattr(self, f'cls_{i}'), getattr(self, f'bbox_{i}'))
+        anchors = torch.cat(anchors, dim=1) # 将锚框坐标展平
+        cls_preds = concat_preds(cls_preds) # 边框预测种类
+        cls_preds = cls_preds.reshape(
+            cls_preds.shape[0], -1, self.num_classes + 1) # 把类的每一个预测作为一个维度
+        bbox_preds = concat_preds(bbox_preds) # 边框预测坐标
+        return anchors, cls_preds, bbox_preds
+</code></pre>
+
+<pre class="language-python"><code class="language-python">net = TinySSD(num_classes=1)
+X = torch.zeros((32, 3, 256, 256))
+anchors, cls_preds, bbox_preds = net(X)
+
+print('output anchors:', anchors.shape)
+print('output class preds:', cls_preds.shape)
+print('output bbox preds:', bbox_preds.shape)
+
+&quot;&quot;&quot;
+output anchors: torch.Size([1, 5444, 4])    # 锚框的位置
+output class preds: torch.Size([32, 5444, 2]) # 锚框的种类预测, 32批量大小, 5444锚框数量
+output bbox preds: torch.Size([32, 21776]) # 预测一下偏移
+&quot;&quot;&quot;
+</code></pre>
+<p>加载数据集</p>
+
+<pre class="language-python"><code class="language-python">batch_size = 32
+train_iter, _ = d2l.load_data_bananas(batch_size)
+</code></pre>
+<p>加载模型</p>
+
+<pre class="language-python"><code class="language-python">device, net = d2l.try_gpu(), TinySSD(num_classes=1)
+trainer = torch.optim.SGD(net.parameters(), lr=0.2, weight_decay=5e-4)
+</code></pre>
+<p>损失函数</p>
+
+<pre class="language-python"><code class="language-python">cls_loss = nn.CrossEntropyLoss(reduction='none')
+bbox_loss = nn.L1Loss(reduction='none') # 
+def calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels, bbox_masks):
+    batch_size, num_classes = cls_preds.shape[0], cls_preds.shape[2]
+    # 计算一下分类的偏移
+    cls = cls_loss(cls_preds.reshape(-1, num_classes),
+        cls_labels.reshape(-1)).reshape(batch_size, -1).mean(dim=1)
+    # 计算一下边框位置的偏移, 乘一个mask去除无关的框
+    bbox = bbox_loss(bbox_preds * bbox_masks, bbox_labels * bbox_masks).mean(dim=1)
+    return cls + bbox # 把两个误差加在一起
+def cls_eval(cls_preds, cls_labels):
+    # 由于类别预测结果放在最后一维，argmax需要指定最后一维。
+    # 计算一下算对的个数
+    return float((cls_preds.argmax(dim=-1).type(cls_labels.dtype) == cls_labels).sum())
+def bbox_eval(bbox_preds, bbox_labels, bbox_masks):
+    # 计算一下偏移
+    return float((torch.abs((bbox_labels - bbox_preds) * bbox_masks))
+</code></pre>
+<p>开始训练</p>
+
+<pre class="language-python"><code class="language-python">num_epochs, timer = 20, d2l.Timer()
+animator = d2l.Animator(xlabel='epoch', xlim=[1, num_epochs],
+            legend=['class error', 'bbox mae'])
+net = net.to(device)
+for epoch in range(num_epochs):
+    # 训练精确度的和，训练精确度的和中的示例数
+    # 绝对误差的和，绝对误差的和中的示例数
+    metric = d2l.Accumulator(4)
+    net.train()
+    for features, target in train_iter:
+        timer.start()
+        trainer.zero_grad()
+        X, Y = features.to(device), target.to(device)
+        # 生成多尺度的锚框，为每个锚框预测类别和偏移量
+        anchors, cls_preds, bbox_preds = net(X)
+        # 获取真实的每一个锚框的分类以及偏移
+        bbox_labels, bbox_masks, cls_labels = d2l.multibox_target(anchors, Y)
+        # 根据类别和偏移量的预测和标注值计算损失函数
+        l = calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels,
+            bbox_masks)
+        l.mean().backward()
+        trainer.step()
+        metric.add(cls_eval(cls_preds, cls_labels), cls_labels.numel(),
+            bbox_eval(bbox_preds, bbox_labels, bbox_masks),
+            bbox_labels.numel())
+    cls_err, bbox_mae = 1 - metric[0] / metric[1], metric[2] / metric[3]
+    animator.add(epoch + 1, (cls_err, bbox_mae))
+print(f'class err {cls_err:.2e}, bbox mae {bbox_mae:.2e}')
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501251533557.png" alt="image-20250125153326312" /></p>
+<p>实际预测一下</p>
+
+<pre class="language-python"><code class="language-python">import torchvision
+# 加载一个图片
+X = torchvision.io.read_image('E:/JHY/python/2024-11-3-pytorchLiMu/jupyrt/data/bananas/bananas_val/images/1.png').unsqueeze(0).float()
+img = X.squeeze(0).permute(1, 2, 0).long() # 加一个批量维度
+
+import torch.nn.functional as F
+
+def predict(X):
+    net.eval()
+    anchors, cls_preds, bbox_preds = net(X.to(device))
+    cls_probs = F.softmax(cls_preds, dim=2).permute(0, 2, 1)
+    # 使用真实的锚框以及偏移进行抑制以及获取实际的输出
+    output = multibox_detection(cls_probs, bbox_preds, anchors)
+    idx = [i for i, row in enumerate(output[0]) if row[0] != -1] # 获取有效的类
+    return output[0, idx]
+output = predict(X)
+output
+
+&quot;&quot;&quot;
+tensor([[ 0.00,  0.99,  0.09,  0.31,  0.30,  0.53],
+        [ 0.00,  0.04, -0.18,  0.18,  1.13,  0.81],
+        [ 0.00,  0.04,  0.12, -0.05,  0.98,  0.96],
+        [ 0.00,  0.03,  0.10,  0.37,  0.26,  0.58],
+        [ 0.00,  0.03, -0.22,  0.52,  0.44,  1.18],
+        [ 0.00,  0.03,  0.08,  0.24,  0.28,  0.45],
+        [ 0.00,  0.02,  0.62,  0.32,  1.14,  1.31],
+        [ 0.00,  0.02,  0.63, -0.32,  1.14,  0.64],
+        [ 0.00,  0.01, -0.11, -0.36,  0.26,  0.45],
+        [ 0.00,  0.01,  0.37,  0.61,  1.36,  1.13],
+        [ 0.00,  0.01,  0.37, -0.17,  1.32,  0.34],
+        [ 0.00,  0.01,  0.03,  0.33,  0.21,  0.52],
+        [ 0.00,  0.01,  0.09,  0.19,  0.30,  0.37]], device='cuda:0',
+       grad_fn=&lt;IndexBackward0&gt;)
+&quot;&quot;&quot;
+def display(img, output, threshold):
+    d2l.set_figsize((5, 5))
+    fig = d2l.plt.imshow(img)
+    for row in output:
+        score = float(row[1])
+        if score &lt; threshold:
+            continue
+        h, w = img.shape[0:2]
+        bbox = [row[2:6] * torch.tensor((w, h, w, h), device=row.device)]
+        d2l.show_bboxes(fig.axes, bbox, '%.2f' % score, 'w')
+display(img, output.cpu(), threshold=0.9)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/picture/202501251537278.png" alt="image-20250125153705020" /></p>
+<h2 id="YOLO">YOLO</h2>
+<p>SSD框里面锚框大量的重叠, 浪费很多的计算, YOLO把图片均匀的分割为SxS个锚框, 每个锚框预测B个边缘框(有B个物体和这一个边缘框比较相近)</p>
+<p>所有的锚框之间不会重合</p>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-1-19-25目标检测</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html">
+                            <span class="label">2025-2-1-27语义分割</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>RKLLM - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="active_parent no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李沐课程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">视觉识别</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>RKLLM</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/rv模型部署/2025-12-3-04-RKLLM.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <blockquote>
+<p>相关文档rknn-llm/doc/Rockchip_RKLLM_SDK_CN_1.2.0.pdf</p>
+</blockquote>
+<p>通过该工具提供的Python接口可以便捷地完成以下功能：</p>
+<p>1）模型转换：支持将Hugging Face 和 GGUF 格式的大语言模型（Large Language Model, LLM）转换为 RKLLM 模型</p>
+<ul>
+<li>目前支持的模型包括</li>
+</ul>
+<p>LLaMA, Qwen, Qwen2, Phi-2, Phi-3, ChatGLM3, Gemma, Gemma2, Gemma3, InternLM2, TeleChat2, MiniCPM-S, MiniCPM 和 MiniCPM3</p>
+<p>转换后的RKLLM模型能够在RockchipNPU平台上加载使用。</p>
+<p>2）量化功能：支持将浮点模型量化为定点模型，目前支持的量化类型包括</p>
+<p>a. w4a16； b. w4a16分组量化(支持的分组数为32,64,128)； c. w8a8； d. w8a8分组量化(支持的分组数为128,256,512)；</p>
+<h2 id="%E5%9F%BA%E7%A1%80%E6%AD%A5%E9%AA%A4">基础步骤</h2>
+<h3 id="%E6%A8%A1%E5%9E%8B%E8%BD%AC%E6%8D%A2">模型转换</h3>
+<p>用户提供的HuggingFace格式的大语言模型将会被转换为RKLLM格式， 以便在RockchipNPU平台上进行高效的推理</p>
+<ul>
+<li>获取原始模型：1、开源的HuggingFace格式的大语言模型；2、自行训练得到的大语 言模型，要求模型保存的结构与HuggingFace平台上的模型结构一致；3、GGUF模型，目 前仅支持q4_0和fp16类型模型</li>
+<li>模型加载：通过rkllm.load_huggingface()函数加载 huggingface 格式模型，通过 rkllm.load_gguf()函数加载 GGUF 模型</li>
+<li>模型量化配置：通过 rkllm.build() 函数构建RKLLM模型，在构建过程中可选择是否 进行模型量化来提高模型部署在硬件上的性能，以及选择不同的优化等级和量化类型</li>
+<li>模型导出：通过 rkllm.export_rkllm() 函数将 RKLLM模型导出为一个.rkllm格式文件， 用于后续的部署</li>
+</ul>
+<h3 id="%E6%9D%BF%E5%AD%90%E9%83%A8%E7%BD%B2">板子部署</h3>
+<ul>
+<li>模型初始化：加载RKLLM模型到RockchipNPU平台，进行相应的模型参数设置来 定义所需的文本生成方式，并提前定义用于接受实时推理结果的回调函数，进行推理前准备</li>
+<li>模型推理：执行推理操作，将输入数据传递给模型并运行模型推理，用户可以通过预 先定义的回调函数不断获取推理结果</li>
+<li>模型释放：在完成推理流程后，释放模型资源，以便其他任务继续使用NPU的计算资源</li>
+</ul>
+<p>1） 定义回调函数callback()；</p>
+<p>2） 定义RKLLM模型参数结构体RKLLMParam；</p>
+<p>3） rkllm_init()初始化 RKLLM 模型；</p>
+<p>4） rkllm_run()进行模型推理；</p>
+<p>5） 通过回调函数callback()对模型实时传回的推理结果进行处理；</p>
+<p>6） rkllm_destroy()销毁 RKLLM 模型并释放资源；</p>
+<h2 id="%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96">模型量化</h2>
+<p><strong>模型量化</strong>是一种模型压缩技术，其核心思想是<strong>用更低精度的数值格式（例如8位整数）来表示和计算一个深度学习模型中原本使用高精度数值格式（例如32位浮点数）的权重和激活值</strong>。</p>
+<p>您可以把它想象成：</p>
+<ul>
+<li><strong>原始模型（FP32）</strong>：像用高保真无损音频文件（如FLAC/WAV）存储音乐，精度高、保真度好，但文件体积巨大。</li>
+<li><strong>量化后模型（INT8）</strong>：像把音乐转换成MP3格式。虽然损失了一点点音质细节，但文件体积大幅减小，播放更流畅，对设备要求也更低。在绝大多数情况下，这点音质损失是听不出来的。</li>
+</ul>
+<hr />
+<h3 id="%3Cstrong%3E%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96%EF%BC%9F%EF%BC%88%E5%8A%A8%E6%9C%BA%E4%B8%8E%E5%A5%BD%E5%A4%84%EF%BC%89%3C/strong%3E"><strong>为什么要进行模型量化？（动机与好处）</strong></h3>
+<p>量化主要为了解决深度学习模型部署时的三大瓶颈：</p>
+<ol>
+<li><strong>减少模型体积</strong><ul>
+<li>将权重从32位浮点（FP32）转换为8位整数（INT8），模型大小理论上直接减少为原来的 <strong>1/4</strong>。这对于将模型部署到存储空间有限的移动设备、嵌入式系统（如手机、智能摄像头、自动驾驶汽车）至关重要。</li>
+</ul>
+</li>
+<li><strong>提升推理速度</strong><ul>
+<li>整数运算比浮点运算快得多，尤其是在没有专用浮点计算单元（如一些边缘计算芯片）的硬件上。</li>
+<li>更低精度的数据意味着在相同内存带宽下可以传输更多数据，减少了数据搬运的瓶颈。</li>
+<li>许多硬件（如CPU、GPU、NPU）都针对低精度整数运算进行了特殊优化，能大幅提升计算吞吐量。</li>
+</ul>
+</li>
+<li><strong>降低功耗</strong><ul>
+<li>更简单的整数运算单元比复杂的浮点运算单元消耗的能量更少。这对于依赖电池的移动设备和物联网设备来说，能显著延长续航时间。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="%3Cstrong%3E%E4%B8%BB%E8%A6%81%E7%9A%84%E9%87%8F%E5%8C%96%E6%96%B9%E6%B3%95%3C/strong%3E"><strong>主要的量化方法</strong></h3>
+<p>根据量化发生的时机和是否需要原始训练数据，可以分为以下几类：</p>
+<ol>
+<li><strong>训练后量化</strong><ul>
+<li><strong>做法</strong>：在一个<strong>已经训练好的FP32模型</strong>上直接进行量化。</li>
+<li><strong>优点</strong>：简单快捷，不需要重新训练或原始数据（部分方法需要少量校准数据）。</li>
+<li><strong>缺点</strong>：精度损失可能相对较大，尤其是对敏感的模型。</li>
+<li><strong>最常见、应用最广</strong>的类型。</li>
+</ul>
+</li>
+<li><strong>量化感知训练</strong><ul>
+<li><strong>做法</strong>：在<strong>模型训练过程中</strong>就模拟量化的效果，让模型在训练时“提前适应”低精度的表示。</li>
+<li><strong>优点</strong>：能最大程度地保持量化后的模型精度，通常能达到接近原始FP32模型的准确率。</li>
+<li><strong>缺点</strong>：过程复杂，需要重新训练或微调模型，计算成本高。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="%3Cstrong%3E%E9%87%8F%E5%8C%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%87%E7%A8%8B%EF%BC%88%E4%BB%A5%E8%AE%AD%E7%BB%83%E5%90%8EINT8%E9%87%8F%E5%8C%96%E4%B8%BA%E4%BE%8B%EF%BC%89%3C/strong%3E"><strong>量化的基本过程（以训练后INT8量化为例）</strong></h3>
+<p>量化的关键步骤是找到一个<strong>缩放因子</strong>和一个<strong>零点</strong>，将浮点数范围线性映射到整数范围。</p>
+<p><strong>公式简化表示：</strong><br />
+<code>量化值 = round(浮点值 / 缩放因子) + 零点</code></p>
+<p><strong>步骤：</strong></p>
+<ol>
+<li><strong>统计范围</strong>：分析模型权重或激活值的分布范围（最大值、最小值）。</li>
+<li><strong>计算参数</strong>：根据统计的范围，确定最佳的<code>缩放因子</code>和<code>零点</code>，使得浮点数范围能尽可能无损地映射到有限的整数域（如-128到127）。</li>
+<li><strong>转换与存储</strong>：使用上述公式将所有浮点权重转换为整数，并存储在模型中。</li>
+<li><strong>推理计算</strong>：在设备上进行推理时，使用高效的整数矩阵乘加运算。输入数据也需要被量化为整数，输出结果再通过反量化转换回浮点数以供后续层使用或最终输出。</li>
+</ol>
+<hr />
+<h3 id="%3Cstrong%3E%E6%8C%91%E6%88%98%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%3C/strong%3E"><strong>挑战与注意事项</strong></h3>
+<ul>
+<li><strong>精度损失</strong>：最核心的挑战。过度压缩可能导致模型准确度显著下降。</li>
+<li><strong>模型敏感性</strong>：不同模型、不同层对量化的容忍度不同。例如，轻量级模型可能比大型模型更敏感。</li>
+<li><strong>硬件支持</strong>：需要目标部署硬件（如手机芯片、AI加速卡）支持相应的低精度指令集，才能发挥量化优势。</li>
+</ul>
+<h3 id="%3Cstrong%3E%E6%80%BB%E7%BB%93%3C/strong%3E"><strong>总结</strong></h3>
+<p>模型量化是<strong>将深度学习模型从“实验室环境”推向“实际生产部署”的关键桥梁</strong>。它通过牺牲微不足道的精度，换来了<strong>模型体积、推理速度和功耗</strong>的显著优化，使得在资源受限的边缘设备上运行强大的AI模型成为可能。如今，它已成为AI模型部署中一项标准且必不可少的技术。</p>
+<h2 id="%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96">模型量化</h2>
+
+<pre class="language-python"><code class="language-python">from rkllm.api import RKLLM
+import os
+#os.environ['CUDA_VISIBLE_DEVICES']='0'
+
+modelpath = './huggingface/deepseek-r1-1.5b'
+llm = RKLLM()
+
+# Load model
+# Use 'export CUDA_VISIBLE_DEVICES=0' to specify GPU device
+# options ['cpu', 'cuda']
+ret = llm.load_huggingface(model=modelpath, model_lora = None, device='cpu')
+if ret != 0:
+    print('Load model failed!')
+    exit(ret)
+
+# Build model
+dataset = &quot;./data_quant.json&quot;
+qparams = None
+# do_quantization: 量化精度优化, quantized_algorithm使用的量化优化算法
+# 权重(weights)和激活(activations)都量化为8位整数 → 最高压缩率，速度最快
+# optimization_level=1: 优化等级, 
+# 0: 基本优化，只做必要转换, 1: 中等优化（常用），包括图优化、算子融合等
+# 2: 高级优化，更激进的优化策略 3: 极致优化（可能影响精度）
+# 量化校准算法
+# 'normal': 标准线性量化（最常用）'minmax': 基于最小-最大值的量化
+# 'kl_divergence': 基于KL散度的量化（精度更高）'percentile': 基于百分位的量化（抗异常值）
+ret = llm.build(do_quantization=True, optimization_level=1, quantized_dtype='w8a8',
+                quantized_algorithm='normal', target_platform='rk3588', num_npu_core=3, extra_qparams=qparams,dataset=dataset)
+if ret != 0:
+    print('Build model failed!')
+    exit(ret)
+
+
+# Export rkllm model
+ret = llm.export_rkllm(f&quot;./deepseek-1.5b-w8a8-rk3588.rkllm&quot;)
+if ret != 0:
+    print('Export model failed!')
+    exit(ret)
+</code></pre>
+<h3 id="%E9%87%8F%E5%8C%96%E7%AE%97%E6%B3%95">量化算法</h3>
+<ol>
+<li>量化算法的核心作用</li>
+</ol>
+<p>量化算法的核心任务是<strong>解决&quot;如何将连续的浮点数映射到离散的整数&quot;</strong>这一数学问题，主要解决：</p>
+<ul>
+<li><strong>动态范围匹配</strong>：将权重/激活值的浮点分布（如[-3.2, 4.8]）映射到有限的整数范围（如[-128, 127]）</li>
+<li><strong>精度损失最小化</strong>：找到最优的映射函数，使量化后的信息损失最小</li>
+<li><strong>异常值处理</strong>：处理极端大/小的值，防止它们影响整体量化效果</li>
+</ul>
+<ol start="2">
+<li>不同量化算法的详细区别</li>
+</ol>
+<p>a) <code>'normal'</code> - 标准线性量化（最常用）</p>
+
+<pre class="language-none"><code class="language-none"># 基本原理：基于均值和标准差的线性映射
+scale = (max_value - min_value) / (quant_max - quant_min)
+zero_point = -min_value / scale
+
+# 适用场景：
+# - 数据分布相对均匀
+# - 激活值无明显异常值
+# - 大多数CNN、Transformer基础层
+# 优点：计算简单，速度快
+# 缺点：对异常值敏感
+</code></pre>
+<h4 id="b%29-%3Ccode%3E%27minmax%27%3C/code%3E---%E6%9C%80%E5%B0%8F-%E6%9C%80%E5%A4%A7%E5%80%BC%E9%87%8F%E5%8C%96">b) <code>'minmax'</code> - 最小-最大值量化</h4>
+
+<pre class="language-none"><code class="language-none"># 基本原理：直接使用原始数据的绝对最大/最小值
+min_val = min(原始数据)
+max_val = max(原始数据)
+# 然后线性映射
+
+# 适用场景：
+# - 数据范围明确且有限
+# - 需要完全保留原始范围
+# - 图像处理（像素值范围固定）
+# 优点：覆盖全部数据范围
+# 缺点：一个异常值就能毁掉整个量化（如max=1000，正常值都在[-1,1]）
+</code></pre>
+<p>c) <code>'kl_divergence'</code> - KL散度量化(精度最高)</p>
+
+<pre class="language-none"><code class="language-none"># 基本原理：最小化原始分布与量化分布的KL散度
+# 1. 将原始数据分成多个bins（直方图）
+# 2. 搜索最优的截断阈值，使量化后的分布与原始分布差异最小
+# 3. 使用截断后的范围进行线性量化
+
+# 适用场景：
+# - 对精度要求极高的应用
+# - 数据分布不均匀或有长尾分布
+# - LLM中的注意力机制、GeLU激活层
+# 优点：精度损失最小，能智能处理长尾分布
+# 缺点：计算复杂，需要更多校准数据和时间
+</code></pre>
+<p>d) <code>'percentile'</code> - 百分位量化</p>
+
+<pre class="language-none"><code class="language-none"># 基本原理：使用百分位数（如99.9%）而非绝对极值
+min_val = np.percentile(数据, 0.1)  # 忽略最小的0.1%
+max_val = np.percentile(数据, 99.9) # 忽略最大的0.1%
+
+# 适用场景：
+# - 数据包含少量异常值
+# - 需要鲁棒性强的量化
+# - 实时推理系统
+# 优点：抗异常值干扰，稳定性好
+# 缺点：可能丢失极端但重要的信息
+</code></pre>
+<ol start="3">
+<li>算法选择建议</li>
+</ol>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">算法</th>
+  <th style="text-align:left">精度</th>
+  <th style="text-align:left">速度</th>
+  <th style="text-align:left">内存</th>
+  <th style="text-align:left">推荐场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><code>normal</code></td>
+  <td style="text-align:left">中等</td>
+  <td style="text-align:left">最快</td>
+  <td style="text-align:left">低</td>
+  <td style="text-align:left">一般应用，快速部署</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>minmax</code></td>
+  <td style="text-align:left">低-中等</td>
+  <td style="text-align:left">快</td>
+  <td style="text-align:left">低</td>
+  <td style="text-align:left">数据范围明确的简单模型</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>kl_divergence</code></td>
+  <td style="text-align:left"><strong>最高</strong></td>
+  <td style="text-align:left">慢</td>
+  <td style="text-align:left">高</td>
+  <td style="text-align:left">对话模型、高精度要求</td>
+</tr>
+<tr>
+  <td style="text-align:left"><code>percentile</code></td>
+  <td style="text-align:left">高</td>
+  <td style="text-align:left">中等</td>
+  <td style="text-align:left">中等</td>
+  <td style="text-align:left">工业部署，鲁棒性要求高</td>
+</tr>
+</tbody>
+</table>
+<p>实际经验：</p>
+<ul>
+<li>对于LLM：通常使用<code>kl_divergence</code> + <code>percentile</code>组合</li>
+<li>对于CNN视觉模型：<code>normal</code>或<code>percentile</code>足够</li>
+<li>移动端部署：<code>percentile</code>（平衡精度和稳定性）</li>
+</ul>
+<h2 id="%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2">模型部署</h2>
+<p>模型的运行需要使用两个库, 分别是<code>libgomp</code>以及<code>librkllm_api</code></p>
+<h3 id="C%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8">C语言调用</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string&gt;
+#include &quot;rkllm.h&quot;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;csignal&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+LLMHandle llmHandle = nullptr;
+
+#define PROMPT_TEXT_PREFIX &quot;&lt;｜begin▁of▁sentence｜&gt;&lt;｜User｜&gt;&quot;
+#define PROMPT_TEXT_POSTFIX &quot;&lt;｜Assistant｜&gt;&quot;
+
+void exit_handler(int signal)
+{
+    if (llmHandle != nullptr)
+    {
+        {
+            cout &lt;&lt; &quot;程序即将退出&quot; &lt;&lt; endl;
+            LLMHandle _tmp = llmHandle;
+            llmHandle = nullptr;
+            rkllm_destroy(_tmp);
+        }
+    }
+    exit(signal);
+}
+/*
+LLM_RUN_NORMAL：表示RKLLM模型当前正在推理中；
+LLM_RUN_FINISH：表示RKLLM模型已完成当前输入的全部推理；
+LLM_RUN_WAITING：表示当前RKLLM解码出的字符不是完整UTF8编码，需等待与下一次解码拼接；
+LLM_RUN_ERROR：表示RKLLM模型推理出现错误；
+*/
+void callback(RKLLMResult *result, void *userdata, LLMCallState state)
+{
+    if (state == RKLLM_RUN_FINISH)
+    {
+        printf(&quot;\n&quot;);
+    } else if (state == RKLLM_RUN_ERROR) {
+        printf(&quot;\\run error\n&quot;);
+    } else if (state == RKLLM_RUN_GET_LAST_HIDDEN_LAYER) {
+        /* ================================================================================================================
+        若使用GET_LAST_HIDDEN_LAYER功能,callback接口会回传内存指针:last_hidden_layer,token数量:num_tokens与隐藏层大小:embd_size
+        通过这三个参数可以取得last_hidden_layer中的数据
+        注:需要在当前callback中获取,若未及时获取,下一次callback会将该指针释放
+        ===============================================================================================================*/
+        if (result-&gt;last_hidden_layer.embd_size != 0 &amp;&amp; result-&gt;last_hidden_layer.num_tokens != 0) {
+            int data_size = result-&gt;last_hidden_layer.embd_size * result-&gt;last_hidden_layer.num_tokens * sizeof(float);
+            printf(&quot;\ndata_size:%d&quot;,data_size);
+            std::ofstream outFile(&quot;last_hidden_layer.bin&quot;, std::ios::binary);
+            if (outFile.is_open()) {
+                outFile.write(reinterpret_cast&lt;const char*&gt;(result-&gt;last_hidden_layer.hidden_states), data_size);
+                outFile.close();
+                std::cout &lt;&lt; &quot;Data saved to output.bin successfully!&quot; &lt;&lt; std::endl;
+            } else {
+                std::cerr &lt;&lt; &quot;Failed to open the file for writing!&quot; &lt;&lt; std::endl;
+            }
+        }
+    } else if (state == RKLLM_RUN_NORMAL) {
+        printf(&quot;%s&quot;, result-&gt;text);
+    }
+}
+
+int main(int argc, char **argv)
+{
+    if (argc &lt; 4) {
+        std::cerr &lt;&lt; &quot;Usage: &quot; &lt;&lt; argv[0] &lt;&lt; &quot; model_path max_new_tokens max_context_len\n&quot;;
+        return 1;
+    }
+
+    signal(SIGINT, exit_handler);
+    printf(&quot;rkllm init start\n&quot;);
+
+    //设置参数及初始化
+    RKLLMParam param = rkllm_createDefaultParam();
+    param.model_path = argv[1];
+
+    //设置采样参数
+    param.top_k = 1;
+    param.top_p = 0.95;
+    param.temperature = 0.8;
+    param.repeat_penalty = 1.1;
+    param.frequency_penalty = 0.0;
+    param.presence_penalty = 0.0;
+
+    param.max_new_tokens = std::atoi(argv[2]);
+    param.max_context_len = std::atoi(argv[3]);
+    param.skip_special_token = true;
+    param.extend_param.base_domain_id = 0;
+
+    int ret = rkllm_init(&amp;llmHandle, &amp;param, callback);
+    if (ret == 0){
+        printf(&quot;rkllm init success\n&quot;);
+    } else {
+        printf(&quot;rkllm init failed\n&quot;);
+        exit_handler(-1);
+    }
+
+    vector&lt;string&gt; pre_input;
+    pre_input.push_back(&quot;现有一笼子，里面有鸡和兔子若干只，数一数，共有头14个，腿38条，求鸡和兔子各有多少只？&quot;);
+    pre_input.push_back(&quot;有28位小朋友排成一行,从左边开始数第10位是学豆,从右边开始数他是第几位?&quot;);
+    cout &lt;&lt; &quot;\n**********************可输入以下问题对应序号获取回答/或自定义输入********************\n&quot;
+         &lt;&lt; endl;
+    for (int i = 0; i &lt; (int)pre_input.size(); i++)
+    {
+        cout &lt;&lt; &quot;[&quot; &lt;&lt; i &lt;&lt; &quot;] &quot; &lt;&lt; pre_input[i] &lt;&lt; endl;
+    }
+    cout &lt;&lt; &quot;\n*************************************************************************\n&quot;
+         &lt;&lt; endl;
+
+    string text;
+    RKLLMInput rkllm_input;
+
+    // 初始化 infer 参数结构体
+    RKLLMInferParam rkllm_infer_params;
+    memset(&amp;rkllm_infer_params, 0, sizeof(RKLLMInferParam));  // 将所有内容初始化为 0
+    rkllm_infer_params.mode = RKLLM_INFER_GENERATE;
+
+    while (true)
+    {
+        std::string input_str;
+        printf(&quot;\n&quot;);
+        printf(&quot;user: &quot;);
+        std::getline(std::cin, input_str);
+        if (input_str == &quot;exit&quot;)
+        {
+            break;
+        }
+        for (int i = 0; i &lt; (int)pre_input.size(); i++)
+        {
+            if (input_str == to_string(i))
+            {
+                input_str = pre_input[i];
+                cout &lt;&lt; input_str &lt;&lt; endl;
+            }
+        }
+        text = PROMPT_TEXT_PREFIX + input_str + PROMPT_TEXT_POSTFIX;
+        // text = input_str;
+        rkllm_input.input_type = RKLLM_INPUT_PROMPT;
+        rkllm_input.prompt_input = (char *)text.c_str();
+        printf(&quot;robot: &quot;);
+
+        // 若要使用普通推理功能,则配置rkllm_infer_mode为RKLLM_INFER_GENERATE或不配置参数
+        rkllm_run(llmHandle, &amp;rkllm_input, &amp;rkllm_infer_params, NULL);
+    }
+    rkllm_destroy(llmHandle);
+
+    return 0;
+}
+</code></pre>
+
+<pre class="language-cmake"><code class="language-cmake">cmake_minimum_required(VERSION 3.8)
+project(atk_deepseek_rkllm_demo)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(TOOLCHAIN_DIR /home/jiao/yh-linux/rk3588/prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu)
+set(CMAKE_CXX_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-rockchip1031-linux-gnu-g++)
+set(CMAKE_C_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-rockchip1031-linux-gnu-gcc)
+
+include_directories(${CMAKE_SOURCE_DIR}/lib/librkllm_api/include/)
+set(RKLLM_RT_LIB ${CMAKE_SOURCE_DIR}/lib/librkllm_api/librkllmrt.so)
+set(GOMP_LIB ${CMAKE_SOURCE_DIR}/lib/libgomp/libgomp.so)
+
+add_executable(atk_deepseek_demo main.cc)
+target_link_libraries(atk_deepseek_demo ${RKLLM_RT_LIB} ${GOMP_LIB})
+
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install/atk_deepseek_rkllm_demo)
+install(TARGETS atk_deepseek_demo DESTINATION ./)
+install(DIRECTORY rkllm_model DESTINATION ./)
+</code></pre>
+
+<pre class="language-bash"><code class="language-bash">set -e
+
+ROOT_PWD=$( cd &quot;$( dirname $0 )&quot; &amp;&amp; cd -P &quot;$( dirname &quot;$SOURCE&quot; )&quot; &amp;&amp; pwd )
+BUILD_DIR=${ROOT_PWD}/build/build_linux_aarch64
+
+if [[ ! -d &quot;${BUILD_DIR}&quot; ]]; then
+  mkdir -p ${BUILD_DIR}
+fi
+
+cd ${BUILD_DIR}
+cmake ../..
+make -j4
+make install
+cd -
+</code></pre>
+<p>运行以后的结果放在<code>./install/atk_deepseek_rkllm_demo</code>文件夹里面, 把这个文件复制到开发板</p>
+<p>实际运行的命令</p>
+
+<pre class="language-bash"><code class="language-bash"> ./atk_deepseek_demo rkllm_model/deepseek-1.5b-w8a8-rk3588.rkllm 5000 5000
+</code></pre>
+<blockquote>
+<p>两个数字指的是, 实际的使用可以在的RKLLM的开源项目手册里面看到, 这里是设置生成token的上限以及推理的token上限</p>
+</blockquote>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-12-3-03-RKNN_Toolkit2</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html">
+                            <span class="label">2026-2-2-05-RKNN开发</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

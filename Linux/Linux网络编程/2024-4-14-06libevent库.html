@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>libevent库 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["Linux 网络"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class="active"><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/Linux/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">Linux命令行与shell脚本编程大全</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-初认识Linux_shell.html"><span class="label">2022-8-1-初认识Linux_shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-基本bashshell命令.html"><span class="label">2022-8-1-基本bashshell命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-走进shell.html"><span class="label">2022-8-1-走进shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-10-sed进阶.html"><span class="label">2022-8-10-sed进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-gawk进阶.html"><span class="label">2022-8-11-gawk进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-使用其他shell.html"><span class="label">2022-8-11-使用其他shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-实例.html"><span class="label">2022-8-11-实例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-12-邮件相关.html"><span class="label">2022-8-12-邮件相关</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-2-更多命令.html"><span class="label">2022-8-2-更多命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-2-理解shell.html"><span class="label">2022-8-2-理解shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-3-使用Linux环境变量.html"><span class="label">2022-8-3-使用Linux环境变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-3-理解Linux的文件权限.html"><span class="label">2022-8-3-理解Linux的文件权限</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-4-安装软件程序.html"><span class="label">2022-8-4-安装软件程序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-4-管理文件系统.html"><span class="label">2022-8-4-管理文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-5-使用编辑器.html"><span class="label">2022-8-5-使用编辑器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-5-构建基本脚本.html"><span class="label">2022-8-5-构建基本脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-使用结构初始化.html"><span class="label">2022-8-6-使用结构初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-处理用户输入.html"><span class="label">2022-8-6-处理用户输入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-更多结构化命令.html"><span class="label">2022-8-6-更多结构化命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-7-呈现数据.html"><span class="label">2022-8-7-呈现数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-7-控制脚本.html"><span class="label">2022-8-7-控制脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-8-创建函数.html"><span class="label">2022-8-8-创建函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-图形化桌面环境中的脚本编程.html"><span class="label">2022-8-9-图形化桌面环境中的脚本编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-正则表达式.html"><span class="label">2022-8-9-正则表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-认识sed和gawk.html"><span class="label">2022-8-9-认识sed和gawk</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux就该这么学</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/2022-8-23-.html"><span class="label">2022-8-23-</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">鸟哥的linux私房菜</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-10-计算机概论.html"><span class="label">2022-9-10-计算机概论</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-主机规划与磁盘分区.html"><span class="label">2022-9-20-主机规划与磁盘分区</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-安装CentOS.html"><span class="label">2022-9-20-安装CentOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-首次登录.html"><span class="label">2022-9-20-首次登录</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-25-文件权限以及目录.html"><span class="label">2022-9-25-文件权限以及目录</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux源码趣读</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux源码趣读/2024-1-26-01最开始的代码.html"><span class="label">2024-1-26-01最开始的代码</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux系统编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-2-14-01文件IO.html"><span class="label">2024-2-14-01文件IO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-19-02文件系统.html"><span class="label">2024-3-19-02文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-21-03程序和进程.html"><span class="label">2024-3-21-03程序和进程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-23-04进程间通信.html"><span class="label">2024-3-23-04进程间通信</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-25-05信号.html"><span class="label">2024-3-25-05信号</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-28-06守护进程、线程.html"><span class="label">2024-3-28-06守护进程、线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-31-07线程同步.html"><span class="label">2024-3-31-07线程同步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">Linux网络编程</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-10-04线程池.html"><span class="label">2024-4-10-04线程池</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-13-05本地套接字.html"><span class="label">2024-4-13-05本地套接字</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/Linux/Linux网络编程/2024-4-14-06libevent库.html"><span class="label">2024-4-14-06libevent库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-16-07简单的Web服务器.html"><span class="label">2024-4-16-07简单的Web服务器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-16-08html入门.html"><span class="label">2024-4-16-08html入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-17-09CSS.html"><span class="label">2024-4-17-09CSS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-17-09HTTP协议.html"><span class="label">2024-4-17-09HTTP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-2-01网络基础.html"><span class="label">2024-4-2-01网络基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-20-10telnet调试.html"><span class="label">2024-4-20-10telnet调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-20-11服务器.html"><span class="label">2024-4-20-11服务器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-3-02Socket编程.html"><span class="label">2024-4-3-02Socket编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-6-03高并发服务器.html"><span class="label">2024-4-6-03高并发服务器</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">原子Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-10-Linux常用命令.html"><span class="label">2022-8-10-Linux常用命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-压缩解压缩.html"><span class="label">2022-8-11-压缩解压缩</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-文件系统结构.html"><span class="label">2022-8-11-文件系统结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-磁盘管理.html"><span class="label">2022-8-11-磁盘管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-LinuxC.html"><span class="label">2022-8-12-LinuxC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-Makefile书.html"><span class="label">2022-8-12-Makefile书</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-make和Makefile.html"><span class="label">2022-8-12-make和Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-开发环境搭建.html"><span class="label">2022-8-12-开发环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-用户和用户组.html"><span class="label">2022-8-12-用户和用户组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-链接文件.html"><span class="label">2022-8-12-链接文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-IMX启动方式.html"><span class="label">2022-8-13-IMX启动方式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-vscode.html"><span class="label">2022-8-13-vscode</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-开发板简介.html"><span class="label">2022-8-13-开发板简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-汇编LED驱动.html"><span class="label">2022-8-13-汇编LED驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-C语言点灯.html"><span class="label">2022-8-14-C语言点灯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-按键检测.html"><span class="label">2022-8-14-按键检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-模仿stm32编程.html"><span class="label">2022-8-14-模仿stm32编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-15-中断.html"><span class="label">2022-8-15-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-15-主频时钟配置.html"><span class="label">2022-8-15-主频时钟配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-16-EPIT定时器.html"><span class="label">2022-8-16-EPIT定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-16-GPT时钟.html"><span class="label">2022-8-16-GPT时钟</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-DDR3.html"><span class="label">2022-8-17-DDR3</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-RGBLED.html"><span class="label">2022-8-17-RGBLED</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-串口.html"><span class="label">2022-8-17-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-18-I2C.html"><span class="label">2022-8-18-I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-18-RTC.html"><span class="label">2022-8-18-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-PWM.html"><span class="label">2022-8-19-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-SPI.html"><span class="label">2022-8-19-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-多点电容触摸屏.html"><span class="label">2022-8-19-多点电容触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-20-uBoot.html"><span class="label">2022-8-20-uBoot</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-20-系统烧写.html"><span class="label">2022-8-20-系统烧写</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-22-源码目录分析.html"><span class="label">2022-8-22-源码目录分析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-22-顶层Makefile.html"><span class="label">2022-8-22-顶层Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-Linux内核.html"><span class="label">2022-8-23-Linux内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-uboot图形化配置界面.html"><span class="label">2022-8-23-uboot图形化配置界面</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-启动流程.html"><span class="label">2022-8-23-启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-移植.html"><span class="label">2022-8-23-移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-24-驱动开发.html"><span class="label">2022-8-24-驱动开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-26-linux点灯.html"><span class="label">2022-8-26-linux点灯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-27-设备树.html"><span class="label">2022-8-27-设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-28-led设备树.html"><span class="label">2022-8-28-led设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-29-Linux的并发与竞争.html"><span class="label">2022-8-29-Linux的并发与竞争</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-29-pinclt和gpio.html"><span class="label">2022-8-29-pinclt和gpio</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-30-Linux中断.html"><span class="label">2022-8-30-Linux中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-30-Linux内核定时器.html"><span class="label">2022-8-30-Linux内核定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-31-异步通知.html"><span class="label">2022-8-31-异步通知</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-31-阻塞非阻塞.html"><span class="label">2022-8-31-阻塞非阻塞</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-1-platform设备驱动.html"><span class="label">2022-9-1-platform设备驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-10-WIFI.html"><span class="label">2022-9-10-WIFI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-10-网络驱动.html"><span class="label">2022-9-10-网络驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-4G.html"><span class="label">2022-9-11-4G</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-IIO.html"><span class="label">2022-9-11-IIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-PWM.html"><span class="label">2022-9-11-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-RGBtoHDMI.html"><span class="label">2022-9-11-RGBtoHDMI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-Regmap.html"><span class="label">2022-9-11-Regmap</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-INPUT子系统.html"><span class="label">2022-9-2-INPUT子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-LCD屏幕.html"><span class="label">2022-9-2-LCD屏幕</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-Linux自带的led.html"><span class="label">2022-9-2-Linux自带的led</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-MISC.html"><span class="label">2022-9-2-MISC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-I2C.html"><span class="label">2022-9-3-I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-RTC.html"><span class="label">2022-9-3-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-SPI.html"><span class="label">2022-9-3-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-4-串口.html"><span class="label">2022-9-4-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-5-触摸屏.html"><span class="label">2022-9-5-触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-5-音频驱动.html"><span class="label">2022-9-5-音频驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-6-CAN协议.html"><span class="label">2022-9-6-CAN协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-7-USB.html"><span class="label">2022-9-7-USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-7-块设备驱动.html"><span class="label">2022-9-7-块设备驱动</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">操作系统原理</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-1操作系统.html"><span class="label">2023-6-17-1操作系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-2操作系统目标和作用.html"><span class="label">2023-6-17-2操作系统目标和作用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-3操作系统特征.html"><span class="label">2023-6-17-3操作系统特征</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-4操作系统的发展.html"><span class="label">2023-6-17-4操作系统的发展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-5运行机制.html"><span class="label">2023-6-17-5运行机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-18-6中断异常.html"><span class="label">2023-6-18-6中断异常</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-18-7系统调用.html"><span class="label">2023-6-18-7系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-19-8体系结构.html"><span class="label">2023-6-19-8体系结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-10虚拟机.html"><span class="label">2023-6-20-10虚拟机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-11进程.html"><span class="label">2023-6-20-11进程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-9操作系统的引导.html"><span class="label">2023-6-20-9操作系统的引导</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-22-12线程.html"><span class="label">2023-6-22-12线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-23-13调度.html"><span class="label">2023-6-23-13调度</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-27-14进程同步进程互斥.html"><span class="label">2023-6-27-14进程同步进程互斥</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-28-15锁.html"><span class="label">2023-6-28-15锁</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-28-16信号量机制.html"><span class="label">2023-6-28-16信号量机制</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">服务器</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/服务器/2023-6-12-代理.html"><span class="label">2023-6-12-代理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/服务器/2023-6-12-新服务器搭建.html"><span class="label">2023-6-12-新服务器搭建</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李述铜手写操作系统</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-10-26-05中断和异常处理.html"><span class="label">2023-10-26-05中断和异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-11-10-06日志与printf输出.html"><span class="label">2023-11-10-06日志与printf输出</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-23-03引导程序接管控制权.html"><span class="label">2023-9-23-03引导程序接管控制权</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-28-04加载器loader的实现.html"><span class="label">2023-9-28-04加载器loader的实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-01补充知识2.html"><span class="label">2023-9-6-01补充知识2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-0补充知识.html"><span class="label">2023-9-6-0补充知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-1操作系统准备.html"><span class="label">2023-9-6-1操作系统准备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-7-2x86保护模式下的编程.html"><span class="label">2023-9-7-2x86保护模式下的编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17-07进程切换.html"><span class="label">2024-2-17-07进程切换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17-08链表.html"><span class="label">2024-2-17-08链表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17添加任务管理器.html"><span class="label">2024-2-17添加任务管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-18-内存管理.html"><span class="label">2024-2-18-内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-24-系统调用.html"><span class="label">2024-2-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-26-移植Newlib库.html"><span class="label">2024-2-26-移植Newlib库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-27-屏幕显示信息.html"><span class="label">2024-2-27-屏幕显示信息</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-29-键盘初始化.html"><span class="label">2024-2-29-键盘初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-1-设备管理.html"><span class="label">2024-3-1-设备管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-3-Shell.html"><span class="label">2024-3-3-Shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-4-文件系统.html"><span class="label">2024-3-4-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-5-磁盘.html"><span class="label">2024-3-5-磁盘</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-7-Fat16.html"><span class="label">2024-3-7-Fat16</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">树莓派</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-01开始使用.html"><span class="label">2024-2-1-01开始使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-02-使用命令了解树莓派.html"><span class="label">2024-2-1-02-使用命令了解树莓派</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-03-安装mysql.html"><span class="label">2024-2-1-03-安装mysql</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-3-04网络连接.html"><span class="label">2024-2-3-04网络连接</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-8-时钟设置.html"><span class="label">2024-2-8-时钟设置</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">泰山派</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-20-05-lvgl程序.html"><span class="label">2025-12-20-05-lvgl程序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-24-06-二维码识别.html"><span class="label">2025-12-24-06-二维码识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-24-07-yolo部署.html"><span class="label">2025-12-24-07-yolo部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-25-08-OpenCV.html"><span class="label">2025-12-25-08-OpenCV</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-26-09-拍照.html"><span class="label">2025-12-26-09-拍照</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-26-10-Qt.html"><span class="label">2025-12-26-10-Qt</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-11-01环境搭建.html"><span class="label">2025-5-11-01环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-11-02设备树.html"><span class="label">2025-5-11-02设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-14-03屏幕驱动.html"><span class="label">2025-5-14-03屏幕驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-17-04触摸驱动.html"><span class="label">2025-5-17-04触摸驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2026-1-27-ROS.html"><span class="label">2026-1-27-ROS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2026-1-30-Ubuntu22.html"><span class="label">2026-1-30-Ubuntu22</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">瑞芯微Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-10-Cpp提供C接口.html"><span class="label">2025-12-10-Cpp提供C接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-5-01-EchoAI编译代码.html"><span class="label">2025-12-5-01-EchoAI编译代码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-5-02-EchoAI代码.html"><span class="label">2025-12-5-02-EchoAI代码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-7-03-添加板子.html"><span class="label">2025-12-7-03-添加板子</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-8-04-内核.html"><span class="label">2025-12-8-04-内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-9-05-模型.html"><span class="label">2025-12-9-05-模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/配置网络.html"><span class="label">配置网络</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">野火Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-11-55-buildroot.html"><span class="label">2025-10-11-55-buildroot</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-11-56-裸机汇编开发.html"><span class="label">2025-10-11-56-裸机汇编开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-12-57-Uboot编译脚本.html"><span class="label">2025-10-12-57-Uboot编译脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-47-镜像构建.html"><span class="label">2025-10-2-47-镜像构建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-48-systemd.html"><span class="label">2025-10-2-48-systemd</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-49-deb包.html"><span class="label">2025-10-2-49-deb包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-50-修改img文件.html"><span class="label">2025-10-2-50-修改img文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-51-备份量产.html"><span class="label">2025-10-2-51-备份量产</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-52-Uboot启动.html"><span class="label">2025-10-2-52-Uboot启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-28-58-Uboot移植.html"><span class="label">2025-10-28-58-Uboot移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-30-59-Uboot图形配置界面语法.html"><span class="label">2025-10-30-59-Uboot图形配置界面语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-30-60-Linux编译脚本.html"><span class="label">2025-10-30-60-Linux编译脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-31-61-Linux启动流程.html"><span class="label">2025-10-31-61-Linux启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-9-53-Uboot启动(二).html"><span class="label">2025-10-9-53-Uboot启动(二)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-9-54-Uboot启动(三).html"><span class="label">2025-10-9-54-Uboot启动(三)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-1-62-linux移植.html"><span class="label">2025-11-1-62-linux移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-1-63-Busybox.html"><span class="label">2025-11-1-63-Busybox</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-10-65-定时器.html"><span class="label">2025-11-10-65-定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-12-66-信号.html"><span class="label">2025-11-12-66-信号</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-14-67-MISC设备.html"><span class="label">2025-11-14-67-MISC设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-15-68-RTC.html"><span class="label">2025-11-15-68-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-16-69-串口.html"><span class="label">2025-11-16-69-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-18-70-中断线程化.html"><span class="label">2025-11-18-70-中断线程化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-18-71-音频.html"><span class="label">2025-11-18-71-音频</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-19-72-CAN.html"><span class="label">2025-11-19-72-CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-19-73-USB.html"><span class="label">2025-11-19-73-USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-2-64-mfgtool.html"><span class="label">2025-11-2-64-mfgtool</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-20-74-块设备.html"><span class="label">2025-11-20-74-块设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-21-75-网络设备.html"><span class="label">2025-11-21-75-网络设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-76-Wifi.html"><span class="label">2025-11-22-76-Wifi</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-77-PWM.html"><span class="label">2025-11-22-77-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-78-Regmap通用寄存器.html"><span class="label">2025-11-22-78-Regmap通用寄存器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-79-IIO驱动框架.html"><span class="label">2025-11-22-79-IIO驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-25-80-ADC驱动.html"><span class="label">2025-11-25-80-ADC驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-12-6-81-音频驱动.html"><span class="label">2025-12-6-81-音频驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-12-8-82-DRM显示设备.html"><span class="label">2025-12-8-82-DRM显示设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-6-11-01-入门.html"><span class="label">2025-6-11-01-入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-6-22-02-开发板下载启动.html"><span class="label">2025-6-22-02-开发板下载启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-12-04-镜像文件.html"><span class="label">2025-7-12-04-镜像文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-13-06-GPIO.html"><span class="label">2025-7-13-06-GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-13-07-中断.html"><span class="label">2025-7-13-07-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-05-ARMv7汇编.html"><span class="label">2025-7-14-05-ARMv7汇编</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-08-时钟控制模块.html"><span class="label">2025-7-14-08-时钟控制模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-09-串口.html"><span class="label">2025-7-14-09-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-10-内核模块.html"><span class="label">2025-7-15-10-内核模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-11-字符设备.html"><span class="label">2025-7-15-11-字符设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-12-驱动设备模型.html"><span class="label">2025-7-15-12-驱动设备模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-13-Kset.html"><span class="label">2025-7-19-13-Kset</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-14-uevent消息.html"><span class="label">2025-7-19-14-uevent消息</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-15-class设备管理.html"><span class="label">2025-7-19-15-class设备管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-16-17-总结.html"><span class="label">2025-7-19-16-17-总结</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-16-xbus和platform.html"><span class="label">2025-7-19-16-xbus和platform</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-2-03-控制设备.html"><span class="label">2025-7-2-03-控制设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-20-18-DTS设备树.html"><span class="label">2025-7-20-18-DTS设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-20-19-DeviceTreeOverlay.html"><span class="label">2025-7-20-19-DeviceTreeOverlay</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-16-21-iomux节点(中).html"><span class="label">2025-9-16-21-iomux节点(中)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-16-22-iomux节点(下).html"><span class="label">2025-9-16-22-iomux节点(下)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-23-iomux节点(应用).html"><span class="label">2025-9-17-23-iomux节点(应用)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-24-GPIO子系统.html"><span class="label">2025-9-17-24-GPIO子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-25-并发硬件同步原语.html"><span class="label">2025-9-17-25-并发硬件同步原语</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-18-26-IIC驱动框架.html"><span class="label">2025-9-18-26-IIC驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-20-27-IIC驱动框架使用.html"><span class="label">2025-9-20-27-IIC驱动框架使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-28-阻塞和非阻塞IO.html"><span class="label">2025-9-25-28-阻塞和非阻塞IO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-29-POLL机制.html"><span class="label">2025-9-25-29-POLL机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-30-Completion.html"><span class="label">2025-9-25-30-Completion</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-31-kthread_worker.html"><span class="label">2025-9-25-31-kthread_worker</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-26-32-SPI.html"><span class="label">2025-9-26-32-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-26-33-SPI使用.html"><span class="label">2025-9-26-33-SPI使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-34-中断.html"><span class="label">2025-9-27-34-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-35-软中断和tasklet.html"><span class="label">2025-9-27-35-软中断和tasklet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-36-工作队列.html"><span class="label">2025-9-27-36-工作队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-37-Input子系统.html"><span class="label">2025-9-27-37-Input子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-38-电容触摸屏.html"><span class="label">2025-9-28-38-电容触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-39-PWM.html"><span class="label">2025-9-28-39-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-40-LCD-FB设备.html"><span class="label">2025-9-28-40-LCD-FB设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-41-Linux系统构成.html"><span class="label">2025-9-29-41-Linux系统构成</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-42-Uboot基础使用.html"><span class="label">2025-9-29-42-Uboot基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-43-Linux.html"><span class="label">2025-9-29-43-Linux</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-44-添加驱动(设备树).html"><span class="label">2025-9-29-44-添加驱动(设备树)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-30-45-图标.html"><span class="label">2025-9-30-45-图标</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-30-46-根文件系统.html"><span class="label">2025-9-30-46-根文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-4-20-iomux节点(上).html"><span class="label">2025-9-4-20-iomux节点(上)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/Untitled.html"><span class="label">Untitled</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">问题处理</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-11-20-Linux图形界面.html"><span class="label">2022-11-20-Linux图形界面</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-24-tftp下载.html"><span class="label">2022-8-24-tftp下载</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-26-uboot设置.html"><span class="label">2022-8-26-uboot设置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-27-根文件系统被删除.html"><span class="label">2022-8-27-根文件系统被删除</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-5-没有release文件.html"><span class="label">2022-8-5-没有release文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-9-7-备份根文件.html"><span class="label">2022-9-7-备份根文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-9-9-ubuntu移植问题处理.html"><span class="label">2022-9-9-ubuntu移植问题处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-11-11-树莓派.html"><span class="label">2023-11-11-树莓派</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-6-14-打不开gpedit-msc.html"><span class="label">2023-6-14-打不开gpedit-msc</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-6-28-vscode配置.html"><span class="label">2023-6-28-vscode配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-8-27-开发板网络设置.html"><span class="label">2023-8-27-开发板网络设置</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">韦东山Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/韦东山Linux/2025-3-4-基础.html"><span class="label">2025-3-4-基础</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>libevent库</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>Linux 网络</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/Linux/Linux网络编程/2024-4-14-06libevent库.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="libevent%E5%BA%93">libevent库</h1>
+<p>这一个开源, 精简, 跨平台的库, 专注于网络通信</p>
+<p>有两个版本比较稳定1.4和2.0</p>
+<blockquote>
+<p>1.4比较简单适合用于学习</p>
+<p>使用的话建议使用2.0</p>
+</blockquote>
+<p>这两个版本的接口是不兼容的</p>
+<p><a href="https://libevent.org/"  target="_blank">libevent官网</a></p>
+<p><a href="https://blog.csdn.net/xp178171640/article/details/105490027"  target="_blank">libevent源码深度剖析-张亮_libevent源码深度剖析是c语言-CSDN博客</a></p>
+<p>从官网下载以后可以使用<code>./configure</code> 检查安装环境以及生成Makefile, 之后使用make, 生成.o或者可执行文件, 最后<code>sudo make install</code>把必要的资源拷贝到系统的指定目录</p>
+<blockquote>
+<p>一般直接看readme文件</p>
+</blockquote>
+<p>建立成功以后, 可以使用sample目录里面运行demo验证安装情况</p>
+
+<pre class="language-bash"><code class="language-bash">➜  sample gcc hello-world.c -o hello -levent
+</code></pre>
+<blockquote>
+<p>编译的时候需要链接这一个库, 这一个库的实际的安装目录是/usr/local/lib文件夹</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404141253456.png" alt="image-20240414125346381" /></p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404141154664.png" alt="image-20240414115435365" /></p>
+<h2 id="%E7%89%B9%E7%82%B9">特点</h2>
+<p>1）事件驱动（event-driven），高性能;<br />
+2）轻量级，专注于网络，不如ACE那么臃肿庞大；<br />
+3）源代码相当精炼、易读；<br />
+4）跨平台，支持Windows、Linux、*BSD和Mac Os；<br />
+5）支持多种I/O多路复用技术， epoll、poll、dev/poll、select和kqueue等；<br />
+6）支持I/O，定时器和信号等事件；<br />
+7）注册事件优先级；</p>
+<h2 id="%E6%A1%86%E6%9E%B6">框架</h2>
+<ol>
+<li>创建event_base</li>
+</ol>
+
+<pre class="language-c"><code class="language-c">#include &lt;event2/event.h&gt;
+struct event_base *event_base_new(void);
+struct event_base *base = event_base_new();
+</code></pre>
+<ol start="2">
+<li>创建事件event</li>
+</ol>
+<p>事件有两种, 常规的事件event, 以及bufferevent</p>
+
+<pre class="language-c"><code class="language-c">struct event *event_new(struct event_base* base, evutil_socket_t fd, short what,
+                       event_callback_fn cd, void *arg);
+struct bufferevent * bufferevent_socket_new(struct event_base *base, evutil_socket_t fd, 
+                       enum bufferevent_options options);
+</code></pre>
+<blockquote>
+<p>what: EV_READ</p>
+<p>​		  EV_WRITE</p>
+<p>​		  EV_PERSIST 持续触发</p>
+<p>cd : 回调函数</p>
+</blockquote>
+<ol start="3">
+<li>把事件放到base上面</li>
+</ol>
+
+<pre class="language-c"><code class="language-c">int event_add(struct event *ev, const struct timeval *tv)
+</code></pre>
+<ol start="4">
+<li>循环监听事件满足</li>
+</ol>
+
+<pre class="language-c"><code class="language-c">int event_base_dispatch(struct event_base *event_base)
+{
+  return (event_base_loop(event_base, 0));  //调用event_base_loop()
+}
+</code></pre>
+<blockquote>
+<p>event_new函数里面指定了参数EV_PERSIST才可以持续触发, 否则只触发一次, 之后跳出循环</p>
+<p>通常使用EV_WRITE|EV_PERSIST, EV_READ|EV_PERSIST</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">int event_base_loopexit(struct event_base*base, const struct timeval*tv);
+</code></pre>
+<blockquote>
+<p>指定时间以后退出循环</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">int event_base_loopbreak(struct event_base*base);
+</code></pre>
+<blockquote>
+<p>立即停止循环</p>
+</blockquote>
+<ol start="5">
+<li>释放eventbase</li>
+</ol>
+
+<pre class="language-c"><code class="language-c">void bufferevent_free(struct bufferevent *bev);
+</code></pre>
+<h2 id="%E7%A4%BA%E4%BE%8B%E5%88%86%E6%9E%90">示例分析</h2>
+<p>这是一个事件异步通信模型, 这一个文件里的所有都是事件, 主要依赖回调函数</p>
+
+<pre class="language-c"><code class="language-c">#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+#ifndef _WIN32
+#include &lt;netinet/in.h&gt;
+# ifdef _XOPEN_SOURCE_EXTENDED
+#  include &lt;arpa/inet.h&gt;
+# endif
+#include &lt;sys/socket.h&gt;
+#endif
+
+#include &lt;event2/bufferevent.h&gt;
+#include &lt;event2/buffer.h&gt;
+#include &lt;event2/listener.h&gt;
+#include &lt;event2/util.h&gt;
+#include &lt;event2/event.h&gt;
+
+static const char MESSAGE[] = &quot;Hello, World!\n&quot;;
+
+static const int PORT = 9995;
+//cb指的是call back回调函数
+static void listener_cb(struct evconnlistener *, evutil_socket_t,
+    struct sockaddr *, int socklen, void *);
+static void conn_writecb(struct bufferevent *, void *);
+static void conn_eventcb(struct bufferevent *, short, void *);
+static void signal_cb(evutil_socket_t, short, void *);
+
+int main(int argc, char **argv)
+{
+    struct event_base *base;
+    struct evconnlistener *listener;//用于监听
+    struct event *signal_event;		//一个事件
+
+    struct sockaddr_in sin;			//socket结构
+#ifdef _WIN32
+    WSADATA wsa_data;
+    WSAStartup(0x0201, &amp;wsa_data);
+#endif
+
+    base = event_base_new();		//获取一个底座
+    if (!base) {
+    	fprintf(stderr, &quot;Could not initialize libevent!\n&quot;);
+    	return 1;
+    }
+
+    memset(&amp;sin, 0, sizeof(sin));
+    sin.sin_family = AF_INET;
+    sin.sin_port = htons(PORT);		//这里的ip地址使用的是0, 也就是监听所有的ip
+    //这一个相当于socket, bind, listen, accept
+    listener = evconnlistener_new_bind(base, listener_cb, (void *)base,
+        LEV_OPT_REUSEABLE|LEV_OPT_CLOSE_ON_FREE, -1,
+        (struct sockaddr*)&amp;sin,
+        sizeof(sin));
+
+    if (!listener) {
+    	fprintf(stderr, &quot;Could not create a listener!\n&quot;);
+    	return 1;
+    }
+    //获取另一个事件, 这是一个信号事件
+    signal_event = evsignal_new(base, SIGINT, signal_cb, (void *)base);
+
+    if (!signal_event || event_add(signal_event, NULL)&lt;0) {
+    	fprintf(stderr, &quot;Could not create/add a signal event!\n&quot;);
+    	return 1;
+    }
+    //这一个这一个相当于while和epoll_wait
+    event_base_dispatch(base);
+    //这三个函数很可能到不了
+    evconnlistener_free(listener);
+    event_free(signal_event);
+    event_base_free(base);
+
+    printf(&quot;done\n&quot;);
+    return 0;
+}
+
+static void
+listener_cb(struct evconnlistener *listener, evutil_socket_t fd,
+    struct sockaddr *sa, int socklen, void *user_data)
+{
+    struct event_base *base = user_data;
+    struct bufferevent *bev;
+
+    bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+    if (!bev) {
+    	fprintf(stderr, &quot;Error constructing bufferevent!&quot;);
+    	event_base_loopbreak(base);
+    	return;
+    }
+    bufferevent_setcb(bev, NULL, conn_writecb, conn_eventcb, NULL);
+    bufferevent_enable(bev, EV_WRITE);
+    bufferevent_disable(bev, EV_READ);
+
+    bufferevent_write(bev, MESSAGE, strlen(MESSAGE));
+}
+
+static void
+conn_writecb(struct bufferevent *bev, void *user_data)
+{
+    struct evbuffer *output = bufferevent_get_output(bev);
+    if (evbuffer_get_length(output) == 0) {
+    	printf(&quot;flushed answer\n&quot;);
+    	bufferevent_free(bev);
+    }
+}
+
+static void
+conn_eventcb(struct bufferevent *bev, short events, void *user_data)
+{
+    if (events &amp; BEV_EVENT_EOF) {
+    	printf(&quot;Connection closed.\n&quot;);
+    } else if (events &amp; BEV_EVENT_ERROR) {
+    	printf(&quot;Got an error on the connection: %s\n&quot;,
+    	    strerror(errno));/*XXX win32*/
+    }
+    /* None of the other events can happen here, since we haven't enabled
+     * timeouts */
+    bufferevent_free(bev);
+}
+
+static void
+signal_cb(evutil_socket_t sig, short events, void *user_data)
+{
+    struct event_base *base = user_data;
+    struct timeval delay = { 2, 0 };
+    //这是一个信号的回调函数
+    printf(&quot;Caught an interrupt signal; exiting cleanly in two seconds.\n&quot;);
+
+    event_base_loopexit(base, &amp;delay);
+}
+</code></pre>
+<h2 id="%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0">常用函数</h2>
+<h3 id="event_base_new%E5%88%9B%E5%BB%BAbase">event_base_new创建base</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;event2/event.h&gt;
+struct event_base *event_base_new(void);
+struct event_base *base = event_base_new();
+</code></pre>
+<h3 id="event_base_free%E9%94%80%E6%AF%81base">event_base_free销毁base</h3>
+
+<pre class="language-c"><code class="language-c">void event_base_free(struct event_base *base);
+</code></pre>
+<h3 id="event_base_dispatch%E5%BC%80%E5%90%AF%E5%BE%AA%E7%8E%AF">event_base_dispatch开启循环</h3>
+
+<pre class="language-c"><code class="language-c">int event_base_dispatch(struct event_base *event_base);
+</code></pre>
+<h3 id="event_new%E5%88%9B%E5%BB%BA%E4%BA%8B%E4%BB%B6">event_new创建事件</h3>
+
+<pre class="language-c"><code class="language-c">struct event *event_new(struct event_base*base, evutil_socket_t fd, short what, 
+                        event_callback_fn cb, void *arg);
+</code></pre>
+<blockquote>
+<p>在这一个事件base里面加入一个事件</p>
+<p>base: 使用的base</p>
+<p>fd: 监听的文件描述符</p>
+<p>what: 监听的这一个文件的什么事件(读写异常)</p>
+<blockquote>
+<ul>
+<li>常用</li>
+</ul>
+<p>读事件EV_READ</p>
+<p>写事件EV_ERITE</p>
+<p>持续触发EV_PERSIST, 一般是配合event_base_dispatch函数使用</p>
+
+<pre class="language-c"><code class="language-c">#define EV_TIMEOUT 0x01		//这一个废弃了
+#define EV_READ 0x02
+#define EV_WRITE 0x04
+#define EV_SIGNAL 0x08
+#define EV_PERSIST 0x10
+#define EV_ET 0x20
+</code></pre>
+</blockquote>
+<p>cb: 回调函数</p>
+<blockquote>
+<p><code>typedef void(*event_callback_fn)(evutil_socket_t fd, short, void *)</code></p>
+<p>evutil_socket_t实际就是一个int类型, short是上面的what和arg</p>
+</blockquote>
+<p>arg: 这一个函数的参数</p>
+<p>返回值是成功创建的事件对象</p>
+</blockquote>
+<h3 id="event_add%E6%B7%BB%E5%8A%A0%E4%BA%8B%E4%BB%B6">event_add添加事件</h3>
+
+<pre class="language-c"><code class="language-c">int event_add(struct event *ev, const struct timeval *tv);
+</code></pre>
+<blockquote>
+<p>ev: event_new函数的返回值</p>
+<p>tv: 时间, NULL这一个不会超时, 为非零的时候, 这一个事件没有触发也会被回调</p>
+<p>不要设置 tv 为希望超时事件执行的时间。如果在 2010 年 1 月 1 日设置 “tv- &gt;tv_sec=time(NULL)+10;”,超时事件将会等待40年,而不是10秒</p>
+<p><code>struct timeval delay = { 2, 0 };</code></p>
+<p>返回值 : 成功0, 失败-1</p>
+</blockquote>
+<h3 id="event_free%E9%94%80%E6%AF%81%E4%BA%8B%E4%BB%B6">event_free销毁事件</h3>
+
+<pre class="language-c"><code class="language-c">void event_free(struct event *event);
+</code></pre>
+<h3 id="event_del%E4%BA%8B%E4%BB%B6%E7%A7%BB%E5%87%BAbase">event_del事件移出base</h3>
+
+<pre class="language-c"><code class="language-c">int event_del(struct event *ev);
+</code></pre>
+<h3 id="%E6%9C%AA%E5%86%B3%E5%92%8C%E9%9D%9E%E6%9C%AA%E5%86%B3">未决和非未决</h3>
+<p>未决: 有资格被处理, 但是还没有被处理</p>
+<p>非未决: 没有资格被处理</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202404152229527.png" alt="image-20240415222945402" /></p>
+<h2 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h2>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;event2/event.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/stat.h&gt;
+
+void write_cb(evutil_socket_t fd, short what, void *arg){
+    char buf[1024];
+    static int num = 0;
+    sprintf(buf, &quot;hello world-%d\n&quot;, num++);
+    write(fd, buf, strlen(buf)+1);
+    sleep(1);
+}
+
+int main(void){
+    int fd = open(&quot;myfifo&quot;, O_WRONLY | O_NONBLOCK);
+    if(fd == -1){
+    	perror(&quot;open error&quot;);
+    	exit(1);
+    }
+    struct event_base *base = NULL;
+    base = event_base_new();
+    struct event *event = event_new(base, fd, EV_WRITE|EV_PERSIST, write_cb, NULL); 
+    event_add(event, NULL);
+
+    event_base_dispatch(base);
+
+    event_free(event);
+    event_base_free(base);
+    close(fd);
+
+    return 0;
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;string.h&gt;
+#include &lt;event2/event.h&gt;
+#include &quot;fcntl.h&quot;
+
+void read_cb(evutil_socket_t fd, short what, void *arg){
+    char buf[1024];
+    int len = read(fd, buf, sizeof(buf));
+    printf(&quot;read event: %s \n&quot;, what &amp; EV_READ ? &quot;Yse&quot; :&quot;No&quot; );
+    printf(&quot;data len = %d, buf = %s\n&quot;, len, buf);
+    sleep(1);
+}
+
+int main(void){
+    unlink(&quot;myfifo&quot;);
+    mkfifo(&quot;myfifo&quot;, 0664);
+
+    int fd = open(&quot;myfifo&quot;, O_RDONLY | O_NONBLOCK);
+    if(fd == -1){
+    	perror(&quot;open error&quot;);
+    	exit(1);
+    }
+    struct event_base*base;
+    base = event_base_new();
+
+    struct event* ev = NULL;
+    ev = event_new(base, fd, EV_READ| EV_PERSIST, read_cb, NULL);
+    //添加事件，不加时间限制
+    event_add(ev, NULL);
+    //开始循环
+    event_base_dispatch(base);
+
+    event_free(ev);
+    event_base_free(base);
+    close(fd);
+
+    return 0;
+
+}
+</code></pre>
+<h2 id="%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0">其他函数</h2>
+
+<pre class="language-c"><code class="language-c">const char **event_get_supported_methods(void);
+</code></pre>
+<blockquote>
+<p>查看这一个系统支持的多路IO, epoll, poll, select之类的</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">const char * event_base_get_method(const struct event_base * base);
+</code></pre>
+<blockquote>
+<p>查看现在使用的IO</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">int event_reinit(struct event_base *base);
+</code></pre>
+<blockquote>
+<p>查看fork以后使用的这一个重新初始化这一个base</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;event2/event.h&gt;
+
+int main(void){
+    struct event_base *base;
+    base = event_base_new();
+    const char **buf;
+    if(!base){
+    	printf(&quot;Could not initialize libevent!\n&quot;);
+    	return 1;
+    }
+    buf = event_get_supported_methods();//获取支持的IO
+    printf(&quot;Using Libevent with backend method %s.\n&quot;, event_base_get_method(base));//获取使用IO
+    printf(&quot;Starting Libevent %s.  Available methods are:\n&quot;, event_get_version());//获取版本
+    for(int i = 0; buf[i] != NULL; i++){
+    	printf(&quot;%s\n&quot;, buf[i]);
+    }
+}
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">➜  2024-4-14-libvent ./event 
+Using Libevent with backend method epoll.
+Starting Libevent 2.1.8-stable.  Available methods are:
+epoll
+poll
+select
+</code></pre>
+</blockquote>
+<h2 id="%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E4%BA%8B%E4%BB%B6">带缓冲区的事件</h2>
+<blockquote>
+<p><strong>需要使用头文件&lt;event2/bufferevent.h&gt;</strong></p>
+</blockquote>
+<p>bufferevent, 里面有两个buffer, 一个读一个写, 使用队列实现, 读走以后就没有了, 先进先出</p>
+<p>读 : 有数据 --&gt; 读回调函数 --&gt; 使用bufferevent_read --&gt; 把数据读出来</p>
+<p>写: 使用bufferevent_write --&gt; 向缓冲区写数据 --&gt; 缓冲区有数据自动写出 --&gt; 写完  --&gt; 回调函数</p>
+<blockquote>
+<p>在这里面就不能使用read和write函数了</p>
+<p>实际使用的时候需要在读缓冲回调函数里面使用bufferevent_read读取数据, 读取以后处理数据, 之后写入</p>
+<p>写缓冲的回调函数用处不大</p>
+</blockquote>
+<h3 id="bufferevent_socket_new">bufferevent_socket_new</h3>
+
+<pre class="language-c"><code class="language-c">struct bufferevent *bufferevent_socket_new(struct event_base *base,evutil_socket_t fd,enum bufferevent_options options);
+</code></pre>
+<blockquote>
+<p>base 是 event_base,options 是表示 bufferevent 选项 (BEV_OPT_CLOSE_ON_FREE 等) 的位掩码</p>
+<p>fd是一个可选的表示套接字的文件 描述符。如果想以后设置文件描述符,可以设置fd为-1。 成功时函数返回一个 bufferevent,失败则返回 NULL。</p>
+<p>optiona:</p>
+<ul>
+<li>BEV_OPT_CLOSE_ON_FREE：释放 bufferevent 时关闭底层传输端口。这将关闭底 层套接字，释放底层 bufferevent 等。</li>
+</ul>
+<blockquote>
+<p>主要使用的是这一个</p>
+</blockquote>
+<ul>
+<li>BEV_OPT_THREADSAFE：自动为 bufferevent 分配锁，这样就可以安全地在多个线 程中使用 bufferevent。</li>
+<li>BEV_OPT_DEFER_CALLBACKS：设置这个标志时，bufferevent 延迟所有回调，如 上所述。</li>
+<li>BEV_OPT_UNLOCK_CALLBACKS：默认情况下，如果设置 bufferevent 为线程安全 的，则 bufferevent 会在调用用户提供的回调时进行锁定。设置这个选项会让 libevent 在执行回调的时候不进行锁定。</li>
+</ul>
+</blockquote>
+<h3 id="bufferevent_free">bufferevent_free</h3>
+
+<pre class="language-c"><code class="language-c">void bufferevent_free(struct bufferevent *bev);
+</code></pre>
+<h3 id="bufferevent_setcb">bufferevent_setcb</h3>
+
+<pre class="language-c"><code class="language-c">typedef void (*bufferevent_data_cb)(struct bufferevent *bev, void *ctx);
+typedef void (*bufferevent_event_cb)(struct bufferevent *bev, short events, void *ctx);
+void bufferevent_setcb(struct bufferevent *bufev, bufferevent_data_cb readcb, bufferevent_data_cb writecb, bufferevent_event_cb eventcb, void *cbarg);
+void bufferevent_getcb(struct bufferevent *bufev, bufferevent_data_cb *readcb_ptr, bufferevent_data_cb *writecb_ptr, bufferevent_event_cb *eventcb_ptr, void **cbarg_ptr);
+</code></pre>
+<blockquote>
+<p>这两个缓冲区的回调函数</p>
+<p>readcb_ptr: 读缓冲回调</p>
+<p>writecb: 写缓冲回调</p>
+<p>eventcb: 事件回调, 用于处理状态以及异常</p>
+<p>cbarg: 回调使用的参数</p>
+<ul>
+<li>回调函数参数</li>
+</ul>
+<p>events: 实际的事件</p>
+<blockquote>
+<p>BEV_EVENT_READING：读取操作时发生某事件，具体是哪种事件请看其他标志。</p>
+<p>BEV_EVENT_WRITING：写入操作时发生某事件，具体是哪种事件请看其他标志。</p>
+<p>BEV_EVENT_ERROR ： 操作时发生错误。关于错误的更多信息，请调用 EVUTIL_SOCKET_ERROR()。</p>
+<p>BEV_EVENT_TIMEOUT：发生超时。</p>
+<p>BEV_EVENT_EOF：遇到文件结束指示。</p>
+<p>BEV_EVENT_CONNECTED：请求的连接过程已经完成</p>
+</blockquote>
+<p>ctx : 传递的参数</p>
+</blockquote>
+<h3 id="bufferevent_read">bufferevent_read</h3>
+
+<pre class="language-c"><code class="language-c">size_t bufferevent_read(struct bufferevent *bufev, void *data, size_t size);
+</code></pre>
+<h3 id="bufferevent_write">bufferevent_write</h3>
+
+<pre class="language-c"><code class="language-c">int bufferevent_write(struct bufferevent *bufev,const void *data, size_t size);
+</code></pre>
+<h3 id="bufferevent_enable">bufferevent_enable</h3>
+
+<pre class="language-c"><code class="language-c">void bufferevent_enable(struct bufferevent *bufev, short events);
+void bufferevent_disable(struct bufferevent *bufev, short events);
+</code></pre>
+<blockquote>
+<p>启用以及禁用缓冲区</p>
+<p>可以启用或者禁用 bufferevent 上的 EV_READ、EV_WRITE 或者 EV_READ | EV_WRITE 事件。</p>
+<p>默认的时候读是disable, 写是enable的</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">short bufferevent_get_enabled(struct bufferevent *bufev);
+</code></pre>
+<blockquote>
+<p>获取缓冲区状态</p>
+</blockquote>
+<h2 id="%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1">网络通信</h2>
+<h3 id="%E6%B5%81%E7%A8%8B">流程</h3>
+<blockquote>
+<p>使用头文件&lt;event2/listener.h&gt;</p>
+</blockquote>
+<ul>
+<li>客户端</li>
+</ul>
+<p>socket, connect</p>
+
+<pre class="language-c"><code class="language-c">int bufferevent_socket_connect(struct bufferevent *bev, struct sockaddr *address, int addrlen);
+</code></pre>
+<blockquote>
+<p>可以使用这一个函数进行封装使用</p>
+<p>address, addrlen实际就是connect函数的参数2和参数3</p>
+</blockquote>
+<ul>
+<li>服务器端</li>
+</ul>
+<p>socket, bind, listen, accept</p>
+
+<pre class="language-c"><code class="language-c">struct evconnlistener *evconnlistener_new(struct event_base *base, evconnlistener_cb cb, void *ptr, unsigned flags, int backlog, evutil_socket_t fd);//建立一个监听器, 这一个不多使用(了解)
+struct evconnlistener *evconnlistener_new_bind(struct event_base *base, evconnlistener_cb cb, void *ptr, unsigned flags, int backlog,const struct sockaddr *sa, int socklen);//主要使用
+void evconnlistener_free(struct evconnlistener *lev);
+</code></pre>
+<blockquote>
+<p>cb: 回调函数</p>
+<p>ptr : 回调使用的参数</p>
+<p>flags: 标志</p>
+<blockquote>
+<p>主要使用的有两个</p>
+<ol>
+<li>LEV_OPT_CLOSE_ON_FRE, 释放bufferevent时候关闭这一个传输端口, 释放底层套接字</li>
+<li>LEV_OPT_REUSABLE: 端口可以复用</li>
+</ol>
+</blockquote>
+<p>backlog: listen的第二个参数, 传-1表示使用最大值</p>
+<p>sa: 服务器的IP+Port, 这一个是服务器自己的地址结构</p>
+<p>成功的话返回一个监听器</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">typedef void (*evconnlistener_cb)(struct evconnlistener *listener, evutil_socket_t fd, struct sockaddr *address, int socklen, void *arg);
+</code></pre>
+<blockquote>
+<p>这一个是他的回调函数, 会在客户端连接的时候调用这一个函数</p>
+<p>listener: evconnlistener_new_bind函数的返回值</p>
+<p>fd: 用于通信的文件描述符</p>
+<p>address: 客户端的IP+端口</p>
+</blockquote>
+<h3 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h3>
+<ul>
+<li>服务器端</li>
+</ul>
+<ol>
+<li>创建event_base</li>
+<li>建立一个监听服务器evconnlistener_new_bind, 设置一个回调函数, 有连接的时候这一个回调函数会被调用, 获取fd</li>
+<li>封装listner_cb, 在这一个函数里面和客户端通信</li>
+<li>在连接回调函数里面使用获取的fd创建一个buffer_event, 使用bufferevent_socket_new</li>
+<li>设置一下回调函数, bufferevent_setcb, 给bufferevent的read, write和event设置回调函数</li>
+<li>开启读写缓冲区</li>
+<li>初始化回调函数, 监听的事件满足的时候, 回调函数被调用, 在read_cb里面使用bufferevent_read</li>
+<li>启动监听event_base_dispatch</li>
+<li>释放</li>
+</ol>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;event2/event.h&gt;
+#include &lt;event2/listener.h&gt;
+#include &lt;event2/bufferevent.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;ctype.h&gt;
+
+void event_cb(struct bufferevent *bev, short events, void *arg){
+    if(events &amp; BEV_EVENT_EOF){
+    	printf(&quot;connection closed\n&quot;);
+    }else if(events &amp; BEV_EVENT_ERROR){
+    	printf(&quot;some other error\n&quot;);
+    }
+    bufferevent_free(bev);
+    printf(&quot;event_cb\n&quot;);
+}
+void read_cb(struct bufferevent *bev, void *arg){
+    char buf[1024];
+    int len = bufferevent_read(bev, buf, sizeof(buf));
+    if(len &lt;= 0){
+    	printf(&quot;read_cb: connection closed\n&quot;);
+    	bufferevent_free(bev);
+    	return;
+    }
+    buf[len] = '\0';
+    printf(&quot;read_cb: %s\n&quot;, buf);
+    for(int i = 0;i&lt;len;i++){
+    	buf[i] = toupper(buf[i]);
+    }
+
+    bufferevent_write(bev, buf, len);
+}
+
+void write_cb(struct bufferevent *bev, void *arg){
+    printf(&quot;write_cb\n&quot;);
+}
+void listener_cb(struct evconnlistener *listener, evutil_socket_t fd,
+    	struct sockaddr *addr, int socklen, void *arg){
+    char buf[1024];
+    int len;
+    printf(&quot;connect from %s:%d\n&quot;, 
+    		inet_ntop(AF_INET, &amp;((struct sockaddr_in*)addr)-&gt;sin_addr,
+    			buf, sizeof(buf)),
+    		ntohs(((struct sockaddr_in*)addr)-&gt;sin_port));
+    struct bufferevent *bev = bufferevent_socket_new(
+    		evconnlistener_get_base(listener), fd, BEV_OPT_CLOSE_ON_FREE);
+    if(bev == NULL){
+    	printf(&quot;bufferevent_socket_newi error&quot;);
+    	return;
+    }
+    bufferevent_setcb(bev, read_cb, write_cb, event_cb, NULL);
+    bufferevent_enable(bev, EV_READ);
+}
+
+
+int main(void){
+    struct sockaddr_in serv;
+    
+    memset(&amp;serv, 0, sizeof(serv));
+    serv.sin_family = AF_INET;
+    serv.sin_port = htons(9876);
+    serv.sin_addr.s_addr = htonl(INADDR_ANY);
+    //创建event_base
+    struct event_base *base = event_base_new();
+    if(base == NULL){
+    	printf(&quot;event_base_new&quot;);
+    	return -1;
+    }
+    //创建监听器
+    struct evconnlistener *listener = evconnlistener_new_bind(base, 
+    		listener_cb, base, LEV_OPT_CLOSE_ON_FREE | LEV_OPT_REUSEABLE,
+    		-1, (struct sockaddr*)&amp;serv, sizeof(serv));
+    if(listener == NULL){
+    	printf(&quot;evconnlistener_new_bind&quot;);
+    	return -1;
+    }
+    //启动事件循环
+    event_base_dispatch(base);
+    //释放资源
+    evconnlistener_free(listener);
+    event_base_free(base);
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>客户端</li>
+</ul>
+<ol>
+<li>获取一个base</li>
+<li>bufferevent_socket_new, 获取一个用于通信的bufferevent对象</li>
+<li>使用bufferevent_socket_connect进行连接服务器</li>
+<li>使用bufferevent_setcb()给这一个对象设置一个回调函数</li>
+<li>读写缓冲区的使能以及失能</li>
+<li>收发数据</li>
+<li>释放资源</li>
+</ol>
+
+<pre class="language-c"><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;event2/event.h&gt;
+#include &lt;event2/listener.h&gt;
+#include &lt;event2/bufferevent.h&gt;
+
+
+void read_cb(struct bufferevent *bev, void *ctx){
+    char buf[1024] = {0};
+    int len = bufferevent_read(bev, buf, sizeof(buf)-1);
+    if(len &lt;= 0){
+    	fprintf(stderr, &quot;read data error!\n&quot;);
+    	return;
+    }
+    printf(&quot;recv data: %s\n&quot;, buf);
+}
+void read_terminal(evutil_socket_t fd, short what, void *arg){
+    char buf[1024] = {0};
+    int len = read(fd, buf, sizeof(buf)-1);
+    if(len &lt;= 0){
+    	fprintf(stderr, &quot;read data error!\n&quot;);
+    	return;
+    }
+    struct bufferevent *bev = (struct bufferevent *)arg;
+    bufferevent_write(bev, buf, len);
+}
+void write_cb(struct bufferevent *bev, void *ctx){
+    printf(&quot;write data\n&quot;);
+}
+void event_cb(struct bufferevent *bev, short what, void *ctx){
+    if(what &amp; BEV_EVENT_EOF){
+    	printf(&quot;connection closed\n&quot;);
+    }else if(what &amp; BEV_EVENT_ERROR){
+    	printf(&quot;some other error\n&quot;);
+    }else if(what &amp; BEV_EVENT_CONNECTED){
+    	printf(&quot;connected\n&quot;);
+    	return;
+    }
+    bufferevent_free(bev);
+}
+int main(void){
+    struct event_base *base;
+    struct bufferevent *bev;
+    struct sockaddr_in serv;
+
+    base = event_base_new();
+    if(!base){
+    	fprintf(stderr, &quot;Could not initialize libevent!\n&quot;);
+    	return 1;
+    }
+    int fd = socket(AF_INET, SOCK_STREAM, 0);
+    memset(&amp;serv, 0, sizeof(serv));
+
+    bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+    if(!bev){
+    	fprintf(stderr, &quot;Could not create bufferevent!\n&quot;);
+    	return 1;
+    }
+    //连接服务器
+    serv.sin_family = AF_INET;
+    serv.sin_port = htons(9876);
+    inet_pton(AF_INET, &quot;127.0.0.1&quot;, &amp;serv.sin_addr);
+    bufferevent_socket_connect(bev, (struct sockaddr *)&amp;serv, sizeof(serv));
+
+    bufferevent_setcb(bev, read_cb, write_cb, event_cb, NULL);
+    
+    bufferevent_enable(bev, EV_READ|EV_WRITE);
+    //监听标准输入
+    struct event *ev = event_new(base, STDIN_FILENO, EV_READ|EV_PERSIST, read_terminal, bev);
+    event_add(ev, NULL);
+    event_base_dispatch(base);
+    event_free(ev);
+    event_base_free(base);
+    bufferevent_free(bev);
+    return 0;
+
+}
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/Linux/Linux网络编程/2024-4-13-05本地套接字.html">
+                            <span class="icon"></span>
+                            <span class="label">2024-4-13-05本地套接字</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/Linux/Linux网络编程/2024-4-16-07简单的Web服务器.html">
+                            <span class="label">2024-4-16-07简单的Web服务器</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

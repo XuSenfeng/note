@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>elem_attr驱动设备模型 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class="active"><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/Linux/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">Linux命令行与shell脚本编程大全</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-初认识Linux_shell.html"><span class="label">2022-8-1-初认识Linux_shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-基本bashshell命令.html"><span class="label">2022-8-1-基本bashshell命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-1-走进shell.html"><span class="label">2022-8-1-走进shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-10-sed进阶.html"><span class="label">2022-8-10-sed进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-gawk进阶.html"><span class="label">2022-8-11-gawk进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-使用其他shell.html"><span class="label">2022-8-11-使用其他shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-11-实例.html"><span class="label">2022-8-11-实例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-12-邮件相关.html"><span class="label">2022-8-12-邮件相关</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-2-更多命令.html"><span class="label">2022-8-2-更多命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-2-理解shell.html"><span class="label">2022-8-2-理解shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-3-使用Linux环境变量.html"><span class="label">2022-8-3-使用Linux环境变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-3-理解Linux的文件权限.html"><span class="label">2022-8-3-理解Linux的文件权限</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-4-安装软件程序.html"><span class="label">2022-8-4-安装软件程序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-4-管理文件系统.html"><span class="label">2022-8-4-管理文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-5-使用编辑器.html"><span class="label">2022-8-5-使用编辑器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-5-构建基本脚本.html"><span class="label">2022-8-5-构建基本脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-使用结构初始化.html"><span class="label">2022-8-6-使用结构初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-处理用户输入.html"><span class="label">2022-8-6-处理用户输入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-6-更多结构化命令.html"><span class="label">2022-8-6-更多结构化命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-7-呈现数据.html"><span class="label">2022-8-7-呈现数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-7-控制脚本.html"><span class="label">2022-8-7-控制脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-8-创建函数.html"><span class="label">2022-8-8-创建函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-图形化桌面环境中的脚本编程.html"><span class="label">2022-8-9-图形化桌面环境中的脚本编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-正则表达式.html"><span class="label">2022-8-9-正则表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux命令行与shell脚本编程大全/2022-8-9-认识sed和gawk.html"><span class="label">2022-8-9-认识sed和gawk</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux就该这么学</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/2022-8-23-.html"><span class="label">2022-8-23-</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">鸟哥的linux私房菜</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-10-计算机概论.html"><span class="label">2022-9-10-计算机概论</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-主机规划与磁盘分区.html"><span class="label">2022-9-20-主机规划与磁盘分区</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-安装CentOS.html"><span class="label">2022-9-20-安装CentOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-20-首次登录.html"><span class="label">2022-9-20-首次登录</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux就该这么学/鸟哥的linux私房菜/2022-9-25-文件权限以及目录.html"><span class="label">2022-9-25-文件权限以及目录</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux源码趣读</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux源码趣读/2024-1-26-01最开始的代码.html"><span class="label">2024-1-26-01最开始的代码</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux系统编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-2-14-01文件IO.html"><span class="label">2024-2-14-01文件IO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-19-02文件系统.html"><span class="label">2024-3-19-02文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-21-03程序和进程.html"><span class="label">2024-3-21-03程序和进程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-23-04进程间通信.html"><span class="label">2024-3-23-04进程间通信</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-25-05信号.html"><span class="label">2024-3-25-05信号</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-28-06守护进程、线程.html"><span class="label">2024-3-28-06守护进程、线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux系统编程/2024-3-31-07线程同步.html"><span class="label">2024-3-31-07线程同步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">Linux网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-10-04线程池.html"><span class="label">2024-4-10-04线程池</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-13-05本地套接字.html"><span class="label">2024-4-13-05本地套接字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-14-06libevent库.html"><span class="label">2024-4-14-06libevent库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-16-07简单的Web服务器.html"><span class="label">2024-4-16-07简单的Web服务器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-16-08html入门.html"><span class="label">2024-4-16-08html入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-17-09CSS.html"><span class="label">2024-4-17-09CSS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-17-09HTTP协议.html"><span class="label">2024-4-17-09HTTP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-2-01网络基础.html"><span class="label">2024-4-2-01网络基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-20-10telnet调试.html"><span class="label">2024-4-20-10telnet调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-20-11服务器.html"><span class="label">2024-4-20-11服务器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-3-02Socket编程.html"><span class="label">2024-4-3-02Socket编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/Linux网络编程/2024-4-6-03高并发服务器.html"><span class="label">2024-4-6-03高并发服务器</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">原子Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-10-Linux常用命令.html"><span class="label">2022-8-10-Linux常用命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-压缩解压缩.html"><span class="label">2022-8-11-压缩解压缩</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-文件系统结构.html"><span class="label">2022-8-11-文件系统结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-11-磁盘管理.html"><span class="label">2022-8-11-磁盘管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-LinuxC.html"><span class="label">2022-8-12-LinuxC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-Makefile书.html"><span class="label">2022-8-12-Makefile书</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-make和Makefile.html"><span class="label">2022-8-12-make和Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-开发环境搭建.html"><span class="label">2022-8-12-开发环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-用户和用户组.html"><span class="label">2022-8-12-用户和用户组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-12-链接文件.html"><span class="label">2022-8-12-链接文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-IMX启动方式.html"><span class="label">2022-8-13-IMX启动方式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-vscode.html"><span class="label">2022-8-13-vscode</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-开发板简介.html"><span class="label">2022-8-13-开发板简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-13-汇编LED驱动.html"><span class="label">2022-8-13-汇编LED驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-C语言点灯.html"><span class="label">2022-8-14-C语言点灯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-按键检测.html"><span class="label">2022-8-14-按键检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-14-模仿stm32编程.html"><span class="label">2022-8-14-模仿stm32编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-15-中断.html"><span class="label">2022-8-15-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-15-主频时钟配置.html"><span class="label">2022-8-15-主频时钟配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-16-EPIT定时器.html"><span class="label">2022-8-16-EPIT定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-16-GPT时钟.html"><span class="label">2022-8-16-GPT时钟</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-DDR3.html"><span class="label">2022-8-17-DDR3</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-RGBLED.html"><span class="label">2022-8-17-RGBLED</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-17-串口.html"><span class="label">2022-8-17-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-18-I2C.html"><span class="label">2022-8-18-I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-18-RTC.html"><span class="label">2022-8-18-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-PWM.html"><span class="label">2022-8-19-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-SPI.html"><span class="label">2022-8-19-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-19-多点电容触摸屏.html"><span class="label">2022-8-19-多点电容触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-20-uBoot.html"><span class="label">2022-8-20-uBoot</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-20-系统烧写.html"><span class="label">2022-8-20-系统烧写</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-22-源码目录分析.html"><span class="label">2022-8-22-源码目录分析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-22-顶层Makefile.html"><span class="label">2022-8-22-顶层Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-Linux内核.html"><span class="label">2022-8-23-Linux内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-uboot图形化配置界面.html"><span class="label">2022-8-23-uboot图形化配置界面</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-启动流程.html"><span class="label">2022-8-23-启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-23-移植.html"><span class="label">2022-8-23-移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-24-驱动开发.html"><span class="label">2022-8-24-驱动开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-26-linux点灯.html"><span class="label">2022-8-26-linux点灯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-27-设备树.html"><span class="label">2022-8-27-设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-28-led设备树.html"><span class="label">2022-8-28-led设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-29-Linux的并发与竞争.html"><span class="label">2022-8-29-Linux的并发与竞争</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-29-pinclt和gpio.html"><span class="label">2022-8-29-pinclt和gpio</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-30-Linux中断.html"><span class="label">2022-8-30-Linux中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-30-Linux内核定时器.html"><span class="label">2022-8-30-Linux内核定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-31-异步通知.html"><span class="label">2022-8-31-异步通知</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-8-31-阻塞非阻塞.html"><span class="label">2022-8-31-阻塞非阻塞</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-1-platform设备驱动.html"><span class="label">2022-9-1-platform设备驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-10-WIFI.html"><span class="label">2022-9-10-WIFI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-10-网络驱动.html"><span class="label">2022-9-10-网络驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-4G.html"><span class="label">2022-9-11-4G</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-IIO.html"><span class="label">2022-9-11-IIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-PWM.html"><span class="label">2022-9-11-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-RGBtoHDMI.html"><span class="label">2022-9-11-RGBtoHDMI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-11-Regmap.html"><span class="label">2022-9-11-Regmap</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-INPUT子系统.html"><span class="label">2022-9-2-INPUT子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-LCD屏幕.html"><span class="label">2022-9-2-LCD屏幕</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-Linux自带的led.html"><span class="label">2022-9-2-Linux自带的led</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-2-MISC.html"><span class="label">2022-9-2-MISC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-I2C.html"><span class="label">2022-9-3-I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-RTC.html"><span class="label">2022-9-3-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-3-SPI.html"><span class="label">2022-9-3-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-4-串口.html"><span class="label">2022-9-4-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-5-触摸屏.html"><span class="label">2022-9-5-触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-5-音频驱动.html"><span class="label">2022-9-5-音频驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-6-CAN协议.html"><span class="label">2022-9-6-CAN协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-7-USB.html"><span class="label">2022-9-7-USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/原子Linux/2022-9-7-块设备驱动.html"><span class="label">2022-9-7-块设备驱动</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">操作系统原理</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-1操作系统.html"><span class="label">2023-6-17-1操作系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-2操作系统目标和作用.html"><span class="label">2023-6-17-2操作系统目标和作用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-3操作系统特征.html"><span class="label">2023-6-17-3操作系统特征</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-4操作系统的发展.html"><span class="label">2023-6-17-4操作系统的发展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-17-5运行机制.html"><span class="label">2023-6-17-5运行机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-18-6中断异常.html"><span class="label">2023-6-18-6中断异常</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-18-7系统调用.html"><span class="label">2023-6-18-7系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-19-8体系结构.html"><span class="label">2023-6-19-8体系结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-10虚拟机.html"><span class="label">2023-6-20-10虚拟机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-11进程.html"><span class="label">2023-6-20-11进程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-20-9操作系统的引导.html"><span class="label">2023-6-20-9操作系统的引导</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-22-12线程.html"><span class="label">2023-6-22-12线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-23-13调度.html"><span class="label">2023-6-23-13调度</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-27-14进程同步进程互斥.html"><span class="label">2023-6-27-14进程同步进程互斥</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-28-15锁.html"><span class="label">2023-6-28-15锁</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/操作系统原理/2023-6-28-16信号量机制.html"><span class="label">2023-6-28-16信号量机制</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">服务器</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/服务器/2023-6-12-代理.html"><span class="label">2023-6-12-代理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/服务器/2023-6-12-新服务器搭建.html"><span class="label">2023-6-12-新服务器搭建</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李述铜手写操作系统</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-10-26-05中断和异常处理.html"><span class="label">2023-10-26-05中断和异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-11-10-06日志与printf输出.html"><span class="label">2023-11-10-06日志与printf输出</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-23-03引导程序接管控制权.html"><span class="label">2023-9-23-03引导程序接管控制权</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-28-04加载器loader的实现.html"><span class="label">2023-9-28-04加载器loader的实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-01补充知识2.html"><span class="label">2023-9-6-01补充知识2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-0补充知识.html"><span class="label">2023-9-6-0补充知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-6-1操作系统准备.html"><span class="label">2023-9-6-1操作系统准备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2023-9-7-2x86保护模式下的编程.html"><span class="label">2023-9-7-2x86保护模式下的编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17-07进程切换.html"><span class="label">2024-2-17-07进程切换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17-08链表.html"><span class="label">2024-2-17-08链表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-17添加任务管理器.html"><span class="label">2024-2-17添加任务管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-18-内存管理.html"><span class="label">2024-2-18-内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-24-系统调用.html"><span class="label">2024-2-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-26-移植Newlib库.html"><span class="label">2024-2-26-移植Newlib库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-27-屏幕显示信息.html"><span class="label">2024-2-27-屏幕显示信息</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-2-29-键盘初始化.html"><span class="label">2024-2-29-键盘初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-1-设备管理.html"><span class="label">2024-3-1-设备管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-3-Shell.html"><span class="label">2024-3-3-Shell</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-4-文件系统.html"><span class="label">2024-3-4-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-5-磁盘.html"><span class="label">2024-3-5-磁盘</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/李述铜手写操作系统/2024-3-7-Fat16.html"><span class="label">2024-3-7-Fat16</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">树莓派</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-01开始使用.html"><span class="label">2024-2-1-01开始使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-02-使用命令了解树莓派.html"><span class="label">2024-2-1-02-使用命令了解树莓派</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-1-03-安装mysql.html"><span class="label">2024-2-1-03-安装mysql</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-3-04网络连接.html"><span class="label">2024-2-3-04网络连接</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/树莓派/2024-2-8-时钟设置.html"><span class="label">2024-2-8-时钟设置</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">泰山派</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-20-05-lvgl程序.html"><span class="label">2025-12-20-05-lvgl程序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-24-06-二维码识别.html"><span class="label">2025-12-24-06-二维码识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-24-07-yolo部署.html"><span class="label">2025-12-24-07-yolo部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-25-08-OpenCV.html"><span class="label">2025-12-25-08-OpenCV</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-26-09-拍照.html"><span class="label">2025-12-26-09-拍照</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-12-26-10-Qt.html"><span class="label">2025-12-26-10-Qt</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-11-01环境搭建.html"><span class="label">2025-5-11-01环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-11-02设备树.html"><span class="label">2025-5-11-02设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-14-03屏幕驱动.html"><span class="label">2025-5-14-03屏幕驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2025-5-17-04触摸驱动.html"><span class="label">2025-5-17-04触摸驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2026-1-27-ROS.html"><span class="label">2026-1-27-ROS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/泰山派/2026-1-30-Ubuntu22.html"><span class="label">2026-1-30-Ubuntu22</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">瑞芯微Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-10-Cpp提供C接口.html"><span class="label">2025-12-10-Cpp提供C接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-5-01-EchoAI编译代码.html"><span class="label">2025-12-5-01-EchoAI编译代码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-5-02-EchoAI代码.html"><span class="label">2025-12-5-02-EchoAI代码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-7-03-添加板子.html"><span class="label">2025-12-7-03-添加板子</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-8-04-内核.html"><span class="label">2025-12-8-04-内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/2025-12-9-05-模型.html"><span class="label">2025-12-9-05-模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/瑞芯微Linux/配置网络.html"><span class="label">配置网络</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">野火Linux</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-11-55-buildroot.html"><span class="label">2025-10-11-55-buildroot</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-11-56-裸机汇编开发.html"><span class="label">2025-10-11-56-裸机汇编开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-12-57-Uboot编译脚本.html"><span class="label">2025-10-12-57-Uboot编译脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-47-镜像构建.html"><span class="label">2025-10-2-47-镜像构建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-48-systemd.html"><span class="label">2025-10-2-48-systemd</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-49-deb包.html"><span class="label">2025-10-2-49-deb包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-50-修改img文件.html"><span class="label">2025-10-2-50-修改img文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-51-备份量产.html"><span class="label">2025-10-2-51-备份量产</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-2-52-Uboot启动.html"><span class="label">2025-10-2-52-Uboot启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-28-58-Uboot移植.html"><span class="label">2025-10-28-58-Uboot移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-30-59-Uboot图形配置界面语法.html"><span class="label">2025-10-30-59-Uboot图形配置界面语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-30-60-Linux编译脚本.html"><span class="label">2025-10-30-60-Linux编译脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-31-61-Linux启动流程.html"><span class="label">2025-10-31-61-Linux启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-9-53-Uboot启动(二).html"><span class="label">2025-10-9-53-Uboot启动(二)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-10-9-54-Uboot启动(三).html"><span class="label">2025-10-9-54-Uboot启动(三)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-1-62-linux移植.html"><span class="label">2025-11-1-62-linux移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-1-63-Busybox.html"><span class="label">2025-11-1-63-Busybox</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-10-65-定时器.html"><span class="label">2025-11-10-65-定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-12-66-信号.html"><span class="label">2025-11-12-66-信号</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-14-67-MISC设备.html"><span class="label">2025-11-14-67-MISC设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-15-68-RTC.html"><span class="label">2025-11-15-68-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-16-69-串口.html"><span class="label">2025-11-16-69-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-18-70-中断线程化.html"><span class="label">2025-11-18-70-中断线程化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-18-71-音频.html"><span class="label">2025-11-18-71-音频</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-19-72-CAN.html"><span class="label">2025-11-19-72-CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-19-73-USB.html"><span class="label">2025-11-19-73-USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-2-64-mfgtool.html"><span class="label">2025-11-2-64-mfgtool</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-20-74-块设备.html"><span class="label">2025-11-20-74-块设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-21-75-网络设备.html"><span class="label">2025-11-21-75-网络设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-76-Wifi.html"><span class="label">2025-11-22-76-Wifi</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-77-PWM.html"><span class="label">2025-11-22-77-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-78-Regmap通用寄存器.html"><span class="label">2025-11-22-78-Regmap通用寄存器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-22-79-IIO驱动框架.html"><span class="label">2025-11-22-79-IIO驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-11-25-80-ADC驱动.html"><span class="label">2025-11-25-80-ADC驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-12-6-81-音频驱动.html"><span class="label">2025-12-6-81-音频驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-12-8-82-DRM显示设备.html"><span class="label">2025-12-8-82-DRM显示设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-6-11-01-入门.html"><span class="label">2025-6-11-01-入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-6-22-02-开发板下载启动.html"><span class="label">2025-6-22-02-开发板下载启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-12-04-镜像文件.html"><span class="label">2025-7-12-04-镜像文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-13-06-GPIO.html"><span class="label">2025-7-13-06-GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-13-07-中断.html"><span class="label">2025-7-13-07-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-05-ARMv7汇编.html"><span class="label">2025-7-14-05-ARMv7汇编</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-08-时钟控制模块.html"><span class="label">2025-7-14-08-时钟控制模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-14-09-串口.html"><span class="label">2025-7-14-09-串口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-10-内核模块.html"><span class="label">2025-7-15-10-内核模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-15-11-字符设备.html"><span class="label">2025-7-15-11-字符设备</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/Linux/野火Linux/2025-7-15-12-驱动设备模型.html"><span class="label">2025-7-15-12-驱动设备模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-13-Kset.html"><span class="label">2025-7-19-13-Kset</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-14-uevent消息.html"><span class="label">2025-7-19-14-uevent消息</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-15-class设备管理.html"><span class="label">2025-7-19-15-class设备管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-16-17-总结.html"><span class="label">2025-7-19-16-17-总结</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-19-16-xbus和platform.html"><span class="label">2025-7-19-16-xbus和platform</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-2-03-控制设备.html"><span class="label">2025-7-2-03-控制设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-20-18-DTS设备树.html"><span class="label">2025-7-20-18-DTS设备树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-7-20-19-DeviceTreeOverlay.html"><span class="label">2025-7-20-19-DeviceTreeOverlay</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-16-21-iomux节点(中).html"><span class="label">2025-9-16-21-iomux节点(中)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-16-22-iomux节点(下).html"><span class="label">2025-9-16-22-iomux节点(下)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-23-iomux节点(应用).html"><span class="label">2025-9-17-23-iomux节点(应用)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-24-GPIO子系统.html"><span class="label">2025-9-17-24-GPIO子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-17-25-并发硬件同步原语.html"><span class="label">2025-9-17-25-并发硬件同步原语</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-18-26-IIC驱动框架.html"><span class="label">2025-9-18-26-IIC驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-20-27-IIC驱动框架使用.html"><span class="label">2025-9-20-27-IIC驱动框架使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-28-阻塞和非阻塞IO.html"><span class="label">2025-9-25-28-阻塞和非阻塞IO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-29-POLL机制.html"><span class="label">2025-9-25-29-POLL机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-30-Completion.html"><span class="label">2025-9-25-30-Completion</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-25-31-kthread_worker.html"><span class="label">2025-9-25-31-kthread_worker</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-26-32-SPI.html"><span class="label">2025-9-26-32-SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-26-33-SPI使用.html"><span class="label">2025-9-26-33-SPI使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-34-中断.html"><span class="label">2025-9-27-34-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-35-软中断和tasklet.html"><span class="label">2025-9-27-35-软中断和tasklet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-36-工作队列.html"><span class="label">2025-9-27-36-工作队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-27-37-Input子系统.html"><span class="label">2025-9-27-37-Input子系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-38-电容触摸屏.html"><span class="label">2025-9-28-38-电容触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-39-PWM.html"><span class="label">2025-9-28-39-PWM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-28-40-LCD-FB设备.html"><span class="label">2025-9-28-40-LCD-FB设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-41-Linux系统构成.html"><span class="label">2025-9-29-41-Linux系统构成</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-42-Uboot基础使用.html"><span class="label">2025-9-29-42-Uboot基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-43-Linux.html"><span class="label">2025-9-29-43-Linux</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-29-44-添加驱动(设备树).html"><span class="label">2025-9-29-44-添加驱动(设备树)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-30-45-图标.html"><span class="label">2025-9-30-45-图标</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-30-46-根文件系统.html"><span class="label">2025-9-30-46-根文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/2025-9-4-20-iomux节点(上).html"><span class="label">2025-9-4-20-iomux节点(上)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/野火Linux/Untitled.html"><span class="label">Untitled</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">问题处理</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-11-20-Linux图形界面.html"><span class="label">2022-11-20-Linux图形界面</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-24-tftp下载.html"><span class="label">2022-8-24-tftp下载</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-26-uboot设置.html"><span class="label">2022-8-26-uboot设置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-27-根文件系统被删除.html"><span class="label">2022-8-27-根文件系统被删除</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-8-5-没有release文件.html"><span class="label">2022-8-5-没有release文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-9-7-备份根文件.html"><span class="label">2022-9-7-备份根文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2022-9-9-ubuntu移植问题处理.html"><span class="label">2022-9-9-ubuntu移植问题处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-11-11-树莓派.html"><span class="label">2023-11-11-树莓派</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-6-14-打不开gpedit-msc.html"><span class="label">2023-6-14-打不开gpedit-msc</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-6-28-vscode配置.html"><span class="label">2023-6-28-vscode配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/Linux/问题处理/2023-8-27-开发板网络设置.html"><span class="label">2023-8-27-开发板网络设置</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">韦东山Linux</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/Linux/韦东山Linux/2025-3-4-基础.html"><span class="label">2025-3-4-基础</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>elem_attr驱动设备模型</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/Linux/野火Linux/2025-7-15-12-驱动设备模型.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h2 id="linux%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B">linux设备驱动模型</h2>
+<h3 id="%E5%BA%94%E7%94%A8">应用</h3>
+<p>创建一个kobject对象, 这个对象里面可以有很多个属性, 分别对应一个文件, 对文件读写操控对应的函数</p>
+
+<pre class="language-c"><code class="language-c">// 创建一个文件夹
+struct kobject *kobject_create_and_add(const char *name, struct kobject *parent);
+// 添加属性文件
+int sysfs_create_group(struct kobject *kobj, const struct attribute_gr释放资源
+// 释放资源
+void kobject_put(struct kobject *kobj);
+</code></pre>
+<p>使用的参数</p>
+
+<pre class="language-c"><code class="language-c">static struct kobj_attribute led_attribute =
+    // 第一个是名字的字符串, 使用宏定义进行类型的转换
+    __ATTR(led, 0664, led_show, led_store);
+// 参数的列表 
+static struct attribute *attrs[] = {
+    &amp;foo_attribute.attr,
+    &amp;led_attribute.attr,
+    NULL,	/* need to NULL terminate the list of attributes */
+};
+// 实际注册的类型
+static struct attribute_group attr_group = {
+    .attrs = attrs,
+};
+</code></pre>
+<h3 id="%E6%A6%82%E5%BF%B5">概念</h3>
+<h4 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B">为什么需要设备驱动模型</h4>
+<ul>
+<li>早期内核（2.4之前）没有统一的设备驱动模型，但照样可以用, 需要使用mknod命令在/dev创建驱动文件</li>
+<li>2.4~2.6期间使用devfs，挂载在/dev目录。<ul>
+<li>需要在内核驱动中创建设备文件(可以使用devfs_register函数进行文件的创建)，在代码里面写死命名死板</li>
+</ul>
+</li>
+<li>2.6以后使用sysfs，挂载在/sys目录<ul>
+<li>将设备分类、分层次统一进行管理</li>
+<li>配合udev/mdev守护进程动态创建设备文件，命令规则自由制定, 守护进程监听用户发来的信息</li>
+<li>实际控制的是模型的多个属性, 可以进行读写</li>
+</ul>
+</li>
+</ul>
+<h4 id="sysfs%E6%A6%82%E8%BF%B0">sysfs概述</h4>
+<p>linux系统通过sysfs体现出设备驱动模型</p>
+<ul>
+<li>sysfs是一个虚拟文件系统（类似proc文件系统）</li>
+<li><strong>目录</strong>对应的inode节点会记录基本驱动对象(kobject)，从而将系统中的设备组成层次结构</li>
+<li>用户可以读写目录下的不同文件来配置驱动对象(kobject)的不同属性</li>
+</ul>
+<blockquote>
+<p>proc文件系统一般适用于展示任务的信息的</p>
+<p>rootfs的根文件系统在初始化脚本里面有<code>echo /sbin/mdev &gt; /proc/sys/kernel/hotplug</code>把 hotplug 机制的路径设置为 /sbin/mdev</p>
+<ul>
+<li>/proc/sys/kernel/hotplug 是一个内核参数，用于指定当检测到新硬件设备时，内核应调用哪个程序来处理设备的创建与删除（即 hotplug 事件的处理器）。</li>
+<li>/sbin/mdev 是 busybox 或类似工具提供的一个轻量级设备管理器，它负责在设备节点和 /dev 目录之间建立或删除设备节点。它常用于嵌入式系统、内核初始阶段尚未运行 udev 的场景。</li>
+</ul>
+</blockquote>
+<h4 id="%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E5%85%83%E7%B4%A0">设备驱动模型基本元素</h4>
+<ul>
+<li>kobject：sysfs中的一个目录，常用来表示基本驱动对象，不允许发送消息到用户空间</li>
+<li>kset：sysfs中的一个目录，常用来管理kobject，允许发送消息到用户空间</li>
+<li>kobj_type：目录下属性文件的操作接口</li>
+</ul>
+<h3 id="%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B1">驱动模型1</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507181421091.png" alt="image-20250718142106602" /></p>
+<p>在 Linux 内核的设备模型中，<strong><code>kset</code>（Kernel Object Set）</strong> 是一个 <strong>管理同类型 <code>kobject</code> 的容器</strong>。它本质上是 <code>kobject</code> 的集合管理器，用于组织、管理和操作一组逻辑相关的内核对象。</p>
+<h4 id="kset-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BD%9C%E7%94%A8">kset 的核心作用</h4>
+<ol>
+<li><strong>逻辑分组</strong></li>
+</ol>
+<ul>
+<li><p>将具有<strong>相同类型或功能属性</strong>的 <code>kobject</code> 归入同一集合（如所有 USB 设备、所有 PCI 设备）。</p>
+</li>
+<li><p>示例：</p>
+
+<pre class="language-none"><code class="language-none">struct kset *usb_devices_kset; // 所有 USB 设备的集合
+</code></pre>
+</li>
+</ul>
+<ol start="2">
+<li><strong>统一管理</strong></li>
+</ol>
+<ul>
+<li>提供对组内对象的批量操作：<ul>
+<li>遍历所有成员（通过链表 <code>kobject-&gt;entry</code> 连接）。</li>
+<li>递归释放组内所有对象（当 <code>kset</code> 自身被释放时）。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>sysfs 目录结构</strong></li>
+</ol>
+<ul>
+<li>每个 <code>kset</code> 在 sysfs 中对应<strong>一个目录</strong>（如 <code>/sys/bus/usb/devices/</code>）。</li>
+<li>成员 <code>kobject</code> 默认显示在该目录下（除非显式指定 <code>parent</code>）。</li>
+</ul>
+<ol start="4">
+<li><strong>继承默认行为</strong></li>
+</ol>
+<ul>
+<li>为组内对象提供共享的属性和方法：<ul>
+<li>通过关联 <code>ktype</code>（如所有 USB 设备共享相同的属性文件操作）。</li>
+<li>若组内 <code>kobject</code> 未单独设置 <code>ktype</code>，则继承 <code>kset-&gt;ktype</code>。</li>
+</ul>
+</li>
+</ul>
+<ol start="5">
+<li><strong>热插拔事件处理</strong></li>
+</ol>
+<ul>
+<li>管理 <strong>uevent</strong> 事件（如设备插入/移除）：<ul>
+<li>定义 <code>kset-&gt;uevent_ops</code> 处理事件回调。</li>
+<li>统一向用户空间（如 udev）发送事件通知。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><code>*kset</code> 指针：管理对象集合（横向分组）</li>
+</ol>
+<blockquote>
+<ul>
+<li><p><strong>作用</strong>：<br />
+  指向一个 <strong><code>kset</code> 对象</strong>，表示当前 <code>kobject</code> <strong>所属的集合</strong>。<code>kset</code> 是相同类型对象的逻辑分组（如所有 USB 设备、所有 PCI 设备）。</p>
+</li>
+<li><p><strong>核心功能</strong>：</p>
+<ul>
+<li><strong>统一管理</strong>：通过 <code>kset</code> 可批量操作组内对象（如遍历所有对象、统一释放资源）。</li>
+<li><strong>定义默认属性</strong>：<code>kset</code> 可提供组内对象共享的默认属性和方法（如 <code>ktype</code>）。</li>
+<li><strong>sysfs 组织结构</strong>：<ul>
+<li>若 <code>kobject</code> 未显式指定 <code>parent</code>，则它在 sysfs 中默认出现在 <code>kset</code> 对应的目录下。</li>
+<li>例如：所有 USB 设备（<code>kobject</code>）位于 <code>/sys/bus/usb/devices/</code>（<code>kset</code> 的目录）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>特点</strong>：<br />
+  体现对象的 <strong>“分类归属”</strong>（如设备类型、总线类型），强调逻辑分组。</p>
+</li>
+</ul>
+</blockquote>
+<ol start="2">
+<li><code>*parent</code> 指针：构建层次结构（纵向继承）</li>
+</ol>
+<blockquote>
+<ul>
+<li><strong>作用</strong>：<br />
+ 指向另一个 <strong><code>kobject</code> 对象</strong>，表示当前对象的 <strong>父对象</strong>，用于构建树形层次结构。</li>
+<li><strong>核心功能</strong>：<ul>
+<li><strong>sysfs 目录结构</strong>：<br />
+  当前对象的 sysfs 目录直接位于父对象的目录下（形成路径如 <code>/sys/devices/parent/child/</code>）。</li>
+<li><strong>生命周期管理</strong>：<br />
+  父对象被释放时，所有子对象会递归释放（引用计数机制）。</li>
+<li><strong>设备模型关系</strong>：<br />
+  描述物理/逻辑层级（如：USB 鼠标的 <code>parent</code> 是 USB 集线器，集线器的 <code>parent</code> 是 USB 控制器）。</li>
+</ul>
+</li>
+<li><strong>特点</strong>：<br />
+ 体现对象的 <strong>“从属关系”</strong>（如设备拓扑结构），强调物理/逻辑层级。</li>
+</ul>
+</blockquote>
+<h4 id="kset-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">kset 的数据结构</h4>
+
+<pre class="language-c"><code class="language-c">struct kset {
+    struct list_head list;        // 连接所有成员的链表头
+    spinlock_t list_lock;         // 链表操作锁
+    struct kobject kobj;          // 内嵌的 kobject（kset本身也是kobject！）
+    const struct kset_uevent_ops *uevent_ops; // 热插拔事件操作集
+};
+</code></pre>
+<h3 id="%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B2">驱动模型2</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507181424565.png" alt="image-20250718142424444" /></p>
+<p>上层kobject节点无法遍历查找下层kobject</p>
+<h3 id="kobject">kobject</h3>
+<p>sysfs中每一个目录都对应一个kobject, 目录里面的文件是实际需要控制的属性</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507181437767.png" alt="image-20250718143722417" /></p>
+<p>include/linux/kobject.h</p>
+
+<pre class="language-c"><code class="language-c">struct kobject {
+    //用来表示该kobject的名称
+    const char		*name;
+    //链表节点
+    struct list_head	entry;
+    //该kobject的上层节点，构建kobject之间的层次关系
+    struct kobject		*parent;
+    //该kobject所属的kset对象，用于批量管理kobject对象
+    struct kset		*kset;
+    //该Kobject的sysfs文件系统相关的操作和属性
+    struct kobj_type	*ktype;
+    //该kobject在sysfs文件系统中对应目录项
+    struct kernfs_node	*sd; /* sysfs directory entry */
+    //该kobject的引用次数
+    struct kref		kref;
+#ifdef CONFIG_DEBUG_KOBJECT_RELEASE
+    struct delayed_work	release;
+#endif
+    //记录内核对象的初始化状态
+    unsigned int state_initialized:1;
+    //表示该kobject所代表的内核对象有没有在sysfs建立目录
+    unsigned int state_in_sysfs:1;
+    // 用于发送消息到用户空间
+    unsigned int state_add_uevent_sent:1;
+    unsigned int state_remove_uevent_sent:1;
+    unsigned int uevent_suppress:1;
+};
+</code></pre>
+<h4 id="kobject_create_and_add%28%29">kobject_create_and_add()</h4>
+<p>lib/kobject.c</p>
+<ul>
+<li>kobject对象的构建</li>
+<li>构建一个sysfs里面的目录项, kernelfs_node</li>
+<li>关联起来</li>
+</ul>
+
+<pre class="language-c"><code class="language-c">struct kobject *kobject_create_and_add(const char *name, struct kobject *parent)
+{
+    struct kobject *kobj;
+    int retval;
+    /*创建并初始化一个kobject对象*/
+    kobj = kobject_create();
+    if (!kobj)
+    	return NULL;
+    /*sysfs创建一个目录项并与kobject对象关联*/
+    retval = kobject_add(kobj, parent, &quot;%s&quot;, name);
+    if (retval) {
+    	pr_warn(&quot;%s: kobject_add error: %d\n&quot;, __func__, retval);
+    	kobject_put(kobj);
+    	kobj = NULL;
+    }
+    return kobj;
+}
+</code></pre>
+<h4 id="kobject_create%28%29%E5%87%BD%E6%95%B0">kobject_create()函数</h4>
+<p>lib/kobject.c</p>
+<p>创建一个对象以及初始化他的操作函数</p>
+
+<pre class="language-c"><code class="language-c">struct kobject *kobject_create(void)
+{
+    struct kobject *kobj;
+    /*动态申请内存，存放kobject对象*/
+    kobj = kzalloc(sizeof(*kobj), GFP_KERNEL);
+    if (!kobj)
+    	return NULL;
+    // 初始化, 设置实际的操作接口ktype为dynamic_kobj_ktype
+    kobject_init(kobj, &amp;dynamic_kobj_ktype);
+    return kobj;
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">static struct kobj_type dynamic_kobj_ktype = {
+    .release	= dynamic_kobj_release,
+    .sysfs_ops	= &amp;kobj_sysfs_ops,
+};
+</code></pre>
+
+<pre class="language-c"><code class="language-c">// 文件的属性接口, 是一个统一的接口
+const struct sysfs_ops kobj_sysfs_ops = {
+    .show	= kobj_attr_show,
+    .store	= kobj_attr_store,
+};
+</code></pre>
+<h5 id="kobject_init%28%29%E5%87%BD%E6%95%B0">kobject_init()函数</h5>
+<p>lib/kobject.c</p>
+<p>初始化操作的接口</p>
+
+<pre class="language-c"><code class="language-c">void kobject_init(struct kobject *kobj, struct kobj_type *ktype)
+{
+...
+    // 初始化一下其他的操作对象
+    kobject_init_internal(kobj);
+    /*设置目录属性文件的操作接口*/
+    kobj-&gt;ktype = ktype;
+    return;
+...
+}
+</code></pre>
+<h5 id="kobject_init_internal%28%29%E5%87%BD%E6%95%B0">kobject_init_internal()函数</h5>
+<p>lib/kobject.c</p>
+<p>初始化一下基础的成员变量, 计数链表初始化</p>
+
+<pre class="language-c"><code class="language-c">static void kobject_init_internal(struct kobject *kobj)
+{
+    if (!kobj)
+    	return;\
+    /*将kobject的引用计数设置为1*/
+    kref_init(&amp;kobj-&gt;kref);
+    /*初始化链表节点*/
+    INIT_LIST_HEAD(&amp;kobj-&gt;entry);
+    /*该kobject对象还没和sysfs目录项关联*/
+    kobj-&gt;state_in_sysfs = 0;
+    kobj-&gt;state_add_uevent_sent = 0;
+    kobj-&gt;state_remove_uevent_sent = 0;
+    /*kobject对象的初始化标志*/
+    kobj-&gt;state_initialized = 1;
+}
+</code></pre>
+<h4 id="kobject_add%28%29%E5%87%BD%E6%95%B0">kobject_add()函数</h4>
+<p>lib/kobject.c</p>
+<p>设置名字参数以及把这个对象和父对象进行链接等</p>
+<p>调用: <code>retval = kobject_add(kobj, parent, &quot;%s&quot;, name);</code></p>
+
+<pre class="language-c"><code class="language-c">int kobject_add(struct kobject *kobj, struct kobject *parent,const char *fmt, ...)
+{
+    va_list args;
+    int retval;
+...
+    /*获取第一个可变参数(名字)，可变参数函数的实现与函数传参的栈结构有关*/
+    va_start(args, fmt);
+    retval = kobject_add_varg(kobj, parent, fmt, args);
+    va_end(args);
+...
+    return retval;
+}
+</code></pre>
+<h5 id="kobject_add_varg%28%29%E5%87%BD%E6%95%B0">kobject_add_varg()函数</h5>
+<p>lib/kobject.c</p>
+<p>设置父对象以及设置名字等</p>
+
+<pre class="language-c"><code class="language-c">static __printf(3, 0) int kobject_add_varg(struct kobject *kobj,
+    				   struct kobject *parent,
+    				   const char *fmt, va_list vargs)
+{
+    int retval;
+    retval = kobject_set_name_vargs(kobj, fmt, vargs);
+    if (retval) {
+    	pr_err(&quot;kobject: can not set name properly!\n&quot;);
+    	return retval;
+    }
+    /*第一次设置kobj的parent指针*/
+    kobj-&gt;parent = parent;
+    return kobject_add_internal(kobj);
+}
+</code></pre>
+<h5 id="kobject_set_name_vargs%28%29%E5%87%BD%E6%95%B0">kobject_set_name_vargs()函数</h5>
+<p>lib/kobject.c</p>
+<p>初始化名字参数</p>
+
+<pre class="language-c"><code class="language-c">int kobject_set_name_vargs(struct kobject *kobj, const char *fmt,
+    			  va_list vargs)
+{
+    const char *s;
+    ...
+    /*参数格式化打印到s字符串中*/
+    s = kvasprintf_const(GFP_KERNEL, fmt, vargs);
+    ...
+    /*设置kobject对象的名称*/
+    kobj-&gt;name = s;
+    ...
+}
+    
+</code></pre>
+<h5 id="kobject_add_internal%28%29%E5%87%BD%E6%95%B0">kobject_add_internal()函数</h5>
+<p>lib/kobject.c</p>
+<p>把这个对象和父对象进行连接</p>
+
+<pre class="language-c"><code class="language-c">static int kobject_add_internal(struct kobject *kobj)
+{
+    struct kobject *parent;
+    ...
+    parent = kobject_get(kobj-&gt;parent);
+    
+    if (kobj-&gt;kset) {
+    	/*如果parent为空，parent设置为kobj-&gt;kset-&gt;kobj*/
+    	if (!parent)
+    		parent = kobject_get(&amp;kobj-&gt;kset-&gt;kobj);
+    	/*把该kobject加入到kset链表的末尾*/
+    	kobj_kset_join(kobj);
+    	/*第二次设置kobj的parent指针*/
+    	kobj-&gt;parent = parent;
+    }
+    ...
+     // 负责创建目录项
+    error = create_dir(kobj);
+    ...
+    kobj-&gt;state_in_sysfs = 1;
+    ...
+}
+</code></pre>
+<h5 id="create_dir%28%29%E5%87%BD%E6%95%B0">create_dir()函数</h5>
+<p>lib/kobject.c</p>
+
+<pre class="language-c"><code class="language-c">static int create_dir(struct kobject *kobj)
+{
+    const struct kobj_ns_type_operations *ops;
+    int error;
+    // 实际的创建函数
+    error = sysfs_create_dir_ns(kobj, kobject_namespace(kobj));
+    ...
+}
+</code></pre>
+<h5 id="sysfs_create_dir_ns%28%29%E5%87%BD%E6%95%B0">sysfs_create_dir_ns()函数</h5>
+<p>fs/sysfs/dir.c</p>
+
+<pre class="language-c"><code class="language-c">int sysfs_create_dir_ns(struct kobject *kobj, const void *ns)
+{
+    struct kernfs_node *parent, *kn;
+    kuid_t uid;
+    kgid_t gid;
+
+    BUG_ON(!kobj);
+    
+    if (kobj-&gt;parent)
+    	/*获取上一层节点的目录项*/
+    	parent = kobj-&gt;parent-&gt;sd;
+    else
+    	/*设置上一层节点的目录项为sysfs根目录*/
+    	parent = sysfs_root_kn;
+
+    if (!parent)
+    	return -ENOENT;
+    // 记录在sysfs文件系统里面
+    kn = kernfs_create_dir_ns(parent, kobject_name(kobj),
+    			  S_IRWXU | S_IRUGO | S_IXUGO, uid, gid,
+    			  kobj, ns);
+    ...
+    /*kobj对象关联sysfs目录项*/
+    kobj-&gt;sd = kn;
+    return 0;
+}
+</code></pre>
+<h5 id="kernfs_create_dir_ns%28%29%E5%87%BD%E6%95%B0">kernfs_create_dir_ns()函数</h5>
+
+<pre class="language-c"><code class="language-c">struct kernfs_node *kernfs_create_dir_ns(struct kernfs_node *parent,
+    				 const char *name, umode_t mode,
+    				 kuid_t uid, kgid_t gid,
+    				 void *priv, const void *ns)
+{
+    struct kernfs_node *kn;
+    int rc;
+
+    /* allocate */
+    kn = kernfs_new_node(parent, name, mode | S_IFDIR,
+    		     uid, gid, KERNFS_DIR);
+    ...
+    /*sysfs目录项关联kobject对象*/
+    kn-&gt;priv = priv; // 记录的是kobject对象
+    ...
+}
+</code></pre>
+<h5 id="kernfs_new_node%28%29%E5%87%BD%E6%95%B0">kernfs_new_node()函数</h5>
+
+<pre class="language-c"><code class="language-c">struct kernfs_node *kernfs_new_node(struct kernfs_node *parent,
+    			    const char *name, umode_t mode,
+    			    kuid_t uid, kgid_t gid,
+    			    unsigned flags)
+{
+    struct kernfs_node *kn;
+
+    kn = __kernfs_new_node(kernfs_root(parent),
+    		       name, mode, uid, gid, flags);
+    if (kn) {
+    	kernfs_get(parent);
+    	kn-&gt;parent = parent;
+    }
+    return kn;
+}
+</code></pre>
+<h3 id="kset">kset</h3>
+<p>对应一个目录, 可以用于管理多个子目录</p>
+
+<pre class="language-c"><code class="language-c">struct kset {
+    //用来将起中的object对象构建成链表
+    struct list_head list;
+    //自旋锁
+    spinlock_t list_lock;
+    //当前kset内核对象的kobject变量
+    struct kobject kobj;
+    //定义了一组函数指针，当kset中的某些kobject对象发生状态变化需要通知用户空间时，调用其中的函数来完成
+    const struct kset_uevent_ops *uevent_ops;
+}
+</code></pre>
+<h3 id="kobj_type">kobj_type</h3>
+<p>目录文件的操作接口, 初始化的时候注册在kobject里面</p>
+
+<pre class="language-c"><code class="language-c">struct kobj_type {
+    //销毁kobject对象时调用
+    void (*release)(struct kobject *kobj);
+    //kobject对象属性文件统一操作接口, 之后调用不同属性的具体接口
+    const struct sysfs_ops *sysfs_ops;
+    //kobject默认属性文件的名字、&quot;文件具体操作接口&quot;
+    struct attribute **default_attrs;                                                         
+    const struct kobj_ns_type_operations *(*child_ns_type)(struct kobject *kobj);
+    const void *(*namespace)(struct kobject *kobj);
+    void (*get_ownership)(struct kobject *kobj, kuid_t *uid, kgid_t *gid);
+};
+</code></pre>
+<h4 id="kobj_type%EF%BC%9A%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E7%9A%84%E6%B3%95%E5%AE%9D">kobj_type：用户空间的法宝</h4>
+<ul>
+<li>为kobject对象构建多个<strong>属性文件</strong></li>
+<li>为每个属性文件设置具体操作接口</li>
+<li>vfs的inode对象与sysfs的kernfs_node对象的绑定过程, 使得文件系统可以直接控制</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507182350766.png" alt="image-20250718235010661" /></p>
+<h4 id="%E9%87%8D%E7%82%B9">重点</h4>
+<ul>
+<li>关注属性文件具体操作接口的赋值过程</li>
+<li>关注open()、read()、write函数的底层机制</li>
+</ul>
+<h3 id="%E5%B1%9E%E6%80%A7">属性</h3>
+<h4 id="%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E6%8E%A5%E5%8F%A3%E8%B5%8B%E5%80%BC">第一阶段：属性文件操作接口赋值</h4>
+<h5 id="sysfs_create_group%28%29%E5%87%BD%E6%95%B0">sysfs_create_group()函数</h5>
+<p>fs/sysfs/group.c</p>
+<p>创建属性文件以及和文件接口的绑定</p>
+
+<pre class="language-c"><code class="language-c">int sysfs_create_group(struct kobject *kobj,
+    	       const struct attribute_group *grp)
+{
+    return internal_create_group(kobj, 0, grp);
+}
+</code></pre>
+<ul>
+<li><p>attribute_group结构体：</p>
+<p>include/linux/sysfs.h</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507182350775.png" alt="image-20250718235047632" /></p>
+</li>
+</ul>
+
+<pre class="language-c"><code class="language-c">struct attribute_group {
+    const char		*name;
+    umode_t			(*is_visible)(struct kobject *,
+    				      struct attribute *, int);
+    umode_t			(*is_bin_visible)(struct kobject *,
+    					  struct bin_attribute *, int);
+    struct attribute	**attrs; // 一个attribute的指针数组, 记录属性
+    struct bin_attribute	**bin_attrs;
+};
+</code></pre>
+<ul>
+<li><p>struct attribute结构体：</p>
+<p>include/linux/sysfs.h</p>
+</li>
+</ul>
+
+<pre class="language-c"><code class="language-c">// 一个属性
+struct attribute {
+    const char		*name;
+    umode_t			mode;  // 属性文件的权限
+};
+</code></pre>
+<ul>
+<li>kobj_attribute结构体</li>
+</ul>
+
+<pre class="language-c"><code class="language-c">// 实际使用的属性
+struct kobj_attribute {
+    struct attribute attr;
+    // 实际的操作接口
+    ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr,
+    		char *buf);
+    ssize_t (*store)(struct kobject *kobj, struct kobj_attribute *attr,
+    		 const char *buf, size_t count);
+};
+</code></pre>
+<h5 id="internal_create_group%28%29%E5%87%BD%E6%95%B0">internal_create_group()函数</h5>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507182351866.png" alt="image-20250718235130790" /></p>
+<p>fs/sysfs/group.c</p>
+<p>把一个kobject和属性建立关系</p>
+
+<pre class="language-c"><code class="language-c">tatic int internal_create_group(struct kobject *kobj, int update,
+    			 const struct attribute_group *grp)
+{
+    struct kernfs_node *kn;
+    kuid_t uid;
+    kgid_t gid;
+    int error;
+    
+    ...
+    if (grp-&gt;name)
+    ...
+    else
+    	kn = kobj-&gt;sd; // 获取目录项
+    ...
+    // 文件的目录节点, 所属的用户以及组等信息
+    error = create_files(kn, kobj, uid, gid, grp, update);
+    ...
+}	
+</code></pre>
+<h5 id="create_files%28%29%E5%87%BD%E6%95%B0">create_files()函数</h5>
+<p>fs/sysfs/group.c</p>
+<p>依次个每个属性建立文件</p>
+
+<pre class="language-c"><code class="language-c">static int create_files(struct kernfs_node *parent, struct kobject *kobj,
+    		kuid_t uid, kgid_t gid,
+    		const struct attribute_group *grp, int update)
+{
+    struct attribute *const *attr;
+    struct bin_attribute *const *bin_attr;
+    int error = 0, i;
+
+    if (grp-&gt;attrs) {
+    	for (i = 0, attr = grp-&gt;attrs; *attr &amp;&amp; !error; i++, attr++) {
+            // 遍历所有属性, 属性以及权限是自己设置的
+    		umode_t mode = (*attr)-&gt;mode;
+    		...
+    		error = sysfs_add_file_mode_ns(parent, *attr, false,
+    					       mode, uid, gid, NULL);
+    		...
+    		}
+    ...
+}
+</code></pre>
+<h5 id="sysfs_add_file_mode_ns%28%29%E5%87%BD%E6%95%B0">sysfs_add_file_mode_ns()函数</h5>
+<p>fs/sysfs/file.c</p>
+<p>获取一下实际的操作函数</p>
+
+<pre class="language-c"><code class="language-c">int sysfs_add_file_mode_ns(struct kernfs_node *parent,
+    		   const struct attribute *attr, bool is_bin,
+    		   umode_t mode, kuid_t uid, kgid_t gid, const void *ns)
+{
+    struct lock_class_key *key = NULL;
+    const struct kernfs_ops *ops;
+    struct kernfs_node *kn;
+    loff_t size;
+    // 参数是false, 一定进入
+    if (!is_bin) {
+    	struct kobject *kobj = parent-&gt;priv;
+    	/*kobj_sysfs_ops 初始化默认的属性操作函数*/
+    	const struct sysfs_ops *sysfs_ops = kobj-&gt;ktype-&gt;sysfs_ops;
+    	...
+         // 默认初始化的两个函数
+    	if (sysfs_ops-&gt;show &amp;&amp; sysfs_ops-&gt;store) {
+    		if (mode &amp; SYSFS_PREALLOC)
+    			ops = &amp;sysfs_prealloc_kfops_rw;
+    		else
+                 // 实际初始化的操作接口
+    			ops = &amp;sysfs_file_kfops_rw;
+    	else if
+    		...
+    	}
+    ...
+    // 实际创建文件的位置
+    kn = __kernfs_create_file(parent, attr-&gt;name, mode &amp; 0777, uid, gid,
+    			  size, ops, (void *)attr, ns, key);
+    ...
+}
+</code></pre>
+<ul>
+<li>kernfs_ops节点的操作函数</li>
+</ul>
+<p><code>ops = &amp;sysfs_file_kfops_rw;</code>初始化的操作函数, 最后赋值给kernelfs_node的节点</p>
+
+<pre class="language-c"><code class="language-c">static const struct kernfs_ops sysfs_file_kfops_rw = {
+    .seq_show	= sysfs_kf_seq_show,
+    .write		= sysfs_kf_write,
+};
+</code></pre>
+<h5 id="__kernfs_create_file%28%29%E5%87%BD%E6%95%B0">__kernfs_create_file()函数</h5>
+<p>为每一个属性创建一个kernfs_node文件</p>
+
+<pre class="language-c"><code class="language-c">struct kernfs_node *__kernfs_create_file(struct kernfs_node *parent,
+    				 const char *name,
+    				 umode_t mode, kuid_t uid, kgid_t gid,
+    				 loff_t size,
+    				 const struct kernfs_ops *ops,
+    				 void *priv, const void *ns,
+    				 struct lock_class_key *key)
+{
+    struct kernfs_node *kn;
+    unsigned flags;
+    int rc;
+
+    flags = KERNFS_FILE;
+    // 建立一个新的节点
+    kn = kernfs_new_node(parent, name, (mode &amp; S_IALLUGO) | S_IFREG,
+    		     uid, gid, flags);
+    if (!kn)
+    	return ERR_PTR(-ENOMEM);
+    /*给这一个节点的操作接口赋值*/
+    kn-&gt;attr.ops = ops;
+    kn-&gt;attr.size = size;
+    kn-&gt;ns = ns;
+    /*文件属性赋值*/
+    kn-&gt;priv = priv; // 实际的前一级是一个attribute
+    
+    if (ops-&gt;seq_show)
+    	kn-&gt;flags |= KERNFS_HAS_SEQ_SHOW;
+    ...
+}
+</code></pre>
+<h4 id="%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9Aopen%28%29%5Cread%28%29%5Cwrite%28%29%E7%9A%84%E5%BA%95%E5%B1%82%E6%9C%BA%E5%88%B6">第二阶段：open()\read()\write()的底层机制</h4>
+<p><strong>设置参数的相关的部分</strong>, 使用对于参数的控制实现操作</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507182353345.png" alt="image-20250718235348248" /></p>
+<p>在 Linux 内核的 <code>kernfs</code> 子系统（用于 sysfs、cgroupfs 等）中，当用户空间进程与一个 <code>kernfs_node</code>（代表文件、目录、符号链接等）进行交互（特别是打开和读写文件）时，涉及到的结构体 <code>inode</code>, <code>kernfs_open_file</code>, <code>file</code>, <code>seq_file</code>, <code>seq_operations</code> 扮演着关键角色。它们协同工作，将 VFS 层的操作路由到具体的 <code>kernfs</code> 实现。以下是它们建立关系和发挥作用的过程：</p>
+<ol>
+<li><strong><code>kernfs_node</code> (核心实体):</strong><ul>
+<li>这是 <code>kernfs</code> 文件系统的基石，代表文件系统中的一个对象（文件、目录、符号链接、属性）。</li>
+<li>它包含：<ul>
+<li>名称、父节点、操作权限等元数据。</li>
+<li>一个指向 <code>kernfs_ops</code> 结构体的指针 (<code>kernfs_ops *ops</code>)。这个结构体定义了该节点类型（特别是文件节点）的核心操作：<ul>
+<li><code>open</code>：可选，当文件被打开时调用。</li>
+<li><code>release</code>：可选，当文件被关闭时调用。</li>
+<li><code>read</code> / <code>write</code>：<strong>传统模式</strong>的直接读写函数。</li>
+<li><code>seq_show</code> / <code>seq_start</code> / <code>seq_next</code> / <code>seq_stop</code>：<strong>seq_file 模式</strong>的函数，用于实现顺序、迭代式读取（常用于输出内核数据结构）。</li>
+<li><code>mmap</code>：内存映射操作。</li>
+</ul>
+</li>
+<li>节点特定的私有数据 (<code>void *priv</code>)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><code>inode</code> (VFS 索引节点):</strong><ul>
+<li>当 <code>kernfs_node</code>（特别是文件节点）被查找或创建时，<code>kernfs</code> 会为其在内存中创建一个对应的 VFS <code>inode</code> 结构体（通过 <code>kernfs_get_inode</code>）。</li>
+<li>这个 <code>inode</code> 的 <code>i_private</code> 字段会被设置为指向它所代表的 <code>kernfs_node</code> (<code>kn</code>)。</li>
+<li><code>inode</code> 的 <code>i_fop</code> (文件操作) 字段会被设置为 <code>kernfs</code> 定义的通用文件操作结构体 <code>kernfs_file_operations</code>。</li>
+<li><strong>作用:</strong> 在 VFS 层代表 <code>kernfs_node</code>。当 VFS 操作（如 <code>open</code>, <code>read</code>, <code>write</code>）作用在这个 <code>inode</code> 上时，VFS 会调用 <code>i_fop</code> 中注册的函数，这些函数由 <code>kernfs</code> 提供，并将操作路由到具体的 <code>kernfs_node</code> 及其 <code>kernfs_ops</code>。</li>
+</ul>
+</li>
+<li><strong><code>file</code> (VFS 文件对象):</strong><ul>
+<li>当用户空间<strong>进程</strong>调用 <code>open()</code> 打开一个由 <code>kernfs_node</code> 代表的文件时，VFS 会创建一个 <code>file</code> 结构体来表示这次“打开”的实例。</li>
+<li>这个 <code>file</code> 结构体的 <code>private_data</code> 字段至关重要。</li>
+<li>VFS 会调用该文件对应 <code>inode-&gt;i_fop-&gt;open()</code> 函数。对于 <code>kernfs</code>，这个函数是 <code>kernfs_fop_open</code>。</li>
+<li><strong><code>kernfs_fop_open</code> 的关键作用 (建立桥梁):</strong><ol>
+<li>通过 <code>file-&gt;f_inode-&gt;i_private</code> 获取对应的 <code>kernfs_node</code> (<code>kn</code>)。</li>
+<li>分配一个 <code>kernfs_open_file</code> 结构体 (<code>of</code>)。</li>
+<li>将 <code>of-&gt;kn</code> 设置为 <code>kn</code> (关联 <code>kernfs_node</code>)。</li>
+<li>将 <code>file-&gt;private_data</code> 设置为 <code>of</code> (关联 <code>file</code> 和 <code>kernfs_open_file</code>)。</li>
+<li>检查 <code>kn-&gt;attr.ops</code> (<code>kernfs_ops</code>)：<ul>
+<li>如果定义了 <code>kn-&gt;attr.ops-&gt;open</code>，则调用它。</li>
+<li>如果定义了 <code>kn-&gt;attr.ops-&gt;seq_show</code> (表明使用 seq_file 模式)，则调用 <code>seq_open(file, &amp;kernfs_seq_ops)</code>。这个函数：<ul>
+<li>分配一个 <code>seq_file</code> 结构体 (<code>seq</code>)。</li>
+<li>将 <code>seq-&gt;private</code> 设置为 <code>of</code> (关联 <code>seq_file</code> 和 <code>kernfs_open_file</code>)。</li>
+<li>将 <code>file-&gt;private_data</code> <strong>覆盖</strong>为指向这个 <code>seq_file</code> 结构体 (<code>seq</code>)。<em>(注意：此时 <code>file-&gt;private_data</code> 指向 <code>seq</code>，而 <code>seq-&gt;private</code> 指向 <code>of</code>，<code>of-&gt;kn</code> 指向 <code>kn</code>)</em></li>
+<li>设置 <code>seq-&gt;op</code> 为 <code>&amp;kernfs_seq_ops</code> (一个 <code>seq_operations</code> 结构体，其函数内部会再路由到 <code>kernfs_open_file</code> 和 <code>kernfs_ops</code>)。</li>
+</ul>
+</li>
+<li>否则（传统模式），<code>file-&gt;private_data</code> 保持指向 <code>of</code>。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong><code>kernfs_open_file</code> (Per-open-file 状态):</strong><ul>
+<li>表示一个 <code>kernfs_node</code> 文件被<strong>打开一次</strong>的上下文信息。</li>
+<li>关键字段：<ul>
+<li><code>kn</code>: 指向关联的 <code>kernfs_node</code>。</li>
+<li><code>file</code>: 指向关联的 VFS <code>file</code> 结构体。</li>
+<li><code>priv</code>: 可选的私有数据，可由 <code>kernfs_ops-&gt;open</code> 设置，供后续操作（<code>read</code>/<code>write</code>/<code>seq_show</code> 等）使用。</li>
+<li><code>atomic_write_len</code>: 原子写长度（如果适用）。</li>
+<li><code>mutex</code>: 保护该打开文件状态的互斥锁（用于防止并发读写冲突）。</li>
+</ul>
+</li>
+<li><strong>作用:</strong> 维护特定于这次文件打开操作的状态（如 <code>priv</code> 数据）。它是连接 VFS <code>file</code> 和底层 <code>kernfs_node</code> 及其操作的核心中间结构。无论是传统模式还是 seq_file 模式，最终的操作都需要通过它来访问 <code>kn</code> 和可能的 <code>priv</code> 数据。</li>
+</ul>
+</li>
+<li><strong><code>seq_file</code> (序列文件抽象):</strong><ul>
+<li>当 <code>kernfs_ops</code> 定义了 <code>seq_show</code> 时，<code>kernfs_fop_open</code> 会调用 <code>seq_open</code> 创建一个 <code>seq_file</code> 结构体。</li>
+<li>该结构体管理顺序、迭代读取的状态。它处理缓冲区、游标位置、迭代状态机等。</li>
+<li>关键字段：<ul>
+<li><code>buf</code>: 内核缓冲区，用于累积要输出到用户空间的数据。</li>
+<li><code>size</code> / <code>from</code> / <code>count</code> / <code>index</code>: 缓冲区管理和迭代状态。</li>
+<li><code>op</code>: 指向 <code>seq_operations</code> 结构体 (这里是 <code>&amp;kernfs_seq_ops</code>)。</li>
+<li><code>private</code>: 指向与之关联的 <code>kernfs_open_file</code> (<code>of</code>)。</li>
+</ul>
+</li>
+<li><strong>作用:</strong> 为需要迭代输出大量或结构化数据（如链表、数组）的 <code>kernfs</code> 文件提供标准化的、更简单的编程接口 (<code>seq_operations</code>)。它处理了缓冲区管理、多次调用 (<code>start</code>/<code>next</code>/<code>show</code>/<code>stop</code>) 的协调等复杂性。</li>
+</ul>
+</li>
+<li><strong><code>seq_operations</code> (序列文件操作):</strong><ul>
+<li>这是一个包含函数指针的结构体 (<code>start</code>, <code>next</code>, <code>show</code>, <code>stop</code>)，定义了如何遍历和显示序列中的元素。</li>
+<li>在 <code>kernfs</code> 的 seq_file 模式下，它被设置为 <code>kernfs_seq_ops</code>。</li>
+<li><code>kernfs_seq_ops</code> 的函数实现 (<code>kernfs_seq_start</code>, <code>kernfs_seq_next</code>, <code>kernfs_seq_stop</code>, <code>kernfs_seq_show</code>) 充当适配器：<ol>
+<li>它们通过 <code>seq_file-&gt;private</code> 获取 <code>kernfs_open_file *of</code>。</li>
+<li>它们通过 <code>of-&gt;kn</code> 获取 <code>kernfs_node *kn</code>。</li>
+<li>它们最终调用 <code>kn-&gt;attr.ops</code> (<code>kernfs_ops</code>) 中定义的对应 seq_file 函数：<ul>
+<li><code>kernfs_seq_start</code> -&gt; 调用 <code>ops-&gt;seq_start(of, &amp;pos)</code> (如果定义了)，否则处理简单的单次输出。</li>
+<li><code>kernfs_seq_next</code> -&gt; 调用 <code>ops-&gt;seq_next(of, v, &amp;pos)</code> (如果定义了)。</li>
+<li><code>kernfs_seq_show</code> -&gt; 调用 <code>ops-&gt;seq_show(of, v)</code> <strong>(核心输出函数！)</strong>.</li>
+<li><code>kernfs_seq_stop</code> -&gt; 调用 <code>ops-&gt;seq_stop(of, v)</code> (如果定义了)。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong>作用:</strong> 提供 VFS seq_file 子系统期望的通用接口 (<code>seq_operations</code>)，并将这些通用调用<strong>适配</strong>到具体的 <code>kernfs_node</code> 的 <code>kernfs_ops</code> 中定义的 seq_file 操作函数上。<code>kernfs_seq_show</code> 是核心，它调用 <code>ops-&gt;seq_show</code> 来生成文件的实际内容。</li>
+</ul>
+</li>
+</ol>
+<h5 id="kernfs_init_inode%28%29%E5%87%BD%E6%95%B0">kernfs_init_inode()函数</h5>
+<p>进行inode以及kernfs_node的关联, 实际是在open函数的时候进行的</p>
+
+<pre class="language-c"><code class="language-c">static void kernfs_init_inode(struct kernfs_node *kn, struct inode *inode)
+{
+    kernfs_get(kn);
+    /*sysfs的kernels_node赋值给vfs的inode*/
+    inode-&gt;i_private = kn; // 使用这个函数记录关联
+    inode-&gt;i_mapping-&gt;a_ops = &amp;kernfs_aops;
+    inode-&gt;i_op = &amp;kernfs_iops;
+    inode-&gt;i_generation = kn-&gt;id.generation;
+
+    set_default_inode_attr(inode, kn-&gt;mode);
+    kernfs_refresh_inode(kn, inode);
+
+    /* 判断sysfs的kernels_node类型 */
+    switch (kernfs_type(kn)) {
+    case KERNFS_DIR:
+    	inode-&gt;i_op = &amp;kernfs_dir_iops;
+    	inode-&gt;i_fop = &amp;kernfs_dir_fops;
+    	if (kn-&gt;flags &amp; KERNFS_EMPTY_DIR)
+    		make_empty_dir_inode(inode);
+    	break;
+    case KERNFS_FILE:
+         // 属性分支
+    	inode-&gt;i_size = kn-&gt;attr.size;
+    	/*文件的操作接口*/
+    	inode-&gt;i_fop = &amp;kernfs_file_fops; // 初始化一下各种实际的操作指针
+    	break;
+    case KERNFS_LINK:
+    	inode-&gt;i_op = &amp;kernfs_symlink_iops;
+    	break;
+    default:
+    	BUG();
+    }
+
+    unlock_new_inode(inode);
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">// 最先调用的函数
+const struct file_operations kernfs_file_fops = {
+    .read		= kernfs_fop_read,
+    .write		= kernfs_fop_write,
+    .llseek		= generic_file_llseek,
+    .mmap		= kernfs_fop_mmap,
+    .open		= kernfs_fop_open,
+    .release	= kernfs_fop_release,
+    .poll		= kernfs_fop_poll,
+    .fsync		= noop_fsync,
+};
+</code></pre>
+<h5 id="kernfs_fop_open%28%29%E5%87%BD%E6%95%B0">kernfs_fop_open()函数</h5>
+<p>初始化kernfs_open_file结构</p>
+
+<pre class="language-c"><code class="language-c">static int kernfs_fop_open(struct inode *inode, struct file *file)
+{
+    struct kernfs_node *kn = inode-&gt;i_private; // sysfs的node, 是kernfs_node类
+    struct kernfs_open_file *of;
+    ...
+    of = kzalloc(sizeof(struct kernfs_open_file), GFP_KERNEL);
+    ...
+    /*sysfs中文件的kernfs_node赋值给of-&gt;kn*/
+    of-&gt;kn = kn;
+    /*进程的struct file赋值给of-&gt;file*/
+    of-&gt;file = file;
+    ...
+    // 这里获取到的是kernfs_node里面的attr属性的ops参数
+    if (ops-&gt;seq_show)
+    	error = seq_open(file, &amp;kernfs_seq_ops);
+    ...
+    /*struct file的私有指针赋值给of-&gt;seq_file */
+    of-&gt;seq_file = file-&gt;private_data;
+    /*of赋值给of-&gt;seq_file-&gt;private*/
+    of-&gt;seq_file-&gt;private = of;
+    ...
+ }
+</code></pre>
+<p>// 记录的是fs系统的操作</p>
+
+<pre class="language-c"><code class="language-c">static const struct seq_operations kernfs_seq_ops = {
+    .start = kernfs_seq_start,
+    .next = kernfs_seq_next,
+    .stop = kernfs_seq_stop,
+    .show = kernfs_seq_show,
+};
+</code></pre>
+<p>seq_open</p>
+
+<pre class="language-c"><code class="language-c">int seq_open(struct file *file, const struct seq_operations *op)
+{
+    struct seq_file *p;
+
+    WARN_ON(file-&gt;private_data);
+
+    p = kmem_cache_zalloc(seq_file_cache, GFP_KERNEL);
+    if (!p)
+    	return -ENOMEM;
+    
+    file-&gt;private_data = p;
+    ...
+    p-&gt;op = op;
+    ...
+}
+</code></pre>
+<h5 id="kernfs_fop_read%28%29%E5%87%BD%E6%95%B0">kernfs_fop_read()函数</h5>
+<p>用于调用之前设置的 seq_operations里面的show函数</p>
+
+<pre class="language-c"><code class="language-c">static ssize_t kernfs_fop_read(struct file *file, char __user *user_buf,
+    		       size_t count, loff_t *ppos)
+{
+    struct kernfs_open_file *of = kernfs_of(file);
+    // 创建的时候设置的这个标志位
+    if (of-&gt;kn-&gt;flags &amp; KERNFS_HAS_SEQ_SHOW)
+         // 实际的读取函数
+    	return seq_read(file, user_buf, count, ppos);
+    else
+    	return kernfs_file_direct_read(of, user_buf, count, ppos);
+}
+
+</code></pre>
+<h5 id="kernfs_of%28%29%E5%87%BD%E6%95%B0">kernfs_of()函数</h5>
+<p>获取一个file结构体和sysfs连接的kernfs_open_file结构</p>
+
+<pre class="language-c"><code class="language-c">static struct kernfs_open_file *kernfs_of(struct file *file)
+{
+    return ((struct seq_file *)file-&gt;private_data)-&gt;private;
+}
+</code></pre>
+<h5 id="seq_read%28%29%E5%87%BD%E6%95%B0">seq_read()函数</h5>
+
+<pre class="language-c"><code class="language-c">ssize_t seq_read(struct file *file, char __user *buf, size_t size, loff_t *ppos)
+{
+    struct seq_file *m = file-&gt;private_data;
+    ...
+    err = m-&gt;op-&gt;show(m, p); // 实际是kernfs_seq_show函数
+    ...
+    err = copy_to_user(buf, m-&gt;buf, n);
+    ...
+}
+</code></pre>
+<h5 id="kernfs_seq_show%28%29%E5%87%BD%E6%95%B0">kernfs_seq_show()函数</h5>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507190008624.png" alt="image-20250719000819498" /></p>
+
+<pre class="language-c"><code class="language-c">static int kernfs_seq_show(struct seq_file *sf, void *v)
+{
+    struct kernfs_open_file *of = sf-&gt;private;
+    ...
+    return of-&gt;kn-&gt;attr.ops-&gt;seq_show(sf, v); // 调用的是sysfs_kf_seq_show
+}
+</code></pre>
+<h5 id="sysfs_kf_seq_show%28%29%E5%87%BD%E6%95%B0">sysfs_kf_seq_show()函数</h5>
+<p>这里的seq_file实际就是和用户空间通信使用的, 记录读取的数据缓冲区等</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507190012035.png" alt="image-20250719001258975" /></p>
+
+<pre class="language-c"><code class="language-c">static int sysfs_kf_seq_show(struct seq_file *sf, void *v)
+{
+    struct kernfs_open_file *of = sf-&gt;private;
+    struct kobject *kobj = of-&gt;kn-&gt;parent-&gt;priv;
+    const struct sysfs_ops *ops = sysfs_file_ops(of-&gt;kn);
+    ssize_t count;
+    char *buf;
+    // 获取一个缓冲区buf
+    count = seq_get_buf(sf, &amp;buf);
+    if (count &lt; PAGE_SIZE) {
+    	seq_commit(sf, -1);
+    	return 0;
+    }
+    memset(buf, 0, PAGE_SIZE);
+
+    /*
+     * Invoke show().  Control may reach here via seq file lseek even
+     * if @ops-&gt;show() isn't implemented.
+     */
+    if (ops-&gt;show) {
+        // 实际是sysfs_kf_seq_show, 使用属性的上一级节点, 获取kobject
+    	count = ops-&gt;show(kobj, of-&gt;kn-&gt;priv, buf); // 使用这个文件对用的属性进行读取kobj_attr_show
+    	if (count &lt; 0)
+    		return count;
+    }
+
+    /*
+     * The code works fine with PAGE_SIZE return but it's likely to
+     * indicate truncated result or overflow in normal use cases.
+     */
+    if (count &gt;= (ssize_t)PAGE_SIZE) {
+    	printk(&quot;fill_read_buffer: %pS returned bad count\n&quot;,
+    			ops-&gt;show);
+    	/* Try to struggle along */
+    	count = PAGE_SIZE - 1;
+    }
+    seq_commit(sf, count);
+    return 0;
+}
+</code></pre>
+<h5 id="sysfs_file_ops%28%29%E5%87%BD%E6%95%B0">sysfs_file_ops()函数</h5>
+<p>获取到最初的kobject的sysfs_ops, 实际是kobj_sysfs_ops函数</p>
+
+<pre class="language-c"><code class="language-c">static const struct sysfs_ops *sysfs_file_ops(struct kernfs_node *kn)
+{
+    struct kobject *kobj = kn-&gt;parent-&gt;priv;
+
+    if (kn-&gt;flags &amp; KERNFS_LOCKDEP)
+    	lockdep_assert_held(kn);
+    return kobj-&gt;ktype ? kobj-&gt;ktype-&gt;sysfs_ops : NULL;
+}
+</code></pre>
+<h5 id="seq_get_buf%28%29%E5%87%BD%E6%95%B0">seq_get_buf()函数</h5>
+<p>在seq_file里面有一个buf, 用于和用户通信</p>
+
+<pre class="language-c"><code class="language-c">static inline size_t seq_get_buf(struct seq_file *m, char **bufp)
+{
+    BUG_ON(m-&gt;count &gt; m-&gt;size);
+    if (m-&gt;count &lt; m-&gt;size)
+    	*bufp = m-&gt;buf + m-&gt;count; // 缓冲区加偏移
+    else
+    	*bufp = NULL;
+
+    return m-&gt;size - m-&gt;count;
+}
+</code></pre>
+<h4 id="kobj_attr_show%28%29%E5%87%BD%E6%95%B0">kobj_attr_show()函数</h4>
+<p>最终的获取属性的位置</p>
+
+<pre class="language-c"><code class="language-c">static ssize_t kobj_attr_show(struct kobject *kobj, struct attribute *attr,char *buf)
+{
+    struct kobj_attribute *kattr;
+    ssize_t ret = -EIO;
+    /*根据结构体成员的内存地址获取结构体的地址*/
+    kattr = container_of(attr, struct kobj_attribute, attr);
+    if (kattr-&gt;show)
+    	ret = kattr-&gt;show(kobj, kattr, buf);// 用户自己初始化的show属性
+    return ret;
+}
+</code></pre>
+<h2 id="%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8">实际应用</h2>
+<h3 id="%E5%AE%9E%E9%AA%8C%E6%80%9D%E8%B7%AF">实验思路</h3>
+<p>内核模块+led驱动+kobject+kobj_attribute</p>
+<p>首先使用函数<code>kobject_create_and_add</code>创建一个kobject对象, 之后使用<code>sysfs_create_group</code>添加对应的参数</p>
+<h4 id="%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97">内核模块</h4>
+<ul>
+<li>动态加载功能</li>
+</ul>
+<h4 id="led%E9%A9%B1%E5%8A%A8">led驱动</h4>
+<ul>
+<li>控制硬件led</li>
+</ul>
+<h4 id="kobject">kobject</h4>
+<ul>
+<li>在/sys创建目录项</li>
+</ul>
+<h4 id="kobj_attribute">kobj_attribute</h4>
+<ul>
+<li>为kobject对象的属性文件提供独有的读写接口</li>
+</ul>
+<h3 id="%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B">代码示例</h3>
+
+<pre class="language-c"><code class="language-c">#include &lt;linux/module.h&gt;
+#include &lt;linux/init.h&gt;
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/kobject.h&gt;
+#include &lt;linux/string.h&gt;
+#include &lt;linux/sysfs.h&gt;
+#include &lt;linux/fs.h&gt;
+#include &lt;linux/uaccess.h&gt;
+#include &lt;asm/io.h&gt;
+
+#define DEV_MAJOR		0		/* 动态申请主设备号 */
+#define DEV_NAME		&quot;red_led&quot; 	/*led设备名字 */
+
+/* GPIO虚拟地址指针 */
+static void __iomem *IMX6U_CCM_CCGR1;
+static void __iomem *SW_MUX_GPIO1_IO04;
+static void __iomem *SW_PAD_GPIO1_IO04;
+static void __iomem *GPIO1_DR;
+static void __iomem *GPIO1_GDIR;
+
+static int foo;
+
+static ssize_t foo_show(struct kobject *kobj, struct kobj_attribute *attr,
+    		char *buf)
+{
+    return sprintf(buf, &quot;%d\n&quot;, foo);
+}
+
+static ssize_t foo_store(struct kobject *kobj, struct kobj_attribute *attr,
+    		 const char *buf, size_t count)
+{
+    int ret;
+    // 使用10进制的格式进行读取
+    ret = kstrtoint(buf, 10, &amp;foo);
+    if (ret &lt; 0)
+    	return ret;
+
+    return count;
+}
+// 第一个参数是名字会被转换为字符串, 第二个是文件的权限, 后面的是读写的函数
+static struct kobj_attribute foo_attribute =
+    __ATTR(foo, 0664, foo_show, foo_store);
+
+
+static ssize_t led_show(struct kobject *kobj, struct kobj_attribute *attr,
+    	      char *buf)
+{
+    int var;
+
+    if (strcmp(attr-&gt;attr.name, &quot;led&quot;) == 0)
+    		var =123;
+
+    return sprintf(buf, &quot;%d\n&quot;, var);
+}
+
+static ssize_t led_store(struct kobject *kobj, struct kobj_attribute *attr,
+    	       const char *buf, size_t count)
+{
+
+    if (strcmp(attr-&gt;attr.name, &quot;led&quot;) == 0){
+    	if(!memcmp(buf,&quot;on&quot;,2)) {	
+    		iowrite32(0 &lt;&lt; 4, GPIO1_DR);	
+    	} else if(!memcmp(buf,&quot;off&quot;,3)) {
+    		iowrite32(1 &lt;&lt; 4, GPIO1_DR);
+    	}
+    }
+    return count;
+}
+
+static struct kobj_attribute led_attribute =
+    // 第一个是名字的字符串, 使用宏定义进行类型的转换
+    __ATTR(led, 0664, led_show, led_store);
+
+static struct attribute *attrs[] = {
+    &amp;foo_attribute.attr,
+    &amp;led_attribute.attr,
+    NULL,	/* need to NULL terminate the list of attributes */
+};
+
+static struct attribute_group attr_group = {
+    .attrs = attrs,
+};
+
+static struct kobject *led_kobj;
+
+static int __init led_init(void)
+{
+    int retval;
+
+    /* GPIO相关寄存器映射 */
+  IMX6U_CCM_CCGR1 = ioremap(0x20c406c, 4);
+    SW_MUX_GPIO1_IO04 = ioremap(0x20e006c, 4);
+  SW_PAD_GPIO1_IO04 = ioremap(0x20e02f8, 4);
+    GPIO1_GDIR = ioremap(0x0209c004, 4);
+    GPIO1_DR = ioremap(0x0209c000, 4);
+
+
+    /* 使能GPIO1时钟 */
+    iowrite32(0xffffffff, IMX6U_CCM_CCGR1);
+
+    /* 设置GPIO1_IO04复用为普通GPIO*/
+    iowrite32(5, SW_MUX_GPIO1_IO04);
+    
+    /*设置GPIO属性*/
+    iowrite32(0x10B0, SW_PAD_GPIO1_IO04);
+
+    /* 设置GPIO1_IO04为输出功能 */
+    iowrite32(1 &lt;&lt; 4, GPIO1_GDIR);
+
+    /* LED输出高电平 */
+    iowrite32(1&lt;&lt; 4, GPIO1_DR);
+
+    /* 创建一个kobject对象, 目录在sys的根目录*/
+    led_kobj = kobject_create_and_add(&quot;led_kobject&quot;, NULL);
+    if (!led_kobj)
+    	return -ENOMEM;
+
+    /* 为kobject设置属性文件*/
+    retval = sysfs_create_group(led_kobj, &amp;attr_group);
+    if (retval)
+    	kobject_put(led_kobj);
+
+    return retval;
+
+    return 0;
+}
+
+static void __exit led_exit(void)
+{
+    /* 取消映射 */
+    iounmap(IMX6U_CCM_CCGR1);
+    iounmap(SW_MUX_GPIO1_IO04);
+    iounmap(SW_PAD_GPIO1_IO04);
+    iounmap(GPIO1_DR);
+    iounmap(GPIO1_GDIR);
+
+    /* 注销字符设备驱动 */
+    kobject_put(led_kobj);
+}
+
+module_init(led_init);
+module_exit(led_exit);
+
+MODULE_LICENSE(&quot;GPL&quot;);
+MODULE_AUTHOR(&quot;embedfire &quot;);
+MODULE_DESCRIPTION(&quot;led_module&quot;);
+MODULE_ALIAS(&quot;led_module&quot;);
+</code></pre>
+
+<pre class="language-c"><code class="language-c">#define __ATTR(_name, _mode, _show, _store) {				\
+    .attr = {.name = __stringify(_name),				\
+    	 .mode = VERIFY_OCTAL_PERMISSIONS(_mode) },		\
+    .show	= _show,						\
+    .store	= _store,						\
+}
+
+/* Indirect stringification.  Doing two levels allows the parameter to be a
+ * macro itself.  For example, compile with -DFOO=bar, __stringify(FOO)
+ * converts to &quot;bar&quot;.
+ */
+
+#define __stringify_1(x...)	#x
+#define __stringify(x...)	__stringify_1(x)
+
+/* Permissions on a sysfs file: you didn't miss the 0 prefix did you? */
+#define VERIFY_OCTAL_PERMISSIONS(perms)						\
+    (BUILD_BUG_ON_ZERO((perms) &lt; 0) +					\
+     BUILD_BUG_ON_ZERO((perms) &gt; 0777) +					\
+     /* USER_READABLE &gt;= GROUP_READABLE &gt;= OTHER_READABLE */		\
+     BUILD_BUG_ON_ZERO((((perms) &gt;&gt; 6) &amp; 4) &lt; (((perms) &gt;&gt; 3) &amp; 4)) +	\
+     BUILD_BUG_ON_ZERO((((perms) &gt;&gt; 3) &amp; 4) &lt; ((perms) &amp; 4)) +		\
+     /* USER_WRITABLE &gt;= GROUP_WRITABLE */					\
+     BUILD_BUG_ON_ZERO((((perms) &gt;&gt; 6) &amp; 2) &lt; (((perms) &gt;&gt; 3) &amp; 2)) +	\
+     /* OTHER_WRITABLE?  Generally considered a bad idea. */		\
+     BUILD_BUG_ON_ZERO((perms) &amp; 2) +					\
+     (perms))
+#endif
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507191305098.png" alt="image-20250719130531021" /></p>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/Linux/野火Linux/2025-7-15-11-字符设备.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-7-15-11-字符设备</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/Linux/野火Linux/2025-7-19-13-Kset.html">
+                            <span class="label">2025-7-19-13-Kset</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

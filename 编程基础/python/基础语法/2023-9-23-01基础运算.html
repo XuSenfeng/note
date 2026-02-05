@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>基础运算 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["python基础"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class="active"><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">C#</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/no_translate.html?ref=C.html&from=/编程基础/C.html"><span class="label">2023-6-24-1.C#</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C和指针</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-C语言环境.html"><span class="label">2022-7-25-C语言环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-字符串操作.html"><span class="label">2022-7-25-字符串操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-操作符和表达式.html"><span class="label">2022-7-25-操作符和表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-数据.html"><span class="label">2022-7-25-数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-词法规则.html"><span class="label">2022-7-25-词法规则</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-语句.html"><span class="label">2022-7-25-语句</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-函数.html"><span class="label">2022-7-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-指针.html"><span class="label">2022-7-26-指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-数组.html"><span class="label">2022-7-26-数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-表达式.html"><span class="label">2022-7-26-表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-动态内存分配.html"><span class="label">2022-7-27-动态内存分配</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-字符串字符字节.html"><span class="label">2022-7-27-字符串字符字节</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构体和指针.html"><span class="label">2022-7-27-结构体和指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构和联合.html"><span class="label">2022-7-27-结构和联合</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-预处理器.html"><span class="label">2022-7-28-预处理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-高级指针.html"><span class="label">2022-7-28-高级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-29-输入输出函数.html"><span class="label">2022-7-29-输入输出函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html"><span class="label">2022-7-30-标准库函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-经典抽象数据类型.html"><span class="label">2022-7-30-经典抽象数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html"><span class="label">2022-7-31-运行时环境</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C陷阱与缺陷</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-27-语义陷阱.html"><span class="label">2022-8-27-语义陷阱</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">c</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-16-c监控.html"><span class="label">2023-6-16-c监控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-19-C语言程序设计.html"><span class="label">2023-6-19-C语言程序设计</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">cpp</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-01C++.html"><span class="label">2025-1-1-01C++</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-02内存.html"><span class="label">2025-1-1-02内存</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-22-其他扩展语法.html"><span class="label">2025-1-22-其他扩展语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-26-多线程.html"><span class="label">2025-1-26-多线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-6-03模板和STL.html"><span class="label">2025-1-6-03模板和STL</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">go</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">python</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="active_parent no_link"><a><span class="label">基础语法</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html"><span class="label">2023-6-15-修饰器</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/编程基础/python/基础语法/2023-9-23-01基础运算.html"><span class="label">2023-9-23-01基础运算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html"><span class="label">2023-9-24-02函数及变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-03虚拟环境.html"><span class="label">2024-4-23-03虚拟环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-04常用函数.html"><span class="label">2024-4-23-04常用函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-24-05程序获取参数.html"><span class="label">2024-4-24-05程序获取参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-06推导式和拆包.html"><span class="label">2024-4-25-06推导式和拆包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-07引入.html"><span class="label">2024-4-25-07引入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-08匿名函数.html"><span class="label">2024-4-25-08匿名函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-09面向对象.html"><span class="label">2024-4-25-09面向对象</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-26-10文件基本操作.html"><span class="label">2024-4-26-10文件基本操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-11OS模块.html"><span class="label">2024-4-27-11OS模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-12迭代器.html"><span class="label">2024-4-27-12迭代器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-13异常处理.html"><span class="label">2024-4-27-13异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-14生成器.html"><span class="label">2024-4-27-14生成器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-28-15闭包.html"><span class="label">2024-4-28-15闭包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-30-16深拷贝浅拷贝.html"><span class="label">2024-4-30-16深拷贝浅拷贝</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-1-17With和上下文管理器.html"><span class="label">2024-5-1-17With和上下文管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-18GIL.html"><span class="label">2024-5-4-18GIL</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-19垃圾回收.html"><span class="label">2024-5-4-19垃圾回收</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-1-31-多任务.html"><span class="label">2025-1-31-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html"><span class="label">2025-12-19-CPP交互使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-打包whl文件.html"><span class="label">2025-12-19-打包whl文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html"><span class="label">2025-2-25-yaml</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-3-21-包导入.html"><span class="label">2025-3-21-包导入</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">C语言-Cpp接轨</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/C语言-Cpp接轨/2025-12-10-01-struct.html"><span class="label">2025-12-10-01-struct</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">django</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-01-Django.html"><span class="label">2025-7-24-01-Django</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-02-创建.html"><span class="label">2025-7-24-02-创建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-03-路由.html"><span class="label">2025-7-24-03-路由</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-04-视图.html"><span class="label">2025-7-24-04-视图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-05-配置文件.html"><span class="label">2025-7-24-05-配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-26-04-模版.html"><span class="label">2025-7-26-04-模版</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-28-05-静态文件.html"><span class="label">2025-7-28-05-静态文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html"><span class="label">2025-7-29-06-中间件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html"><span class="label">2025-7-29-07-数据库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html"><span class="label">2025-7-30-08-进阶数据查询</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html"><span class="label">2025-8-1-09-ORM优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-10-模型扩展.html"><span class="label">2025-8-2-10-模型扩展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-11-组件.html"><span class="label">2025-8-2-11-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-3-12-异步.html"><span class="label">2025-8-3-12-异步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">pyQT</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-11-08界面容器.html"><span class="label">2024-5-11-08界面容器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-01介绍以及安装.html"><span class="label">2024-5-6-01介绍以及安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-02控件.html"><span class="label">2024-5-6-02控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-03布局.html"><span class="label">2024-5-7-03布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-04窗口.html"><span class="label">2024-5-7-04窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-05信号与槽.html"><span class="label">2024-5-8-05信号与槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-06QTDesigner.html"><span class="label">2024-5-8-06QTDesigner</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-07线程.html"><span class="label">2024-5-8-07线程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">简单模块使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2024-5-4-01logging日志模块.html"><span class="label">2024-5-4-01logging日志模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2025-3-15-02fastapi.html"><span class="label">2025-3-15-02fastapi</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">线程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-10-01多任务.html"><span class="label">2024-5-10-01多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-14-02队列.html"><span class="label">2024-5-14-02队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2025-2-20-async.html"><span class="label">2025-2-20-async</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-01网络编程.html"><span class="label">2024-5-10-01网络编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-02Socket.html"><span class="label">2024-5-10-02Socket</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-12-03软件.html"><span class="label">2024-5-12-03软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-8-20-04MQTT.html"><span class="label">2024-8-20-04MQTT</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">前端</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-12-04CSS2.html"><span class="label">2024-8-12-04CSS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-01基础知识.html"><span class="label">2024-8-5-01基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-02HTML.html"><span class="label">2024-8-5-02HTML</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-6-03CSS.html"><span class="label">2024-8-6-03CSS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式C语言</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-__attribute__.html"><span class="label">2022-7-21-__attribute__</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-内联函数内置内存函数.html"><span class="label">2022-7-21-内联函数内置内存函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-变量指针.html"><span class="label">2022-7-21-变量指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-大小端数据对齐size_t.html"><span class="label">2022-7-21-大小端数据对齐size_t</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-存储器.html"><span class="label">2022-7-21-存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-语句表达式define.html"><span class="label">2022-7-21-语句表达式define</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-Linux中的面向对象思想-封装.html"><span class="label">2022-7-22-Linux中的面向对象思想-封装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-main函数的参数.html"><span class="label">2022-7-22-main函数的参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-二级指针.html"><span class="label">2022-7-22-二级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-代码复用分层思想.html"><span class="label">2022-7-22-代码复用分层思想</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数参数的本质.html"><span class="label">2022-7-22-函数参数的本质</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数指针.html"><span class="label">2022-7-22-函数指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-指针和数组.html"><span class="label">2022-7-22-指针和数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-面向对象编程基础.html"><span class="label">2022-7-22-面向对象编程基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-goto关键字.html"><span class="label">2022-7-23-goto关键字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-可重入函数.html"><span class="label">2022-7-23-可重入函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-多任务.html"><span class="label">2022-7-23-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-头文件剖析.html"><span class="label">2022-7-23-头文件剖析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-异步通信模式.html"><span class="label">2022-7-23-异步通信模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-操作系统基本原理.html"><span class="label">2022-7-23-操作系统基本原理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块化编程.html"><span class="label">2022-7-23-模块化编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块进阶.html"><span class="label">2022-7-23-模块进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块间通讯.html"><span class="label">2022-7-23-模块间通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-MMU内存管理单元.html"><span class="label">2022-7-24-MMU内存管理单元</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-中断.html"><span class="label">2022-7-24-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-寄存器操作.html"><span class="label">2022-7-24-寄存器操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-嵌入式启动.html"><span class="label">2022-7-24-嵌入式启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-文件系统.html"><span class="label">2022-7-24-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-系统调用.html"><span class="label">2022-7-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-进程线程协程.html"><span class="label">2022-7-24-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">算法基础</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2022-7-31-高级数据结构.html"><span class="label">2022-7-31-高级数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-01快速排序.html"><span class="label">2024-12-31-01快速排序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-02哈希表.html"><span class="label">2024-12-31-02哈希表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-03贪心算法.html"><span class="label">2024-12-31-03贪心算法</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>基础运算</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>python基础</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/编程基础/python/基础语法/2023-9-23-01基础运算.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="%E5%9F%BA%E7%A1%80%E8%BF%90%E7%AE%97">基础运算</h1>
+<blockquote>
+<p>可以使用type获取一个变量的类型</p>
+</blockquote>
+<p>常见的数据类型</p>
+<ul>
+<li>整形, 可以存储任意大小的整数, 支持二进制（如<code>0b100</code>，换算成十进制是4）、八进制（如<code>0o100</code>，换算成十进制是64）、十进制（<code>100</code>）和十六进制（<code>0x100</code>，换算成十进制是256）的表示法。</li>
+<li>浮点型：浮点数也就是小数，之所以称为浮点数，是因为按照科学记数法表示时，一个浮点数的小数点位置是可变的，浮点数除了数学写法（如<code>123.456</code>）之外还支持科学计数法（如<code>1.23456e2</code>）</li>
+<li>字符串型：字符串是以单引号或双引号括起来的任意文本，比如<code>'hello'</code>和<code>&quot;hello&quot;</code>,字符串还有原始字符串表示法、字节字符串表示法、Unicode字符串表示法，而且可以书写成多行的形式（用三个单引号或三个双引号开头，三个单引号或三个双引号结尾）。</li>
+<li>布尔型：布尔值只有<code>True</code>、<code>False</code>两种值，要么是<code>True</code>，要么是<code>False</code>，在Python中，可以直接用<code>True</code>、<code>False</code>表示布尔值</li>
+<li>复数型：形如<code>3+5j</code>，跟数学上的复数表示一样，唯一不同的是虚部的<code>i</code>换成了<code>j</code>。</li>
+</ul>
+<p><strong>变量命令</strong></p>
+<p>和C语言相似</p>
+<p>常用的模式</p>
+<ul>
+<li>小写字母下划线连接</li>
+<li>受保护的属性使用下划线开头</li>
+<li>是有的实例属性使用两个下划线</li>
+</ul>
+<p><strong>实际的使用</strong></p>
+<p>在Python中可以使用<code>type</code>函数对变量的类型进行检查</p>
+
+<pre class="language-c"><code class="language-c">a = 100
+b = 12.345
+c = 1 + 5j
+d = 'hello, world'
+e = True
+print(type(a))    # &lt;class 'int'&gt;
+print(type(b))    # &lt;class 'float'&gt;
+print(type(c))    # &lt;class 'complex'&gt;
+print(type(d))    # &lt;class 'str'&gt;
+print(type(e))    # &lt;class 'bool'&gt;
+</code></pre>
+<p>可以使用Python中内置的函数对变量类型进行转换。</p>
+<ul>
+<li><code>int()</code>：将一个数值或字符串转换成整数，可以指定进制。</li>
+<li><code>float()</code>：将一个字符串转换成浮点数。</li>
+<li><code>str()</code>：将指定的对象转换成字符串形式，可以指定编码。</li>
+<li><code>chr()</code>：将整数转换成该编码对应的字符串（一个字符）。</li>
+<li><code>ord()</code>：将字符串（一个字符）转换成对应的编码（整数）。</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">a = int(input('a = '))
+b = int(input('b = '))
+print('%d + %d = %d' % (a, b, a + b))
+print('%d - %d = %d' % (a, b, a - b))
+print('%d * %d = %d' % (a, b, a * b))
+print('%d / %d = %f' % (a, b, a / b))
+print('%d // %d = %d' % (a, b, a // b))
+print('%d %% %d = %d' % (a, b, a % b))
+print('%d ** %d = %d' % (a, b, a ** b))
+</code></pre>
+<blockquote>
+<p>字符串之后的<code>%</code>后面跟的变量值会替换掉占位符然后输出到终端中</p>
+
+<pre class="language-python"><code class="language-python">In [1]: import keyword
+
+In [2]: keyword.kwlist
+Out[2]:
+['False',
+ 'None',
+ 'True',
+ 'and',
+ 'as',
+ 'assert',
+ 'async',
+ 'await',
+ 'break',
+ 'class',
+ 'continue',
+ 'def',
+ 'del',
+ 'elif',
+ 'else',
+ 'except',
+ 'finally',
+ 'for',
+ 'from',
+ 'global',
+ 'if',
+ 'import',
+ 'in',
+ 'is',
+ 'lambda',
+ 'nonlocal',
+ 'not',
+ 'or',
+ 'pass',
+ 'raise',
+ 'return',
+ 'try',
+ 'while',
+ 'with',
+ 'yield']
+</code></pre>
+</blockquote>
+<h3 id="%E5%85%B3%E9%94%AE%E5%AD%97">关键字</h3>
+
+<pre class="language-python"><code class="language-python">False, None, True, and, as, assert, async, await, break, class, continue, def, del
+elif, else, except, finally, for, from, global, if, import, in, is, lambda, nonlocalnot, or, pass, raise, return, try, while, with, yield
+
+</code></pre>
+<h2 id="%E8%BF%90%E7%AE%97%E7%AC%A6">运算符</h2>
+<table>
+<thead>
+<tr>
+  <th>运算符</th>
+  <th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>[]</code> <code>[:]</code></td>
+  <td>下标，切片</td>
+</tr>
+<tr>
+  <td><code>**</code></td>
+  <td>指数</td>
+</tr>
+<tr>
+  <td><code>~</code> <code>+</code> <code>-</code></td>
+  <td>按位取反, 正负号</td>
+</tr>
+<tr>
+  <td><code>*</code> <code>/</code> <code>%</code> <code>//</code></td>
+  <td>乘，除，模，整除</td>
+</tr>
+<tr>
+  <td><code>+</code> <code>-</code></td>
+  <td>加，减</td>
+</tr>
+<tr>
+  <td><code>&gt;&gt;</code> <code>&lt;&lt;</code></td>
+  <td>右移，左移</td>
+</tr>
+<tr>
+  <td><code>&amp;</code></td>
+  <td>按位与</td>
+</tr>
+<tr>
+  <td><code>^</code> `</td>
+  <td>`</td>
+  <td>按位异或，按位或</td>
+</tr>
+<tr>
+  <td><code>&lt;=</code> <code>&lt;</code> <code>&gt;</code> <code>&gt;=</code></td>
+  <td>小于等于，小于，大于，大于等于</td>
+</tr>
+<tr>
+  <td><code>==</code> <code>!=</code></td>
+  <td>等于，不等于</td>
+</tr>
+<tr>
+  <td><code>is</code>  <code>is not</code></td>
+  <td>身份运算符</td>
+</tr>
+<tr>
+  <td><code>in</code> <code>not in</code></td>
+  <td>成员运算符</td>
+</tr>
+<tr>
+  <td><code>not</code> <code>or</code> <code>and</code></td>
+  <td>逻辑运算符</td>
+</tr>
+<tr>
+  <td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <code>//=</code> <code>**=</code> <code>&amp;=</code> `</td>
+  <td>=<code></code>^=<code></code>&gt;&gt;=<code></code>&lt;&lt;=`</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6">比较运算符</h3>
+<p>可以使用连等</p>
+
+<pre class="language-python"><code class="language-python">60 &lt;= score
+</code></pre>
+<h3 id="%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6">赋值运算符</h3>
+<p>python里面可以使用=对多个数据进行赋值</p>
+
+<pre class="language-python"><code class="language-python">name, age, addr = &quot;jiao&quot;, 18, &quot;China&quot;
+</code></pre>
+<h3 id="%E4%B9%98%E5%8F%B7">乘号</h3>
+<p>一个乘号的一侧是一个字符串, 实际是对这一个字符串的重复</p>
+<h3 id="%E9%99%A4%E5%8F%B7">除号</h3>
+<p>使用/进行计算得到的数据是一个浮点数, //得到的数据是一个整形</p>
+<h3 id="%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6">逻辑运算符</h3>
+<p>一般情况下, 逻辑运算符里一般左右都是布尔类型</p>
+<p>如果左右都是一个数字的时候, 会把一个非零的值作为一个True, 如果判断的结果是True, and返回右侧的数字(两个都是需要判断的), or返回非零的数字, 两个都是非零的数字的时候返回左侧的(先判断的)</p>
+
+<pre class="language-python"><code class="language-python">In [1]: 100 and 200
+Out[1]: 200
+
+In [2]: 200 and 100
+Out[2]: 100
+
+In [3]: 0 and 200
+Out[3]: 0
+
+In [4]: 0 or 200
+Out[4]: 200
+
+In [5]: 200 or 0
+Out[5]: 200
+
+In [6]: 100 or 200
+Out[6]: 100
+
+In [7]: 200 or 100
+Out[7]: 200
+</code></pre>
+<h3 id="is-%E5%92%8C-%3D%3D-%E7%9A%84%E5%8C%BA%E5%88%AB">is 和 == 的区别</h3>
+<p>Python 中，对于任意的变量都具有三个基本要素：分别是 id，type，value。其中 id 为身份标识，即唯一能识别变量的标志，type 为数据类型，value 为数据值。</p>
+
+<pre class="language-c"><code class="language-c">&gt;&gt;&gt; a=1
+&gt;&gt;&gt; id(a)
+140705782725696
+&gt;&gt;&gt; type(a)
+&lt;class 'int'&gt;
+&gt;&gt;&gt; a
+1
+</code></pre>
+<p>“==” 主要用于判断两个对象的 value 是否相等，属于 Python 标准操作符中的比较运算符。</p>
+<p>“is” 主要用来判断两个对象的身份标识，即两者的基本要素 “id”，也叫做同一性运算符。</p>
+<p>在 Python 中，整型对象和字符串对象是不可变对象，所以 Python 会很高效地对它们进行缓存。因此在程序上看应该创建新对象时，却并不会创建新对象，而是对它们进行缓存。</p>
+<p>但 Python 仅缓存简单整型，因为 Python 认为在程序中这些小整型会经常被用到。而 Python 缓存的值也是有一定范围的，并且是可变的，使用时要注意。</p>
+
+<pre class="language-python"><code class="language-python">&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; b = 1
+&gt;&gt;&gt; a == b
+True
+&gt;&gt;&gt; a is b
+True
+&gt;&gt;&gt; c = 1.0
+&gt;&gt;&gt; d = 1.0
+&gt;&gt;&gt; c == d
+True
+&gt;&gt;&gt; c is d
+False
+&gt;&gt;&gt; e = &quot;abc&quot;
+&gt;&gt;&gt; f = &quot;abc&quot;
+&gt;&gt;&gt; e == f
+True
+&gt;&gt;&gt; e is f
+True
+&gt;&gt;&gt; g = [1,2,3]
+&gt;&gt;&gt; h = [1,2,3]
+&gt;&gt;&gt; g == h
+True
+&gt;&gt;&gt; g is h
+False
+&gt;&gt;&gt; i = (1,2,3)
+&gt;&gt;&gt; j = (1,2,3)
+&gt;&gt;&gt; i == j
+True
+&gt;&gt;&gt; i is j
+False
+</code></pre>
+<h2 id="%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5">条件语句</h2>
+<p>使用的关键字if , elif, else, 语句之后使用:进行分割</p>
+
+<pre class="language-python"><code class="language-python">a = input(&quot;请用户输入用户名: &quot;)
+b = input(&quot;请输入密码: &quot;)
+if a == 'jiao' and b == '1234':
+    print(&quot;用户存在&quot;)
+elif a == 'jiao' b != '1234':
+    print(&quot;密码错了&quot;)
+else:
+    print(&quot;滚&quot;)
+</code></pre>
+<h2 id="%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84">循环结构</h2>
+<h3 id="for%E5%BE%AA%E7%8E%AF">for循环</h3>
+<p>用于循环遍历一个可迭代的变量</p>
+
+<pre class="language-c"><code class="language-c">sum = 0
+for x in range(101):
+    sum += x
+print(sum)
+</code></pre>
+<blockquote>
+<p><code>range(1, 101)</code>可以用来构造一个从1到100的范围，当我们把这样一个范围放到<code>for-in</code>循环中，就可以通过前面的循环变量<code>x</code>依次取出从1到100的整数。</p>
+</blockquote>
+<ul>
+<li><code>range(101)</code>：可以用来产生0到100范围的整数，需要注意的是取不到101。</li>
+<li><code>range(1, 101)</code>：可以用来产生1到100范围的整数，相当于前面是闭区间后面是开区间。</li>
+<li><code>range(1, 101, 2)</code>：可以用来产生1到100的奇数，其中2是步长，即每次数值递增的值。</li>
+<li><code>range(100, 0, -2)</code>：可以用来产生100到1的偶数，其中-2是步长，即每次数字递减的值。</li>
+</ul>
+<h3 id="while%E5%BE%AA%E7%8E%AF">while循环</h3>
+<p><code>while True:</code></p>
+<p>可以使用break, continue</p>
+<h3 id="%E5%92%8Celse%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8">和else配合使用</h3>
+
+<pre class="language-python"><code class="language-python">while xxx:
+    ...
+else:
+    ...
+</code></pre>
+<blockquote>
+<p>如果退出的时候是这一个判断条件不成立退出的, 会执行这一个else语句, 使用bread进行退出则不会执行</p>
+</blockquote>
+<h2 id="%E5%AE%9E%E4%BE%8B">实例</h2>
+<p>求最大公约数以及最小公倍数</p>
+
+<pre class="language-python"><code class="language-python">x = int(input('x = '))
+y = int(input('y = '))
+# 如果x大于y就交换x和y的值
+if x &gt; y:
+    # 通过下面的操作将y的值赋给x, 将x的值赋给y
+    x, y = y, x
+# 从两个数中较小的数开始做递减的循环
+for factor in range(x, 0, -1):
+    if x % factor == 0 and y % factor == 0:
+        print('%d和%d的最大公约数是%d' % (x, y, factor))
+        print('%d和%d的最小公倍数是%d' % (x, y, x * y // factor))
+        break
+</code></pre>
+<h2 id="%E5%8F%98%E9%87%8F">变量</h2>
+<h3 id="%E4%BD%9C%E7%94%A8%E5%9F%9F">作用域</h3>
+<ul>
+<li><p>Python 能够改变变量作用域的代码段是 def 、 class 、 lamda.</p>
+</li>
+<li><p>if/elif/else、try/except/finally、for/while 并不能涉及变量作用域的更改，也就是在这些代码块中的变量，外部也是可以访问的</p>
+</li>
+<li><p>变量搜索路径是：局部变量-&gt;全局变量</p>
+</li>
+<li><p>局部变量：在函数内部，类内部，lamda.的变量，它的作用域仅在函数、类、lamda 里面</p>
+</li>
+<li><p>全局变量：在当前 py 文件都生效的变量</p>
+</li>
+</ul>
+<blockquote>
+<p>可以使用global进行初始化一个变量, 这一个变量作用域为全局变量</p>
+</blockquote>
+<h2 id="%E5%8D%A0%E4%BD%8D%E7%AC%A6">占位符</h2>
+<p>函数或者一个循环里面暂时不打算实现, 可以写一个<code>pass</code></p>
+<h2 id="%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6">三目运算符</h2>
+
+<pre class="language-python"><code class="language-python">条件成立的时候返回值 if 条件 else 不成立的时候的返回值
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html">
+                            <span class="icon"></span>
+                            <span class="label">2023-6-15-修饰器</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html">
+                            <span class="label">2023-9-24-02函数及变量</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

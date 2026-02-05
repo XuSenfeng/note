@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>RT-Thread线程间通信 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["RT-Thread"], "date": "2026-02-05", "update": [], "ts": 1770297751, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class="active"><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/嵌入式/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">PCB</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">立创eda</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-16-01入门.html"><span class="label">2024-7-16-01入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-17-02硬件基础.html"><span class="label">2024-7-17-02硬件基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-18-03立创eda.html"><span class="label">2024-7-18-03立创eda</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-18-04设计.html"><span class="label">2024-7-18-04设计</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-21-esp32设计.html"><span class="label">2024-7-21-esp32设计</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/PCB/立创eda/2024-7-23-触摸墨水屏时钟.html"><span class="label">2024-7-23-触摸墨水屏时钟</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">ROS</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">ROS1</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-12-01-基础介绍.html"><span class="label">2026-1-12-01-基础介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-02-命令行工具.html"><span class="label">2026-1-13-02-命令行工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-03-工作空间功能包.html"><span class="label">2026-1-13-03-工作空间功能包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-04-Publisher编程实现.html"><span class="label">2026-1-13-04-Publisher编程实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-05-Subscriber实现.html"><span class="label">2026-1-13-05-Subscriber实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-06-话题消息发布.html"><span class="label">2026-1-13-06-话题消息发布</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-07-同步Client实现.html"><span class="label">2026-1-13-07-同步Client实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-13-08-Server实现.html"><span class="label">2026-1-13-08-Server实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-09-自定义服务数据类型.html"><span class="label">2026-1-14-09-自定义服务数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-10-参数的使用.html"><span class="label">2026-1-14-10-参数的使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-11-坐标系管理系统.html"><span class="label">2026-1-14-11-坐标系管理系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS1/2026-1-14-12-可视化工具.html"><span class="label">2026-1-14-12-可视化工具</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">ROS2</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-01-ROS2.html"><span class="label">2026-1-15-01-ROS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-02-命令行使用.html"><span class="label">2026-1-15-02-命令行使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-03-工作空间功能包.html"><span class="label">2026-1-15-03-工作空间功能包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-04-节点node.html"><span class="label">2026-1-15-04-节点node</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-05-话题topic.html"><span class="label">2026-1-15-05-话题topic</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-06-服务Server.html"><span class="label">2026-1-15-06-服务Server</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-07-通信接口.html"><span class="label">2026-1-15-07-通信接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-08-动作.html"><span class="label">2026-1-15-08-动作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-09-参数.html"><span class="label">2026-1-15-09-参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-15-10-分布式系统.html"><span class="label">2026-1-15-10-分布式系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-16-11-DDS通信QoS.html"><span class="label">2026-1-16-11-DDS通信QoS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-16-12-launch启动脚本.html"><span class="label">2026-1-16-12-launch启动脚本</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-16-13-TF坐标系.html"><span class="label">2026-1-16-13-TF坐标系</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-17-14-机器人建模.html"><span class="label">2026-1-17-14-机器人建模</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-17-15-三维仿真.html"><span class="label">2026-1-17-15-三维仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-17-16-环境变量.html"><span class="label">2026-1-17-16-环境变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-19-17-电脑信息示例.html"><span class="label">2026-1-19-17-电脑信息示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-19-18-人脸识别.html"><span class="label">2026-1-19-18-人脸识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-19-rqt工具.html"><span class="label">2026-1-21-19-rqt工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-20-rviz.html"><span class="label">2026-1-21-20-rviz</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-21-bag记录工具.html"><span class="label">2026-1-21-21-bag记录工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-21-22-Gozebo仿真.html"><span class="label">2026-1-21-22-Gozebo仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-22--23-ros2_control驱动.html"><span class="label">2026-1-22--23-ros2_control驱动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-23-24-自主导航.html"><span class="label">2026-1-23-24-自主导航</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-24-25-slam_toolbox.html"><span class="label">2026-1-24-25-slam_toolbox</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-24-26-Navigation2自主导航.html"><span class="label">2026-1-24-26-Navigation2自主导航</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-24-27-导航应用开发.html"><span class="label">2026-1-24-27-导航应用开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-25-28-navigation2插件机制.html"><span class="label">2026-1-25-28-navigation2插件机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-25-29-自定义路径规划.html"><span class="label">2026-1-25-29-自定义路径规划</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-25-30-自定义导航控制器.html"><span class="label">2026-1-25-30-自定义导航控制器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-31-MicroROS.html"><span class="label">2026-1-26-31-MicroROS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-32-机器人搭建.html"><span class="label">2026-1-26-32-机器人搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-33-PID.html"><span class="label">2026-1-26-33-PID</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-34-运动学正逆解.html"><span class="label">2026-1-26-34-运动学正逆解</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-26-35-里程计计算.html"><span class="label">2026-1-26-35-里程计计算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-36-坐标系建图.html"><span class="label">2026-1-27-36-坐标系建图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-37-执行器回调组.html"><span class="label">2026-1-27-37-执行器回调组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-38-生命周期节点.html"><span class="label">2026-1-27-38-生命周期节点</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-39-执行器组织多个节点.html"><span class="label">2026-1-27-39-执行器组织多个节点</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-40-消息过滤器同步数据.html"><span class="label">2026-1-27-40-消息过滤器同步数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/ROS/ROS2/2026-1-27-41-不同DDS.html"><span class="label">2026-1-27-41-不同DDS</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">esp32</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-0-00CMake.html"><span class="label">2023-9-0-00CMake</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-15-01初识esp32.html"><span class="label">2023-9-15-01初识esp32</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-16-02ESP-IDE.html"><span class="label">2023-9-16-02ESP-IDE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-17-03延时函数点亮LED.html"><span class="label">2023-9-17-03延时函数点亮LED</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-17-04Flash和psram的配置.html"><span class="label">2023-9-17-04Flash和psram的配置</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2023-9-19-05多个文件编译.html"><span class="label">2023-9-19-05多个文件编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/2025-1-16-服务器.html"><span class="label">2025-1-16-服务器</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">Arduino</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/Arduino/2024-12-30-03-w25q64b.html"><span class="label">2024-12-30-03-w25q64b</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/Arduino/2024-2-2-01Arduino框架.html"><span class="label">2024-2-2-01Arduino框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/Arduino/2025-1-1-04-WifiAP.html"><span class="label">2025-1-1-04-WifiAP</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">esp-idf</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-10-4-28大语言模型.html"><span class="label">2024-10-4-28大语言模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-10-5-29文件系统.html"><span class="label">2024-10-5-29文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-10-5-30U8g2.html"><span class="label">2024-10-5-30U8g2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-11-9-31SD卡.html"><span class="label">2024-11-9-31SD卡</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-01ESP-IDF接口.html"><span class="label">2024-5-23-01ESP-IDF接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-02基础使用.html"><span class="label">2024-5-23-02基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-03GPIO.html"><span class="label">2024-5-23-03GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-23-安装.html"><span class="label">2024-5-23-安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-24-04I2C.html"><span class="label">2024-5-24-04I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-05I2S.html"><span class="label">2024-5-25-05I2S</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-06efuse.html"><span class="label">2024-5-25-06efuse</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-07lvgl.html"><span class="label">2024-5-25-07lvgl</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-07组件管理.html"><span class="label">2024-5-25-07组件管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-5-25-08触摸屏.html"><span class="label">2024-5-25-08触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-13-15蓝牙GAP.html"><span class="label">2024-6-13-15蓝牙GAP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-13-16蓝牙GATT.html"><span class="label">2024-6-13-16蓝牙GATT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-13-17SMP安全配对绑定.html"><span class="label">2024-6-13-17SMP安全配对绑定</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-22-18蓝牙HID控制.html"><span class="label">2024-6-22-18蓝牙HID控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-24-19分区表.html"><span class="label">2024-6-24-19分区表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-24-20OTA数据分区.html"><span class="label">2024-6-24-20OTA数据分区</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-25-21FreeRTOS.html"><span class="label">2024-6-25-21FreeRTOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-26-22错误处理.html"><span class="label">2024-6-26-22错误处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-26-23MQTT.html"><span class="label">2024-6-26-23MQTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-27-24睡眠模式.html"><span class="label">2024-6-27-24睡眠模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-27-25电源管理.html"><span class="label">2024-6-27-25电源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-28-26RTC.html"><span class="label">2024-6-28-26RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-3-09wifi.html"><span class="label">2024-6-3-09wifi</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-4-10事件循环库.html"><span class="label">2024-6-4-10事件循环库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-6-11HTTP库.html"><span class="label">2024-6-6-11HTTP库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-6-12cJSON.html"><span class="label">2024-6-6-12cJSON</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-8-13AI大语言模型.html"><span class="label">2024-6-8-13AI大语言模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-6-9-14蓝牙.html"><span class="label">2024-6-9-14蓝牙</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2024-8-1-27启动模式.html"><span class="label">2024-8-1-27启动模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-1-22-32cpp.html"><span class="label">2025-1-22-32cpp</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-3-27-33照相机.html"><span class="label">2025-3-27-33照相机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-6-6-34USB.html"><span class="label">2025-6-6-34USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/esp-idf/2025-6-7-36存储器.html"><span class="label">2025-6-7-36存储器</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">micropython</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-4-22-01环境搭建.html"><span class="label">2024-4-22-01环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-4-22-02-GPIO.html"><span class="label">2024-4-22-02-GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-4-22-03-WIFI.html"><span class="label">2024-4-22-03-WIFI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2024-5-20-04SPI.html"><span class="label">2024-5-20-04SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2026-1-3-05-编译.html"><span class="label">2026-1-3-05-编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/esp32/micropython/2026-1-6-06-自定义模块.html"><span class="label">2026-1-6-06-自定义模块</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">stc32</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stc32/2023-9-17-01.html"><span class="label">2023-9-17-01</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">stm32</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">HAL原子</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-11-05创建工程.html"><span class="label">2023-11-11-05创建工程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-11-06初识HAL库.html"><span class="label">2023-11-11-06初识HAL库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-12-07新建HAL库版本的工程.html"><span class="label">2023-11-12-07新建HAL库版本的工程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-12-08启动过程浅析.html"><span class="label">2023-11-12-08启动过程浅析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-12-09STM32CubeMX.html"><span class="label">2023-11-12-09STM32CubeMX</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-18-10SYSTEN文件介绍.html"><span class="label">2023-11-18-10SYSTEN文件介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-20-11GPIO.html"><span class="label">2023-11-20-11GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-21-12中断.html"><span class="label">2023-11-21-12中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-28-13USART.html"><span class="label">2023-11-28-13USART</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-30-14IWDG.html"><span class="label">2023-11-30-14IWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-30-15WWDG.html"><span class="label">2023-11-30-15WWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-5-原理图设计.html"><span class="label">2023-11-5-原理图设计</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-6-常用的开发工具.html"><span class="label">2023-11-6-常用的开发工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-9-03C语言知识.html"><span class="label">2023-11-9-03C语言知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-11-9-04stm32基础知识.html"><span class="label">2023-11-9-04stm32基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-1-16定时器.html"><span class="label">2023-12-1-16定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-13-17-FSMC.html"><span class="label">2023-12-13-17-FSMC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-19-18LTDC.html"><span class="label">2023-12-19-18LTDC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-21-19DMA2D.html"><span class="label">2023-12-21-19DMA2D</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-21-20USMART.html"><span class="label">2023-12-21-20USMART</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-22-21RTC.html"><span class="label">2023-12-22-21RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-25-23RNG.html"><span class="label">2023-12-25-23RNG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-26-24电源管理.html"><span class="label">2023-12-26-24电源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-28-25DMA.html"><span class="label">2023-12-28-25DMA</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-28-26ADC.html"><span class="label">2023-12-28-26ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-29-27DAC.html"><span class="label">2023-12-29-27DAC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2023-12-6-17MPU.html"><span class="label">2023-12-6-17MPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-1-28SPI.html"><span class="label">2024-1-1-28SPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-3-29QSPI.html"><span class="label">2024-1-3-29QSPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-4-30CAN.html"><span class="label">2024-1-4-30CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-6-31内部Flash.html"><span class="label">2024-1-6-31内部Flash</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-7-32DCMI.html"><span class="label">2024-1-7-32DCMI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-8-33SDIO.html"><span class="label">2024-1-8-33SDIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL原子/2024-1-8-34SDMMC.html"><span class="label">2024-1-8-34SDMMC</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">HAL库</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-13-13SPIFlash.html"><span class="label">2023-10-13-13SPIFlash</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-16-14Fatfs.html"><span class="label">2023-10-16-14Fatfs</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-19-15FSMC扩展SRAM.html"><span class="label">2023-10-19-15FSMC扩展SRAM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-19-16LCD.html"><span class="label">2023-10-19-16LCD</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-2-01入门.html"><span class="label">2023-10-2-01入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-26-17电阻触摸屏.html"><span class="label">2023-10-26-17电阻触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-27-18ADC.html"><span class="label">2023-10-27-18ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-29-19-定时器.html"><span class="label">2023-10-29-19-定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-30-20电容按键.html"><span class="label">2023-10-30-20电容按键</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-4-02初识HAL固件库.html"><span class="label">2023-10-4-02初识HAL固件库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-03GPIO板级支持包的构建.html"><span class="label">2023-10-5-03GPIO板级支持包的构建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-04启动过程.html"><span class="label">2023-10-5-04启动过程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-05复位以及时钟控制.html"><span class="label">2023-10-5-05复位以及时钟控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-5-06异常和中断EXTI.html"><span class="label">2023-10-5-06异常和中断EXTI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-07Systick定时器.html"><span class="label">2023-10-6-07Systick定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-08HAL库驱动框架.html"><span class="label">2023-10-6-08HAL库驱动框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-09Debug调试.html"><span class="label">2023-10-6-09Debug调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-6-10通讯原理-USART.html"><span class="label">2023-10-6-10通讯原理-USART</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-7-11DMA直接存储访问控制器.html"><span class="label">2023-10-7-11DMA直接存储访问控制器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/HAL库/2023-10-9-12常见的存储器-I2C-EEPROM.html"><span class="label">2023-10-9-12常见的存储器-I2C-EEPROM</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">固件库</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-11-29-27IWDG.html"><span class="label">2023-11-29-27IWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-11-30-28WWDG.html"><span class="label">2023-11-30-28WWDG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-18-31LTDC.html"><span class="label">2023-12-18-31LTDC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-20-32DMA2D.html"><span class="label">2023-12-20-32DMA2D</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-22-33-RTC.html"><span class="label">2023-12-22-33-RTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-25-34RNG.html"><span class="label">2023-12-25-34RNG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-29-35DAC.html"><span class="label">2023-12-29-35DAC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-5-29电容按键.html"><span class="label">2023-12-5-29电容按键</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-12-6-30MPU.html"><span class="label">2023-12-6-30MPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-19-1安装软件.html"><span class="label">2023-6-19-1安装软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-19-2初识stm32.html"><span class="label">2023-6-19-2初识stm32</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-20-3寄存器.html"><span class="label">2023-6-20-3寄存器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-20-4GPIO.html"><span class="label">2023-6-20-4GPIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-22-5使用固件库.html"><span class="label">2023-6-22-5使用固件库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-26-6启动文件.html"><span class="label">2023-6-26-6启动文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-26-7时钟.html"><span class="label">2023-6-26-7时钟</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-26-8中断.html"><span class="label">2023-6-26-8中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-30-10串口通讯.html"><span class="label">2023-6-30-10串口通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-6-30-9SysTick.html"><span class="label">2023-6-30-9SysTick</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-15-19ADC.html"><span class="label">2023-7-15-19ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-16-20定时器.html"><span class="label">2023-7-16-20定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-19-21SDIO.html"><span class="label">2023-7-19-21SDIO</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-2-11DMA.html"><span class="label">2023-7-2-11DMA</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-25-22电源管理.html"><span class="label">2023-7-25-22电源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-27-23MDK编译过程.html"><span class="label">2023-7-27-23MDK编译过程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-28-24读写内部Flash.html"><span class="label">2023-7-28-24读写内部Flash</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-29-25SRAM.html"><span class="label">2023-7-29-25SRAM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-3-12存储器(I2C).html"><span class="label">2023-7-3-12存储器(I2C)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-3-13Flash(SPI).html"><span class="label">2023-7-3-13Flash(SPI)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-5-14文件系统.html"><span class="label">2023-7-5-14文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-8-15FSMC(SRAM).html"><span class="label">2023-7-8-15FSMC(SRAM)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-7-9-16FSMC液晶屏8080时序.html"><span class="label">2023-7-9-16FSMC液晶屏8080时序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2023-9-14-26摄像头.html"><span class="label">2023-9-14-26摄像头</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-1-36QSPI.html"><span class="label">2024-1-1-36QSPI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-10-41FPU.html"><span class="label">2024-1-10-41FPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-11-42USB.html"><span class="label">2024-1-11-42USB</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-4-37CAN.html"><span class="label">2024-1-4-37CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-7-38DCMI.html"><span class="label">2024-1-7-38DCMI</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-8-39SDMMC.html"><span class="label">2024-1-8-39SDMMC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/固件库/2024-1-9-40硬件JGEG.html"><span class="label">2024-1-9-40硬件JGEG</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">无人机</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/无人机/2025-2-1-01-基础知识.html"><span class="label">2025-2-1-01-基础知识</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">蓝桥杯备赛</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/蓝桥杯备赛/2024-3-10-01.html"><span class="label">2024-3-10-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/stm32/蓝桥杯备赛/2024-3-11-02理论题.html"><span class="label">2024-3-11-02理论题</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">基础知识</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">Cotex-M3权威指南</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-00快查.html"><span class="label">2024-1-16-00快查</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-01概览.html"><span class="label">2024-1-16-01概览</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-02基础(寄存器-栈-中断向量表).html"><span class="label">2024-1-16-02基础(寄存器-栈-中断向量表)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-16-03指令集.html"><span class="label">2024-1-16-03指令集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-04存储器.html"><span class="label">2024-1-17-04存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-05全景概况.html"><span class="label">2024-1-17-05全景概况</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-06异常.html"><span class="label">2024-1-17-06异常</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-07NVIC与中断控制.html"><span class="label">2024-1-17-07NVIC与中断控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-17-08中断的具体行为.html"><span class="label">2024-1-17-08中断的具体行为</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-09Cotex-M3低层编程.html"><span class="label">2024-1-18-09Cotex-M3低层编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-10系统异常.html"><span class="label">2024-1-18-10系统异常</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-11系统行为.html"><span class="label">2024-1-18-11系统行为</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-12其它特性.html"><span class="label">2024-1-18-12其它特性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-18-13MPU.html"><span class="label">2024-1-18-13MPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-19调试.html"><span class="label">2024-1-19调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/Cotex-M3权威指南/2024-1-20-20Cotex-M3开发.html"><span class="label">2024-1-20-20Cotex-M3开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">RISC-V体系</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-6-26-01RISC-V体系.html"><span class="label">2024-6-26-01RISC-V体系</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-6-26-问题处理.html"><span class="label">2024-6-26-问题处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-6-30-02开发环境.html"><span class="label">2024-6-30-02开发环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-7-31-03内核.html"><span class="label">2024-7-31-03内核</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-1-04汇编.html"><span class="label">2024-8-1-04汇编</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-4-05异常处理机制.html"><span class="label">2024-8-4-05异常处理机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-5-06中断处理.html"><span class="label">2024-8-5-06中断处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/基础知识/RISC-V体系/2024-8-5-07-其他组件.html"><span class="label">2024-8-5-07-其他组件</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">外设</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-31-01环境传感器AP3216.html"><span class="label">2023-12-31-01环境传感器AP3216</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-31-02磁力计ST480MC.html"><span class="label">2023-12-31-02磁力计ST480MC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-31-03六轴传感器SH3001.html"><span class="label">2023-12-31-03六轴传感器SH3001</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-12-5-模块OLED.html"><span class="label">2023-12-5-模块OLED</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2023-7-13-18触摸屏.html"><span class="label">2023-7-13-18触摸屏</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-1-Flash-W25Q64.html"><span class="label">2024-1-1-Flash-W25Q64</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-10-15音频编解码VS1053等.html"><span class="label">2024-1-10-15音频编解码VS1053等</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-4-05电阻触摸屏XPT2046.html"><span class="label">2024-1-4-05电阻触摸屏XPT2046</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-4-06电容触摸屏GT9147.html"><span class="label">2024-1-4-06电容触摸屏GT9147</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-5-07红外遥控.html"><span class="label">2024-1-5-07红外遥控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-5-08游戏手柄.html"><span class="label">2024-1-5-08游戏手柄</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-5-09温度传感器DS18B20.html"><span class="label">2024-1-5-09温度传感器DS18B20</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-10温湿度传感器DHT11.html"><span class="label">2024-1-6-10温湿度传感器DHT11</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-11-2.4G通信nrf24l01.html"><span class="label">2024-1-6-11-2.4G通信nrf24l01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-12摄像头OV7725.html"><span class="label">2024-1-6-12摄像头OV7725</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-6-13摄像头OV2640OV5640.html"><span class="label">2024-1-6-13摄像头OV2640OV5640</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-1-7-14SD卡.html"><span class="label">2024-1-7-14SD卡</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/外设/2024-9-11-4G DTU.html"><span class="label">2024-9-11-4G DTU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式Linux编程入门与实例开发</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/嵌入式Linux编程入门与实例开发/2022-8-24-嵌入式系统基础.html"><span class="label">2022-8-24-嵌入式系统基础</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">模拟器</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">RISC-V模拟器</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-19-02指令实现.html"><span class="label">2024-8-19-02指令实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-29-GDB调试.html"><span class="label">2024-8-29-GDB调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-5-00基础知识.html"><span class="label">2024-8-5-00基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-8-5-01模拟器.html"><span class="label">2024-8-5-01模拟器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/模拟器/RISC-V模拟器/2024-9-3-04外设.html"><span class="label">2024-9-3-04外设</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">第三方移植</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active no_link"><a><span class="label">MySTMOS</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-19-a所有文件的作用记录.html"><span class="label">2023-7-19-a所有文件的作用记录</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-19-day1.html"><span class="label">2023-7-19-day1</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-20-day2汇编指令以及Makefile.html"><span class="label">2023-7-20-day2汇编指令以及Makefile</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-21-day3进入32位系统以及C语言.html"><span class="label">2023-7-21-day3进入32位系统以及C语言</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-21-day4C语言以及显示.html"><span class="label">2023-7-21-day4C语言以及显示</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-23-day5结构体文字显示与GDTIDT初始化.html"><span class="label">2023-7-23-day5结构体文字显示与GDTIDT初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-7-25-day6分割编译与中断处理.html"><span class="label">2023-7-25-day6分割编译与中断处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-14-day7FIFO与鼠标控制.html"><span class="label">2023-8-14-day7FIFO与鼠标控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-17-day10叠加处理.html"><span class="label">2023-8-17-day10叠加处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-17-day8鼠标控制以及32位转换.html"><span class="label">2023-8-17-day8鼠标控制以及32位转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-17-day9内存管理.html"><span class="label">2023-8-17-day9内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-19-day11制作窗口.html"><span class="label">2023-8-19-day11制作窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-23-day12定时器.html"><span class="label">2023-8-23-day12定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-24-day13定时器.html"><span class="label">2023-8-24-day13定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-25-day14高分辨率以及键盘输入.html"><span class="label">2023-8-25-day14高分辨率以及键盘输入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-26-day15多任务.html"><span class="label">2023-8-26-day15多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-8-29-day16多任务.html"><span class="label">2023-8-29-day16多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/MySTMOS/2023-9-5-day17命令行窗口.html"><span class="label">2023-9-5-day17命令行窗口</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">RT-Thread</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-00速查手册.html"><span class="label">2024-1-26-00速查手册</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-00问题处理.html"><span class="label">2024-1-26-00问题处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-01简介.html"><span class="label">2024-1-26-01简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-02RT-Thread架构.html"><span class="label">2024-1-26-02RT-Thread架构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-03移植.html"><span class="label">2024-1-26-03移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-26-04内核框架.html"><span class="label">2024-1-26-04内核框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-27-05启动流程.html"><span class="label">2024-1-27-05启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-27-06线程管理.html"><span class="label">2024-1-27-06线程管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-27-07时钟管理.html"><span class="label">2024-1-27-07时钟管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-28-09系统间同步.html"><span class="label">2024-1-28-09系统间同步</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-28-10IO模型.html"><span class="label">2024-1-28-10IO模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-28-11串口设备.html"><span class="label">2024-1-28-11串口设备</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-29-12ADC.html"><span class="label">2024-1-29-12ADC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-30-13I2C.html"><span class="label">2024-1-30-13I2C</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-30-14RT-Thread对象管理.html"><span class="label">2024-1-30-14RT-Thread对象管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-31-15线程管理(代码分析).html"><span class="label">2024-1-31-15线程管理(代码分析)</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-31-16线程管理(源码分析02.html"><span class="label">2024-1-31-16线程管理(源码分析02</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-2-5-17线程间通信.html"><span class="label">2024-2-5-17线程间通信</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2024-2-7-18内存管理.html"><span class="label">2024-2-7-18内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/RT-Thread/2025-1-18-RTThreadEnv.html"><span class="label">2025-1-18-RTThreadEnv</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">freeRTOS</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/0000-0-0-00实际使用.html"><span class="label">0000-0-0-00实际使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-15-wds01使用.html"><span class="label">2023-11-15-wds01使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-17-wds02互斥量.html"><span class="label">2023-11-17-wds02互斥量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-19-wds03任务通知.html"><span class="label">2023-11-19-wds03任务通知</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-21-wds04计时器.html"><span class="label">2023-11-21-wds04计时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-22-wds05中断管理.html"><span class="label">2023-11-22-wds05中断管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-22-wds06资源管理.html"><span class="label">2023-11-22-wds06资源管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-23-08wds优化.html"><span class="label">2023-11-23-08wds优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-23-wds07调试.html"><span class="label">2023-11-23-wds07调试</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-11-23-wds09内存管理.html"><span class="label">2023-11-23-wds09内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-18-1架构概念.html"><span class="label">2023-6-18-1架构概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-18-2堆栈.html"><span class="label">2023-6-18-2堆栈</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-20-3FreeRTOS.html"><span class="label">2023-6-20-3FreeRTOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-6-21-4修改.html"><span class="label">2023-6-21-4修改</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-10-fire4临界段.html"><span class="label">2023-7-10-fire4临界段</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-11-fire5空闲任务阻塞延时.html"><span class="label">2023-7-11-fire5空闲任务阻塞延时</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-11-fire6支持任务多优先级.html"><span class="label">2023-7-11-fire6支持任务多优先级</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-12-fire7任务延时列表实现.html"><span class="label">2023-7-12-fire7任务延时列表实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-12-fire8实现时间片.html"><span class="label">2023-7-12-fire8实现时间片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-12-fire9移植.html"><span class="label">2023-7-12-fire9移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-13-fire10创建任务.html"><span class="label">2023-7-13-fire10创建任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-19-fire11FreeRTOS启动任务管理.html"><span class="label">2023-7-19-fire11FreeRTOS启动任务管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-19-fire12任务状态.html"><span class="label">2023-7-19-fire12任务状态</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-5-fire1项目构建.html"><span class="label">2023-7-5-fire1项目构建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-5-fire2数据结构.html"><span class="label">2023-7-5-fire2数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2023-7-9-fire3任务创建切换.html"><span class="label">2023-7-9-fire3任务创建切换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/freeRTOS/2024-1-21-02实际使用CubeMX封装.html"><span class="label">2024-1-21-02实际使用CubeMX封装</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">homeassistant</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/homeassistant/2025-3-30-homeassistant.html"><span class="label">2025-3-30-homeassistant</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">libpeer</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/libpeer/2025-5-29-WebRTC.html"><span class="label">2025-5-29-WebRTC</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/libpeer/2025-6-2-MIPI.html"><span class="label">2025-6-2-MIPI</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">lvgl</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-1-11-02移植.html"><span class="label">2024-1-11-02移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-1-5-01入门.html"><span class="label">2024-1-5-01入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-26-03初始化.html"><span class="label">2024-5-26-03初始化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-26-04配置文件.html"><span class="label">2024-5-26-04配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-26-05lvgl模拟器.html"><span class="label">2024-5-26-05lvgl模拟器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-27-06基础部件.html"><span class="label">2024-5-27-06基础部件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-30-07部件使用.html"><span class="label">2024-5-30-07部件使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-5-31-08其他.html"><span class="label">2024-5-31-08其他</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-09实体按键.html"><span class="label">2024-6-3-09实体按键</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-10文件系统移植.html"><span class="label">2024-6-3-10文件系统移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-11-中文字库.html"><span class="label">2024-6-3-11-中文字库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2024-6-3-12屏幕切换.html"><span class="label">2024-6-3-12屏幕切换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2025-12-07-图层绘制.html"><span class="label">2025-12-07-图层绘制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2025-12-5-14-操作系统使用.html"><span class="label">2025-12-5-14-操作系统使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lvgl/2025-2-24-13图片字体.html"><span class="label">2025-2-24-13图片字体</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">lwIP</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-6-3-LWIP.html"><span class="label">2024-6-3-LWIP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-6-30-02MAC简介.html"><span class="label">2024-6-30-02MAC简介</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-1-03移植.html"><span class="label">2024-7-1-03移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-1-04启动流程.html"><span class="label">2024-7-1-04启动流程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-10-13RAW接口.html"><span class="label">2024-7-10-13RAW接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-12-14WebServer.html"><span class="label">2024-7-12-14WebServer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-12-15NETCONN.html"><span class="label">2024-7-12-15NETCONN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-13-16NTP获取时间.html"><span class="label">2024-7-13-16NTP获取时间</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-14-17Jpref测速.html"><span class="label">2024-7-14-17Jpref测速</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-14-18MQTT.html"><span class="label">2024-7-14-18MQTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-2-05内存管理.html"><span class="label">2024-7-2-05内存管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-3-06网络接口.html"><span class="label">2024-7-3-06网络接口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-4-07网络数据包.html"><span class="label">2024-7-4-07网络数据包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-4-08超时定时器.html"><span class="label">2024-7-4-08超时定时器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-5-09ARP协议.html"><span class="label">2024-7-5-09ARP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-5-10IP协议.html"><span class="label">2024-7-5-10IP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-8-11ICMP协议.html"><span class="label">2024-7-8-11ICMP协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/lwIP/2024-7-8-12传输协议.html"><span class="label">2024-7-8-12传输协议</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">u8g2</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/u8g2/2024-10-4-01U8G2.html"><span class="label">2024-10-4-01U8G2</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">文件系统</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/文件系统/2024-1-9-01FATFS.html"><span class="label">2024-1-9-01FATFS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">物联网</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-12-01网络基础知识.html"><span class="label">2023-11-12-01网络基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-13-02MQQT程序分层.html"><span class="label">2023-11-13-02MQQT程序分层</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-25-03移植到stm32.html"><span class="label">2023-11-25-03移植到stm32</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/第三方移植/物联网/2023-11-26-04连接wifi.html"><span class="label">2023-11-26-04连接wifi</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">补充知识</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2023-11-7-IAP技术.html"><span class="label">2023-11-7-IAP技术</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2023-7-13-17液晶屏显示字符.html"><span class="label">2023-7-13-17液晶屏显示字符</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-10-03图片存储.html"><span class="label">2024-1-10-03图片存储</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-10-04视频解码.html"><span class="label">2024-1-10-04视频解码</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-10-05手写识别.html"><span class="label">2024-1-10-05手写识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-11-06T9拼音输入法.html"><span class="label">2024-1-11-06T9拼音输入法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-11-07IAP原子.html"><span class="label">2024-1-11-07IAP原子</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-1-9-02图片显示.html"><span class="label">2024-1-9-02图片显示</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/嵌入式/补充知识/2024-9-14-08USB.html"><span class="label">2024-9-14-08USB</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>RT-Thread线程间通信</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>RT-Thread</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-02-05">
+                                    2026-02-05
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/嵌入式/第三方移植/RT-Thread/2024-2-5-17线程间通信.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1">线程间通信</h1>
+<p>一般可以使用全局变量以及线程间同步进行实现</p>
+<p>RT-Thread也提供了一部分的通信机制</p>
+<h2 id="%E9%82%AE%E7%AE%B1">邮箱</h2>
+<p>一个线程发送, 另外的线程接受信息, 进行处理</p>
+<p>使用邮箱的时候每一次只能发送一个四字节的数据(32位处理器),特点是开销比较低，效率较高</p>
+<blockquote>
+<p>可以发送一个地址从而达到发送多个数据的目的</p>
+</blockquote>
+<p>非阻塞方式的邮件发送过程能够安全的应用于中断服务中, 发送以及接受信息的时候可以使用阻塞的模式</p>
+<p>邮箱有一个缓存区, 使用rt_mailbox_t进行控制</p>
+<h3 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202402051610635.png" alt="image-20240205161002594" /></p>
+<h4 id="%E5%88%9B%E5%BB%BA%28%E5%88%9D%E5%A7%8B%E5%8C%96%29">创建(初始化)</h4>
+
+<pre class="language-c"><code class="language-c">/** 动态的方式创建
+ * This function will create a mailbox object from system resource
+ *
+ * @param name the name of mailbox 记录一个名字
+ * @param size the size of mailbox 记录一下缓存区的大小
+ * @param flag the flag of mailbox 一个标志位
+ *
+ * @return the created mailbox, RT_NULL on error happen
+ */
+rt_mailbox_t rt_mb_create(const char *name, rt_size_t size, rt_uint8_t flag)
+ /** 静态的方式创建
+ * This function will initialize a mailbox and put it under control of resource
+ * management.
+ *
+ * @param mb the mailbox object 邮箱的句柄
+ * @param name the name of mailbox 名字
+ * @param msgpool the begin address of buffer to save received mail 缓存区的地址
+ * @param size the size of mailbox	缓冲区大小
+ * @param flag the flag of mailbox 标志
+ *
+ * @return the operation status, RT_EOK on successful
+ */
+rt_err_t rt_mb_init(rt_mailbox_t mb,
+                    const char  *name,
+                    void        *msgpool,
+                    rt_size_t    size,
+                    rt_uint8_t   flag)
+</code></pre>
+<blockquote>
+<p>这一个标志位可以为RT_IPC_FLAG_FIFO或RT_IPC_FLAG_PRIO, 设置的是挂起任务被释放的时候是按照进入的顺序先进入的先出去还是优先级比较高的先出去</p>
+</blockquote>
+<h4 id="%E5%88%A0%E9%99%A4">删除</h4>
+
+<pre class="language-c"><code class="language-c">/**动态
+ * This function will delete a mailbox object and release the memory
+ *
+ * @param mb the mailbox object
+ *
+ * @return the error code
+ */
+rt_err_t rt_mb_delete(rt_mailbox_t mb)
+/**静态
+ * This function will detach a mailbox from resource management
+ *
+ * @param mb the mailbox object
+ *
+ * @return the operation status, RT_EOK on successful
+ */
+rt_err_t rt_mb_detach(rt_mailbox_t mb)
+</code></pre>
+<h4 id="%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6">发送邮件</h4>
+
+<pre class="language-c"><code class="language-c">/**
+ * This function will send a mail to mailbox object, if there are threads
+ * suspended on mailbox object, it will be waked up. This function will return
+ * immediately, if you want blocking send, use rt_mb_send_wait instead.
+ *
+ * @param mb the mailbox object
+ * @param value the mail 要发送的数据
+ *
+ * @return the error code
+ */
+rt_err_t rt_mb_send(rt_mailbox_t mb, rt_ubase_t value)
+</code></pre>
+<blockquote>
+<p>这是一个不等待的时钟发送函数</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">/**
+ * This function will send a mail to mailbox object. If the mailbox is full,
+ * current thread will be suspended until timeout.
+ *
+ * @param mb the mailbox object
+ * @param value the mail
+ * @param timeout the waiting time 多了一个等待时间
+ *
+ * @return the error code
+ */
+rt_err_t rt_mb_send_wait(rt_mailbox_t mb,
+                         rt_ubase_t   value,
+                         rt_int32_t   timeout)
+</code></pre>
+<h4 id="%E6%8E%A5%E6%94%B6">接收</h4>
+
+<pre class="language-c"><code class="language-c">/**
+ * This function will receive a mail from mailbox object, if there is no mail
+ * in mailbox object, the thread shall wait for a specified time.
+ *
+ * @param mb the mailbox object
+ * @param value the received mail will be saved in 给出一个存放收到的数据的位置
+ * @param timeout the waiting time
+ *
+ * @return the error code
+ */
+rt_err_t rt_mb_recv(rt_mailbox_t mb, rt_ubase_t *value, rt_int32_t timeout)
+</code></pre>
+<h3 id="%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7">使用技巧</h3>
+<p>可以使用一个这样的结构体, 每次发送这一个结构体的地址, 进行大于32字节的数据发送</p>
+
+<pre class="language-c"><code class="language-c">struct msg
+{
+    uint32_t *data;
+    uint32_t size;
+}
+</code></pre>
+<h2 id="%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97">消息队列</h2>
+<p>是邮箱的扩展, 没有4字节的限制</p>
+<p>消息队列能够接收来自线程或中断服务例程中不固定长度的消息，并把消息缓存在自己的内存空间中。这些消息使用的是链表进行连接, 消息先进先出</p>
+<p>这一个使用的拷贝的模式进行传输, 不建议直接发送大量数据(可以发送一个地址)</p>
+<p>可以用于发送不定长的数据, 实际使用的时候可以使用消息队列发送消息, 使用邮箱表示接收到数据了</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202402051643722.png" alt="image-20240205164352685" /></p>
+<h3 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202402051648180.png" alt="image-20240205164847142" /></p>
+<h4 id="%E5%88%9B%E5%BB%BA">创建</h4>
+
+<pre class="language-c"><code class="language-c">/**动态
+ * This function will create a message queue object from system resource
+ *
+ * @param name the name of message queue 名字
+ * @param msg_size the size of message	每一个消息的大小(字节)
+ * @param max_msgs the maximum number of message in queue 记录一下消息的最大的个数
+ * @param flag the flag of message queue 一个标志
+ *
+ * @return the created message queue, RT_NULL on error happen
+ */
+rt_mq_t rt_mq_create(const char *name,
+                     rt_size_t   msg_size,
+                     rt_size_t   max_msgs,
+                     rt_uint8_t  flag)
+/**静态
+ * This function will initialize a message queue and put it under control of
+ * resource management.
+ *
+ * @param mq the message object	对象的句柄
+ * @param name the name of message queue
+ * @param msgpool the beginning address of buffer to save messages 缓冲区的地址, 动态申请
+ *		 的时候这个的大小是 (一个数据的大小+sizeof(struct rt_mq_message)) * mq-&gt;max_msgs
+ * @param msg_size the maximum size of message一个消息的大小
+ * @param pool_size the size of buffer to save messages 缓冲区的大小
+ * @param flag the flag of message queue
+ *
+ * @return the operation status, RT_EOK on successful
+ */
+rt_err_t rt_mq_init(rt_mq_t     mq,
+                    const char *name,
+                    void       *msgpool,
+                    rt_size_t   msg_size,
+                    rt_size_t   pool_size,
+                    rt_uint8_t  flag)
+</code></pre>
+<blockquote>
+<p>这一个标志位可以为RT_IPC_FLAG_FIFO或RT_IPC_FLAG_PRIO, 设置的是挂起任务被释放的时候是按照进入的顺序先进入的先出去还是优先级比较高的先出去</p>
+</blockquote>
+<h4 id="%E5%88%A0%E9%99%A4">删除</h4>
+
+<pre class="language-c"><code class="language-c">/**动态
+ * This function will delete a message queue object and release the memory
+ *
+ * @param mq the message queue object
+ *
+ * @return the error code
+ */
+rt_err_t rt_mq_delete(rt_mq_t mq)
+/**静态
+ * This function will detach a message queue object from resource management
+ *
+ * @param mq the message queue object
+ *
+ * @return the operation status, RT_EOK on successful
+ */
+rt_err_t rt_mq_detach(rt_mq_t mq)
+</code></pre>
+<h4 id="%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF">发送消息</h4>
+
+<pre class="language-c"><code class="language-c">/**
+ * This function will send a message to message queue object, if there are
+ * threads suspended on message queue object, it will be waked up.
+ *
+ * @param mq the message queue object 
+ * @param buffer the message 发送的消息的地址
+ * @param size the size of buffer 发送的数据的大小
+ *
+ * @return the error code
+ */
+rt_err_t rt_mq_send(rt_mq_t mq, const void *buffer, rt_size_t size)
+</code></pre>
+<blockquote>
+<p>不等待</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">/**
+ * This function will send a message to message queue object. If the message queue is full,
+ * current thread will be suspended until timeout.
+ *
+ * @param mq the message queue object
+ * @param buffer the message
+ * @param size the size of buffer
+ * @param timeout the waiting time
+ *
+ * @return the error code
+ */
+rt_err_t rt_mq_send_wait(rt_mq_t     mq,
+                         const void *buffer,
+                         rt_size_t   size,
+                         rt_int32_t  timeout)
+</code></pre>
+<blockquote>
+<p>等待</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">/**
+ * This function will send an urgent message to message queue object, which
+ * means the message will be inserted to the head of message queue. If there
+ * are threads suspended on message queue object, it will be waked up.
+ *
+ * @param mq the message queue object
+ * @param buffer the message
+ * @param size the size of buffer
+ *
+ * @return the error code
+ */
+rt_err_t rt_mq_urgent(rt_mq_t mq, const void *buffer, rt_size_t size)
+</code></pre>
+<blockquote>
+<p>发送一个紧急的消息, 这一个消息会直接放到队首</p>
+</blockquote>
+<h4 id="%E6%8E%A5%E6%94%B6">接收</h4>
+
+<pre class="language-c"><code class="language-c">/**
+ * This function will receive a message from message queue object, if there is
+ * no message in message queue object, the thread shall wait for a specified
+ * time.
+ *
+ * @param mq the message queue object
+ * @param buffer the received message will be saved in 接收到的数据
+ * @param size the size of buffer
+ * @param timeout the waiting time
+ *
+ * @return the error code
+ */
+rt_err_t rt_mq_recv(rt_mq_t    mq,
+                    void      *buffer,
+                    rt_size_t  size,
+                    rt_int32_t timeout)
+</code></pre>
+<h2 id="%E4%BF%A1%E5%8F%B7%28%E8%BD%AF%E4%BB%B6%E4%B8%AD%E6%96%AD%E4%BF%A1%E5%8F%B7%29">信号(软件中断信号)</h2>
+<blockquote>
+<p><strong>注: </strong>信号这块应该是要在微内核里使用，如果你是用宏内核版本，不推荐使用信号功能。</p>
+</blockquote>
+<p>POSIX标准定义了sigset_t类型来定义一个信号集, 实际是一个unsigned long类型的数据, 应用程序能够使用的信号为SIGUSR1（10）和SIGUSR2（12）</p>
+<p>他的本质是一个软件中断</p>
+<p>收到信号的线程实际的处理方法有三种</p>
+<ul>
+<li>类似中断的处理程序，对于需要处理的信号，线程可以指定处理函数，由该函数来处理。</li>
+<li>忽略某个信号，对该信号不做任何处理，就像未发生过一样。</li>
+<li>对该信号的处理保留系统的默认值。</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202402051714288.png" alt="image-20240205171441255" /></p>
+<blockquote>
+<p>需要定义RT_USING_SIGNALS这一个宏</p>
+</blockquote>
+<h3 id="%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8">实际使用</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202402051714696.png" alt="image-20240205171459644" /></p>
+<h4 id="%E5%AE%89%E8%A3%85%E4%BF%A1%E5%8F%B7">安装信号</h4>
+<p>如果线程要处理某一信号，那么就要在线程中安装该信号。</p>
+<p>主要用来确定信号值及线程针对该信号值的动作之间的映射关系，即线程将要处理哪个信号，该信号被传递给线程时，将执行何种操作。</p>
+
+<pre class="language-c"><code class="language-c">rt_sighandler_t rt_signal_install(int signo, rt_sighandler_t handler)
+</code></pre>
+<blockquote>
+<p>(这一个函数是给现在的线程安装)</p>
+<p>signo信号值（只有SIGUSR1和SIGUSR2是开放给用户使用的）</p>
+<p>handler设置对信号值的处理方式, 这一个的实际的函数是void (*rt_sighandler_t)(int signo);</p>
+<p>也可以使用SIG_IGN，忽略某个信号, SIG_DFL，系统会调用默认的处理函数_signal_default_handler()</p>
+<p>返回安装信号前的handler值表示成功</p>
+</blockquote>
+<h4 id="%E9%98%BB%E5%A1%9E%28%E5%B1%8F%E8%94%BD%29%E4%BF%A1%E5%8F%B7">阻塞(屏蔽)信号</h4>
+<p>该信号将不会递达给安装此信号的线程，也不会引发软中断处理。</p>
+
+<pre class="language-c"><code class="language-c">void rt_signal_mask(int signo)
+</code></pre>
+<h4 id="%E8%A7%A3%E9%99%A4%E4%BF%A1%E5%8F%B7%E9%98%BB%E5%A1%9E">解除信号阻塞</h4>
+
+<pre class="language-c"><code class="language-c">void rt_signal_unmask(int signo)
+</code></pre>
+<h4 id="%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7">发送信号</h4>
+
+<pre class="language-c"><code class="language-c">int rt_thread_kill(rt_thread_t tid, int sig)
+</code></pre>
+<blockquote>
+<p>tid: 接收信号的线程</p>
+<p>sig: 信号值</p>
+</blockquote>
+<h4 id="%E7%AD%89%E5%BE%85%E4%BF%A1%E5%8F%B7">等待信号</h4>
+
+<pre class="language-c"><code class="language-c">int rt_signal_wait(const rt_sigset_t *set, rt_siginfo_t *si, rt_int32_t timeout)
+</code></pre>
+<blockquote>
+<p>set: 指定等待的信号</p>
+<p>si: 指向存储等到信号信息的指针</p>
+</blockquote>
+<h1 id="RT-Thread%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90">RT-Thread代码分析</h1>
+<h2 id="%E9%82%AE%E7%AE%B1">邮箱</h2>
+<p>实际是实现是一个对环形缓存区的使用</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202402051852365.png" alt="image-20240205185245224" /></p>
+
+<pre class="language-c"><code class="language-c">struct rt_mailbox
+{
+    struct rt_ipc_object parent;                        /**&lt; inherit from ipc_object */
+
+    rt_ubase_t          *msg_pool;                      /**&lt; start address of 
+    												message buffer 缓存区地址*/
+
+    rt_uint16_t          size;                          /**&lt; size of message pool 大小*/
+
+    rt_uint16_t          entry;                         /**&lt; index of messages in msg_pool
+    												记录一下数量*/
+    rt_uint16_t          in_offset;                     /**&lt; input offset of the message 																				buffer记录一下写的位置 */
+    rt_uint16_t          out_offset;                    /**&lt; output offset of the message 																				记录一下读的位置buffer */
+
+    rt_list_t            suspend_sender_thread;         /**&lt; sender thread suspended on
+    												挂起的任务链表this mailbox */
+};
+typedef struct rt_mailbox *rt_mailbox_t;
+</code></pre>
+
+<pre class="language-c"><code class="language-c">struct rt_ipc_object
+{
+    struct rt_object parent;                            /**&lt; inherit from rt_object */
+
+    rt_list_t        suspend_thread;                    /**&lt; threads pended on this resource 记录接收的任务的队列 */
+};
+</code></pre>
+<h3 id="%E5%88%9B%E5%BB%BA">创建</h3>
+
+<pre class="language-c"><code class="language-c">rt_mailbox_t rt_mb_create(const char *name, rt_size_t size, rt_uint8_t flag)
+{
+    rt_mailbox_t mb;
+
+    RT_DEBUG_NOT_IN_INTERRUPT;
+
+    /* allocate object 这一个在对象创建的那一篇里面分析过了*/
+    mb = (rt_mailbox_t)rt_object_allocate(RT_Object_Class_MailBox, name);
+    if (mb == RT_NULL)
+        return mb;
+
+    /* set parent */
+    mb-&gt;parent.parent.flag = flag;
+
+    /* initialize ipc object 实际上就是初始化一个用于记录接收任务挂起的链表 */
+    rt_ipc_object_init(&amp;(mb-&gt;parent));
+
+    /* initialize mailbox 记录一些信息 */
+    mb-&gt;size     = size;
+    //获取一个缓存区
+    mb-&gt;msg_pool = (rt_ubase_t *)RT_KERNEL_MALLOC(mb-&gt;size * sizeof(rt_ubase_t));
+    if (mb-&gt;msg_pool == RT_NULL)
+    {
+        //获取失败
+        /* delete mailbox object */
+        rt_object_delete(&amp;(mb-&gt;parent.parent));
+
+        return RT_NULL;
+    }
+    mb-&gt;entry      = 0;
+    mb-&gt;in_offset  = 0;
+    mb-&gt;out_offset = 0;
+
+    /* initialize an additional list of sender suspend thread 发送者的队列 */
+    rt_list_init(&amp;(mb-&gt;suspend_sender_thread));
+
+    return mb;
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">//实际就是记录一下信息
+rt_err_t rt_mb_init(rt_mailbox_t mb,
+                    const char  *name,
+                    void        *msgpool,
+                    rt_size_t    size,
+                    rt_uint8_t   flag)
+{
+    RT_ASSERT(mb != RT_NULL);
+
+    /* initialize object 具体看对象的分析那一章*/
+    rt_object_init(&amp;(mb-&gt;parent.parent), RT_Object_Class_MailBox, name);
+
+    /* set parent flag */
+    mb-&gt;parent.parent.flag = flag;
+
+    /* initialize ipc object */
+    rt_ipc_object_init(&amp;(mb-&gt;parent));
+
+    /* initialize mailbox */
+    mb-&gt;msg_pool   = (rt_ubase_t *)msgpool;
+    mb-&gt;size       = size;
+    mb-&gt;entry      = 0;
+    mb-&gt;in_offset  = 0;
+    mb-&gt;out_offset = 0;
+
+    /* initialize an additional list of sender suspend thread */
+    rt_list_init(&amp;(mb-&gt;suspend_sender_thread));
+
+    return RT_EOK;
+}
+</code></pre>
+<h3 id="%E5%88%A0%E9%99%A4">删除</h3>
+
+<pre class="language-c"><code class="language-c">rt_err_t rt_mb_delete(rt_mailbox_t mb)
+{
+    RT_DEBUG_NOT_IN_INTERRUPT;
+
+    /* resume all suspended thread 把所有的挂起的接收线程释放, 这个同步那一章里面有 */
+    rt_ipc_list_resume_all(&amp;(mb-&gt;parent.suspend_thread));
+
+    /* also resume all mailbox private suspended thread 发送线程释放 */
+    rt_ipc_list_resume_all(&amp;(mb-&gt;suspend_sender_thread));
+
+    /* free mailbox pool 释放缓存内存 */
+    RT_KERNEL_FREE(mb-&gt;msg_pool);
+
+    /* delete mailbox object 控制块会在空闲任务释放 */
+    rt_object_delete(&amp;(mb-&gt;parent.parent));
+
+    return RT_EOK;
+}
+</code></pre>
+<h3 id="%E5%8F%91%E9%80%81">发送</h3>
+
+<pre class="language-c"><code class="language-c">rt_err_t rt_mb_send(rt_mailbox_t mb, rt_ubase_t value)
+{
+    return rt_mb_send_wait(mb, value, 0);
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">rt_err_t rt_mb_send_wait(rt_mailbox_t mb,
+                         rt_ubase_t   value,
+                         rt_int32_t   timeout)
+{
+    struct rt_thread *thread;
+    register rt_ubase_t temp;
+    rt_uint32_t tick_delta;
+
+    /* initialize delta tick */
+    tick_delta = 0;
+    /* get current thread 获取当前线程 */
+    thread = rt_thread_self();
+    //回调函数
+    RT_OBJECT_HOOK_CALL(rt_object_put_hook, (&amp;(mb-&gt;parent.parent)));
+
+    /* disable interrupt 临界区 */
+    temp = rt_hw_interrupt_disable();
+
+    /* for non-blocking call 看一看有没有位置 */
+    if (mb-&gt;entry == mb-&gt;size &amp;&amp; timeout == 0)
+    {
+        //没有并且不等待
+        rt_hw_interrupt_enable(temp);
+
+        return -RT_EFULL;
+    }
+
+    /* mailbox is full */
+    while (mb-&gt;entry == mb-&gt;size)
+    {
+        //邮箱满了
+        /* reset error number in thread */
+        thread-&gt;error = RT_EOK;
+
+        /* no waiting, return timeout */
+        if (timeout == 0)
+        {
+            /* enable interrupt 这一个线程等待时间到了 */
+            rt_hw_interrupt_enable(temp);
+
+            return -RT_EFULL;
+        }
+    	//这个使用的时候需要已经开始调度了
+        RT_DEBUG_IN_THREAD_CONTEXT;
+        /* suspend current thread */
+        //把这一个任务记录在挂起队列里面(具体分析看任务同步的那一篇)
+        rt_ipc_list_suspend(&amp;(mb-&gt;suspend_sender_thread),
+                            thread,
+                            mb-&gt;parent.parent.flag);
+
+        /* has waiting time, start thread timer */
+        if (timeout &gt; 0)
+        {
+            //需要等待
+            /* get the start tick of timer 获取现在的时间 */
+            tick_delta = rt_tick_get();
+
+            RT_DEBUG_LOG(RT_DEBUG_IPC, (&quot;mb_send_wait: start timer of thread:%s\n&quot;,
+                                        thread-&gt;name));
+
+            /* reset the timeout of thread timer and start it 开启一个时钟用于超时时候的唤醒*/
+            rt_timer_control(&amp;(thread-&gt;thread_timer),
+                             RT_TIMER_CTRL_SET_TIME,
+                             &amp;timeout);
+            rt_timer_start(&amp;(thread-&gt;thread_timer));
+        }
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+
+        /* re-schedule 启动一次调度 */
+        rt_schedule();
+    	//这里线程被唤醒, 看一看这这时候是不是超时了
+        /* resume from suspend state */
+        if (thread-&gt;error != RT_EOK)
+        {
+            /* return error */
+            return thread-&gt;error;
+        }
+
+        /* disable interrupt 在这之前可能有一个高优先级把这一个位置又使用了, 需要再看看可不可以发送*/
+        temp = rt_hw_interrupt_disable();
+
+        /* if it's not waiting forever and then re-calculate timeout tick 跟新一下发送的时间, 再试着发送一次 */
+        if (timeout &gt; 0)
+        {
+            tick_delta = rt_tick_get() - tick_delta;
+            timeout -= tick_delta;
+            //时间已经到了
+            if (timeout &lt; 0)
+                timeout = 0;
+        }
+    }
+    //可以发送信息
+    /* set ptr 记录一下信息*/
+    mb-&gt;msg_pool[mb-&gt;in_offset] = value;
+    /* increase input offset 更新一下记录的指针 */
+    ++ mb-&gt;in_offset;
+    if (mb-&gt;in_offset &gt;= mb-&gt;size)
+        mb-&gt;in_offset = 0;//大小大于这一个环形缓冲区, 回头部
+    /* increase message entry */
+    mb-&gt;entry ++;//大小加一
+
+    /* resume suspended thread 看一看接收的有没有在等的 */
+    if (!rt_list_isempty(&amp;mb-&gt;parent.suspend_thread))
+    {
+        //唤醒一下第一个等待的线程以及把时钟关了(看线程同步)
+        rt_ipc_list_resume(&amp;(mb-&gt;parent.suspend_thread));
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+    	//切换一下任务
+        rt_schedule();
+
+        return RT_EOK;
+    }
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(temp);
+
+    return RT_EOK;
+}
+</code></pre>
+<h3 id="%E6%8E%A5%E6%94%B6">接收</h3>
+
+<pre class="language-c"><code class="language-c">//基本和发送一样, 只是循环判断是为空, 以及标识符加减反过来了
+rt_err_t rt_mb_recv(rt_mailbox_t mb, rt_ubase_t *value, rt_int32_t timeout)
+{
+    struct rt_thread *thread;
+    register rt_ubase_t temp;
+    rt_uint32_t tick_delta;
+
+    /* parameter check */
+    RT_ASSERT(mb != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&amp;mb-&gt;parent.parent) == RT_Object_Class_MailBox);
+
+    /* initialize delta tick */
+    tick_delta = 0;
+    /* get current thread */
+    thread = rt_thread_self();
+
+    RT_OBJECT_HOOK_CALL(rt_object_trytake_hook, (&amp;(mb-&gt;parent.parent)));
+
+    /* disable interrupt */
+    temp = rt_hw_interrupt_disable();
+
+    /* for non-blocking call */
+    if (mb-&gt;entry == 0 &amp;&amp; timeout == 0)
+    {
+        rt_hw_interrupt_enable(temp);
+
+        return -RT_ETIMEOUT;
+    }
+
+    /* mailbox is empty 看看是不是空的 */
+    while (mb-&gt;entry == 0)
+    {
+        //需要等待
+        /* reset error number in thread */
+        thread-&gt;error = RT_EOK;
+
+        /* no waiting, return timeout */
+        if (timeout == 0)
+        {
+            //等待的时间到了, 失败
+            /* enable interrupt */
+            rt_hw_interrupt_enable(temp);
+
+            thread-&gt;error = -RT_ETIMEOUT;
+
+            return -RT_ETIMEOUT;
+        }
+    	//必须打开调度器了
+        RT_DEBUG_IN_THREAD_CONTEXT;
+        //一个典型的icp挂起处理
+        /* suspend current thread */
+        rt_ipc_list_suspend(&amp;(mb-&gt;parent.suspend_thread),
+                            thread,
+                            mb-&gt;parent.parent.flag);
+
+        /* has waiting time, start thread timer 还有时间, 挂起*/
+        if (timeout &gt; 0)
+        {
+            /* get the start tick of timer */
+            tick_delta = rt_tick_get();
+
+            RT_DEBUG_LOG(RT_DEBUG_IPC, (&quot;mb_recv: start timer of thread:%s\n&quot;,
+                                        thread-&gt;name));
+
+            /* reset the timeout of thread timer and start it */
+            rt_timer_control(&amp;(thread-&gt;thread_timer),
+                             RT_TIMER_CTRL_SET_TIME,
+                             &amp;timeout);
+            rt_timer_start(&amp;(thread-&gt;thread_timer));
+        }
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+
+        /* re-schedule */
+        rt_schedule();
+    	//切换, 看一看是不是出错了(超时等)
+        /* resume from suspend state */
+        if (thread-&gt;error != RT_EOK)
+        {
+            /* return error */
+            return thread-&gt;error;
+        }
+
+        /* disable interrupt 最后检测一下有没有位置 */
+        temp = rt_hw_interrupt_disable();
+
+        /* if it's not waiting forever and then re-calculate timeout tick 更新时间 */
+        if (timeout &gt; 0)
+        {
+            tick_delta = rt_tick_get() - tick_delta;
+            timeout -= tick_delta;
+            if (timeout &lt; 0)
+                timeout = 0;
+        }
+    }
+
+    /* fill ptr */
+    *value = mb-&gt;msg_pool[mb-&gt;out_offset];
+
+    /* increase output offset */
+    ++ mb-&gt;out_offset;
+    if (mb-&gt;out_offset &gt;= mb-&gt;size)
+        mb-&gt;out_offset = 0;
+    /* decrease message entry */
+    mb-&gt;entry --;
+
+    /* resume suspended thread */
+    if (!rt_list_isempty(&amp;(mb-&gt;suspend_sender_thread)))
+    {
+        //释放第一个线程
+        rt_ipc_list_resume(&amp;(mb-&gt;suspend_sender_thread));
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+
+        RT_OBJECT_HOOK_CALL(rt_object_take_hook, (&amp;(mb-&gt;parent.parent)));
+
+        rt_schedule();
+
+        return RT_EOK;
+    }
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(temp);
+
+    RT_OBJECT_HOOK_CALL(rt_object_take_hook, (&amp;(mb-&gt;parent.parent)));
+
+    return RT_EOK;
+}
+</code></pre>
+<h2 id="%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97">消息队列</h2>
+<p>实际上这是一个对链表的使用</p>
+<p>消息链表: 使用两个指针记录消息链表的头以及尾</p>
+<p>空闲链表: 类似栈, 使用一个指针记录空闲任务尾部</p>
+
+<pre class="language-c"><code class="language-c">struct rt_messagequeue
+{
+    struct rt_ipc_object parent;                        /**&lt; inherit from ipc_object */
+
+    void                *msg_pool;                      /**&lt; start address of message
+    												queue 存放消息的缓冲区 */
+
+    rt_uint16_t          msg_size;                      /**&lt; message size of each message
+    												记录可以容纳的每一个消息的大小*/
+    rt_uint16_t          max_msgs;                      /**&lt; max number of messages 
+    												记录消息的个数*/
+
+    rt_uint16_t          entry;                         /**&lt; index of messages in the 													 								queue 记录现在消息的个数 */
+
+    void                *msg_queue_head;                /**&lt; list head 链表头 */
+    void                *msg_queue_tail;                /**&lt; list tail 链表尾*/
+    void                *msg_queue_free;                /**&lt; pointer indicated the free 																			node of queue 记录缓冲区里下一个空闲消息的链表 */
+
+    rt_list_t            suspend_sender_thread;         /**&lt; sender thread suspended on 																				this message queue 发送线程的挂起的等待队列*/
+};
+</code></pre>
+
+<pre class="language-c"><code class="language-c">struct rt_mq_message
+{
+    struct rt_mq_message *next;
+};
+</code></pre>
+<blockquote>
+<p>一个管理信息的链表</p>
+</blockquote>
+<h3 id="%E5%88%9B%E5%BB%BA">创建</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202402051825703.png" alt="image-20240205182510596" /></p>
+<blockquote>
+<p>初始化以后的缓冲区</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">rt_mq_t rt_mq_create(const char *name,
+                     rt_size_t   msg_size,
+                     rt_size_t   max_msgs,
+                     rt_uint8_t  flag)
+{
+    struct rt_messagequeue *mq;
+    struct rt_mq_message *head;
+    register rt_base_t temp;
+    //这一个函数不应该在中断里面使用
+    RT_DEBUG_NOT_IN_INTERRUPT;
+
+    /* allocate object 获取一个邮箱的对象 */
+    mq = (rt_mq_t)rt_object_allocate(RT_Object_Class_MessageQueue, name);
+    if (mq == RT_NULL)
+        return mq;
+
+    /* set parent 记录一下标志 */
+    mq-&gt;parent.parent.flag = flag;
+
+    /* initialize ipc object 主要是初始化一个ipc的链表(这一部分在信号同步的的那一篇里面有) */
+    rt_ipc_object_init(&amp;(mq-&gt;parent));
+
+    /* initialize message queue */
+
+    /* get correct message size 把这一个按照四字节对齐 */
+    mq-&gt;msg_size = RT_ALIGN(msg_size, RT_ALIGN_SIZE);
+    mq-&gt;max_msgs = max_msgs;
+
+    /* allocate message pool 获取一个存信息的内存, 实际的大小是(信息大小 + 管理结构体(一个链表)) * 数量 */
+    mq-&gt;msg_pool = RT_KERNEL_MALLOC((mq-&gt;msg_size + sizeof(struct rt_mq_message)) * mq-&gt;max_msgs);
+    if (mq-&gt;msg_pool == RT_NULL)
+    {
+        //获取失败的时候
+        rt_object_delete(&amp;(mq-&gt;parent.parent));
+
+        return RT_NULL;
+    }
+
+    /* initialize message list */
+    mq-&gt;msg_queue_head = RT_NULL;
+    mq-&gt;msg_queue_tail = RT_NULL;
+
+    /* initialize message empty list 初始化这一个缓存里面的信息 */
+    mq-&gt;msg_queue_free = RT_NULL;
+    for (temp = 0; temp &lt; mq-&gt;max_msgs; temp ++)
+    {
+        head = (struct rt_mq_message *)((rt_uint8_t *)mq-&gt;msg_pool +
+                                        temp * (mq-&gt;msg_size + sizeof(struct rt_mq_message)));//计算一下第n个信息的位置
+        head-&gt;next = (struct rt_mq_message *)mq-&gt;msg_queue_free;//初始化链表指向数组前一个信息
+        mq-&gt;msg_queue_free = head;//更新一下可以使用的下一个的位置
+    }
+
+    /* the initial entry is zero */
+    mq-&gt;entry = 0;
+
+    /* initialize an additional list of sender suspend thread */
+    rt_list_init(&amp;(mq-&gt;suspend_sender_thread));
+
+    return mq;
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">//静态, 实际就是记录一下用到的值
+rt_err_t rt_mq_init(rt_mq_t     mq,
+                    const char *name,
+                    void       *msgpool,
+                    rt_size_t   msg_size,
+                    rt_size_t   pool_size,
+                    rt_uint8_t  flag)
+{
+    struct rt_mq_message *head;
+    register rt_base_t temp;
+
+    /* parameter check */
+    RT_ASSERT(mq != RT_NULL);
+
+    /* initialize object */
+    rt_object_init(&amp;(mq-&gt;parent.parent), RT_Object_Class_MessageQueue, name);
+
+    /* set parent flag */
+    mq-&gt;parent.parent.flag = flag;
+
+    /* initialize ipc object */
+    rt_ipc_object_init(&amp;(mq-&gt;parent));
+
+    /* set message pool */
+    mq-&gt;msg_pool = msgpool;
+
+    /* get correct message size 计算一下实际可以存储的信息的个数 */
+    mq-&gt;msg_size = RT_ALIGN(msg_size, RT_ALIGN_SIZE);
+    mq-&gt;max_msgs = pool_size / (mq-&gt;msg_size + sizeof(struct rt_mq_message));
+
+    /* initialize message list */
+    mq-&gt;msg_queue_head = RT_NULL;
+    mq-&gt;msg_queue_tail = RT_NULL;
+
+    /* initialize message empty list */
+    mq-&gt;msg_queue_free = RT_NULL;
+    for (temp = 0; temp &lt; mq-&gt;max_msgs; temp ++)
+    {
+        head = (struct rt_mq_message *)((rt_uint8_t *)mq-&gt;msg_pool +
+                                        temp * (mq-&gt;msg_size + sizeof(struct rt_mq_message)));
+        head-&gt;next = (struct rt_mq_message *)mq-&gt;msg_queue_free;
+        mq-&gt;msg_queue_free = head;
+    }
+
+    /* the initial entry is zero */
+    mq-&gt;entry = 0;
+
+    /* initialize an additional list of sender suspend thread */
+    rt_list_init(&amp;(mq-&gt;suspend_sender_thread));
+
+    return RT_EOK;
+}
+</code></pre>
+<h3 id="%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF">发送消息</h3>
+
+<pre class="language-c"><code class="language-c">rt_err_t rt_mq_send_wait(rt_mq_t     mq,
+                         const void *buffer,
+                         rt_size_t   size,
+                         rt_int32_t  timeout)
+{
+    register rt_ubase_t temp;
+    struct rt_mq_message *msg;
+    rt_uint32_t tick_delta;
+    struct rt_thread *thread;
+
+    /* greater than one message size */
+    if (size &gt; mq-&gt;msg_size)
+        //发送的消息太大了, 不能发送
+        return -RT_ERROR;
+
+    /* initialize delta tick */
+    tick_delta = 0;
+    /* get current thread 获取当前线程 */
+    thread = rt_thread_self();
+
+    RT_OBJECT_HOOK_CALL(rt_object_put_hook, (&amp;(mq-&gt;parent.parent)));
+
+    /* disable interrupt 临界区 */
+    temp = rt_hw_interrupt_disable();
+
+    /* get a free list, there must be an empty item */
+    msg = (struct rt_mq_message *)mq-&gt;msg_queue_free;
+    /* for non-blocking call */
+    if (msg == RT_NULL &amp;&amp; timeout == 0)
+    {
+        /* enable interrupt 没有位置, 并且不等待 */
+        rt_hw_interrupt_enable(temp);
+
+        return -RT_EFULL;
+    }
+
+    /* message queue is full 没有可以用于发送的空闲缓冲区 */
+    while ((msg = mq-&gt;msg_queue_free) == RT_NULL)
+    {
+        /* reset error number in thread */
+        thread-&gt;error = RT_EOK;
+
+        /* no waiting, return timeout */
+        if (timeout == 0)
+        {
+            /* enable interrupt 时间到了 */
+            rt_hw_interrupt_enable(temp);
+
+            return -RT_EFULL;
+        }
+    	//一个典型的ipc挂起
+        RT_DEBUG_IN_THREAD_CONTEXT;
+        /* suspend current thread */
+        rt_ipc_list_suspend(&amp;(mq-&gt;suspend_sender_thread),
+                            thread,
+                            mq-&gt;parent.parent.flag);
+
+        /* has waiting time, start thread timer */
+        if (timeout &gt; 0)
+        {
+            //还需要等待
+            /* get the start tick of timer 记录现在的时间, 用于计算是不是超时 */
+            tick_delta = rt_tick_get();
+
+            RT_DEBUG_LOG(RT_DEBUG_IPC, (&quot;mq_send_wait: start timer of thread:%s\n&quot;,
+                                        thread-&gt;name));
+
+            /* reset the timeout of thread timer and start it */
+            rt_timer_control(&amp;(thread-&gt;thread_timer),
+                             RT_TIMER_CTRL_SET_TIME,
+                             &amp;timeout);
+            rt_timer_start(&amp;(thread-&gt;thread_timer));
+        }
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+
+        /* re-schedule 任务切换*/
+        rt_schedule();
+    	//回来了, 可能有位置或者出错(超时)
+        /* resume from suspend state */
+        if (thread-&gt;error != RT_EOK)
+        {
+            //是出错回来的
+            /* return error */
+            return thread-&gt;error;
+        }
+
+        /* disable interrupt */
+        temp = rt_hw_interrupt_disable();
+    	//最后更新时间以及检测一下是不是真的有位置
+        /* if it's not waiting forever and then re-calculate timeout tick */
+        if (timeout &gt; 0)
+        {
+            tick_delta = rt_tick_get() - tick_delta;
+            timeout -= tick_delta;
+            if (timeout &lt; 0)
+                timeout = 0;
+        }
+    }
+    //有位置
+    /* move free list pointer 获取一个位置, 这个msg是记录空闲位置的那一个指针 */
+    mq-&gt;msg_queue_free = msg-&gt;next;
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(temp);
+
+    /* the msg is the new tailer of list, the next shall be NULL 这是一个新加入的信息, 没有下一个*/
+    msg-&gt;next = RT_NULL;
+    /* copy buffer 把信息拷贝到缓冲区 */
+    rt_memcpy(msg + 1, buffer, size);
+
+    /* disable interrupt */
+    temp = rt_hw_interrupt_disable();
+    /* link msg to message queue  看一看链表里面有没有信息*/
+    if (mq-&gt;msg_queue_tail != RT_NULL)
+    {
+        //这是不第一个信息, 更新上一条信息的下一条为这个新的消息
+        /* if the tail exists, */
+        ((struct rt_mq_message *)mq-&gt;msg_queue_tail)-&gt;next = msg;
+    }
+
+    /* set new tail 尾部记录为这一个信息 */
+    mq-&gt;msg_queue_tail = msg;
+    /* if the head is empty, set head 这时候没有信息的话记录一下这一条信息为第一条 */
+    if (mq-&gt;msg_queue_head == RT_NULL)
+        mq-&gt;msg_queue_head = msg;
+
+    /* increase message entry 数量加一 */
+    mq-&gt;entry ++;
+
+    /* resume suspended thread 看一看有没有可以释放的任务*/
+    if (!rt_list_isempty(&amp;mq-&gt;parent.suspend_thread))
+    {
+        //释放第一个任务
+        rt_ipc_list_resume(&amp;(mq-&gt;parent.suspend_thread));
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+
+        rt_schedule();
+
+        return RT_EOK;
+    }
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(temp);
+
+    return RT_EOK;
+}
+</code></pre>
+<h3 id="%E6%8E%A5%E6%94%B6%E4%BF%A1%E6%81%AF">接收信息</h3>
+
+<pre class="language-c"><code class="language-c">//基本一样, 主要看链表操作
+rt_err_t rt_mq_recv(rt_mq_t    mq,
+                    void      *buffer,
+                    rt_size_t  size,
+                    rt_int32_t timeout)
+{
+    struct rt_thread *thread;
+    register rt_ubase_t temp;
+    struct rt_mq_message *msg;
+    rt_uint32_t tick_delta;
+
+    /* parameter check */
+    RT_ASSERT(mq != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&amp;mq-&gt;parent.parent) == RT_Object_Class_MessageQueue);
+    RT_ASSERT(buffer != RT_NULL);
+    RT_ASSERT(size != 0);
+
+    /* initialize delta tick */
+    tick_delta = 0;
+    /* get current thread */
+    thread = rt_thread_self();
+    RT_OBJECT_HOOK_CALL(rt_object_trytake_hook, (&amp;(mq-&gt;parent.parent)));
+
+    /* disable interrupt */
+    temp = rt_hw_interrupt_disable();
+
+    /* for non-blocking call */
+    if (mq-&gt;entry == 0 &amp;&amp; timeout == 0)
+    {
+        //没有可以获取的信息, 并且不等待
+        rt_hw_interrupt_enable(temp);
+
+        return -RT_ETIMEOUT;
+    }
+
+    /* message queue is empty 没有信息 */
+    while (mq-&gt;entry == 0)
+    {
+        RT_DEBUG_IN_THREAD_CONTEXT;
+
+        /* reset error number in thread */
+        thread-&gt;error = RT_EOK;
+
+        /* no waiting, return timeout 超时 */
+        if (timeout == 0)
+        {
+            /* enable interrupt */
+            rt_hw_interrupt_enable(temp);
+
+            thread-&gt;error = -RT_ETIMEOUT;
+
+            return -RT_ETIMEOUT;
+        }
+    	//ipc挂起
+        /* suspend current thread */
+        rt_ipc_list_suspend(&amp;(mq-&gt;parent.suspend_thread),
+                            thread,
+                            mq-&gt;parent.parent.flag);
+
+        /* has waiting time, start thread timer */
+        if (timeout &gt; 0)
+        {
+            /* get the start tick of timer */
+            tick_delta = rt_tick_get();
+
+            RT_DEBUG_LOG(RT_DEBUG_IPC, (&quot;set thread:%s to timer list\n&quot;,
+                                        thread-&gt;name));
+
+            /* reset the timeout of thread timer and start it */
+            rt_timer_control(&amp;(thread-&gt;thread_timer),
+                             RT_TIMER_CTRL_SET_TIME,
+                             &amp;timeout);
+            rt_timer_start(&amp;(thread-&gt;thread_timer));
+        }
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+
+        /* re-schedule */
+        rt_schedule();
+
+        /* recv message */
+        if (thread-&gt;error != RT_EOK)
+        {
+            /* return error */
+            return thread-&gt;error;
+        }
+
+        /* disable interrupt */
+        temp = rt_hw_interrupt_disable();
+
+        /* if it's not waiting forever and then re-calculate timeout tick */
+        if (timeout &gt; 0)
+        {
+            tick_delta = rt_tick_get() - tick_delta;
+            timeout -= tick_delta;
+            if (timeout &lt; 0)
+                timeout = 0;
+        }
+    }
+
+    /* get message from queue 获取当前的第一个信息 */
+    msg = (struct rt_mq_message *)mq-&gt;msg_queue_head;
+
+    /* move message queue head 更新一下下一条消息的位置 */
+    mq-&gt;msg_queue_head = msg-&gt;next;
+    /* reach queue tail, set to NULL 这个里面没有消息了(头尾一样, 只有一条信息) */
+    if (mq-&gt;msg_queue_tail == msg)
+        mq-&gt;msg_queue_tail = RT_NULL;
+
+    /* decrease message entry 数量更新 */
+    mq-&gt;entry --;
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(temp);
+
+    /* copy message 拷贝一下信息 */
+    rt_memcpy(buffer, msg + 1, size &gt; mq-&gt;msg_size ? mq-&gt;msg_size : size);
+
+    /* disable interrupt */
+    temp = rt_hw_interrupt_disable();
+    /* put message to free list 把这个回归空闲队列 */
+    msg-&gt;next = (struct rt_mq_message *)mq-&gt;msg_queue_free;
+    mq-&gt;msg_queue_free = msg;
+
+    /* resume suspended thread 释放等待线程*/
+    if (!rt_list_isempty(&amp;(mq-&gt;suspend_sender_thread)))
+    {
+        rt_ipc_list_resume(&amp;(mq-&gt;suspend_sender_thread));
+
+        /* enable interrupt */
+        rt_hw_interrupt_enable(temp);
+
+        RT_OBJECT_HOOK_CALL(rt_object_take_hook, (&amp;(mq-&gt;parent.parent)));
+
+        rt_schedule();
+
+        return RT_EOK;
+    }
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(temp);
+
+    RT_OBJECT_HOOK_CALL(rt_object_take_hook, (&amp;(mq-&gt;parent.parent)));
+
+    return RT_EOK;
+}
+</code></pre>
+<h2 id="%E4%BF%A1%E5%8F%B7">信号</h2>
+
+<pre class="language-c"><code class="language-c">#if defined(RT_USING_SIGNALS)
+    rt_sigset_t     sig_pending;                        /**&lt; the pending signals 记录来了的信号 */
+    rt_sigset_t     sig_mask;                           /**&lt; the mask bits of signal 记录屏蔽的信号 */
+
+    rt_sighandler_t *sig_vectors;                       /**&lt; vectors of signal handler 记录处理函数 */
+    void            *si_list;                           /**&lt; the signal infor list 挂起的信号的信息链表 */
+#endif
+</code></pre>
+<blockquote>
+<p>线程管理结构体</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">typedef void (*rt_sighandler_t)(int signo);
+</code></pre>
+<blockquote>
+<p>处理函数</p>
+</blockquote>
+
+<pre class="language-c"><code class="language-c">struct siginfo_node
+{
+    siginfo_t si;
+    struct rt_slist_node list;
+};
+</code></pre>
+<blockquote>
+<p>这一个是用来记录挂起的信号的的信息</p>
+</blockquote>
+<p>信号的处理除了会在这里面显示的位置进行, 还会在切换任务的时候处理</p>
+<h3 id="%E5%AE%89%E8%A3%85">安装</h3>
+
+<pre class="language-c"><code class="language-c">rt_sighandler_t rt_signal_install(int signo, rt_sighandler_t handler)
+{
+    rt_base_t level;
+    rt_sighandler_t old = RT_NULL;
+    rt_thread_t tid = rt_thread_self();
+    //看一看是不是有效的值
+    if (!sig_valid(signo)) return SIG_ERR;
+
+    level = rt_hw_interrupt_disable();
+    if (tid-&gt;sig_vectors == RT_NULL)
+    {
+        //这一个线程之前没有安转过
+        rt_thread_alloc_sig(tid);
+    }
+
+    if (tid-&gt;sig_vectors)
+    {
+        old = tid-&gt;sig_vectors[signo];
+
+        if (handler == SIG_IGN) tid-&gt;sig_vectors[signo] = RT_NULL;
+        else if (handler == SIG_DFL) tid-&gt;sig_vectors[signo] = _signal_default_handler;
+        else tid-&gt;sig_vectors[signo] = handler;
+    }
+    rt_hw_interrupt_enable(level);
+
+    return old;
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">void rt_thread_alloc_sig(rt_thread_t tid)
+{
+    int index;
+    rt_base_t level;
+    rt_sighandler_t *vectors;
+    //获取一个足以记录处理所有信号的函数的数组
+    vectors = (rt_sighandler_t *)RT_KERNEL_MALLOC(sizeof(rt_sighandler_t) * RT_SIG_MAX);
+    RT_ASSERT(vectors != RT_NULL);
+
+    for (index = 0; index &lt; RT_SIG_MAX; index ++)
+    {
+        //初始化为默认的函数
+        vectors[index] = _signal_default_handler;
+    }
+    //把这一个数组记录在线程里面
+    level = rt_hw_interrupt_disable();
+    tid-&gt;sig_vectors = vectors;
+    rt_hw_interrupt_enable(level);
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">//默认的函数
+static void _signal_default_handler(int signo)
+{
+    LOG_I(&quot;handled signo[%d] with default action.&quot;, signo);
+    return ;
+}
+</code></pre>
+<h3 id="%E5%88%A0%E9%99%A4%28%E5%B1%8F%E8%94%BD%29">删除(屏蔽)</h3>
+
+<pre class="language-c"><code class="language-c">//实际上是更新一下线程里面的屏蔽值
+void rt_signal_mask(int signo)
+{
+    rt_base_t level;
+    rt_thread_t tid = rt_thread_self();
+
+    level = rt_hw_interrupt_disable();
+
+    tid-&gt;sig_mask &amp;= ~sig_mask(signo);
+
+    rt_hw_interrupt_enable(level);
+}
+</code></pre>
+<h3 id="%E8%A7%A3%E9%99%A4">解除</h3>
+
+<pre class="language-c"><code class="language-c">void rt_signal_unmask(int signo)
+{
+    rt_base_t level;
+    rt_thread_t tid = rt_thread_self();
+
+    level = rt_hw_interrupt_disable();
+    //改一下标志
+    tid-&gt;sig_mask |= sig_mask(signo);
+
+    /* let thread handle pended signals */
+    if (tid-&gt;sig_mask &amp; tid-&gt;sig_pending)
+    {
+        //有需要处理的标志
+        rt_hw_interrupt_enable(level);
+        _signal_deliver(tid);
+    }
+    else
+    {
+        rt_hw_interrupt_enable(level);
+    }
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">//根据要处理的有信号的线程的状态进行分支处理
+static void _signal_deliver(rt_thread_t tid)
+{
+    rt_ubase_t level;
+
+    level = rt_hw_interrupt_disable();
+
+    /* thread is not interested in pended signals */
+    if (!(tid-&gt;sig_pending &amp; tid-&gt;sig_mask))
+    {
+        //没有待处理的信号
+        rt_hw_interrupt_enable(level);
+        return;
+    }
+
+    if ((tid-&gt;stat &amp; RT_THREAD_STAT_MASK) == RT_THREAD_SUSPEND)
+    {
+        //这一个任务挂起了(他在等待这一个信号)
+        /* resume thread to handle signal */
+        rt_thread_resume(tid);
+        /* add signal state */
+        tid-&gt;stat |= (RT_THREAD_STAT_SIGNAL | RT_THREAD_STAT_SIGNAL_PENDING);
+
+        rt_hw_interrupt_enable(level);
+    	//恢复这一个任务
+        /* re-schedule */
+        rt_schedule();
+        //这时候已经看完是不是这一个信号待处理了
+    }
+    else
+    {
+        //这一个任务运行或ready中
+        if (tid == rt_thread_self())
+        {
+            //是当前的在运行的任务
+            /* add signal state */
+            tid-&gt;stat |= RT_THREAD_STAT_SIGNAL;
+
+            rt_hw_interrupt_enable(level);
+
+            /* do signal action in self thread context */
+            if (rt_interrupt_get_nest() == 0)
+            {
+                //直接开启这一个软件线程
+                rt_thread_handle_sig(RT_TRUE);
+            }
+        }
+        else if (!((tid-&gt;stat &amp; RT_THREAD_STAT_SIGNAL_MASK) &amp; RT_THREAD_STAT_SIGNAL))
+        {
+            //不是在运行的任务, 这个时候会为这一个任务开启一个新的栈
+            /* add signal state 更新一下标志 */
+            tid-&gt;stat |= (RT_THREAD_STAT_SIGNAL | RT_THREAD_STAT_SIGNAL_PENDING);
+    		
+            /* point to the signal handle entry */
+            tid-&gt;stat &amp;= ~RT_THREAD_STAT_SIGNAL_PENDING;
+            tid-&gt;sig_ret = tid-&gt;sp;//记录一下之前的栈
+            //这一个看线程处理篇
+            //实际处理使用的之前栈下面的一部分
+            tid-&gt;sp = rt_hw_stack_init((void *)_signal_entry, RT_NULL,
+                                       (void *)((char *)tid-&gt;sig_ret - 32), RT_NULL);//设置一下这一个线程返回以后的处理
+
+
+            rt_hw_interrupt_enable(level);
+            LOG_D(&quot;signal stack pointer @ 0x%08x&quot;, tid-&gt;sp);
+
+            /* re-schedule */
+            rt_schedule();
+        }
+        else
+        {
+            rt_hw_interrupt_enable(level);
+        }
+    }
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">//这是一个软件中断的线程, 如果需要执行这一个的线程不在runing状态, 会使用一个新的栈空间执行这一个线程
+void rt_thread_handle_sig(rt_bool_t clean_state)
+{
+    rt_base_t level;
+
+    rt_thread_t tid = rt_thread_self();
+    struct siginfo_node *si_node;
+
+    level = rt_hw_interrupt_disable();
+    if (tid-&gt;sig_pending &amp; tid-&gt;sig_mask)
+    {
+        /* if thread is not waiting for signal 等一个信号的话直接返回 */
+        if (!(tid-&gt;stat &amp; RT_THREAD_STAT_SIGNAL_WAIT))
+        {
+            //这个时候不是在等一个信号
+            while (tid-&gt;sig_pending &amp; tid-&gt;sig_mask)
+            {
+                //依次处理信号
+                int signo, error;
+                rt_sighandler_t handler;
+    			//获取一个待处理的信号
+                si_node = (struct siginfo_node *)tid-&gt;si_list;
+                if (!si_node) break;
+
+                /* remove this sig info node from list  */
+                if (si_node-&gt;list.next == RT_NULL)
+                    tid-&gt;si_list = RT_NULL;//这是最后一个信号
+                else
+                    tid-&gt;si_list = (void *)rt_slist_entry(si_node-&gt;list.next, struct siginfo_node, list);//记录下一个信号
+
+                signo   = si_node-&gt;si.si_signo;//获取标号
+                handler = tid-&gt;sig_vectors[signo];//获取处理函数
+                tid-&gt;sig_pending &amp;= ~sig_mask(signo);//更新挂起的标志
+                rt_hw_interrupt_enable(level);
+
+                LOG_D(&quot;handle signal: %d, handler 0x%08x&quot;, signo, handler);
+                if (handler) handler(signo);//执行处理函数
+
+                level = rt_hw_interrupt_disable();
+                error = -RT_EINTR;
+
+                rt_mp_free(si_node); /* release this siginfo node 从内存池里面释放 */
+                /* set errno in thread tcb */
+                tid-&gt;error = error;
+            }
+
+            /* whether clean signal status */
+            //这一个标志需要清除
+            if (clean_state == RT_TRUE)
+            {
+                tid-&gt;stat &amp;= ~RT_THREAD_STAT_SIGNAL;
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+    rt_hw_interrupt_enable(level);
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">//非当前线程的时候线程返回时候的处理函数(软件中断)
+static void _signal_entry(void *parameter)
+{
+    rt_thread_t tid = rt_thread_self();
+
+    /* handle signal 处理一下信号 */
+    rt_thread_handle_sig(RT_FALSE);
+
+    /* return to thread 返回之前的在处理的任务状态 */
+    tid-&gt;sp = tid-&gt;sig_ret;//改变栈
+    tid-&gt;sig_ret = RT_NULL;
+
+    LOG_D(&quot;switch back to: 0x%08x\n&quot;, tid-&gt;sp);
+    tid-&gt;stat &amp;= ~RT_THREAD_STAT_SIGNAL;
+    //线程处理的里面分析了, 主要是切换一下运行位置以及栈
+    rt_hw_context_switch_to((rt_ubase_t)&amp;(tid-&gt;sp));
+}
+</code></pre>
+<h3 id="%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7">发送信号</h3>
+
+<pre class="language-c"><code class="language-c">#define sig_mask(sig_no)    (1u &lt;&lt; sig_no)
+int rt_thread_kill(rt_thread_t tid, int sig)
+{
+    siginfo_t si;
+    rt_base_t level;
+    struct siginfo_node *si_node;
+    
+    if (!sig_valid(sig)) return -RT_EINVAL;
+    
+    LOG_I(&quot;send signal: %d&quot;, sig);
+    si.si_signo = sig;
+    si.si_code  = SI_USER;
+    si.si_value.sival_ptr = RT_NULL;
+
+    level = rt_hw_interrupt_disable();
+    if (tid-&gt;sig_pending &amp; sig_mask(sig))
+    {
+        //这一个信号标志已经挂起了, 用这一个新的信息队列覆盖之前的信息
+        /* whether already emits this signal? */
+        struct rt_slist_node *node;
+        struct siginfo_node  *entry;
+    	//获取挂起的信号的信息链表
+        si_node = (struct siginfo_node *)tid-&gt;si_list;
+        if (si_node)
+            node = (struct rt_slist_node *)&amp;si_node-&gt;list;
+        else
+            node = RT_NULL;
+
+        /* update sig info */
+        for (; (node) != RT_NULL; node = node-&gt;next)
+        {
+            //遍历当前任务待处理的所有信号信息
+            entry = rt_slist_entry(node, struct siginfo_node, list);
+            if (entry-&gt;si.si_signo == sig)
+            {
+                //用新的信息覆盖
+                memcpy(&amp;(entry-&gt;si), &amp;si, sizeof(siginfo_t));
+                rt_hw_interrupt_enable(level);
+                return 0;
+            }
+        }
+    }
+    rt_hw_interrupt_enable(level);
+    //这时候是标志没有挂起, 或者挂起了但是没有信息处理的链表项
+    //获取一个内存块
+    si_node = (struct siginfo_node *) rt_mp_alloc(_rt_siginfo_pool, 0);
+    if (si_node)
+    {
+        rt_slist_init(&amp;(si_node-&gt;list));
+        //更新一下信息
+        memcpy(&amp;(si_node-&gt;si), &amp;si, sizeof(siginfo_t));
+        level = rt_hw_interrupt_disable();
+    	//把这个挂入链表里面
+        if (tid-&gt;si_list)
+        {
+            struct siginfo_node *si_list;
+    		//这个里面前面有节点
+            si_list = (struct siginfo_node *)tid-&gt;si_list;
+            rt_slist_append(&amp;(si_list-&gt;list), &amp;(si_node-&gt;list));
+        }
+        else
+        {
+            //前面没有, 这就是第一个
+            tid-&gt;si_list = si_node;
+        }
+
+        /* a new signal 记录一下标志 */
+        tid-&gt;sig_pending |= sig_mask(sig);
+
+        rt_hw_interrupt_enable(level);
+    }
+    else
+    {
+        LOG_E(&quot;The allocation of signal info node failed.&quot;);
+    }
+
+    /* deliver signal to this thread */
+    _signal_deliver(tid);
+
+    return RT_EOK;
+}
+</code></pre>
+
+<pre class="language-c"><code class="language-c">int rt_system_signal_init(void)
+{
+    //这一个会设置rt_mp_alloc返回的大小
+    _rt_siginfo_pool = rt_mp_create(&quot;signal&quot;, RT_SIG_INFO_MAX, sizeof(struct siginfo_node));
+    if (_rt_siginfo_pool == RT_NULL)
+    {
+        LOG_E(&quot;create memory pool for signal info failed.&quot;);
+        RT_ASSERT(0);
+    }
+
+    return 0;
+}
+</code></pre>
+<h3 id="%E7%AD%89%E5%BE%85%E4%BF%A1%E5%8F%B7">等待信号</h3>
+<p>这一个实际是一直在等待那一个信号, 那一个信号来之前一直挂起, 不会处理其他信号</p>
+
+<pre class="language-c"><code class="language-c">int rt_signal_wait(const rt_sigset_t *set, rt_siginfo_t *si, rt_int32_t timeout)
+{
+    int ret = RT_EOK;
+    rt_base_t   level;
+    rt_thread_t tid = rt_thread_self();
+    struct siginfo_node *si_node = RT_NULL, *si_prev = RT_NULL;
+
+    /* current context checking */
+    RT_DEBUG_IN_THREAD_CONTEXT;
+
+    /* parameters check */
+    if (set == NULL || *set == 0 || si == NULL )
+    {
+        ret = -RT_EINVAL;
+        goto __done_return;
+    }
+
+    /* clear siginfo to avoid unknown value 清空一下, 用于记录 */
+    memset(si, 0x0, sizeof(rt_siginfo_t));
+
+    level = rt_hw_interrupt_disable();
+
+    /* already pending */
+    if (tid-&gt;sig_pending &amp; *set) goto __done;
+
+    if (timeout == 0)
+    {
+        ret = -RT_ETIMEOUT;
+        goto __done_int;
+    }
+
+    /* suspend self thread 把自己挂起 */
+    rt_thread_suspend(tid);
+    /* set thread stat as waiting for signal */
+    tid-&gt;stat |= RT_THREAD_STAT_SIGNAL_WAIT;
+
+    /* start timeout timer */
+    if (timeout != RT_WAITING_FOREVER)
+    {
+        /* reset the timeout of thread timer and start it */
+        rt_timer_control(&amp;(tid-&gt;thread_timer),
+                         RT_TIMER_CTRL_SET_TIME,
+                         &amp;timeout);
+        rt_timer_start(&amp;(tid-&gt;thread_timer));
+    }
+    rt_hw_interrupt_enable(level);
+
+    /* do thread scheduling */
+    rt_schedule();
+    //返回, 可能超时或者有信号来了
+    level = rt_hw_interrupt_disable();
+
+    /* remove signal waiting flag */
+    tid-&gt;stat &amp;= ~RT_THREAD_STAT_SIGNAL_WAIT;
+
+    /* check errno of thread */
+    if (tid-&gt;error == -RT_ETIMEOUT)
+    {
+        //是超时
+        tid-&gt;error = RT_EOK;
+        rt_hw_interrupt_enable(level);
+
+        /* timer timeout */
+        ret = -RT_ETIMEOUT;
+        goto __done_return;
+    }
+
+__done:
+    //是信号来了
+    /* to get the first matched pending signals */
+    si_node = (struct siginfo_node *)tid-&gt;si_list;
+    while (si_node)
+    {
+        //遍历一下所有的节点
+        int signo;
+
+        signo = si_node-&gt;si.si_signo;
+        if (sig_mask(signo) &amp; *set)
+        {
+            //是在等的这一个
+            *si  = si_node-&gt;si;
+
+            LOG_D(&quot;sigwait: %d sig raised!&quot;, signo);
+
+            if (si_prev) si_prev-&gt;list.next = si_node-&gt;list.next;//这一个信号的链表不在第一个
+            else
+            {
+                //是第一个
+                struct siginfo_node *node_next;
+
+                if (si_node-&gt;list.next)
+                {
+                    //不是最后一个
+                    node_next = (void *)rt_slist_entry(si_node-&gt;list.next, struct siginfo_node, list);
+                    tid-&gt;si_list = node_next;
+                }
+                else
+                {
+                    //唯一的信号
+                    tid-&gt;si_list = RT_NULL;
+                }
+            }
+
+            /* clear pending */
+            tid-&gt;sig_pending &amp;= ~sig_mask(signo);//记录为这一个链表处理完了
+            rt_mp_free(si_node);//释放一下
+            break;
+        }
+
+        si_prev = si_node;
+        if (si_node-&gt;list.next)
+        {
+            //后面还有, 获取下一个
+            si_node = (void *)rt_slist_entry(si_node-&gt;list.next, struct siginfo_node, list);
+        }
+        else
+        {
+            si_node = RT_NULL;
+        }
+     }//while
+
+__done_int:
+    rt_hw_interrupt_enable(level);
+
+__done_return:
+    return ret;
+}
+</code></pre>
+<h3 id="%E5%85%B6%E4%BB%96">其他</h3>
+
+<pre class="language-c"><code class="language-c">#ifdef RT_USING_SIGNALS
+                    /* check stat of thread for signal */
+                    level = rt_hw_interrupt_disable();
+                    if (rt_current_thread-&gt;stat &amp; RT_THREAD_STAT_SIGNAL_PENDING)
+                    {
+                        extern void rt_thread_handle_sig(rt_bool_t clean_state);
+
+                        rt_current_thread-&gt;stat &amp;= ~RT_THREAD_STAT_SIGNAL_PENDING;
+
+                        rt_hw_interrupt_enable(level);
+
+                        /* check signal status 处理信号 */
+                        rt_thread_handle_sig(RT_TRUE);
+                    }
+                    else
+                    {
+                        rt_hw_interrupt_enable(level);
+                    }
+#endif
+</code></pre>
+<blockquote>
+<p>在任务切换的时候rt_schedule里面</p>
+</blockquote>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/嵌入式/第三方移植/RT-Thread/2024-1-31-16线程管理(源码分析02.html">
+                            <span class="icon"></span>
+                            <span class="label">2024-1-31-16线程管理(源码分析02</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/嵌入式/第三方移植/RT-Thread/2024-2-7-18内存管理.html">
+                            <span class="label">2024-2-7-18内存管理</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>
