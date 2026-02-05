@@ -6,6 +6,8 @@
 
 ## 使用
 
+[rknn-toolkit2/doc/03_Rockchip_RKNPU_API_Reference_RKNN_Toolkit2_V2.3.2_CN.pdf at master · airockchip/rknn-toolkit2](https://github.com/airockchip/rknn-toolkit2/blob/master/doc/03_Rockchip_RKNPU_API_Reference_RKNN_Toolkit2_V2.3.2_CN.pdf)
+
 流程简单描述：
 
 -   创建RKNN对象，初始化RKNN环境
@@ -21,4 +23,14 @@
 ![image-20251202192600839](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20251202192600839.png)
 
 >   详细使用例程请参考RKNN-Toolkit2工程中examples/functions目录下例程
+
+### 初始化
+
+在使用RKNN-Toolkit2的所有API接口时，都需要先调用RKNN()方法初始化RKNN对象，不再使用该对象时 通过调用该对象的release()方法进行释放
+
+初始化RKNN对象时，可以设置verbose和verbose_file参数，以打印详细的日志信息。其中verbose参数指定 是否要打印详细日志信息；如果设置了verbose_file参数，且verbose参数值为True，日志信息还将写到该参数 指定的文件中
+
+### 模型配置
+
+在构建RKNN模型之前，需要先对模型进行通道均值、量化图片RGB2BGR转换、量化类型等的配置，这些 操作可以通过config接口进行配置
 
