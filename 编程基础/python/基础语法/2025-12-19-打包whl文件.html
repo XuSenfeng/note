@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>打包whl文件 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class="active"><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">C#</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/no_translate.html?ref=C.html&from=/编程基础/C.html"><span class="label">2023-6-24-1.C#</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C和指针</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-C语言环境.html"><span class="label">2022-7-25-C语言环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-字符串操作.html"><span class="label">2022-7-25-字符串操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-操作符和表达式.html"><span class="label">2022-7-25-操作符和表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-数据.html"><span class="label">2022-7-25-数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-词法规则.html"><span class="label">2022-7-25-词法规则</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-语句.html"><span class="label">2022-7-25-语句</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-函数.html"><span class="label">2022-7-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-指针.html"><span class="label">2022-7-26-指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-数组.html"><span class="label">2022-7-26-数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-表达式.html"><span class="label">2022-7-26-表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-动态内存分配.html"><span class="label">2022-7-27-动态内存分配</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-字符串字符字节.html"><span class="label">2022-7-27-字符串字符字节</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构体和指针.html"><span class="label">2022-7-27-结构体和指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构和联合.html"><span class="label">2022-7-27-结构和联合</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-预处理器.html"><span class="label">2022-7-28-预处理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-高级指针.html"><span class="label">2022-7-28-高级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-29-输入输出函数.html"><span class="label">2022-7-29-输入输出函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html"><span class="label">2022-7-30-标准库函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-经典抽象数据类型.html"><span class="label">2022-7-30-经典抽象数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html"><span class="label">2022-7-31-运行时环境</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C陷阱与缺陷</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-27-语义陷阱.html"><span class="label">2022-8-27-语义陷阱</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">c</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-16-c监控.html"><span class="label">2023-6-16-c监控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-19-C语言程序设计.html"><span class="label">2023-6-19-C语言程序设计</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">cpp</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-01C++.html"><span class="label">2025-1-1-01C++</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-02内存.html"><span class="label">2025-1-1-02内存</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-22-其他扩展语法.html"><span class="label">2025-1-22-其他扩展语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-26-多线程.html"><span class="label">2025-1-26-多线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-6-03模板和STL.html"><span class="label">2025-1-6-03模板和STL</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">go</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">python</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="active_parent no_link"><a><span class="label">基础语法</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html"><span class="label">2023-6-15-修饰器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-23-01基础运算.html"><span class="label">2023-9-23-01基础运算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html"><span class="label">2023-9-24-02函数及变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-03虚拟环境.html"><span class="label">2024-4-23-03虚拟环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-04常用函数.html"><span class="label">2024-4-23-04常用函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-24-05程序获取参数.html"><span class="label">2024-4-24-05程序获取参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-06推导式和拆包.html"><span class="label">2024-4-25-06推导式和拆包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-07引入.html"><span class="label">2024-4-25-07引入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-08匿名函数.html"><span class="label">2024-4-25-08匿名函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-09面向对象.html"><span class="label">2024-4-25-09面向对象</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-26-10文件基本操作.html"><span class="label">2024-4-26-10文件基本操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-11OS模块.html"><span class="label">2024-4-27-11OS模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-12迭代器.html"><span class="label">2024-4-27-12迭代器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-13异常处理.html"><span class="label">2024-4-27-13异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-14生成器.html"><span class="label">2024-4-27-14生成器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-28-15闭包.html"><span class="label">2024-4-28-15闭包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-30-16深拷贝浅拷贝.html"><span class="label">2024-4-30-16深拷贝浅拷贝</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-1-17With和上下文管理器.html"><span class="label">2024-5-1-17With和上下文管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-18GIL.html"><span class="label">2024-5-4-18GIL</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-19垃圾回收.html"><span class="label">2024-5-4-19垃圾回收</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-1-31-多任务.html"><span class="label">2025-1-31-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html"><span class="label">2025-12-19-CPP交互使用</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-打包whl文件.html"><span class="label">2025-12-19-打包whl文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html"><span class="label">2025-2-25-yaml</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-3-21-包导入.html"><span class="label">2025-3-21-包导入</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">C语言-Cpp接轨</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/C语言-Cpp接轨/2025-12-10-01-struct.html"><span class="label">2025-12-10-01-struct</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">django</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-01-Django.html"><span class="label">2025-7-24-01-Django</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-02-创建.html"><span class="label">2025-7-24-02-创建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-03-路由.html"><span class="label">2025-7-24-03-路由</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-04-视图.html"><span class="label">2025-7-24-04-视图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-05-配置文件.html"><span class="label">2025-7-24-05-配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-26-04-模版.html"><span class="label">2025-7-26-04-模版</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-28-05-静态文件.html"><span class="label">2025-7-28-05-静态文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html"><span class="label">2025-7-29-06-中间件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html"><span class="label">2025-7-29-07-数据库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html"><span class="label">2025-7-30-08-进阶数据查询</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html"><span class="label">2025-8-1-09-ORM优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-10-模型扩展.html"><span class="label">2025-8-2-10-模型扩展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-11-组件.html"><span class="label">2025-8-2-11-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-3-12-异步.html"><span class="label">2025-8-3-12-异步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">pyQT</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-11-08界面容器.html"><span class="label">2024-5-11-08界面容器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-01介绍以及安装.html"><span class="label">2024-5-6-01介绍以及安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-02控件.html"><span class="label">2024-5-6-02控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-03布局.html"><span class="label">2024-5-7-03布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-04窗口.html"><span class="label">2024-5-7-04窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-05信号与槽.html"><span class="label">2024-5-8-05信号与槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-06QTDesigner.html"><span class="label">2024-5-8-06QTDesigner</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-07线程.html"><span class="label">2024-5-8-07线程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">简单模块使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2024-5-4-01logging日志模块.html"><span class="label">2024-5-4-01logging日志模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2025-3-15-02fastapi.html"><span class="label">2025-3-15-02fastapi</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">线程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-10-01多任务.html"><span class="label">2024-5-10-01多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-14-02队列.html"><span class="label">2024-5-14-02队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2025-2-20-async.html"><span class="label">2025-2-20-async</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-01网络编程.html"><span class="label">2024-5-10-01网络编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-02Socket.html"><span class="label">2024-5-10-02Socket</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-12-03软件.html"><span class="label">2024-5-12-03软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-8-20-04MQTT.html"><span class="label">2024-8-20-04MQTT</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">前端</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-12-04CSS2.html"><span class="label">2024-8-12-04CSS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-01基础知识.html"><span class="label">2024-8-5-01基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-02HTML.html"><span class="label">2024-8-5-02HTML</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-6-03CSS.html"><span class="label">2024-8-6-03CSS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式C语言</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-__attribute__.html"><span class="label">2022-7-21-__attribute__</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-内联函数内置内存函数.html"><span class="label">2022-7-21-内联函数内置内存函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-变量指针.html"><span class="label">2022-7-21-变量指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-大小端数据对齐size_t.html"><span class="label">2022-7-21-大小端数据对齐size_t</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-存储器.html"><span class="label">2022-7-21-存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-语句表达式define.html"><span class="label">2022-7-21-语句表达式define</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-Linux中的面向对象思想-封装.html"><span class="label">2022-7-22-Linux中的面向对象思想-封装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-main函数的参数.html"><span class="label">2022-7-22-main函数的参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-二级指针.html"><span class="label">2022-7-22-二级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-代码复用分层思想.html"><span class="label">2022-7-22-代码复用分层思想</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数参数的本质.html"><span class="label">2022-7-22-函数参数的本质</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数指针.html"><span class="label">2022-7-22-函数指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-指针和数组.html"><span class="label">2022-7-22-指针和数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-面向对象编程基础.html"><span class="label">2022-7-22-面向对象编程基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-goto关键字.html"><span class="label">2022-7-23-goto关键字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-可重入函数.html"><span class="label">2022-7-23-可重入函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-多任务.html"><span class="label">2022-7-23-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-头文件剖析.html"><span class="label">2022-7-23-头文件剖析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-异步通信模式.html"><span class="label">2022-7-23-异步通信模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-操作系统基本原理.html"><span class="label">2022-7-23-操作系统基本原理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块化编程.html"><span class="label">2022-7-23-模块化编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块进阶.html"><span class="label">2022-7-23-模块进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块间通讯.html"><span class="label">2022-7-23-模块间通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-MMU内存管理单元.html"><span class="label">2022-7-24-MMU内存管理单元</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-中断.html"><span class="label">2022-7-24-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-寄存器操作.html"><span class="label">2022-7-24-寄存器操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-嵌入式启动.html"><span class="label">2022-7-24-嵌入式启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-文件系统.html"><span class="label">2022-7-24-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-系统调用.html"><span class="label">2022-7-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-进程线程协程.html"><span class="label">2022-7-24-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">算法基础</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2022-7-31-高级数据结构.html"><span class="label">2022-7-31-高级数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-01快速排序.html"><span class="label">2024-12-31-01快速排序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-02哈希表.html"><span class="label">2024-12-31-02哈希表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-03贪心算法.html"><span class="label">2024-12-31-03贪心算法</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>打包whl文件</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-23">
+                                    2025-12-23
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/编程基础/python/基础语法/2025-12-19-打包whl文件.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <p>whl格式本质上是一个压缩包，里面包含了py文件，以及经过编译的pyd文件。</p>
+<p>可以在不具备编译环境的情况下，选择合适自己的Python环境进行安装。</p>
+<p>说白了，.whl就是python的压缩包。</p>
+<p>目前wheel被认为是Python的二进制包的标准格式。</p>
+<h2 id="%E5%AE%89%E8%A3%85">安装</h2>
+
+<pre class="language-bash"><code class="language-bash">pip install xxxx.whl
+# 或者如果是升级
+pip install -U xxxx.whl
+# 或者如果是卸载
+pip uninstall xxxx.whl
+</code></pre>
+<h2 id="%E7%94%9F%E6%88%90">生成</h2>
+
+<pre class="language-bash"><code class="language-bash">pip install setuptools wheel
+</code></pre>
+
+<pre class="language-none"><code class="language-none">my_package/
+│
+├── my_package/
+│   ├── __init__.py
+│   └── my_module.py
+│
+├── setup.py
+└── README.md
+</code></pre>
+<ul>
+<li><code>my_package/</code>: 包含你的源代码。</li>
+<li><code>setup.py</code>: 包含包的配置信息。</li>
+<li><code>README.md</code>: 包的描述文档（可选）。</li>
+</ul>
+<h3 id="setup.py">setup.py</h3>
+
+<pre class="language-python"><code class="language-python">from setuptools import setup, find_packages
+
+setup(
+    name='my_package',  # 包名
+    version='0.1.0',  # 版本号
+    packages=find_packages(),  # 自动查找子包
+    install_requires=[  # 依赖包
+        # 'numpy',  # 示例依赖
+    ],
+    description='My sample Python package',  # 包描述
+    long_description=open('README.md').read(),  # 长描述
+    long_description_content_type='text/markdown',  # 描述类型
+    url='https://github.com/yourusername/my_package',  # 项目地址
+    author='Your Name',  # 作者
+    author_email='your.email@example.com',  # 作者邮箱
+    classifiers=[  # 分类信息
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ],
+    python_requires='&gt;=3.6',  # Python 版本要求
+)
+</code></pre>
+<p>使用命令<code>python setup.py bdist_wheel</code>即可进行打包</p>
+<h2 id="setup.py">setup.py</h2>
+<p><a href="https://setuptools.pypa.io/en/latest/setuptools.html"  target="_blank">https://setuptools.pypa.io/en/latest/setuptools.html</a></p>
+<p><img src="https://pic3.zhimg.com/v2-4563e810d05ec25ce283c7f54a271e2e_r.jpg" alt="" /></p>
+<p>这个文件是为了打包存在的文件, 最初的时候使用的是工具<code>distutils</code>, <code>distutils</code> 的精髓在于编写 <code>setup.py</code>，它是模块分发与安装的指导文件</p>
+<p><code>setuptools</code> 是 distutils 增强版，不包括在标准库中。其扩展了很多功能，能够帮助开发者更好的创建和分发 Python 包。大部分 Python 用户都会使用更先进的 setuptools 模块</p>
+<p>当你安装完 setuptools 后，就拥有了一个叫做 <code>easy_install</code> 的第三方管理工具，这也是它区分于 distutils 的一大改进</p>
+<h3 id="python%E7%9A%84%E5%8C%85%E5%BD%A2%E5%BC%8F">python的包形式</h3>
+<p>1、以源码包的方式发布</p>
+<p>源码包安装的过程，是先解压，再编译，最后才安装，所以它是跨平台的，由于每次安装都要进行编译，相对二进包安装方式来说安装速度较慢。源码包的本质是一个压缩包</p>
+<p>2、以二进制包形式发布</p>
+<p>二进制包的安装过程省去了编译的过程，直接进行解压安装，所以安装速度较源码包来说更快。</p>
+<p>由于不同平台的编译出来的包无法通用，所以在发布时，需事先编译好多个平台的包, 一般以<code>.egg</code>, <code>.whl</code>结尾</p>
+<p>Egg 格式是由 setuptools 在 2004 年引入，而 Wheel 格式是由PEP427在2012 年定义。Wheel 的出现是为了替代 Egg，它的本质是一个zip包，其现在被认为是 Python 的二进制包的标准格式。</p>
+<h3 id="%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99">文件编写</h3>
+
+<pre class="language-python"><code class="language-python">from setuptools import setup, find_packages
+
+setup(
+    name=&quot;mytest&quot;,
+    version=&quot;1.0&quot;,
+    author=&quot;wangbm&quot;,
+    author_email=&quot;wongbingming@163.com&quot;,
+    description=&quot;Learn to Pack Python Module&quot;,
+    # 项目主页
+    url=&quot;http://iswbm.com/&quot;, 
+    # 你要安装的包，通过 setuptools.find_packages 找到当前目录下有哪些包
+    packages=find_packages()
+)
+</code></pre>
+<h4 id="classifiers">classifiers</h4>
+<p><code>classifiers</code> 参数说明包的分类信息, 实际是一个字符串的数组, 可以在<a href="https://pypi.org/pypi?%3Aaction=list_classifiers%E8%BF%99%E9%87%8C%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E9%A1%B9"  target="_blank">https://pypi.org/pypi?%3Aaction=list_classifiers%E8%BF%99%E9%87%8C%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E9%A1%B9</a></p>
+
+<pre class="language-python"><code class="language-python">setup(
+    classifiers = [
+        # 发展时期,常见的如下
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        'Development Status :: 3 - Alpha',
+
+        # 开发的目标用户
+        'Intended Audience :: Developers',
+
+        # 属于什么类型
+        'Topic :: Software Development :: Build Tools',
+
+        # 许可证信息
+        'License :: OSI Approved :: MIT License',
+
+        # 目标 Python 版本
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+    ]
+)
+
+</code></pre>
+<h4 id="%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6">添加文件</h4>
+
+<pre class="language-python"><code class="language-python">from setuptools import setup, find_packages
+
+
+setup(
+    name=&quot;mytest&quot;,
+    version=&quot;1.0&quot;,
+    author=&quot;wangbm&quot;,
+    author_email=&quot;wongbingming@163.com&quot;,
+    description=&quot;Learn to Pack Python Module&quot;,
+    url=&quot;http://iswbm.com/&quot;, 
+    packages=find_packages(),
+
+    # 安装过程中，需要安装的静态文件，如配置文件、service文件、图片等
+    data_files=[
+        ('', ['conf/*.conf']),
+        ('/usr/lib/systemd/system/', 		['bin/*.service']),
+     ],
+
+    # 希望被打包的文件
+    package_data={
+        '':['*.txt'],
+        'bandwidth_reporter':['*.txt']
+     },
+    # 不打包某些文件
+    exclude_package_data={
+        'bandwidth_reporter':['*.txt']
+     }
+)
+</code></pre>
+<p>除了以上的参数配置之外，还可以使用一个叫做 <code>MANIFEST.in</code> 的文件，来控制文件的分发</p>
+
+<pre class="language-ini"><code class="language-ini">include *.txt
+recursive-include examples *.txt *.py
+prune examples/sample?/build
+</code></pre>
+<ul>
+<li>所有根目录下的以 txt 为后缀名的文件，都会分发</li>
+<li>根目录下的 examples 目录 和 txt、py文件都会分发</li>
+<li>路径匹配上 examples/sample?/build 不会分发</li>
+</ul>
+<p><code>MANIFEST.in</code> 需要放在和 setup.py 同级的顶级目录下，setuptools 会自动读取该文件</p>
+<h4 id="%E4%BE%9D%E8%B5%96%E7%9A%84%E5%8C%85">依赖的包</h4>
+
+<pre class="language-python"><code class="language-python">from setuptools import setup, find_packages
+
+
+setup(
+    ...
+
+    # 表明当前模块依赖哪些包，若环境中没有，则会从pypi中下载安装
+    install_requires=['docutils&gt;=0.3'],
+
+    # setup.py 本身要依赖的包，这通常是为一些setuptools的插件准备的配置
+    # 这里列出的包，不会自动安装。
+    setup_requires=['pbr'],
+
+    # 仅在测试时需要使用的依赖，在正常发布的代码中是没有用的。
+    # 在执行python setup.py test时，可以自动安装这三个库，确保测试的正常运行。
+    tests_require=[
+        'pytest&gt;=3.3.1',
+        'pytest-cov&gt;=2.5.1',
+    ],
+
+    # 用于安装setup_requires或tests_require里的软件包
+    # 这些信息会写入egg的 metadata 信息中
+    dependency_links=[
+        &quot;http://example2.com/p/foobar-1.0.tar.gz&quot;,
+    ],
+
+    # install_requires 在安装模块时会自动安装依赖包
+    # 而 extras_require 不会，这里仅表示该模块会依赖这些包
+    # 但是这些包通常不会使用到，只有当你深度使用模块时，才会用到，这里需要你手动安装
+    extras_require={
+        'PDF':  [&quot;ReportLab&gt;=1.2&quot;, &quot;RXP&quot;],
+        'reST': [&quot;docutils&gt;=0.3&quot;],
+    }
+)
+</code></pre>
+<p>关于 <code>install_requires</code>， 有以下五种常用的表示方法：</p>
+<ol>
+<li><code>'argparse'</code>，只包含包名。 这种形式只检查包的存在性，不检查版本。 方便，但不利于控制风险。</li>
+<li><code>'setuptools==38.2.4'</code>，指定版本。 这种形式把风险降到了最低，确保了开发、测试与部署的版本一致，不会出现意外。 缺点是不利于更新，每次更新都需要改动代码。</li>
+<li><code>'docutils &gt;= 0.3'</code>，这是比较常用的形式。 当对某个库比较信任时，这种形式可以自动保持版本为最新。</li>
+<li><code>'Django &gt;= 1.11, != 1.11.1, &lt;= 2'</code>，这是比较复杂的形式。 如这个例子，保证了Django的大版本在1.11和2之间，也即1.11.x；并且，排除了已知有问题的版本1.11.1（仅举例）。 对于一些大型、复杂的库，这种形式是最合适的。</li>
+<li><code>'requests[security, socks] &gt;= 2.18.4'</code>，这是包含了额外的可选依赖的形式。 正常安装requests会自动安装它的<code>install_requires</code>中指定的依赖，而不会安装<code>security</code>和<code>socks</code>这两组依赖。 这两组依赖是定义在它的<code>extras_require</code>中。 这种形式，用在深度使用某些库时。</li>
+</ol>
+<h4 id="python%E7%89%88%E6%9C%AC">python版本</h4>
+<p><code>python_requires='&gt;=2.7, &lt;=3',</code>有些库并不是在所以的 Python 版本中都适用的，若一个库安装在一个未兼容的 Python 环境中，理论上不应该在使用时才报错</p>
+<h4 id="%E7%94%9F%E6%88%90%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6">生成可执行文件</h4>
+
+<pre class="language-python"><code class="language-python">from setuptools import setup, find_packages
+
+
+setup(
+    name=&quot;mytest&quot;,
+    version=&quot;1.0&quot;,
+    author=&quot;wangbm&quot;,
+    author_email=&quot;wongbingming@163.com&quot;,
+    description=&quot;Learn to Pack Python Module&quot;,
+    url=&quot;http://iswbm.com/&quot;, 
+    packages=find_packages(),
+
+    # 用来支持自动生成脚本，安装后会自动生成 /usr/bin/foo 的可执行文件
+    # 该文件入口指向 foo/main.py 的main 函数
+    entry_points={
+        'console_scripts': [
+            'foo = foo.main:main'
+        ]
+    },
+
+    # 将 bin/foo.sh 和 bar.py 脚本，生成到系统 PATH中
+    # 执行 python setup.py install 后
+    # 会生成 如 /usr/bin/foo.sh 和 如 /usr/bin/bar.py
+    scripts=['bin/foo.sh', 'bar.py']
+)
+</code></pre>
+<p>上面的 scripts 里有的脚本中有 <code>sh</code> 和 <code>py</code> 后缀，那么安装后，setuptools 会原封不动的移动到 /usr/bin 中，并添加可执行权限, 可以使用脚本进行进一步的工作</p>
+
+<pre class="language-python"><code class="language-python">from setuptools.command.install_scripts import install_scripts
+# 定义一个脚本类
+class InstallScripts(install_scripts):
+
+    def run(self):
+        setuptools.command.install_scripts.install_scripts.run(self)
+
+        # Rename some script files
+        for script in self.get_outputs():
+            if basename.endswith(&quot;.py&quot;) or basename.endswith(&quot;.sh&quot;):
+                dest = script[:-3]
+            else:
+                continue
+            print(&quot;moving %s to %s&quot; % (script, dest))
+            shutil.move(script, dest)
+
+setup(
+    ...
+    scripts=['bin/foo.sh', 'bar.py'],
+    	# 注册
+    cmdclass={
+        &quot;install_scripts&quot;: InstallScripts
+    }
+)
+</code></pre>
+<h4 id="%E7%BC%96%E8%AF%91C/C%2B%2B">编译C/C++</h4>
+<p><code>ext_modules</code> 参数用于构建 C 和 C++ 扩展扩展包。其是 Extension 实例的列表，每一个 Extension 实例描述了一个独立的扩展模块，扩展模块可以设置扩展包名，头文件、源文件、链接库及其路径、宏定义和编辑参数等</p>
+
+<pre class="language-python"><code class="language-python">setup(
+    # other arguments here...
+    ext_modules=[
+        Extension('foo',
+            glob(path.join(here, 'src', '*.c')),
+            libraries = [ 'rt' ],
+            include_dirs=[numpy.get_include()])
+    ]
+)
+</code></pre>
+<p>第一个参数 <code>'foo'</code> 是<strong>扩展模块的名称</strong>：</p>
+<ul>
+<li>编译完成后，会生成类似 <code>foo.so</code>（Linux/macOS）或 <code>foo.pyd</code>（Windows）的文件；</li>
+<li>在 Python 中可直接 <code>import foo</code> 使用该模块</li>
+</ul>
+<p>第二个参数，指定<strong>要编译的 C 源文件列表</strong>，拆解：</p>
+<ul>
+<li><p><code>here</code>：通常是提前定义的变量，代表当前 <code>setup.py</code> 脚本所在的目录（如 <code>here = os.path.abspath(os.path.dirname(__file__))</code>）；</p>
+</li>
+<li><p><code>path.join(here, 'src', '*.c')</code>：拼接路径，指向 <code>setup.py</code> 所在目录下的 <code>src</code> 子目录，匹配所有 <code>.c</code> 后缀的文件；</p>
+</li>
+<li><p><code>glob()</code>：将通配符路径（<code>*.c</code>）转换为具体的文件路径列表（比如 <code>src/a.c</code>、<code>src/b.c</code>），告诉编译器要编译这些源文件。</p>
+<p>✅ 替代方案：如果只想编译特定文件，可直接传列表（如 <code>['src/foo.c', 'src/utils.c']</code>），不用 <code>glob</code></p>
+</li>
+</ul>
+<h4 id="%3Ccode%3Elibraries%3D%5B%27rt%27%5D%3C/code%3E%E6%8C%87%E5%AE%9A%E7%BC%96%E8%AF%91%E6%97%B6%E9%9C%80%E8%A6%81%3Cstrong%3E%E9%93%BE%E6%8E%A5%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%BA%93%3C/strong%3E%EF%BC%9A"><code>libraries=['rt']</code>指定编译时需要<strong>链接的系统库</strong>：</h4>
+<ul>
+<li><code>'rt'</code> 是 Linux 下的 <code>librt.so</code>（Real-Time Library，实时库），提供 POSIX 实时扩展功能（如高精度时钟、定时器、共享内存）；</li>
+<li>编译时，编译器会自动添加 <code>-lrt</code> 参数（链接库的标准写法）；</li>
+</ul>
+<h4 id="%3Ccode%3Einclude_dirs%3D%5Bnumpy.get_include%28%29%5D%3C/code%3E%E6%8C%87%E5%AE%9A%E7%BC%96%E8%AF%91%E6%97%B6%E7%9A%84%3Cstrong%3E%E5%A4%B4%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%9B%AE%E5%BD%95%3C/strong%3E"><code>include_dirs=[numpy.get_include()]</code>指定编译时的<strong>头文件搜索目录</strong></h4>
+<ul>
+<li><code>numpy.get_include()</code>：返回 NumPy 的头文件目录路径（如 <code>/usr/lib/python3.x/site-packages/numpy/core/include</code>）；</li>
+<li>如果你的 C 代码中用到了 NumPy 的 C API（比如操作 NumPy 数组、使用 <code>numpy.ndarray</code> 的底层结构），编译器需要找到这些头文件才能编译通过；</li>
+<li>✅ 扩展：可添加自定义头文件目录，比如 <code>include_dirs=[numpy.get_include(), os.path.join(here, 'include')]</code>（<code>include</code> 是自定义头文件目录）</li>
+</ul>
+<h2 id="setup.py%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8">setup.py文件使用</h2>
+<h3 id="%E6%89%93%E5%8C%85%E6%96%87%E4%BB%B6">打包文件</h3>
+<p>用于发布一个 Python 模块或项目，将源码打包成 tar.gz （用于 Linux 环境中）或者 zip 压缩包（用于 Windows 环境中）</p>
+
+<pre class="language-bash"><code class="language-bash">$ python setup.py sdist
+</code></pre>
+<p>那这种包如何安装呢</p>
+<p>答案是，使用下一节即将介绍的 <code>setuptools</code> 中提供的 <code>easy_install</code> 工具。</p>
+
+<pre class="language-text"><code class="language-text">$ easy_install xxx.tar.gz
+</code></pre>
+<p>使用 sdist 将根据当前平台创建默认格式的存档。在类 Unix 平台上，将创建后缀后为 <code>.tar.gz</code> 的 gzip 压缩的tar文件分发包，而在Windows上为 ZIP 文件。</p>
+<p>当然，你也可以通过指定你要的发布包格式来打破这个默认行为</p>
+
+<pre class="language-bash"><code class="language-bash">$ python setup.py sdist --formats=gztar,zip
+</code></pre>
+<p><img src="https://pic4.zhimg.com/v2-7416d2c5ffd4fde928d7bd214ea59d39_1440w.jpg" alt="" /></p>
+<p>另外，如果您希望归档文件的所有文件归root拥有，可以这样指定</p>
+
+<pre class="language-bash"><code class="language-bash">python setup.py sdist --owner=root --group=root
+</code></pre>
+<p>在windows中我们习惯了双击 exe 进行软件的安装，Python 模块的安装也同样支持 打包成 exe 这样的二进制软件包。</p>
+
+<pre class="language-bash"><code class="language-bash">$ python setup.py bdist_wininst
+</code></pre>
+<p>而在 Linux 中，大家也习惯了使用 rpm 来安装包，对此你可以使用这条命令实现 rpm 包的构建</p>
+
+<pre class="language-bash"><code class="language-bash">$ python setup.py bdist_rpm
+</code></pre>
+<p>若你的项目，需要安装多个平台下，既有 Windows 也有 Linux，按照上面的方法，多种格式我们要执行多次命令，为了方便，你可以一步到位，执行如下这条命令，即可生成多个格式的进制</p>
+
+<pre class="language-bash"><code class="language-bash">$ python setup.py bdist
+</code></pre>
+<h3 id="%E7%9B%B4%E6%8E%A5%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E8%B0%83%E8%AF%95">直接安装以及调试</h3>
+<p>正常情况下，我们都是通过以上构建的源码包或者二进制包进行模块的安装。</p>
+<p>但在编写 setup.py 的过程中，可能不能一步到位，需要多次调试，这时候如何测试自己写的 setup.py 文件是可用的呢？</p>
+<p>这时候你可以使用这条命令，它会将你的模块安装至系统全局环境中</p>
+
+<pre class="language-bash"><code class="language-bash">$ python setup.py install
+</code></pre>
+<p>如若你的项目还处于开发阶段，频繁的安装模块，也是一个麻烦事。</p>
+<p>这时候你可以使用这条命令安装，该方法不会真正的安装包，而是在系统环境中创建一个软链接指向包实际所在目录。这边在修改包之后不用再安装就能生效，便于调试。</p>
+
+<pre class="language-bash"><code class="language-bash">$ python setup.py develop
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-12-19-CPP交互使用</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html">
+                            <span class="label">2025-2-25-yaml</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>
