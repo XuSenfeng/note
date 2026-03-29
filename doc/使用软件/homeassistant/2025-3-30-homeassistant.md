@@ -18,6 +18,26 @@ docker compose up -d
 docker ps
 ```
 
+部署以后可以在`127.0.0.1`进行访问
+
+## 插件商店安装
+
+在容器里面执行
+
+```bash
+wget -O - https://get.hacs.xyz | bash -
+```
+
+执行以后重启容器
+
+![image-20260228171746184](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20260228171746184.png)
+
+![image-20260228171729164](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20260228171729164.png)
+
+同意所有协议, 网站登录输入验证码即可
+
+之后用于小米插件安装
+
 ## MCP访问
 
 安装插件
@@ -43,21 +63,7 @@ docker ps
 }
 ```
 
-## 插件安装
-
-在容器里面执行
-
-```bash
-wget -O - https://get.hacs.xyz | bash -
-```
-
-执行以后重启容器
-
-![image-20260228171746184](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20260228171746184.png)
-
-![image-20260228171729164](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/mac-picture/image-20260228171729164.png)
-
-网站登录输入验证码即可
+添加到openclaw使用的mcporter的配置文件里面
 
 ### Xiaomi
 
