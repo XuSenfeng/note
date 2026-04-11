@@ -496,3 +496,20 @@ else:
 openclaw config set gateway.bind lan
 ```
 
+## node
+
+在使用node的时候声明的命令需要在配置文件里面阻止的命令里面进行移除
+
+```json
+"nodes": {
+  "denyCommands": [
+    "camera.snap",
+    "camera.clip",
+    "screen.record",
+    "calendar.add",
+    "contacts.add",
+    "reminders.add"
+  ]
+}
+```
+

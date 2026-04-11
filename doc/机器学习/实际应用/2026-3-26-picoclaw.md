@@ -49,25 +49,38 @@ pkg/agent 目录是 picoclaw 的“智能体”核心模块，负责对话上下
 
 1.  context.go / context_budget.go / context_cache.go
      对话上下文管理，包括上下文对象、缓存、token预算等，保证多轮对话的连续性和资源控制。
+
 2.  definition.go
      定义 agent 的结构、接口、能力描述等，是 agent 的“蓝图”。(加载workspace里面的提示词文件)
+
 3.  eventbus.go / events.go
      agent 内部事件总线，实现事件的发布、订阅、分发，支持解耦的事件驱动逻辑。
+
 4.  hook_mount.go / hook_process.go / hooks.go
      hook 系统，支持在 agent 生命周期、消息处理等关键节点挂载自定义逻辑（如前置/后置处理、拦截等）。
+
+    hook_process: 这个文件里面可以使用JSON-RPC实现进程的开启, 用 JSON 发一条“我要调用某个方法”的消息给另一个进程，对方执行后再回一个 JSON 结果, 把stdin/stdout/stderr当做管道使用, 它能把外部进程当 Hook 插件来调用
+
 5.  instance.go
      agent 实例的创建、生命周期管理，支持多 agent 并发运行。
+
 6.  loop.go / loop_mcp.go / loop_media.go
      agent 的主循环，负责消息的接收、处理、回复。loop_mcp/loop_media 针对不同场景（如 MCP 协议、媒体消息）做适配。
+
 7.  memory.go
      agent 的记忆系统，存储和检索对话历史、知识等。
+
 8.  model_resolution.go
      模型选择与分辨，决定调用哪个大模型或推理后端。
+
 9.  registry.go
      agent 注册表，管理所有 agent 的注册、查找、调度。
+
 10.  steering.go
       对话引导、意图识别、上下文 steering（如多 agent 协作时的分流/转发）。
+
 11.  subturn.go / turn.go
       对话轮次管理，支持多轮对话、子轮次（如多步推理）。
+
 12.  thinking.go
       推理与思考流程，支持复杂的 agent 思考链（Chain-of-Thought）。
