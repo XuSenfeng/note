@@ -1,5 +1,11 @@
 # Qemu Debug
 
+[利用QEMU+GDB搭建Linux内核调试环境 - 学习，积累，成长 - 博客园](https://www.cnblogs.com/dongxb/p/16192358.html)
+
+```bash
+make x86_64_defconfig
+```
+
 Kernel hacking ---> Compile-time checks and compiler options 
 
 ![image-20260407100033803](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202604071000874.png)
@@ -24,6 +30,7 @@ CONFIG_DEBUG_INFO_DWARF4=y
 
 # BTF调试信息（不影响GDB，开着无害，可忽略）
 CONFIG_DEBUG_INFO_BTF=y
+CONFIG_GDB_SCRIPTS=y
 ```
 
 | 选项组合                                         | 适用场景                    | 效果                                                  |
@@ -52,16 +59,12 @@ CONFIG_SYSTEM_REVOCATION_LIST
 默认使用的是x86的架构
 
 ```bash
-apt update && apt install -y bc gcc make libssl-dev bison flex libelf-dev dwarves qemu-system-x86_64 cpio xz-utils bzip2 xz-utils openssl qemu qemu-utils qemu-kvm virt-manager libvirt-daemon-system libvirt-clients bridge-utils texinfo build-essential
-
-
+sudo apt install -y bc gcc make libssl-dev bison flex libelf-dev dwarves cpio xz-utils bzip2 openssl qemu qemu-utils qemu-kvm qemu-system-x86 virt-manager libvirt-daemon-system libvirt-clients bridge-utils texinfo build-essential libncurses-dev pkg-config
 
 make  -j4 bzImage
 make -j4 modules  # 使用4个线程编译内核模块
 make scripts_gdb
 ```
-
-
 
 ## 根文件系统
 
@@ -72,7 +75,7 @@ wget https://busybox.net/downloads/busybox-1.32.1.tar.bz2
 tar -xvf busybox-1.32.1.tar.bz2
 cd busybox-1.32.1/
 make menuconfig
-# 选择 CONFIG_STATIC
+# 选择 Settingd --> Build static binary(no share lib) CONFIG_STATIC
 # 安装完成后生成的相关文件会在 _install 目录下
 make && make install
 ```
