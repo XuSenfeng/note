@@ -526,6 +526,8 @@ struct resource *platform_get_resource_byname(struct platform_device *, unsigned
 >   ```
 >
 >   start 和 end 分别表示资源的起始和终止信息，对于内存类的资源，就表示内存起始和终止地址，name表示资源名字，flags表示资源类型, 记录在`/include/linux/ioport.h`里面
+>
+>   IORESOURCE_IO、IORESOURCE_MEM、IORESOURCE_IRQ、IORESOURCE_DMA
 
 #### 获取设备树节点
 
