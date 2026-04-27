@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>C++ - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class="active"><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">C#</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/no_translate.html?ref=C.html&from=/编程基础/C.html"><span class="label">2023-6-24-1.C#</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C和指针</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-C语言环境.html"><span class="label">2022-7-25-C语言环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-字符串操作.html"><span class="label">2022-7-25-字符串操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-操作符和表达式.html"><span class="label">2022-7-25-操作符和表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-数据.html"><span class="label">2022-7-25-数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-词法规则.html"><span class="label">2022-7-25-词法规则</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-语句.html"><span class="label">2022-7-25-语句</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-函数.html"><span class="label">2022-7-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-指针.html"><span class="label">2022-7-26-指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-数组.html"><span class="label">2022-7-26-数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-表达式.html"><span class="label">2022-7-26-表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-动态内存分配.html"><span class="label">2022-7-27-动态内存分配</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-字符串字符字节.html"><span class="label">2022-7-27-字符串字符字节</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构体和指针.html"><span class="label">2022-7-27-结构体和指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构和联合.html"><span class="label">2022-7-27-结构和联合</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-预处理器.html"><span class="label">2022-7-28-预处理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-高级指针.html"><span class="label">2022-7-28-高级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-29-输入输出函数.html"><span class="label">2022-7-29-输入输出函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html"><span class="label">2022-7-30-标准库函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-经典抽象数据类型.html"><span class="label">2022-7-30-经典抽象数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html"><span class="label">2022-7-31-运行时环境</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C陷阱与缺陷</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-27-语义陷阱.html"><span class="label">2022-8-27-语义陷阱</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">c</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-16-c监控.html"><span class="label">2023-6-16-c监控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-19-C语言程序设计.html"><span class="label">2023-6-19-C语言程序设计</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">cpp</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="active with_link"><a href="/note/编程基础/cpp/2025-1-1-01C++.html"><span class="label">2025-1-1-01C++</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-02内存.html"><span class="label">2025-1-1-02内存</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-22-其他扩展语法.html"><span class="label">2025-1-22-其他扩展语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-26-多线程.html"><span class="label">2025-1-26-多线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-6-03模板和STL.html"><span class="label">2025-1-6-03模板和STL</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">go</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/2022-8-26-01-介绍.html"><span class="label">2022-8-26-01-介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-26-02-基础语法.html"><span class="label">2026-3-26-02-基础语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-29-03-多任务.html"><span class="label">2026-3-29-03-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-30-GoModules.html"><span class="label">2026-3-30-GoModules</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-30-多任务tmp.html"><span class="label">2026-3-30-多任务tmp</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/进阶使用/2026-3-30-01-网络服务.html"><span class="label">2026-3-30-01-网络服务</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">python</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">基础语法</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html"><span class="label">2023-6-15-修饰器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-23-01基础运算.html"><span class="label">2023-9-23-01基础运算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html"><span class="label">2023-9-24-02函数及变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-03虚拟环境.html"><span class="label">2024-4-23-03虚拟环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-04常用函数.html"><span class="label">2024-4-23-04常用函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-24-05程序获取参数.html"><span class="label">2024-4-24-05程序获取参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-06推导式和拆包.html"><span class="label">2024-4-25-06推导式和拆包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-07引入.html"><span class="label">2024-4-25-07引入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-08匿名函数.html"><span class="label">2024-4-25-08匿名函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-09面向对象.html"><span class="label">2024-4-25-09面向对象</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-26-10文件基本操作.html"><span class="label">2024-4-26-10文件基本操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-11OS模块.html"><span class="label">2024-4-27-11OS模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-12迭代器.html"><span class="label">2024-4-27-12迭代器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-13异常处理.html"><span class="label">2024-4-27-13异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-14生成器.html"><span class="label">2024-4-27-14生成器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-28-15闭包.html"><span class="label">2024-4-28-15闭包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-30-16深拷贝浅拷贝.html"><span class="label">2024-4-30-16深拷贝浅拷贝</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-1-17With和上下文管理器.html"><span class="label">2024-5-1-17With和上下文管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-18GIL.html"><span class="label">2024-5-4-18GIL</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-19垃圾回收.html"><span class="label">2024-5-4-19垃圾回收</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-1-31-多任务.html"><span class="label">2025-1-31-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html"><span class="label">2025-12-19-CPP交互使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-打包whl文件.html"><span class="label">2025-12-19-打包whl文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html"><span class="label">2025-2-25-yaml</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-3-21-包导入.html"><span class="label">2025-3-21-包导入</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">C语言-Cpp接轨</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/C语言-Cpp接轨/2025-12-10-01-struct.html"><span class="label">2025-12-10-01-struct</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">django</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-01-Django.html"><span class="label">2025-7-24-01-Django</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-02-创建.html"><span class="label">2025-7-24-02-创建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-03-路由.html"><span class="label">2025-7-24-03-路由</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-04-视图.html"><span class="label">2025-7-24-04-视图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-05-配置文件.html"><span class="label">2025-7-24-05-配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-26-04-模版.html"><span class="label">2025-7-26-04-模版</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-28-05-静态文件.html"><span class="label">2025-7-28-05-静态文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html"><span class="label">2025-7-29-06-中间件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html"><span class="label">2025-7-29-07-数据库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html"><span class="label">2025-7-30-08-进阶数据查询</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html"><span class="label">2025-8-1-09-ORM优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-10-模型扩展.html"><span class="label">2025-8-2-10-模型扩展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-11-组件.html"><span class="label">2025-8-2-11-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-3-12-异步.html"><span class="label">2025-8-3-12-异步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">pyQT</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-11-08界面容器.html"><span class="label">2024-5-11-08界面容器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-01介绍以及安装.html"><span class="label">2024-5-6-01介绍以及安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-02控件.html"><span class="label">2024-5-6-02控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-03布局.html"><span class="label">2024-5-7-03布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-04窗口.html"><span class="label">2024-5-7-04窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-05信号与槽.html"><span class="label">2024-5-8-05信号与槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-06QTDesigner.html"><span class="label">2024-5-8-06QTDesigner</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-07线程.html"><span class="label">2024-5-8-07线程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">简单模块使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2024-5-4-01logging日志模块.html"><span class="label">2024-5-4-01logging日志模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2025-3-15-02fastapi.html"><span class="label">2025-3-15-02fastapi</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">线程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-10-01多任务.html"><span class="label">2024-5-10-01多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-14-02队列.html"><span class="label">2024-5-14-02队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2025-2-20-async.html"><span class="label">2025-2-20-async</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-01网络编程.html"><span class="label">2024-5-10-01网络编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-02Socket.html"><span class="label">2024-5-10-02Socket</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-12-03软件.html"><span class="label">2024-5-12-03软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-8-20-04MQTT.html"><span class="label">2024-8-20-04MQTT</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">前端</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-12-04CSS2.html"><span class="label">2024-8-12-04CSS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-01基础知识.html"><span class="label">2024-8-5-01基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-02HTML.html"><span class="label">2024-8-5-02HTML</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-6-03CSS.html"><span class="label">2024-8-6-03CSS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式C语言</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-__attribute__.html"><span class="label">2022-7-21-__attribute__</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-内联函数内置内存函数.html"><span class="label">2022-7-21-内联函数内置内存函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-变量指针.html"><span class="label">2022-7-21-变量指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-大小端数据对齐size_t.html"><span class="label">2022-7-21-大小端数据对齐size_t</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-存储器.html"><span class="label">2022-7-21-存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-语句表达式define.html"><span class="label">2022-7-21-语句表达式define</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-Linux中的面向对象思想-封装.html"><span class="label">2022-7-22-Linux中的面向对象思想-封装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-main函数的参数.html"><span class="label">2022-7-22-main函数的参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-二级指针.html"><span class="label">2022-7-22-二级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-代码复用分层思想.html"><span class="label">2022-7-22-代码复用分层思想</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数参数的本质.html"><span class="label">2022-7-22-函数参数的本质</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数指针.html"><span class="label">2022-7-22-函数指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-指针和数组.html"><span class="label">2022-7-22-指针和数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-面向对象编程基础.html"><span class="label">2022-7-22-面向对象编程基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-goto关键字.html"><span class="label">2022-7-23-goto关键字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-可重入函数.html"><span class="label">2022-7-23-可重入函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-多任务.html"><span class="label">2022-7-23-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-头文件剖析.html"><span class="label">2022-7-23-头文件剖析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-异步通信模式.html"><span class="label">2022-7-23-异步通信模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-操作系统基本原理.html"><span class="label">2022-7-23-操作系统基本原理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块化编程.html"><span class="label">2022-7-23-模块化编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块进阶.html"><span class="label">2022-7-23-模块进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块间通讯.html"><span class="label">2022-7-23-模块间通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-MMU内存管理单元.html"><span class="label">2022-7-24-MMU内存管理单元</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-中断.html"><span class="label">2022-7-24-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-寄存器操作.html"><span class="label">2022-7-24-寄存器操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-嵌入式启动.html"><span class="label">2022-7-24-嵌入式启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-文件系统.html"><span class="label">2022-7-24-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-系统调用.html"><span class="label">2022-7-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-进程线程协程.html"><span class="label">2022-7-24-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">算法基础</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2022-7-31-高级数据结构.html"><span class="label">2022-7-31-高级数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-01快速排序.html"><span class="label">2024-12-31-01快速排序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-02哈希表.html"><span class="label">2024-12-31-02哈希表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-03贪心算法.html"><span class="label">2024-12-31-03贪心算法</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>C++</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/编程基础/cpp/2025-1-1-01C++.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <p>这是一个基于C语言的语言</p>
+<h2 id="%E5%8C%BA%E5%88%AB">区别</h2>
+<h3 id="%E5%A4%B4%E6%96%87%E4%BB%B6">头文件</h3>
+<p>所有的C语言头文件都有一个C++的版本, 在使用的时候去掉<code>.h</code>在前面加<code>c</code>比如<code>&lt;cstring&gt;</code></p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center">stdio.h</th>
+  <th style="text-align:center">iostream</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center">math</td>
+  <td style="text-align:center">cmath</td>
+</tr>
+<tr>
+  <td style="text-align:center">string</td>
+  <td style="text-align:center">cstring</td>
+</tr>
+<tr>
+  <td style="text-align:center">stdlib</td>
+  <td style="text-align:center">cstdlib</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">命名空间</h3>
+<h3 id="%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA/%E8%BE%93%E5%85%A5">标准输出/输入</h3>
+
+<pre class="language-c++"><code class="language-c++">#include &lt;iostream&gt;
+
+int main(void){
+    std::cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; 24 &lt;&lt; 3.14 &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+
+<pre class="language-c++"><code class="language-c++">int num = -1;
+char name[50];
+std::cin &gt;&gt; num &gt;&gt; name;
+std::cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; num &lt;&lt; std::endl; 
+std::cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; name &lt;&lt; std::endl;
+</code></pre>
+<blockquote>
+<p>这里的std可以在加一行<code>using namespace std;</code>以后进行省略</p>
+</blockquote>
+<h3 id="%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">命名空间</h3>
+<p>防止命名的变量是相同名字的可以把变量放在不同的作用域里面, 标准的命名空间是std</p>
+
+<pre class="language-c"><code class="language-c">#include &lt;iostream&gt;
+
+namespace myNamespace{
+    int myVar = 42;
+}
+
+int main(void){
+    int myVar = 0;
+    std::cout &lt;&lt; myNamespace::myVar &lt;&lt; std::endl;
+    std::cout &lt;&lt; myVar &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>这是一个空间, 在使用的时候可以导入整个命名空间, 也可以导入单个变量</p>
+
+<pre class="language-c++"><code class="language-c++">#include &lt;iostream&gt;
+
+namespace myNamespace{
+    int myVar = 42;
+}
+
+int main(void){
+    using namespace myNamespace;
+    std::cout &lt;&lt; myVar &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+
+<pre class="language-c++"><code class="language-c++">#include &lt;iostream&gt;
+
+namespace myNamespace{
+    int myVar = 42;
+}
+
+int main(void){
+    using myNamespace::myVar;
+    std::cout &lt;&lt; myVar &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+</blockquote>
+<h3 id="%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">数据类型</h3>
+<h4 id="bool">bool</h4>
+<p>多了一个类型<code>bool</code>, 在C语言里面需要使用<code>stdbool.h</code>, 在c++里面可以直接使用<code>true</code>和<code>false</code></p>
+
+<pre class="language-c++"><code class="language-c++">std::cout &lt;&lt; true &lt;&lt; &quot; &quot; &lt;&lt; false &lt;&lt; std::endl;
+</code></pre>
+<p>实际在使用的时候可以使用</p>
+
+<pre class="language-c++"><code class="language-c++">std::cout &lt;&lt; std::boolalpha &lt;&lt; true &lt;&lt; &quot; &quot; &lt;&lt; false &lt;&lt; std::endl;
+</code></pre>
+<blockquote>
+<p><code>true false</code>输出的时候是使用这样的形式</p>
+</blockquote>
+<h4 id="string">string</h4>
+<ol>
+<li><p>内存管理：在C语言中，字符数组需要手动分配内存和管理内存释放。而在C++中，string类会自动处理内存管理，避免了内存泄漏和越界访问的问题。</p>
+</li>
+<li><p>功能性：C语言的字符数组只能存储字符序列，而C++的string类可以存储任意类型的字符串，并提供了丰富的字符串操作方法，如查找、替换、连接、分割等。</p>
+</li>
+<li><p>便利性：使用C++的string类可以更方便地操作字符串，避免了在C语言中使用字符数组时需要手动处理的很多细节，使代码更简洁清晰。</p>
+</li>
+<li><p>长度可变：C语言的字符数组长度是固定的，一旦分配了内存大小就不能再改变。而C++的string类可以动态增加或删除字符串内容，长度可变。</p>
+</li>
+</ol>
+<p>总的来说，C++的string类相比于C语言的字符数组更加安全、便捷、功能更强大，是更好的字符串处理工具。</p>
+
+<pre class="language-c++"><code class="language-c++">string s1; // 默认构造一个空字符串
+string s2(&quot;hello&quot;); // 使用C风格字符串初始化
+string s3(s2); // 拷贝构造
+</code></pre>
+<ul>
+<li>string类的容量操作</li>
+</ul>
+<p><em>string</em>类提供了一系列容量操作的方法，如<em>size()</em>和<em>length()</em>返回字符串的长度，<em>capacity()</em>返回分配的总空间，<em>empty()</em>检查字符串是否为空，<em>clear()</em>清空字符串内容，<em>reserve()</em>预留空间，以及<em>resize()</em>调整字符串大小。例如：</p>
+
+<pre class="language-c++"><code class="language-c++">string str = &quot;hello&quot;;
+cout &lt;&lt; str.size() &lt;&lt; endl; // 输出字符串长度
+str.reserve(100); // 预留100个字符的空间
+str.resize(50, 'x'); // 将字符串大小调整为50，多出的部分用'x'填充
+</code></pre>
+<ul>
+<li>string类的访问和遍历</li>
+</ul>
+<p><em>string</em>类支持通过下标访问单个字符，也支持使用迭代器进行遍历。C++11还引入了范围<em>for</em>循环，使得遍历<em>string</em>对象变得更加简单。例如：</p>
+
+<pre class="language-c++"><code class="language-c++">string str = &quot;hello&quot;;
+
+for (size_t i = 0; i &lt; str.size(); ++i) {
+    cout &lt;&lt; str[i]; // 通过下标访问
+}
+
+for (auto c : str) {
+    cout &lt;&lt; c; // 使用范围for遍历
+}
+</code></pre>
+<p>string类的修改操作</p>
+<p><em>string</em>类提供了丰富的修改操作，如<em>push_back()</em>在字符串末尾添加字符，<em>append()</em>追加字符串，<em>insert()</em>在指定位置插入字符串，<em>erase()</em>删除部分字符串，<em>replace()</em>替换字符串中的一部分，以及<em>operator+=</em>用于字符串连接等。例如：</p>
+
+<pre class="language-c++"><code class="language-c++">string str = &quot;hello&quot;;
+str.push_back('!'); // 在末尾添加字符
+str.append(&quot; world&quot;); // 追加字符串
+str.insert(5, &quot; dear&quot;); // 在指定位置插入字符串
+str.erase(0, 5); // 删除前五个字符
+str.replace(0, 5, &quot;Hi&quot;); // 替换字符串中的一部分
+str += &quot;!!!&quot;; // 字符串连接
+</code></pre>
+<p>string类的非成员函数</p>
+<p><em>string</em>类还提供了一些非成员函数，如<em>operator+</em>用于字符串连接，<em>operator&gt;&gt;</em>和<em>operator&lt;&lt;</em>用于输入输出流操作，以及<em>getline()</em>用于从输入流中读取一行字符串。例如：</p>
+<p>string str1 = &quot;hello&quot;;</p>
+<p>string str2 = &quot;world&quot;;</p>
+<p>string str3 = str1 + &quot; &quot; + str2; // 字符串连接</p>
+<p>cout &lt;&lt; str3 &lt;&lt; endl; // 输出字符串</p>
+<p>getline(cin, str3); // 从标准输入读取一行字符串</p>
+<p><strong>注意</strong>：在使用<em>string</em>类时，应该包含头文件<code>&lt;string&gt;</code>并使用<code>std</code>命名空间。此外，<code>string</code>类的操作在底层可能涉及到内存的分配和释放，因此在性能敏感的场合需要谨慎使用。</p>
+<p>可以直接使用<code>==</code>对两个字符串进行比较</p>
+<h3 id="%E5%BC%BA%E5%BC%B1%E7%B1%BB%E5%9E%8B">强弱类型</h3>
+<p>在c++里面对于类型的检查比较严格, 强制转换需要显式的转换, 除了转换为<code>void *</code>类型的指针</p>
+<h3 id="%E7%A9%BA%E6%8C%87%E9%92%88">空指针</h3>
+<p>在c++里面使用<code>nullptr</code>替代<code>NULL</code>作为空指针, 在c++里面NULL被定义为0, C语言里面这一个<code>void *</code>类型的0</p>
+<h3 id="const">const</h3>
+<p>在C语言里面, 只是规定这一个变量为只读的</p>
+<p>在C语言里面如果使用下面的代码</p>
+
+<pre class="language-c"><code class="language-c">const int num = 18;
+int buf[num]; //这个时候有可能报错
+printf(&quot;The size of the buffer is %d\n&quot;, sizeof(buf));
+int *p = &amp;num;
+*p = 22; // 可以使用这一种方法进行修改数据
+printf(&quot;The value of num is %d\n&quot;, num);
+</code></pre>
+<p>如果是在C++里面</p>
+
+<pre class="language-c"><code class="language-c">    const int num = 18;
+    int buf[num]; // 可以直接使用
+    printf(&quot;The size of the buffer is %d\n&quot;, sizeof(buf));
+    int *p = (int *)&amp;num; // 地址不兼容, 必须强转
+    *p = 22;
+    printf(&quot;The value of num is %d\n&quot;, num); // 实际打印的是18, 没有改变但不报错
+    return 0;
+</code></pre>
+<p>实际在C++进行赋值的时候把常量区的数据复制到了栈区, 最后改的是栈区里面的, 观看件地址的时候这两个地址实际还是一样的数字, 这是因为C++会把真实地址隐藏, 用于兼容C语言</p>
+<p>并且在进行字符串定义的时候要加<code>const</code>=&gt;<code>const char* name = &quot;jiao&quot;;</code></p>
+<h3 id="%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6">三目运算符</h3>
+<p>在C语言里面下面的使用方法是错误的</p>
+
+<pre class="language-c++"><code class="language-c++">(a &gt; b ? a : b) = 20;
+</code></pre>
+<p>在C语言里面返回的这一个值是数值, c++里面可以, 它返回的是变量</p>
+<p>如果在C语言里面使用类似的需要使用下面的</p>
+
+<pre class="language-c"><code class="language-c">*(a &gt; b ? &amp;a : &amp;b) = 20;
+</code></pre>
+<h3 id="%E5%BC%95%E7%94%A8">引用</h3>
+<p>在C语言里面改变一个实参的值, 需要传递一个指针, 在c++里面则可以使用引用, 实际是给这一个变量一个别名</p>
+<p>语法<code>数据类型 &amp;别名 = 原名</code>, 在实际使用的时候必须初始化, 初始化以后不可以改变</p>
+
+<pre class="language-c++"><code class="language-c++">#include &lt;iostream&gt;
+
+void test(int&amp; a){
+    a = 10;
+}
+
+int main(void){
+    int a = 5;
+    test(a);
+    std::cout &lt;&lt; a &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<p>实际还是通过指针实现的, 两个变量指向的是同一个地址</p>
+<p>在实际使用的时候这一个可以作为函数的返回值, 不要返回局部变量的引用, 可以使用static</p>
+
+<pre class="language-c++"><code class="language-c++">int &amp; test(){
+    static int a = 10;
+    return a;
+}
+
+int main(void){
+    int &amp;p = test();
+    std::cout &lt;&lt; p &lt;&lt; std::endl;
+    test() = 20;
+    std::cout &lt;&lt; p &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<p>实际实现的方法是使用一个const类型的地址, 在赋值的时候会自动进行添加<code>*</code></p>
+
+<pre class="language-c++"><code class="language-c++">int * const ref = &amp;b;
+</code></pre>
+<h4 id="%E5%B8%B8%E9%87%8F%E5%BC%95%E7%94%A8">常量引用</h4>
+<p>在实际使用的时候如果指向的数据不是在一个合法的内存里面, 可以在前面加一个<code>const</code></p>
+
+<pre class="language-c++"><code class="language-c++">const int &amp; ref = 10;
+// 等价于int temp = 10; const int &amp; ref = temp; 
+</code></pre>
+<p>这给数据是只读的, 实际的使用场景是作为函数的参数</p>
+<h3 id="%E5%A0%86%E5%8C%BA%E7%94%B3%E8%AF%B7%E9%87%8A%E6%94%BE">堆区申请释放</h3>
+
+<pre class="language-c++"><code class="language-c++">int *p = new int(10);
+delete p;
+</code></pre>
+<blockquote>
+<p>建立一个变量, 这一个变量是10</p>
+</blockquote>
+
+<pre class="language-c++"><code class="language-c++">int *p = new int[10];
+delete[] p;
+</code></pre>
+<blockquote>
+<p>建立一个数组, 这一个数组里面有10个数据, 再释放的时候要告诉他</p>
+</blockquote>
+<h3 id="%E5%87%BD%E6%95%B0">函数</h3>
+<h4 id="%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0">默认参数</h4>
+<p>函数的参数在实际传递的时候可以给一个默认的数值， 函数赋值的时候只可以给最后面的参数赋值</p>
+<p>实际使用的时候如果声明里面使用了默认参数, 实际实现的时候不可以在加一个默认参数(只能有一个里面有)</p>
+<h4 id="%E5%8D%A0%E4%BD%8D%E5%8F%82%E6%95%B0">占位参数</h4>
+<p>在初始化函数的时候只有一个变量的类型, 没有变量名</p>
+
+<pre class="language-c"><code class="language-c">void test(int = 10){
+    std::cout &lt;&lt; &quot;test(int)&quot; &lt;&lt; std::endl;
+}
+
+int main(void){
+    test(10);
+    return 0;
+}
+</code></pre>
+<p>这一个参数可以有默认的数值</p>
+<h4 id="%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD">函数重载</h4>
+<p>在同一个作用域里面函数的名字不同但是函数的参数不同(函数的返回值不可以)</p>
+
+<pre class="language-c++"><code class="language-c++">void test(int ){
+    std::cout &lt;&lt; &quot;test(int)&quot; &lt;&lt; std::endl;
+}
+
+void test(){
+    std::cout &lt;&lt; &quot;test()&quot; &lt;&lt; std::endl;
+}
+
+int main(void){
+    test(10);
+    test();
+    return 0;
+}
+</code></pre>
+<p>在实际使用的时候引用也可以作为重载的条件比如<code>const int &amp;</code>和<code>int &amp;</code></p>
+
+<pre class="language-c++"><code class="language-c++">void test(int &amp; a){
+    std::cout &lt;&lt; &quot;test(int &amp; a)&quot; &lt;&lt; std::endl;
+}
+
+void test(const int &amp; a){
+    std::cout &lt;&lt; &quot;test(const int &amp; a)&quot; &lt;&lt; std::endl;
+}
+
+int main(void){
+    int a = 10;
+    test(a); //test(int &amp; a)
+    test(10);//test(const int &amp; a)
+    return 0;
+}
+</code></pre>
+<p>如果有默认参数使得在传递参数的时候出现异议是非法的</p>
+
+<pre class="language-c++"><code class="language-c++">void test(int a){
+    std::cout &lt;&lt; &quot;test(int a)&quot; &lt;&lt; std::endl;
+}
+
+void test(int a, int b = 10){
+    std::cout &lt;&lt; &quot;test(int a, int b = 10)&quot; &lt;&lt; std::endl;
+}
+</code></pre>
+<blockquote>
+<p>上面的情况再只有一个参数的时候是非法的</p>
+</blockquote>
+<h2 id="%E7%B1%BB">类</h2>
+<h3 id="%E5%B0%81%E8%A3%85">封装</h3>
+<p>把属性的属性和行为封装为一个类</p>
+<h3 id="%E6%9D%83%E9%99%90">权限</h3>
+<p>有三种权限: public共有的, protected保护的, private私有的</p>
+<p>public: 在类里面可以访问, 类外面可以访问</p>
+<p>protected: 类里面可以访问, 外面不可以访问(继承的时候子类可以访问的内容)</p>
+<p>private: 类里面可以访问, 外面不可以访问(继承的时候不可以访问父类)</p>
+<blockquote>
+<p>默认的时候struct里面的都是公共的, Class里面的都是私有的</p>
+</blockquote>
+<h3 id="%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%BB%A5%E5%8F%8A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0">构造函数以及析构函数</h3>
+<p>构造函数<code>类名(){}</code>, 析构函数<code>~类名(){}</code></p>
+<blockquote>
+<p>没有返回值, 也不用写void, 构造函数有参数可以重载</p>
+<p>在C++中，构造函数后面的冒号（:）引入了一个非常重要的概念——初始化列表。初始化列表是在构造函数体执行之前初始化类成员的一种方式。它不仅用于提供给成员变量初始值，而且是某些特定情况下唯一可行的初始化方式。</p>
+<p>初始化列表不仅用于普通成员变量的初始化，还有几种特殊的用途：</p>
+<ol>
+<li><strong>初始化const成员变量</strong>：由于const成员变量一旦被初始化后就不能再被修改，因此它们必须在初始化列表中进行初始化。</li>
+<li><strong>初始化引用类型成员变量</strong>：引用成员也必须在初始化列表中进行初始化，因为引用一旦被绑定到一个对象上，就不能再绑定到另一个对象上。</li>
+<li><strong>调用基类的构造函数</strong>：当创建派生类对象时，可以在初始化列表中调用基类的构造函数来初始化基类部分。</li>
+<li><strong>初始化成员类对象</strong>：如果成员类对象没有默认构造函数，或者需要特定的初始化参数，也必须在初始化列表中进行初始化。</li>
+</ol>
+</blockquote>
+
+<pre class="language-c++"><code class="language-c++">class Circle{
+// 公共权限
+public:
+    // 构造函数
+    Circle(int r):radius(r){
+        std::cout &lt;&lt; &quot;Constructor called&quot; &lt;&lt; std::endl;
+    }
+    int radius;
+    double calculateArea(){
+        return 3.14159 * radius * radius;
+    }
+
+};
+
+int main(void){
+    Circle circle(10);
+    circle.radius = 10;
+    std::cout &lt;&lt; &quot;The area of the circle is: &quot; &lt;&lt; circle.calculateArea() &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>拷贝构造函数</li>
+</ul>
+
+<pre class="language-c++"><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+class Person{
+// 公共权限
+public:
+    // 构造函数
+    Person(const Person &amp;person){
+        // 拷贝构造函数, 作用是初始化一个对象, 该对象是用同类的另一个对象初始化的
+        std::cout &lt;&lt; &quot;Copy constructor called&quot; &lt;&lt; std::endl;
+        name = person.name;
+    }
+    Person(){
+        std::cout &lt;&lt; &quot;Constructor called&quot; &lt;&lt; std::endl;
+    }
+    ~Person(){
+        std::cout &lt;&lt; &quot;Destructor called&quot; &lt;&lt; std::endl; 
+    }
+    string name;
+
+};
+
+int main(void){
+    Person person1; // 调用构造函数
+    person1.name = &quot;zhangsan&quot;; 
+    Person person2 = person1; // 调用拷贝构造函数
+    std::cout &lt;&lt; person2.name &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>调用</li>
+</ul>
+
+<pre class="language-c++"><code class="language-c++">Person person; //没有参数的构造函数
+Person person2(20); // 有参数的构造函数
+Person person3(person2);// 拷贝构造函数
+Person person4 = person3; //拷贝构造函数
+</code></pre>
+<blockquote>
+<p>在调用没有参数的构造函数的时候不要加括号, 否则会被以为是一个函数的声明</p>
+<p>在使用值传递的方式给一个函数传递参数的时候, 实际也是对一个对象实现一次拷贝, 使用值的方式返回局部变量的时候也是同样的</p>
+</blockquote>
+<ul>
+<li>匿名对象</li>
+</ul>
+
+<pre class="language-c++"><code class="language-c++">Person(10); // 一个匿名对象, 这一行结束以后立即释放
+</code></pre>
+<blockquote>
+<p>注意在使用这一个的时候不要使用拷贝构造函数</p>
+
+<pre class="language-c++"><code class="language-c++">Person(p3); // Person(p3) 等价于 Person p3;会导致重复命名
+</code></pre>
+</blockquote>
+<ul>
+<li>隐式转换</li>
+</ul>
+
+<pre class="language-c++"><code class="language-c++">Person p4 = 10; // 相当于 Person p4 = Person(10);
+</code></pre>
+<blockquote>
+<p>拷贝构造同理</p>
+</blockquote>
+<h4 id="%E9%BB%98%E8%AE%A4%E5%87%BD%E6%95%B0">默认函数</h4>
+<p>C++的类默认的时候会初始化四个函数, 没有参数构造函数, 析构函数, 拷贝构造函数以及一个赋值运算符重载, 如果写了一个有参数的构造函数, 无参数的构造函数也会消失, 但是有拷贝构造函数</p>
+<p>如果有一个拷贝构造函数, 其他的函数都会没有</p>
+<h4 id="%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D">深浅拷贝</h4>
+<p>浅拷贝是简单的使用等号赋值, 深拷贝是重新开辟一次内存</p>
+<p>如果使用指针指向一块堆区的内存, 会出现一种情况, 使用默认的复制会导致复制的函数操控的内存是同一块, 如果使用析构函进行释放, 会导致重复释放</p>
+<h3 id="%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8">初始化列表</h3>
+<p><code>构造函数():属性1(值1), 属性2(值2)...{}</code></p>
+<p>用于初始化类里面的值, 这里的值可以是写死的, 也可以是函数的参数</p>
+
+<pre class="language-c++"><code class="language-c++">class Person{
+// 公共权限
+public:
+    // 构造函数
+    Person(int a, int b):a(a), b(b), c(30){
+        std::cout &lt;&lt; &quot;构造函数&quot; &lt;&lt; std::endl;
+    }
+    int a;
+    int b;
+    int c;
+};
+
+int main(void){
+    Person person1(10, 20); // 调用构造函数
+    std::cout &lt;&lt; person1.a &lt;&lt; std::endl;
+    std::cout &lt;&lt; person1.b &lt;&lt; std::endl;
+    std::cout &lt;&lt; person1.c &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<h3 id="%E9%9D%99%E6%80%81%E6%88%90%E5%91%98">静态成员</h3>
+<p>使用static关键字</p>
+<p>静态成员变量: 所有的类使用同一个数据, 在使用的时候类内声明, 类外初始化</p>
+<p>静态成员函数: 所有的类使用同一个函数, 只可以访问静态的变量</p>
+
+<pre class="language-c++"><code class="language-c++">class Person{
+// 公共权限
+public:
+    static int A; 
+    static void func(){
+        std::cout &lt;&lt; &quot;static func&quot; &lt;&lt; std::endl;
+    }
+};
+
+int Person::A = 10;
+int main(void){
+    Person person1; // 调用构造函数
+    std::cout &lt;&lt; person1.A &lt;&lt; std::endl;
+    std::cout &lt;&lt; Person::A &lt;&lt; std::endl;
+
+    person1.func();
+    Person::func();
+
+    return 0;
+}
+</code></pre>
+<p>在访问的时候可以通过对象以及类名进行访问</p>
+<h3 id="%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E4%BB%A5%E5%8F%8Athis%E6%8C%87%E9%92%88">对象模型以及this指针</h3>
+<p>在C++里面只有非静态的成员变量才在类的对象上面, 一个空的类对象占用的内存为一个字节, 为了区分空的对象占用的内存空间不同</p>
+<p>如果里面有一个其他的非静态的变量, 按照变量的大小存储</p>
+<p><code>this</code>指针指向当前的调用成员函数的变量, 隐含在每一个非静态的成员函数, 实质是一个指针常量</p>
+<blockquote>
+<p>可以用于区分形参和成员变量重名以及用于返回对象本身<code>return *this;</code></p>
+</blockquote>
+
+<pre class="language-c++"><code class="language-c++">class Person{
+// 公共权限
+public:
+    int age;
+
+    Person(int age):age(age){
+        cout &lt;&lt; &quot;构造函数&quot; &lt;&lt; endl;
+    }
+    void set_age(int age){
+        this-&gt;age = age;
+    }
+    Person&amp; add_age(Person &amp;p){ // 引用传递
+        this-&gt;age += p.age;
+        return *this;
+    }
+};
+
+int main(void){
+    Person person1(10); // 调用构造函数
+    std::cout &lt;&lt; person1.age &lt;&lt; std::endl;
+    Person person2(20); // 调用构造函数
+    std::cout &lt;&lt; person2.age &lt;&lt; std::endl;
+    person1.add_age(person2).add_age(person2).add_age(person2);
+    std::cout &lt;&lt; person1.age &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<p>在使用空指针调用成员函数的时候, 使用this的函数会失败</p>
+
+<pre class="language-c++"><code class="language-c++">class Person{
+// 公共权限
+public:
+    void test(){
+        cout &lt;&lt; &quot;test&quot; &lt;&lt; endl;
+    }
+
+    int a;
+    void test2(){
+        cout &lt;&lt; &quot;test2&quot;&lt;&lt; this-&gt;a &lt;&lt; endl;
+    }
+};
+
+int main(void){
+    Person *person = NULL;
+    person-&gt;test();
+    person-&gt;test2();	// 失败
+}
+</code></pre>
+<h3 id="const%E4%BF%AE%E9%A5%B0%28%E5%B8%B8%E5%87%BD%E6%95%B0/%E5%AF%B9%E8%B1%A1%29">const修饰(常函数/对象)</h3>
+<p>这一个函数不可以修改成员的属性, 除非在属性声明的时候加一个mutable</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202501051406288.png" alt="image-20250105140613173" /></p>
+<blockquote>
+<p>实质是给this指针变为一个常量指针常量</p>
+
+<pre class="language-c++"><code class="language-c++">class Person{
+// 公共权限
+public:
+    void show_Person() const{
+        cout &lt;&lt; &quot;Person - show()&quot; &lt;&lt; endl;
+        age = 10;
+    }
+
+    mutable int age;
+};
+</code></pre>
+</blockquote>
+<p>在一个对象的前面加一个const, <code>const Person p;</code>, 这时候这一个对象只可以使用常函数, 修根常属性</p>
+<h3 id="%E5%8F%8B%E5%85%83friend">友元friend</h3>
+<p>有一部分的私有属性想要其他的类或者函数进行访问</p>
+<p>这一个可以是全局的函数, 类以及成员函数</p>
+
+<pre class="language-c++"><code class="language-c++">class Person{
+    friend void good_friend(Person *person);
+// 公共权限
+public:
+    Person(string name, int age){
+        m_name = name;
+        m_age = age;
+    }
+private:
+    // 私有权限
+    string m_name;
+    int m_age;
+};
+
+void good_friend(Person *person){
+    cout &lt;&lt; &quot;好基友: &quot; &lt;&lt; person-&gt;m_name &lt;&lt; &quot; 年龄: &quot; &lt;&lt; person-&gt;m_age &lt;&lt; endl;
+}
+
+int main(void){
+    Person person(&quot;张三&quot;, 20);
+    good_friend(&amp;person);
+    return 0;
+}
+</code></pre>
+<p>使用另一个类进行访问的时候可以加一个<code>friend class Goodfriend;</code>, 这时候这一个类里面的所有的函数都可以访问, 如果只希望一部分函数可以使用<code>friend void Goodfriend::visit(void);</code></p>
+<blockquote>
+<p><strong>注:</strong>如果这一个函数在类内实现, 加一个friend, 这一个函数会成为全局函数</p>
+</blockquote>
+<h3 id="%E7%B1%BB%E5%A4%96%E5%AE%9E%E7%8E%B0">类外实现</h3>
+<p>在类里面只有一个声明, 在类的外面使用类的名字以及::函数名进行实现</p>
+<h3 id="%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD">运算符重载</h3>
+<p>实现自定义的类型运算</p>
+
+<pre class="language-c++"><code class="language-c++">// 公共权限
+public:
+    int a, b;
+    Person(int a, int b){
+        this-&gt;a = a;
+        this-&gt;b = b;
+    }
+    Person operator+(Person &amp;person){
+        Person temp(0, 0);
+        temp.a = this-&gt;a + person.a;
+        temp.b = this-&gt;b + person.b;
+        return temp;
+    }
+};
+
+int main(void){
+    Person person1(1, 2);
+    Person person2(3, 4);
+    Person person3 = person1 + person2;
+    cout &lt;&lt; person3.a &lt;&lt; &quot; &quot; &lt;&lt; person3.b &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>也可以使用<code>Person person3 = operator+(p1 ,p2)</code></p>
+</blockquote>
+<p>还可以使用全局函数进行重载</p>
+
+<pre class="language-c++"><code class="language-c++">Person operator+(Person &amp;person1, Person &amp;person2){
+    Person temp(0, 0);
+    temp.a = person1.a + person2.a;
+    temp.b = person1.b + person2.b;
+    return temp;
+}
+</code></pre>
+<blockquote>
+<p>这一个函数也可以函数重载</p>
+
+<pre class="language-c"><code class="language-c">Person operator+(Person &amp;person1, int a){
+    Person temp(0, 0);
+    temp.a = person1.a + a;
+    temp.b = person1.b + a;
+    return temp;
+}
+</code></pre>
+<blockquote>
+<p>这样第二个参数不同的时候调用不同的函数</p>
+</blockquote>
+</blockquote>
+<p>重载一下<code>&lt;&lt;</code>这一个符号, 可以用于输出, 一般不使用成员函数, 这样输出的时候变量可以在的<code>cout</code>的右侧</p>
+
+<pre class="language-c++"><code class="language-c++">ostream&amp; operator&lt;&lt;(ostream &amp;cout, Person &amp;person){
+    cout &lt;&lt; &quot;p.a&quot; &lt;&lt; person.a &lt;&lt; &quot; p.b&quot; &lt;&lt; person.b &lt;&lt; endl;
+    return cout;
+}
+</code></pre>
+<p>在重载递增的时候需要重载前置以及后置的重载</p>
+
+<pre class="language-c++"><code class="language-c++">class MyInteger{
+    int n;
+public:
+    MyInteger(int n): n(n){}
+    MyInteger operator+(int n){
+        return MyInteger(this-&gt;n + n);
+    }
+    friend ostream&amp; operator&lt;&lt;(ostream&amp; os, const MyInteger&amp; myInteger);
+    // 这是一个前置++运算符重载
+    MyInteger&amp; operator++(){
+        n++;
+        return *this;
+    };
+
+    // 这是一个后置++运算符重载, int是一个占位符，用于区分前置和后置
+    MyInteger operator++(int){
+        MyInteger temp = *this;
+        n++;
+        return temp;
+    };
+};
+
+ostream&amp; operator&lt;&lt;(ostream&amp; os, const MyInteger&amp; myInteger){
+    os &lt;&lt; myInteger.n;
+    return os;
+}
+
+
+int main(void){
+    MyInteger myInteger(10);
+    cout &lt;&lt; myInteger + 5 &lt;&lt; endl;
+    cout &lt;&lt; myInteger++ &lt;&lt; endl;
+    cout &lt;&lt; myInteger &lt;&lt; endl;
+    cout &lt;&lt; ++myInteger &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">PS E:\JHY\c++\test&gt; ./main.exe
+15
+10
+11
+12
+</code></pre>
+</blockquote>
+<p>在默认的时候赋值运算符的重载是已经实现了的, 对属性进行浅拷贝, 再重新实现的时候是一个<code>Person &amp; operator=(Person &amp;p)</code></p>
+<p>重载关系运算符的时候返回的是一个bool类型的数据</p>
+<h4 id="%E4%BB%BF%E5%87%BD%E6%95%B0">仿函数</h4>
+<p>实际是对<code>()</code>进行重载, 使用的方式类似一个函数</p>
+
+<pre class="language-c++"><code class="language-c++">class MyPrint{
+public:
+    void operator()(string str){
+        cout &lt;&lt; str &lt;&lt; endl;
+    }
+};
+
+
+int main(void){
+    MyPrint myPrint;
+    myPrint(&quot;Hello World&quot;);
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>在实际使用的时候可以使用匿名对象进行调用<code>MyPrint()(&quot;Hello World&quot;)</code></p>
+</blockquote>
+<h3 id="%E7%BB%A7%E6%89%BF">继承</h3>
+<p>为了避免重复的代码, 语法<code>class 类名:public 继承的类{}</code></p>
+<p>这里的额public是继承的方式, 实际继承的的时候也是三种方式</p>
+<ul>
+<li>public继承</li>
+</ul>
+<p>这一个可以把父类的public和protected的属性继承下来, 同时有对应的属性, 没有变化</p>
+<ul>
+<li>protected继承</li>
+</ul>
+<p>继承父类的public和protected, 继承的属性都是protected</p>
+<ul>
+<li>private继承</li>
+</ul>
+<p>继承父类的public和protected, 继承的属性都是private</p>
+<blockquote>
+<p>在继承的时候父类的所有的属性都会被继承, 但是私有的属性不可以访问, 实际的数据大小是所有的属性相加</p>
+</blockquote>
+<p>子类在继承父类的时候也会调用父类的构造函数, 首先调用父类的构造函数, 最后调用父类的析构函数</p>
+<h4 id="%E5%90%8C%E5%90%8D%E5%8F%98%E9%87%8F">同名变量</h4>
+<p>访问子类的同名对象的时候可以直接进行访问, 在访问父类的同名对象的时候需要加一下作用域</p>
+
+<pre class="language-c++"><code class="language-c++">
+class Parent{
+public:
+    Parent(){
+        num = 10;
+    }
+    int num;
+};
+
+
+class Son: public Parent{
+public:
+    Son(){
+        num = 20;
+    }
+    int num;
+};
+
+int main(void){
+    Son son;
+    cout &lt;&lt; son.num &lt;&lt; endl;
+    cout &lt;&lt; son.Parent::num &lt;&lt; endl; //父类的作用域
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>如果子类里面出现和父类的名字一样的成员函数, 会隐藏掉父类里面的所有的同名函数(包括重载的函数), 想要使用的时候需要使用作用域</p>
+</blockquote>
+<h4 id="%E5%A4%9A%E7%BB%A7%E6%89%BF">多继承</h4>
+<p><code>class 类名:继承方式 继承的类, 继承方式 继承的类3{}</code></p>
+<p>在实际继承的时候父类里面有同样的成员的时候需要使用作用域进行区分, 在C++里面不建议使用</p>
+<h4 id="%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF">菱形继承</h4>
+<p>在继承的时候如果有一个相同的祖宗类, 会使得这一个部分的代码出现重复继承的情况, 实际使用的时候需要加上作用域进行区分, 但是这一部分的数据实际只需要一份, 如果这样使用会导致出现资源的浪费</p>
+<p>解决这一个问题可以使用虚继承的方式在继承的时候继承的方式前面加一个<code>virtual</code></p>
+
+<pre class="language-c++"><code class="language-c++">class base
+{
+public:
+    int A;
+};
+
+class parent1 : public base{
+
+public:
+    parent1(){
+        A = 5;
+    }
+    int B;
+};
+
+class parent2 : public base{
+
+public:
+    parent2(){
+        A = 10;
+    }
+    int C;
+};
+
+class child : public parent1, public parent2{
+public:
+    int D;
+};
+
+int main(void){
+    child obj;
+    cout &lt;&lt; &quot;Size of child: &quot; &lt;&lt; sizeof(obj) &lt;&lt; endl;
+    cout &lt;&lt; &quot;A: = &quot; &lt;&lt; obj.parent1::A &lt;&lt; endl;
+    cout &lt;&lt; &quot;A: = &quot; &lt;&lt; obj.parent2::A &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+
+<pre class="language-c++"><code class="language-c++">class parent1 :virtual public base{
+
+public:
+    parent1(){
+        A = 5;
+    }
+    int B;
+};
+
+class parent2 :virtual public base{
+
+public:
+    parent2(){
+        A = 10;
+    }
+    int C;
+};
+</code></pre>
+<blockquote>
+<p>这时候实际的数据只有一份, 使用这一个关键字的时候, 实际继承的是一个vbptr, virtual base pinter, 指向vbtable, 这一个指针是一个偏移量, 最后指向实际的数据</p>
+</blockquote>
+<h3 id="%E5%A4%9A%E6%80%81">多态</h3>
+<p>静态的多态实际就是函数的多态以及运算符的重装载, 动态的多态实际是在派生类以及虚函数运行的时候实现的多态</p>
+<p>动态的多态在运行的时候函数的地址才会绑定</p>
+
+<pre class="language-c"><code class="language-c">class Animal{
+
+public:
+    string color;
+    void speak(){
+        cout &lt;&lt; &quot;Animal speaks&quot; &lt;&lt; endl;
+    }
+};
+
+class Dog : public Animal{
+public:
+    string breed;
+    void speak(){
+        cout &lt;&lt; &quot;Dog barks&quot; &lt;&lt; endl;
+    }
+};
+// 这一个函数不管传入的是什么类型的动物，都会调用动物的speak方法
+void doSpeak(Animal &amp;a){
+    a.speak();
+}
+
+int main(void){
+    Dog d1;
+    doSpeak(d1);
+    return 0;
+}
+</code></pre>
+
+<pre class="language-c++"><code class="language-c++">class Animal{
+
+public:
+    string color;
+    virtual void speak(){ // virtual关键字，表示这个方法是虚方法，可以被子类重写
+        cout &lt;&lt; &quot;Animal speaks&quot; &lt;&lt; endl;
+    }
+};
+
+class Dog : public Animal{
+public:
+    string breed;
+    void speak(){
+        cout &lt;&lt; &quot;Dog barks&quot; &lt;&lt; endl;
+    }
+};
+// 这时候使用的是Dog的函数
+void doSpeak(Animal &amp;a){
+    a.speak();
+}
+
+int main(void){
+    Dog d1;
+    doSpeak(d1);
+    return 0;
+}
+
+</code></pre>
+<blockquote>
+<p>重写的时候函数的名字以及函数的参数是完全相同的, 实际是父类的指针在指向子类的函数, 所以使用这一个方法以后会使得没有参数的时候占位的一字节变成4个, 变为一个虚函数指针, 指向实际执行的虚函数表, 表里面记录的是虚函数的地址</p>
+</blockquote>
+<h4 id="%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB">纯虚函数和抽象类</h4>
+<p><code>virtual 返回值类型 函数名(参数列表) = 0;</code>这一个函数不实现, 作为父类</p>
+<p>有这一种函数的类是抽象类, 这一个类不能实例化对象, 子类必须重写纯虚函数, 否则也是纯虚函数</p>
+<p>实际的使用是在函数的参数描写的时候写父类, 传递的参数是子类, 由于子类的实现不同, 函数实际执行的任务是不同的</p>
+<h4 id="%E8%99%9A%E6%9E%90%E6%9E%84%E5%92%8C%E7%BA%AF%E8%99%9A%E6%9E%90%E6%9E%84">虚析构和纯虚析构</h4>
+<p>使用多态的时候如果子类里面有在堆区的数据, 使用父类的指针在释放的时候不可以调用到子类的析构函数, 这时候可以把父类的析构函数改为虚析构或纯虚析构, 如果使用的是纯虚的析构, 这一个类也是一个抽象的类</p>
+<p><code>virtual ~类名(){}</code>和<code>virtual ~类名() = 0;</code></p>
+
+<pre class="language-c++"><code class="language-c++">class Base{
+public:
+    Base(){
+        cout &lt;&lt; &quot;Base Constructor&quot; &lt;&lt; endl;
+    }
+    ~Base(){
+        cout &lt;&lt; &quot;Base Destructor&quot; &lt;&lt; endl;
+    }
+};
+
+class Animal: public Base{
+public:
+    Animal(){
+        cout &lt;&lt; &quot;Animal Constructor&quot; &lt;&lt; endl;
+    }
+    ~Animal(){
+        cout &lt;&lt; &quot;Animal Destructor&quot; &lt;&lt; endl;
+    }
+};
+
+void test(Base *b){
+    delete b;
+}
+
+int main(void){
+    Animal *a = new Animal();
+    test(a);
+    return 0;
+}
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">PS E:\JHY\c++\test&gt; ./main.exe
+Base Constructor
+Animal Constructor
+Base Destructor
+</code></pre>
+<p>使用</p>
+
+<pre class="language-c++"><code class="language-c++">virtual ~Base(){
+    cout &lt;&lt; &quot;Base Destructor&quot; &lt;&lt; endl;
+}
+</code></pre>
+
+<pre class="language-bash"><code class="language-bash">PS E:\JHY\c++\test&gt; ./main.exe
+Base Constructor
+Animal Constructor
+Animal Destructor
+Base Destructor
+</code></pre>
+</blockquote>
+<p>使用纯虚析构的时候也需要实现这一个函数, 使用<code>类名::返回值 函数名(参数){}</code>进行实现</p>
+<h2 id="%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C">文件操作</h2>
+<p>使用头文件<code>&lt;fstream&gt;</code>, 主要有三大类ofstream写, istream读, fstream读写</p>
+<h3 id="%E5%86%99%E6%96%87%E4%BB%B6">写文件</h3>
+<ul>
+<li>头文件</li>
+<li>创建对象<code>ofstream ofs;</code></li>
+<li>打开文件<code>ofs.open(文件路径, 打开方式)</code></li>
+<li><code>ofs &lt;&lt; &quot;数据&quot;</code></li>
+<li><code>ofs.close()</code></li>
+</ul>
+<blockquote>
+<p>打开的方式</p>
+<p><code>ios::in</code>读, <code>ios::out</code>写, <code>ios::ate</code>文件末尾, <code>ios::app</code>追加, <code>ios::trunc</code>文件存在先删除,再建立, <code>ios::binary</code>二进制</p>
+<p>可以使用<code>|</code>进行拼接</p>
+</blockquote>
+<h3 id="%E8%AF%BB%E6%96%87%E4%BB%B6">读文件</h3>
+<ul>
+<li>头文件</li>
+<li>创建对象<code>ifstream ifs;</code></li>
+<li>判断是不是打开了<code>ifs.is_open()</code></li>
+<li>打开文件<code>ifs.open(文件路径, 打开方式)</code></li>
+<li>读取数据</li>
+<li><code>ofs.close()</code></li>
+</ul>
+<p>读取数据</p>
+<ol>
+<li>直接读取</li>
+</ol>
+
+<pre class="language-c++"><code class="language-c++">char buf[1024] = {0};
+while(cin &gt;&gt; buf){
+    cout &lt;&lt; buf &lt;&lt; endl;
+}
+</code></pre>
+<ol start="2">
+<li></li>
+</ol>
+
+<pre class="language-c++"><code class="language-c++">char buf[1024] = {0};
+while(ifs.getline(buf, sizeof(buf))){
+    cout &lt;&lt; buf &lt;&lt; endl;
+}
+</code></pre>
+<ol start="3">
+<li></li>
+</ol>
+
+<pre class="language-c++"><code class="language-c++">string buf;
+while(getline(ifs, buf)){
+    cout &lt;&lt; buf &lt;&lt; endl;
+}
+</code></pre>
+<ol start="4">
+<li></li>
+</ol>
+
+<pre class="language-c++"><code class="language-c++">char c;
+while((c = ifs.get()) != EOF){
+    cout &lt;&lt; c;
+}
+</code></pre>
+<h3 id="%E4%BA%8C%E8%BF%9B%E5%88%B6">二进制</h3>
+<p>打开的时候使用二进制的模式</p>
+<p><code>ostream&amp; write(const char *buffer, int len)</code></p>
+<p><code>ostream&amp; read(const char *buffer, int len)</code></p>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/编程基础/c/2023-6-19-C语言程序设计.html">
+                            <span class="icon"></span>
+                            <span class="label">2023-6-19-C语言程序设计</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/编程基础/cpp/2025-1-1-02内存.html">
+                            <span class="label">2025-1-1-02内存</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

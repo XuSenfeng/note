@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>进阶数据查询 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class="active"><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">C#</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/no_translate.html?ref=C.html&from=/编程基础/C.html"><span class="label">2023-6-24-1.C#</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C和指针</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-C语言环境.html"><span class="label">2022-7-25-C语言环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-字符串操作.html"><span class="label">2022-7-25-字符串操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-操作符和表达式.html"><span class="label">2022-7-25-操作符和表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-数据.html"><span class="label">2022-7-25-数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-词法规则.html"><span class="label">2022-7-25-词法规则</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-语句.html"><span class="label">2022-7-25-语句</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-函数.html"><span class="label">2022-7-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-指针.html"><span class="label">2022-7-26-指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-数组.html"><span class="label">2022-7-26-数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-表达式.html"><span class="label">2022-7-26-表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-动态内存分配.html"><span class="label">2022-7-27-动态内存分配</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-字符串字符字节.html"><span class="label">2022-7-27-字符串字符字节</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构体和指针.html"><span class="label">2022-7-27-结构体和指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构和联合.html"><span class="label">2022-7-27-结构和联合</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-预处理器.html"><span class="label">2022-7-28-预处理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-高级指针.html"><span class="label">2022-7-28-高级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-29-输入输出函数.html"><span class="label">2022-7-29-输入输出函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html"><span class="label">2022-7-30-标准库函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-经典抽象数据类型.html"><span class="label">2022-7-30-经典抽象数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html"><span class="label">2022-7-31-运行时环境</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C陷阱与缺陷</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-27-语义陷阱.html"><span class="label">2022-8-27-语义陷阱</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">c</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-16-c监控.html"><span class="label">2023-6-16-c监控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-19-C语言程序设计.html"><span class="label">2023-6-19-C语言程序设计</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">cpp</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-01C++.html"><span class="label">2025-1-1-01C++</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-02内存.html"><span class="label">2025-1-1-02内存</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-22-其他扩展语法.html"><span class="label">2025-1-22-其他扩展语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-26-多线程.html"><span class="label">2025-1-26-多线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-6-03模板和STL.html"><span class="label">2025-1-6-03模板和STL</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">go</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/2022-8-26-01-介绍.html"><span class="label">2022-8-26-01-介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-26-02-基础语法.html"><span class="label">2026-3-26-02-基础语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-29-03-多任务.html"><span class="label">2026-3-29-03-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-30-GoModules.html"><span class="label">2026-3-30-GoModules</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-30-多任务tmp.html"><span class="label">2026-3-30-多任务tmp</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/进阶使用/2026-3-30-01-网络服务.html"><span class="label">2026-3-30-01-网络服务</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">python</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active no_link"><a><span class="label">基础语法</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html"><span class="label">2023-6-15-修饰器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-23-01基础运算.html"><span class="label">2023-9-23-01基础运算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html"><span class="label">2023-9-24-02函数及变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-03虚拟环境.html"><span class="label">2024-4-23-03虚拟环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-04常用函数.html"><span class="label">2024-4-23-04常用函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-24-05程序获取参数.html"><span class="label">2024-4-24-05程序获取参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-06推导式和拆包.html"><span class="label">2024-4-25-06推导式和拆包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-07引入.html"><span class="label">2024-4-25-07引入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-08匿名函数.html"><span class="label">2024-4-25-08匿名函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-09面向对象.html"><span class="label">2024-4-25-09面向对象</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-26-10文件基本操作.html"><span class="label">2024-4-26-10文件基本操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-11OS模块.html"><span class="label">2024-4-27-11OS模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-12迭代器.html"><span class="label">2024-4-27-12迭代器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-13异常处理.html"><span class="label">2024-4-27-13异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-14生成器.html"><span class="label">2024-4-27-14生成器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-28-15闭包.html"><span class="label">2024-4-28-15闭包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-30-16深拷贝浅拷贝.html"><span class="label">2024-4-30-16深拷贝浅拷贝</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-1-17With和上下文管理器.html"><span class="label">2024-5-1-17With和上下文管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-18GIL.html"><span class="label">2024-5-4-18GIL</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-19垃圾回收.html"><span class="label">2024-5-4-19垃圾回收</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-1-31-多任务.html"><span class="label">2025-1-31-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html"><span class="label">2025-12-19-CPP交互使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-打包whl文件.html"><span class="label">2025-12-19-打包whl文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html"><span class="label">2025-2-25-yaml</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-3-21-包导入.html"><span class="label">2025-3-21-包导入</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">进阶使用</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active no_link"><a><span class="label">C语言-Cpp接轨</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/C语言-Cpp接轨/2025-12-10-01-struct.html"><span class="label">2025-12-10-01-struct</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">django</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-01-Django.html"><span class="label">2025-7-24-01-Django</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-02-创建.html"><span class="label">2025-7-24-02-创建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-03-路由.html"><span class="label">2025-7-24-03-路由</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-04-视图.html"><span class="label">2025-7-24-04-视图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-05-配置文件.html"><span class="label">2025-7-24-05-配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-26-04-模版.html"><span class="label">2025-7-26-04-模版</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-28-05-静态文件.html"><span class="label">2025-7-28-05-静态文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html"><span class="label">2025-7-29-06-中间件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html"><span class="label">2025-7-29-07-数据库</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html"><span class="label">2025-7-30-08-进阶数据查询</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html"><span class="label">2025-8-1-09-ORM优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-10-模型扩展.html"><span class="label">2025-8-2-10-模型扩展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-11-组件.html"><span class="label">2025-8-2-11-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-3-12-异步.html"><span class="label">2025-8-3-12-异步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">pyQT</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-11-08界面容器.html"><span class="label">2024-5-11-08界面容器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-01介绍以及安装.html"><span class="label">2024-5-6-01介绍以及安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-02控件.html"><span class="label">2024-5-6-02控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-03布局.html"><span class="label">2024-5-7-03布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-04窗口.html"><span class="label">2024-5-7-04窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-05信号与槽.html"><span class="label">2024-5-8-05信号与槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-06QTDesigner.html"><span class="label">2024-5-8-06QTDesigner</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-07线程.html"><span class="label">2024-5-8-07线程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">简单模块使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2024-5-4-01logging日志模块.html"><span class="label">2024-5-4-01logging日志模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2025-3-15-02fastapi.html"><span class="label">2025-3-15-02fastapi</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">线程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-10-01多任务.html"><span class="label">2024-5-10-01多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-14-02队列.html"><span class="label">2024-5-14-02队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2025-2-20-async.html"><span class="label">2025-2-20-async</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-01网络编程.html"><span class="label">2024-5-10-01网络编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-02Socket.html"><span class="label">2024-5-10-02Socket</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-12-03软件.html"><span class="label">2024-5-12-03软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-8-20-04MQTT.html"><span class="label">2024-8-20-04MQTT</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">前端</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-12-04CSS2.html"><span class="label">2024-8-12-04CSS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-01基础知识.html"><span class="label">2024-8-5-01基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-02HTML.html"><span class="label">2024-8-5-02HTML</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-6-03CSS.html"><span class="label">2024-8-6-03CSS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式C语言</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-__attribute__.html"><span class="label">2022-7-21-__attribute__</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-内联函数内置内存函数.html"><span class="label">2022-7-21-内联函数内置内存函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-变量指针.html"><span class="label">2022-7-21-变量指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-大小端数据对齐size_t.html"><span class="label">2022-7-21-大小端数据对齐size_t</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-存储器.html"><span class="label">2022-7-21-存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-语句表达式define.html"><span class="label">2022-7-21-语句表达式define</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-Linux中的面向对象思想-封装.html"><span class="label">2022-7-22-Linux中的面向对象思想-封装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-main函数的参数.html"><span class="label">2022-7-22-main函数的参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-二级指针.html"><span class="label">2022-7-22-二级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-代码复用分层思想.html"><span class="label">2022-7-22-代码复用分层思想</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数参数的本质.html"><span class="label">2022-7-22-函数参数的本质</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数指针.html"><span class="label">2022-7-22-函数指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-指针和数组.html"><span class="label">2022-7-22-指针和数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-面向对象编程基础.html"><span class="label">2022-7-22-面向对象编程基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-goto关键字.html"><span class="label">2022-7-23-goto关键字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-可重入函数.html"><span class="label">2022-7-23-可重入函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-多任务.html"><span class="label">2022-7-23-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-头文件剖析.html"><span class="label">2022-7-23-头文件剖析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-异步通信模式.html"><span class="label">2022-7-23-异步通信模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-操作系统基本原理.html"><span class="label">2022-7-23-操作系统基本原理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块化编程.html"><span class="label">2022-7-23-模块化编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块进阶.html"><span class="label">2022-7-23-模块进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块间通讯.html"><span class="label">2022-7-23-模块间通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-MMU内存管理单元.html"><span class="label">2022-7-24-MMU内存管理单元</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-中断.html"><span class="label">2022-7-24-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-寄存器操作.html"><span class="label">2022-7-24-寄存器操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-嵌入式启动.html"><span class="label">2022-7-24-嵌入式启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-文件系统.html"><span class="label">2022-7-24-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-系统调用.html"><span class="label">2022-7-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-进程线程协程.html"><span class="label">2022-7-24-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">算法基础</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2022-7-31-高级数据结构.html"><span class="label">2022-7-31-高级数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-01快速排序.html"><span class="label">2024-12-31-01快速排序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-02哈希表.html"><span class="label">2024-12-31-02哈希表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-03贪心算法.html"><span class="label">2024-12-31-03贪心算法</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>进阶数据查询</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2025-12-14">
+                                    2025-12-14
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h2 id="%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6">过滤条件</h2>
+<p>ORM在内部生成SQL中的where子句时，提供3个方法可以帮我们实现where过滤操作，包括：</p>
+<ul>
+<li><strong>filter</strong> 过滤出符合条件的多个结果</li>
+<li>exclude 排除掉符合条件的多个结果，与filter相反，与filter互斥。</li>
+<li><strong>get</strong> 过滤单一结果, 结果不是一个，会报错。</li>
+</ul>
+<p>对于过滤条件的使用，上述三个方法相同，但是互斥的，只能使用任意1个，故仅以<strong>filter</strong>进行讲解。</p>
+<p>文档：<a href="https://docs.djangoproject.com/zh-hans/4.2/ref/models/querysets/#field-lookups"  target="_blank">https://docs.djangoproject.com/zh-hans/4.2/ref/models/querysets/#field-lookups</a></p>
+<p>ORM使用过程中，设置查询过滤条件的表达语法，如下：</p>
+
+<pre class="language-python"><code class="language-python"># 单表的过滤:
+模型类.objects.filter(属性名称__运算符=值)  # 此处的运算符是django的ORM提供的英文单词的运算符，与python的运算符不一样，例如ORM的大于是gt，大于等于是gte。
+模型类.objects.exclude(属性名称__运算符=值) 
+模型类.objects.get(属性名称__运算符=值) 
+
+# 多表的过滤
+模型类.objects.filter(外键属性名称__外键模型的属性名称__运算符=值)
+模型类.objects.exclude(外键属性名称__外键模型的属性名称__运算符=值)
+模型类.objects.get(外键属性名称__外键模型的属性名称__运算符=值)
+# 属性名称和比较运算符间使用两个英文下划线，所以这就是为什么，之前声明模型类，规定了属性名不能包括多个下划线
+</code></pre>
+<blockquote>
+<ol>
+<li>外键属性名称<ul>
+<li>当前模型（你正在查询的模型）中定义的<strong>外键字段名</strong></li>
+<li>即 <code>models.ForeignKey</code> 字段的名称</li>
+<li>它指向另一个模型（关联模型）</li>
+</ul>
+</li>
+<li>外键模型的属性名称<ul>
+<li>被关联模型（外键指向的模型）中的<strong>字段名</strong></li>
+<li>你想基于这个字段的值进行查询</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h4 id="1.-%E7%9B%B8%E7%AD%89">1. 相等</h4>
+<p><strong>exact：表示判断值是否相等。</strong></p>
+<p>例：查询学生信息。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;exact 过滤相等的条件&quot;&quot;&quot;
+# student_list = Student.objects.filter(name__exact=&quot;吴杰&quot;).all()
+student_list = Student.objects.filter(name=&quot;吴杰&quot;).all()  # 简写方式，这个最常用！！
+print(student_list)
+return HttpResponse(&quot;OK&quot;)
+</code></pre>
+<h4 id="2.-%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">2. 模糊查询</h4>
+<p><strong>contains：是否包含。</strong></p>
+<blockquote>
+<p>说明：如果要包含%无需转义，直接写即可。</p>
+</blockquote>
+<p>例：查询姓名包含'华'的学生。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;模糊查询[简单数据表才使用这个，数据量大了不要使用这个，改用全文搜索，使用专业的搜索引擎]&quot;&quot;&quot;
+# name__contains -&gt; 包含 ---&gt; name like &quot;%华%&quot;
+student1 = Student.objects.filter(name__contains='华')
+# print(student1)
+</code></pre>
+<p><strong>startswith、endswith：以指定值开头或结尾。</strong></p>
+<p>例：查询姓名以'华'结尾的学生</p>
+
+<pre class="language-python"><code class="language-python"># name__endswith -&gt; 结尾 ---&gt; name like &quot;%华&quot;
+student2 = Student.objects.filter(name__endswith='华')
+# print(student2)
+
+# name__startswith-&gt;开头 ---&gt; name like &quot;江%&quot;
+student3 = Student.objects.filter(name__startswith=&quot;江&quot;)
+print(student3)
+</code></pre>
+<blockquote>
+<p>以上运算符都区分大小写，在这些运算符前加上i表示不区分字母大小写，如iexact、icontains、istartswith、iendswith.</p>
+</blockquote>
+<h4 id="3.-%E7%A9%BA%E6%9F%A5%E8%AF%A2">3. 空查询</h4>
+<p><strong>isnull：字段值是否为null。</strong></p>
+<p>例：查询个性签名不为空的学生。</p>
+
+<pre class="language-python"><code class="language-python"># 添加测试数据,SQL语句
+INSERT INTO student (name, age, sex, class, description, status, created_time, updated_time, mobile) VALUES ('刘德华', 17, 1, '407', null, 0, '2020-11-20 10:00:00.000000', '2020-11-20 10:00:00.000000', '15067895432');
+
+# 代码操作
+&quot;&quot;&quot;空查询&quot;&quot;&quot;
+student = Student.objects.filter(description__isnull=True)
+print(student)
+</code></pre>
+<h4 id="4.-%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2">4. 范围查询</h4>
+<p><strong>in：是否包含在范围内。</strong></p>
+<p>例：查询班级编号为301,302或303的学生</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;范围查询&quot;&quot;&quot;
+student = Student.objects.filter(classmate__in=[301, 302, 303]).all().values(&quot;id&quot;, &quot;name&quot;, &quot;classmate&quot;)
+print(student)
+</code></pre>
+<h4 id="5.-%E5%8F%96%E5%80%BC%E8%8C%83%E5%9B%B4">5. 取值范围</h4>
+<p>range 设置开始值与结束值范围，进行数值判断，符合范围的数据被查询出来。不仅可以设置数值范围，也可以设置时间范围。</p>
+<p>例如：查询出学号id在51~67之间的。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;取值范围&quot;&quot;&quot;
+# SQL: SELECT ... WHERE id BETWEEN 51 and 67; 
+student_list = Student.objects.filter(id__range=(51, 67)).values(&quot;id&quot;, &quot;name&quot;)
+print(student_list)
+return HttpResponse(&quot;ok&quot;)
+</code></pre>
+<h4 id="6.-%E6%AF%94%E8%BE%83%E6%9F%A5%E8%AF%A2">6. 比较查询</h4>
+<ul>
+<li><strong>gt</strong> 大于 (greater then)</li>
+<li><strong>gte</strong> 大于等于 (greater then equal)</li>
+<li><strong>lt</strong> 小于 (less then)</li>
+<li><strong>lte</strong> 小于等于 (less then equal)</li>
+</ul>
+<p>例：查询编号大于3的学生</p>
+
+<pre class="language-python"><code class="language-python">        &quot;&quot;&quot;比较查询&quot;&quot;&quot;
+        # # 年龄大于20的
+        # # age__gt=20  ----&gt;&gt;&gt;  where age &gt; 20
+        # student_list = Student.objects.filter(age__gt=22).values(&quot;name&quot;, &quot;age&quot;)  # 后面任何方法，默认补充all()
+        # print(student_list)
+
+        # # 年龄小于19的
+        # # age__lt=19  ----&gt;&gt;&gt;  where age &lt; 19
+        # student_list = Student.objects.filter(age__gt=19).all().values(&quot;name&quot;,&quot;age&quot;)
+        # print(student_list)
+
+        # 年龄不等于19的
+        # 使用exclude把符合条件的排除掉
+        student_list = Student.objects.exclude(age=19).all().values(&quot;name&quot;,&quot;age&quot;)
+        print(student_list)
+
+</code></pre>
+<p>不等于的运算符，使用exclude()过滤器。</p>
+<h4 id="7.-%E6%97%A5%E6%9C%9F%E6%9F%A5%E8%AF%A2">7. 日期查询</h4>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>django的ORM中提供了许多方法用于进行日期的查询过滤，例如：<strong>year、month、day、week_day、hour、minute、second都可以对日期时间类型的属性进行运算。</strong></li>
+<li>要进行日期时间的过滤查询，必须保证python代码中使用的时间时区与mysql数据库中的时间时区是对应的！如果mysql的时区与python代码的时区不对应，则得到的结果纯在时区的差异。</li>
+</ol>
+<p>可以使用<code>SELECT NOW()</code>查看mysql的时区</p>
+</blockquote>
+<p>例：查询2017年被添加到数据中的学生。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;日期过滤查询
+需要调整settings.py的时区配置项为：USE_TZ = False
+&quot;&quot;&quot;
+# 查询2017年被加入数据表的信息
+# created_time__year=2017  ---&gt; where year(created_time)=2017
+student_list = Student.objects.filter(created_time__year=2017).values(&quot;name&quot;, &quot;created_time&quot;)
+print(student_list)
+
+# 查询11月份被加入数据表的信息
+# SQL: where month(created_time) = 11;
+student_list = Student.objects.filter(created_time__month=7).values(&quot;name&quot;, &quot;created_time&quot;)
+print(student_list)
+
+# 查询出2022年07月份的学生
+# SQL: WHERE month(created_time) = 7 AND year(created_time) = 2022;
+student_list = Student.objects.filter(created_time__year=2022, created_time__month=7).values(&quot;name&quot;, &quot;created_time&quot;)
+print(student_list)
+
+# 查询出2017年11月20号的学生
+# SQL: WHERE month(created_time) = 7 AND year(created_time) = 2022 AND day(created_time);
+student_list = Student.objects.filter(
+created_time__year=2017,
+created_time__month=7,
+created_time__day=20
+).values(&quot;name&quot;, &quot;created_time&quot;)
+print(student_list)
+
+# 查询07月20号的学生
+student_list = Student.objects.filter(
+created_time__month=7,
+created_time__day=20
+).values(&quot;name&quot;, &quot;created_time&quot;)
+print(student_list)
+</code></pre>
+<h6 id="%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%EF%BC%9A%E6%97%B6%E9%97%B4%E5%88%A4%E6%96%AD">业务场景：时间判断</h6>
+<p>例：查询2021-08-18 16:19:38 这个时间点上添加的学生信息。</p>
+<p>例：查询时间范围在 &quot;2021-08-18 16:19:38&quot; ~ &quot;2021-08-18 16:21:56&quot; 的数据。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;精确时间查询&quot;&quot;&quot;
+# 方式1：当在模型使用datetime指定字段的数据类型以后，就不能直接通过字符串的比较来过滤查询了，因为字符串时间格式无法与datetime对象来进行很精确的判断比较
+student_objs = models.Student.objects.filter(created_time=&quot;2021-08-18 16:19:38&quot;).all()
+print(student_objs)
+
+# 方式2：把字符窜格式的时间转换成datetime对象，也可以查询。
+from django.utils.timezone import datetime
+# 把字符串格式时间转换成datetime时间戳对象
+timestamp = datetime.strptime(&quot;2021-08-18 16:19:38&quot;, &quot;%Y-%m-%d %H:%M:%S&quot;)
+student_objs = models.Student.objects.filter(created_time=timestamp).all()
+print(student_objs)
+
+&quot;&quot;&quot;判断两个时间范围&quot;&quot;&quot;
+time1 = &quot;2020-11-20 9:00:00&quot;
+time2 = &quot;2020-11-20 11:00:00&quot;
+# 查询添加时间在time1与time2之间的学生信息
+student_objs = models.Student.objects.filter(
+created_time__gte=time1,
+created_time__lte=time2,
+).all()
+print(student_objs) # &lt;QuerySet [&lt;Student: 刘德华&gt;]&gt;
+</code></pre>
+<h4 id="8.-F%E5%AF%B9%E8%B1%A1%2C-%E5%AD%97%E6%AE%B5%E9%97%B4">8. F对象, 字段间</h4>
+<p>F对象，主要用于在SQL语句中针对字段之间的值进行比较的查询。</p>
+<p>之前的查询都是对象的属性与常量值比较，两个属性怎么比较呢？ 答：使用F对象，被定义在django.db.models中。</p>
+<p>语法如下：</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;F对象，字段间的值比较查询&quot;&quot;&quot;
+from django.db.models import F
+# 查询出入学以后，数据没有被修改过的学生信息, 比较updated_time和created_time
+student = Student.objects.filter(created_time=F(&quot;updated_time&quot;)).values(&quot;name&quot;,&quot;created_time&quot;,&quot;updated_time&quot;)
+print(student)
+return HttpResponse(&quot;ok&quot;)
+
+# 除了上面例子，我们还可以从工作中针对公司每月的营收(支出和收入)、股票(每月涨和跌)都可以使用F对象进行查询。
+</code></pre>
+<h4 id="9.-Q%E5%AF%B9%E8%B1%A1-%E9%80%BB%E8%BE%91%E6%AF%94%E8%BE%83">9. Q对象 逻辑比较</h4>
+<p><strong>多个过滤器逐个调用表示逻辑与关系，同sql语句中where部分的and关键字。</strong></p>
+<p>例：查询年龄大于20，并且编号小于30的学生。</p>
+
+<pre class="language-python"><code class="language-python">Student.objects.filter(age__gt=20,id__lt=30)
+或
+Student.filter(age__gt=20).filter(id__lt=30)
+</code></pre>
+<p><strong>如果需要实现逻辑或or的查询，需要使用Q()对象结合|运算符</strong>，Q对象被义在django.db.models中。</p>
+<p>语法如下：</p>
+
+<pre class="language-python"><code class="language-python"># And
+filter( Q(属性名__运算符=值) )
+filter(Q(属性名__运算符=值, 属性名__运算符=值, ....))
+
+# OR
+filter(Q(属性名__运算符=值) | Q(属性名__运算符=值))
+filter(Q(属性名__运算符=值) | Q(属性名__运算符=值) | ....)
+
+# NOT
+filter(~Q(属性名__运算符=值))
+</code></pre>
+<p>例子。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;Q对象，复杂逻辑查询，针对多条件进行与或非处理&quot;&quot;&quot;
+from django.db.models import Q
+# 多个与 and  Q(条件) &amp; Q(条件)
+# 查询出301班的男生
+# student = Student.objects.filter(Q(classmate=301) &amp; Q(xingbie=1)).values(&quot;name&quot;,&quot;xingbie&quot;,&quot;classmate&quot;)
+# 上面完全可以简写成
+student = Student.objects.filter(classmate=301, xingbie=1).values(&quot;name&quot;,&quot;xingbie&quot;,&quot;classmate&quot;)
+&quot;&quot;&quot;单纯的多个条件并立的情况下，没必要使用到Q对象进行处理，直接编写多个条件，使用逗号串联即可&quot;&quot;&quot;
+
+# 多个或，or Q(条件) | Q(条件)
+# 查询出301班的男生 或者 302班的男生
+student = Student.objects.filter(Q(classmate=301, xingbie=1) | Q(classmate=302, xingbie=1)).values(&quot;name&quot;,&quot;xingbie&quot;,&quot;classmate&quot;)
+# print(student)
+# 上面完全可以简写成
+student = Student.objects.filter(classmate__in=[301,302], xingbie=1).values(&quot;name&quot;,&quot;xingbie&quot;,&quot;classmate&quot;)
+# print(student)
+
+# 如果是这样则不能简写了
+# 查询出301班年龄大于21男生，或者 302班年龄小于19岁的女生
+student = Student.objects.filter( Q(classmate=301, age__gt=21, xingbie=1) | Q(classmate=302, age__lt=22, xingbie=2) ).values(&quot;name&quot;,&quot;age&quot;,&quot;xingbie&quot;,&quot;classmate&quot;)
+# print(student)
+</code></pre>
+<p><strong>Q对象可以使用&amp; 表示逻辑与（and），| 表示逻辑或（or），~表示逻辑非（not）</strong></p>
+<p>例：查询年龄大于20，或编号小于30的学生，只能使用Q对象实现</p>
+
+<pre class="language-none"><code class="language-none">Student.objects.filter(Q(age__gt=20) | Q(pk__lt=30))
+</code></pre>
+<p><code>Q对象左边可以使用~操作符，表示非not。但是工作中，我们只会使用Q对象进行或者的操作，只有多种嵌套复杂的查询条件才会使用&amp;和~进行与和非得操作</code>。</p>
+<p>例：查询出年龄不是20岁的</p>
+
+<pre class="language-none"><code class="language-none">student = Student.objects.filter(~Q(age=20)).values(&quot;name&quot;, &quot;age&quot;)
+print(student)
+# 相当于 exclude
+student = Student.objects.exclude(age=20).values(&quot;name&quot;, &quot;age&quot;)
+print(student)
+</code></pre>
+<h3 id="%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F">结果排序</h3>
+<p>使用<strong>order_by</strong>对结果进行排序</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;结果排序&quot;&quot;&quot;
+# order_by(&quot;第一排序字段&quot;,&quot;第二排序字段&quot;,....)
+#  当前第一字段的值一样时，参考第二字段进行排序，第二字段的值一样时，参考第三字段进行排序,....
+# 如果没有声明order_by()来查询，而值又是一样的时候，则根据MySQL在内部执行查询计划的顺序进行排列，也就是随机排列
+# 字段排序写法：
+# order_by(&quot;id&quot;)   # 表示按id字段的值进行升序排序，id数值从小到大
+# order_by(&quot;-id&quot;)  # 表示按id字段的值进行降序排序，id数值从大到小
+# 先按班级进行第一排序降序处理，当班级数值一样时，再按id进行第二排序升序处理
+# student = Student.objects.order_by(&quot;-classmate&quot;,&quot;id&quot;).values(&quot;classmate&quot;,&quot;id&quot;,&quot;name&quot;)
+
+# 调用了order_by以后，如果没有后续声明返回结果的all方法时，默认使用all()进行结果查询
+student = Student.objects.order_by(&quot;-id&quot;)
+print(student)
+</code></pre>
+<h3 id="%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2">限制查询</h3>
+<p>ORM中针对查询结果的数量限制，提供了一个查询集对象[QuerySet].这个QuerySet,是ORM中针对查询结果进行<strong>临时保存</strong>数据的一个容器对象,我们可以通过了解这个QuerySet进行使用,达到<strong>查询优化</strong>的目的，也或者<strong>限制查询结果数量</strong>的作用。</p>
+<h4 id="%E6%9F%A5%E8%AF%A2%E9%9B%86-QuerySet">查询集 QuerySet</h4>
+<p>查询集，也称查询结果集、QuerySet，表示从数据库中获取的对象集合。</p>
+<p>当调用如下ORM提供的过滤器方法时，Django会返回查询集（而不是简单的列表）：</p>
+<ul>
+<li><code>all()</code>：返回所有数据。</li>
+<li><code>filter()</code>：返回满足条件的数据。filter会默认调用all方法。</li>
+<li><code>exclude()</code>：返回满足条件之外的数据。exclude会默认调用all方法</li>
+<li><code>order_by()</code>：对结果进行排序。order_by会默认调用all方法</li>
+</ul>
+<p>对查询集可以再次调用过滤器进行过滤，如</p>
+
+<pre class="language-python"><code class="language-python">Student.objects.filter(pk__gt=30).order_by('age')
+</code></pre>
+<p>也就意味着查询集可以含有零个、一个或多个filter过滤器。过滤器基于所给的参数限制查询的结果。</p>
+<p><strong>从SQL的角度讲，查询集与select语句等价，过滤器像where、limit、order by子句。</strong></p>
+<p>判断某一个查询集中是否有数据：</p>
+<ul>
+<li><code>exists()</code>：判断查询集中是否有数据，如果有则返回True，没有则返回False。</li>
+<li><code>values()</code>: 把结果集中的模型对象转换成<strong>字典</strong>,并可以设置转换的字段列表，达到减少内存损耗，提高性能</li>
+<li><code>values_list()</code>: 把结果集中的模型对象转换成<strong>列表</strong>，并可以设置转换的字段列表（元祖），达到减少内存损耗，提高性能</li>
+</ul>
+<p>注意：工作中如果需要返回数据的过程中进行优化，则一般我们选择使用<code>values()</code>或<code>values_list()</code>返回字段，比我们操作模型对象效率更高！当然从提供的功能操作上来说，肯定模型对象更强大灵活。</p>
+
+<pre class="language-python"><code class="language-python"># 所有基于all方法返回的结果，都是Query（查询集），路径： django.db.models.query.QuerySet
+
+# 查询出301班是否有男生
+# student_list = Student.objects.filter(classmate=&quot;301&quot;)
+# student_list = student_list.order_by(&quot;-age&quot;)
+# student_list = student_list.filter(sex=1)
+# ret = student_list.exists()
+
+# values 把查询结果中模型对象转换成字典
+student_list = Student.objects.filter(classmate=&quot;301&quot;)
+student_list = student_list.order_by(&quot;-age&quot;)
+student_list = student_list.filter(sex=1)
+ret1 = student_list.values() # 默认把所有字段全部转换并返回
+ret2 = student_list.values(&quot;id&quot;,&quot;name&quot;,&quot;age&quot;) # 可以通过参数设置要转换的字段并返回
+ret3 = student_list.values_list() # 默认把所有字段全部转换并返回
+ret4 = student_list.values_list(&quot;id&quot;,&quot;name&quot;,&quot;age&quot;) # 可以通过参数设置要转换的字段并返回
+print(ret4)
+return JsonResponse({},safe=False)
+</code></pre>
+<h5 id="QuerySet%E7%9A%84%E4%B8%A4%E5%A4%A7%E7%89%B9%E6%80%A7">QuerySet的两大特性</h5>
+<p>学习之前的准备工作</p>
+<p>为了观察QuerySet的2个特性，我们可以直接到mysql配置mysql.ini中配置查看SQL的运行日志</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;
+说明：
+开启mysql数据库日志有2种方式：
+   临时开启, 通过mysql交互终端临时设置，如果服务器重启或者mysql重启，则日志的配置信息还原。
+   永久开启, 通过mysql的配置文件进行参数设置，将来即便服务器重启或mysql重启，都不会关闭日子功能
+此处我们设置的打印日志是输入临时开启，用于辅助学习之用，数据库关闭或重启以后就失效了
+&quot;&quot;&quot;
+-- 查看日志功能是否开启了，接下来在mysql终端下开启日志显示，根据下面提示输入命令和SQL
+-- 进入数据库终端[账户与密码自己修改下]
+mysql -uroot -p123
+show variables like &quot;%general_log%&quot;;
+--    +------------------+------------------------------------------------------+
+--    | Variable_name    | Value                                                |
+--    +------------------+------------------------------------------------------+
+--    | general_log      | OFF                                                  |  # OFF表示没有开启普通日志功能
+--    | general_log_file | C:\tool\mysql-8.0.28-winx64\data\WIN-Q0O96JBBIJ2.log |  # 这里记录的是普通日志开启以后，日志文件路径
+--    +------------------+------------------------------------------------------+
+
+set global general_log = 'ON';       -- 设置临时开启，mysql重启后关闭
+set global general_log_file = 'C:/Users/Administrator/Desktop/rg2305/day06/general.log'; -- 可以不设置日志路径，默认日志路径[路径不要包括特殊字符也不要出现中文，路径分隔符使用正斜杠]
+
+--   +------------------+---------------------------------------------------------+
+--   | Variable_name    | Value                                                   |
+--   +------------------+---------------------------------------------------------+
+--   | general_log      | ON                                                    |   # 日志功能也开启了
+--   | general_log_file | C:/Users/Administrator/Desktop/rg2305/day06/general.log |  # 可以看到路径发生改变了，。
+--   +------------------+---------------------------------------------------------+
+
+
+-- mysql日志文件中时间一般跟系统时间是对不上的。原因是mysql的时区是0时区，我们这边是东八区。
+select @@log_timestamps;
+--      +------------------+
+--      | @@log_timestamps |
+--      +------------------+
+--      | UTC              |   # 可以发现是UTC，0时区
+--      +------------------+
+set global log_timestamps=SYSTEM;  # 如果要永久设置，在上面配置文件中，添加 log_timestamps = SYSTEM
+--      +------------------+
+--      | @@log_timestamps |
+--      +------------------+
+--      | SYSTEM           |   # 时区参考当前操作系统
+--      +------------------+
+
+-- 退出数据库终端
+exit
+
+接下来，我们只需要打开上面配置好的日志文件就可以了。
+</code></pre>
+<h5 id="1%EF%BC%89%E6%83%B0%E6%80%A7%E6%89%A7%E8%A1%8C">1）惰性执行</h5>
+<p>QuerySet查询集在创建时是不会访问数据库执行SQL语句，直到模型对象被调用输出或者调用模型对象的属性时，才会真正的访问数据库执行SQL语句，调用模型的情况包括<strong>循环迭代、序列化、与if合用，print</strong>的时候。</p>
+<p>例如，当执行如下语句时，并未进行数据库查询，只是创建了一个查询集对象student_list，并没有执行SQL语句的。</p>
+
+<pre class="language-python"><code class="language-python">student_list = Student.objects.all()
+</code></pre>
+<p>继续执行遍历迭代、或打印操作之后操作后，才真正的进行了数据库的查询</p>
+
+<pre class="language-python"><code class="language-python">for student in student_list:
+    pass
+</code></pre>
+<p>惰性执行，可以让重复的查询操作，只执行一次。</p>
+<h5 id="2%EF%BC%89%E7%BC%93%E5%AD%98%E7%BB%93%E6%9E%9C">2）缓存结果</h5>
+<p>使用同一个查询集，第一次使用时会发生数据库的查询，然后Django会把结果缓存下来，再次使用这个查询集时会使用缓存的数据，<strong>减少了数据库的查询次数</strong>。</p>
+<p><strong>情况一</strong>：如下是两个查询集，无法重用缓存，每次查询都会与数据库进行一次交互，增加了数据库的负载。</p>
+
+<pre class="language-python"><code class="language-python">from .models import Student
+[student.id for student in Student.objects.all()] # 因为没有缓存查询集到变量中，所以此处第一次执行了SQL语句
+[student.id for student in Student.objects.all()] # 因为没有缓存查询集到变量中，所以此处第一次执行了SQL语句
+</code></pre>
+<p><strong>情况二</strong>：经过存储后，可以重用查询集，第二次使用缓存中的数据。</p>
+
+<pre class="language-python"><code class="language-python">student_list=Student.objects.all()
+[student.id for student in student_list] # 因为上面保存到查询到变量中，所以此处执行了SQL语句
+[student.id for student in student_list] # 此处调用了之前的缓存数据
+</code></pre>
+<h5 id="%E9%99%90%E5%88%B6%E7%BB%93%E6%9E%9C%E6%95%B0%E9%87%8F">限制结果数量</h5>
+<p>django中还可以对查询集QuerySet进行<strong>取下标或切片操作，等同于SQL中的limit和offset子句</strong>。</p>
+<p>注意：QuerySet毕竟不是真正的列表，所以它<strong>不支持负数索引</strong>。</p>
+<p><strong>对查询集QuerySet进行切片后返回一个新的查询集，但还是不会立即执行数据库查询。</strong></p>
+<p>如果获取一个对象，直接使用[0]，等同于[0:1].get()，但是如果没有数据，[0]引发IndexError异常，[0:1].get()如果没有数据引发DoesNotExist异常。</p>
+<p>示例：获取第1、2项，运行查看。</p>
+
+<pre class="language-python"><code class="language-python">qs = Student.objects.all()[0:2]
+</code></pre>
+<p>代码：</p>
+
+<pre class="language-python"><code class="language-python"># 查询集结果数量的下标和切片操作
+qs = Student.objects.all()
+# print(qs[0])  # 第1条数据， ORM会自动识别这个操作并转化成SQL语句的 limit 1
+# print(qs[2])  # 第3条数据， ORM会自动识别这个操作并转化成SQL语句的 limit 1 offset 2
+# print(qs[:2])   # 前2条数据， ORM会自动识别这个操作并转化成SQL语句的 limit 2
+# print(qs[1:4])  # 第1，2，3 数据， ORM会自动识别这个操作并转化成SQL语句的 limit 3 offset 1
+# print( qs[-1] )   # 报错！！！不能使用负数
+</code></pre>
+<h3 id="%E8%81%9A%E5%90%88%E5%88%86%E7%BB%84">聚合分组</h3>
+<h4 id="%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%28%E5%B9%B3%E5%9D%87/%E6%9C%80%E5%A4%A7%E5%80%BC...%29">聚合函数(平均/最大值...)</h4>
+<p>django中，可以使用aggregate()过滤器调用聚合函数。聚合函数包括：<strong>Avg</strong> 平均，<strong>Count</strong> 总数，<strong>Max</strong> 最大，<strong>Min</strong> 最小，<strong>Sum</strong> 求和，被定义在django.db.models中。</p>
+<p>例：查询301班学生的平均年龄。</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;聚合函数&quot;&quot;&quot;
+from django.db.models import Avg,Max,Min,Sum,Count
+# 查询301班学生的平均年龄
+ret = Student.objects.filter(classmate=301).aggregate(Avg(&quot;age&quot;))
+# print(ret) # {'age__avg': 19.6364}
+
+# 查询301班年龄最大的学生
+ret = Student.objects.filter(classmate=301).aggregate(Max(&quot;age&quot;))
+# print(ret)  # {'age__max': 23}
+
+# 查新301班入学最早的学生[也就是ID最小的]
+ret = Student.objects.filter(classmate=301).aggregate(c=Min(&quot;id&quot;))
+print(ret) # {'id__min': 2}  ==&gt; {'c': 2}
+</code></pre>
+<p>注意：aggregate的返回值是一个字典类型，格式如下：</p>
+
+<pre class="language-python"><code class="language-python">{'属性名__聚合类小写':值}
+如:{'id__min': 2}  ==&gt; {'c': 2}
+</code></pre>
+<p>使用count时一般不使用aggregate()过滤器。</p>
+<p>例：查询301班的学生总数。</p>
+
+<pre class="language-python"><code class="language-python"># 查询301班的总人数
+ret = Student.objects.filter(classmate=301).aggregate(t=Count(&quot;id&quot;))
+print(ret) # {'t':11}
+
+# 统计总数，完全可以调用count方法即可，不需要经过aggregate的调用
+ret = Student.objects.filter(classmate=301).count()
+print(ret) # 11
+</code></pre>
+<p>注意：count函数的返回值是一个数字。</p>
+<h4 id="%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2">分组查询</h4>
+<p>可以先使用<code>values</code>进行分组, values放在不同的位置的时候含义是不同的</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>name</th>
+  <th>class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>xiaoming</td>
+  <td>301</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>xiaohong</td>
+  <td>301</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>xiaoli</td>
+  <td>302</td>
+</tr>
+</tbody>
+</table>
+
+<pre class="language-python"><code class="language-python">QuerySet对象.annotate()
+# annotate() 进行分组统计，按前面values的字段进行 group by
+# annotate() 返回值依然是 queryset对象，增加了分组统计后的键值对
+
+# SQL原生语句中分组之后可以使用having过滤，在django中并没有提供having对应的方法，但是可以使用filter对分组结果进行过滤
+# 所以filter在annotate之前，表示分组查询之间的where子句，在annotate之后代表分组结果的having子句
+# 同理，values在annotate之前，代表分组的字段，在annotate之后代表数据查询结果返回的字段列
+</code></pre>
+<p>代码：</p>
+
+<pre class="language-python"><code class="language-python"># 查询各个班级中的学生数量
+from django.db.models import Count,Min
+# 针对单个字段进行分组  values(&quot;classmate&quot;).annotate(total=Count(&quot;id&quot;)  按班级统计人数
+ret = Student.objects.values(&quot;classmate&quot;).annotate(total=Count(&quot;id&quot;)) # total是返回的参数的名字
+# print(ret)
+&quot;&quot;&quot;
+        &lt;QuerySet [
+            {'classmate': '307', 'total': 3}, 
+            {'classmate': '301', 'total': 11}, 
+            {'classmate': '504', 'total': 2}, 
+            ....
+        ]&gt;
+&quot;&quot;&quot;
+# 针对多个字段进行分组  values(&quot;classmate&quot;,&quot;xingbie&quot;).annotate(total=Count(&quot;id&quot;)) 按 班级和性别 统计人数
+ret = Student.objects.values(&quot;classmate&quot;,&quot;xingbie&quot;).annotate(total=Count(&quot;id&quot;))
+# print(ret)
+&quot;&quot;&quot;
+        &lt;QuerySet [
+            {'classmate': '307', 'xingbie': 1, 'total': 3}, 
+            {'classmate': '301', 'xingbie': 1, 'total': 8}, 
+            {'classmate': '301', 'xingbie': 2, 'total': 2},
+            {'classmate': '301', 'xingbie': 0, 'total': 1},
+            {'classmate': '504', 'xingbie': 1, 'total': 2},
+            ...
+        ]&gt;
+        &quot;&quot;&quot;
+
+# 查询出每一个班级中年龄最小的学生信息
+ret = Student.objects.values(&quot;classmate&quot;).annotate(min=Min(&quot;age&quot;))
+# print(ret)
+&quot;&quot;&quot;
+           &lt;QuerySet [
+                {'classmate': '307', 'min': 19}, 
+                {'classmate': '301', 'min': 17}, 
+                {'classmate': '504', 'min': 19},
+                ....
+           ]&gt;     
+&quot;&quot;&quot;
+ret = Student.objects.values(&quot;classmate&quot;).annotate(min=Min(&quot;age&quot;)).values(&quot;classmate&quot;,&quot;min&quot;).order_by(&quot;classmate&quot;)
+# print(ret)
+&quot;&quot;&quot;
+        &lt;QuerySet [
+            {'classmate': '301', 'min': 17}, 
+            {'classmate': '302', 'min': 21}, 
+            {'classmate': '303', 'min': 19},
+            ...
+        ]&gt;
+&quot;&quot;&quot;
+
+# 查询出人数在4个人以上(包括4个人)的班级
+# 写在annotate后面的filter实际上表示的是having，表示对于分组后的数据结果进行过滤
+# 写在annotate前面的filter实际上表示的是where， 表示对于分组前的数据结果进行过滤
+ret = Student.objects.values(&quot;classmate&quot;).annotate(total=Count(&quot;id&quot;)).values(&quot;classmate&quot;,&quot;total&quot;).filter(total__gte=4)
+# print(ret)
+&quot;&quot;&quot;
+        &lt;QuerySet [
+            {'classmate': '301', 'total': 11}, 
+            {'classmate': '502', 'total': 5}, 
+            {'classmate': '306', 'total': 6}, 
+            {'classmate': '503', 'total': 7}, 
+            {'classmate': '508', 'total': 4}, 
+            ....
+        ]&gt;
+&quot;&quot;&quot;
+# 查询出女生数量在2个以上的班级
+ret = Student.objects.filter(sex=2).values(&quot;classmate&quot;).annotate(total=Count(&quot;id&quot;)).values(&quot;classmate&quot;,&quot;total&quot;).filter(total__gte=2)
+print(ret)
+&quot;&quot;&quot;
+        &lt;QuerySet [
+            {'classmate': '306', 'total': 4}, 
+            {'classmate': '405', 'total': 2}, 
+            {'classmate': '502', 'total': 3}, 
+            ....
+        ]&gt;
+&quot;&quot;&quot;
+</code></pre>
+<h3 id="%E5%8E%9F%E7%94%9F%E6%9F%A5%E8%AF%A2">原生查询</h3>
+<p>执行原生SQL语句，在django中我们可以自己引入pymysql执行SQL，也可以调用ORM提供的raw方法来执行SQL语句</p>
+<p>如果使用raw方法执行SQL语句，则返回结果是QuerySet，这个返回结果在操作字段时，会有额外性能损耗。</p>
+
+<pre class="language-python"><code class="language-python"># 查询所有学生的班级、年龄、姓名和性别
+sql = &quot;SELECT id,name,sex,age,class FROM `db_student`&quot;
+ret = Student.objects.raw(sql)
+# 针对原生SQL语句中已经查询出来的字段，只会查询一遍
+# 但是如果SQL语句没有查询出来的字段，而在模型中调用，则会由ORM再次调用数据库查询，把数据临时查询出来。
+for student in ret:
+    print(student)
+    print(student.description)
+</code></pre>
+<h1 id="%E5%A4%9A%E6%95%B0%E6%8D%AE%E5%BA%93">多数据库</h1>
+<h2 id="%E5%A4%9A%E5%BA%93%E5%85%B1%E5%AD%98">多库共存</h2>
+<p>在django中，settings.py配置的DATABASES配置项允许注册多个数据库，当然也就支持在项目中随时切换操作不同的数据库了。</p>
+<ol>
+<li>先到<code>djdemo/settings.py</code>里面，在DATABASES配置项中新增一个数据库</li>
+<li>为了方便快速演示，所以我们直接把school里面的student复制到student数据库</li>
+</ol>
+
+<pre class="language-mysql"><code class="language-mysql">use students; # 切换数据
+create table student (
+id  bigint auto_increment primary key,
+created_time datetime(6) null,
+updated_time datetime(6) null,
+name         varchar(15) not null,
+age          smallint    not null,
+sex          tinyint(1)  not null,
+class        varchar(50) not null,
+mobile       varchar(20) not null,
+description  longtext    null,
+status       int         null,
+constraint mobile unique (mobile)
+);
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507311549034.png" alt="image-20250731154900919" /></p>
+<ol start="3">
+<li>使用以下语句复制student表的所有数据</li>
+</ol>
+
+<pre class="language-mysql"><code class="language-mysql">insert into `students`.`students` (id, created_time, updated_time, name, age, sex, class, mobile, description, status)
+select id, created_time, updated_time, name, age, sex, class, mobile, description, status from `school1`.`students`;
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507311547963.png" alt="image-20250731154742871" /></p>
+<ol start="4">
+<li>添加到settings.py里面</li>
+</ol>
+
+<pre class="language-python"><code class="language-python">DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  # ORM的底层对接pymysql的核心引擎类
+        'NAME': 'school1',          # 数据库名
+        'PORT': 3306,              # 端口
+        'HOST': '127.0.0.1',       # 数据库IP
+        'USER': 'root',            # 账号
+        'PASSWORD': 'jhy030116',         # 密码
+        'POOL_OPTIONS': {  # pool表示数据库连接池配置，主要为了节省连接数据库的开销，临时存储数据库连接对象
+            'POOL_SIZE': 10,     # 默认情况下，打开的数据库连接对象的数量 [1,2,3,4,5,6,7,8,9,10]
+            'MAX_OVERFLOW': 30,  # 负载情况下，允许溢出的连接数量  [11,12,13,14,15,16,17,18,19,20]
+        }
+    },
+    &quot;djdemo&quot;: {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'students',
+        'PORT': 3306,
+        'HOST': '127.0.0.1',
+        'USER': 'root',
+        'PASSWORD': 'jhy030116',
+        'POOL_OPTIONS': {
+            'POOL_SIZE': 10,     # 默认情况下，打开的数据库连接对象的数量 [1,2,3,4,5,6,7,8,9,10]
+            'MAX_OVERFLOW': 30,  # 负载情况下，允许溢出的连接数量  [11,12,13,14,15,16,17,18,19,20]
+        }
+    }
+}
+</code></pre>
+<ol start="5">
+<li>切换链接</li>
+</ol>
+
+<pre class="language-python"><code class="language-python">def get(self, request):
+    &quot;&quot;&quot;多库共存下，基于django底层安装的pymysql来使用原生SQL语句操作的切换数据连接，完成数据库查询的过程&quot;&quot;&quot;
+    # from django.db import connections
+    # with connections[&quot;djdemo&quot;].cursor() as cursor:
+    #     # 让游标执行SQL语句
+    #     cursor.execute(&quot;select * from student&quot;)
+    #     # 通过游标获取查询结果
+    #     result = cursor.fetchall()
+    #     print(result)
+
+    &quot;&quot;&quot;多库共存下，基于django的ORM模型操作，来切换数据连接完成数据库操作的过程&quot;&quot;&quot;
+    student_objs = models.Student.objects.using(&quot;default&quot;).values(&quot;name&quot;, &quot;age&quot;)
+    print(student_objs)
+    return JsonResponse({})
+
+</code></pre>
+<h2 id="%E5%85%B3%E8%81%94%E6%A8%A1%E5%9E%8B">关联模型</h2>
+<p>关联模型实际上就是ORM提供给开发者用于操作多表数据的功能。因为多个表之间的存在的关联关系，往往都是基于建库建表之初的实体关系分析( ER图 ) 和 范式理论 梳理出来的。</p>
+<p>构建数据库和构建数据表：实体、属性、关系。</p>
+<p>实体：在现实世界中，客观存在的能够被区分的人事物或集体概念。</p>
+<p>属性：具有描述性、修饰性的词语，用于描述实体的特征的。</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>title</th>
+  <th>price</th>
+  <th>sale 销量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>meta40</td>
+  <td>3299</td>
+  <td>15</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>status</th>
+  <th>goods_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>已成交</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>未支付</td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td>已取消</td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E8%8C%83%E5%BC%8F%E7%90%86%E8%AE%BA%28%E4%B8%89%E8%8C%83%E5%BC%8F%E3%80%81%E9%80%86%E8%8C%83%E5%BC%8F%29">范式理论(三范式、逆范式)</h3>
+<p>范式理论是关系型模型建库建表的参考标准。</p>
+<p><a href="https://baike.baidu.com/item/%E7%AC%AC%E4%B8%80%E8%8C%83%E5%BC%8F/3193590"  target="_blank">第一范式</a>（1NF，原子性）：数据表的每一列都是不可分割，不能重复。如果出现重复的属性，就可能需要定义一个新的实体（也就是新建一张数据表来进行保存）。</p>
+<p><a href="https://baike.baidu.com/item/%E7%AC%AC%E4%BA%8C%E8%8C%83%E5%BC%8F/3193760"  target="_blank">第二范式</a>（2NF，依赖性）：数据表的每一行都是唯一，需要创建ID来进行区分每一行数据。</p>
+<p><a href="https://baike.baidu.com/item/%E7%AC%AC%E4%B8%89%E8%8C%83%E5%BC%8F/3193798"  target="_blank">第三范式</a>（3NF，冗余性）：数据表的数据不能冗余，针对冗余数据应该单独创建一个数据表，并把ID写到新表中进行关联。</p>
+<p>逆范式指的是通过增加冗余或重复的数据来提高数据库的读取速度。</p>
+<p>往往逆范式遵循的原则是：<strong>空间换时间</strong>。本质就是： 以廉价的硬盘空间，换取珍贵的数据库查询时间，以更快的数据从数据库读取数据返回给客户端。</p>
+<p>ORM中针对数据表之间进行的关联操作,也可以外键绑定的操作方式,其中根据数据库表与表之间的关系, 可以有三种以上的关联方式：1对1，1对多，多对多。其中针对外键设置的模型代码，在django中一般有2种<strong>操作方式</strong>：</p>
+
+<pre class="language-python"><code class="language-python"># 正向查询按字段，从主模型查询外键模型的数据
+    模型对象 = 当前模型.filter(xxx).first()  # 例如，获取商品，查询商品的分类，假设分类属性 category
+    模型对象.外键    # 商品.category  ---&gt; 商品分类
+
+# 反向查询按表名，从外键模型查询主模型数据
+    主键对象 = 主键模型.filter(xxx).first()  # 先查询分类  --&gt; 当前分类下有多少商品
+    主键对象.外键模型表名_set   # _set方法可以使用related_name代替 [_set操作在一对一里面是没有的]
+</code></pre>
+<p>set方法文档：<a href="https://docs.djangoproject.com/zh-hans/4.0/ref/models/relations/"  target="_blank">https://docs.djangoproject.com/zh-hans/4.0/ref/models/relations/</a></p>
+<h4 id="%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B">创建实例</h4>
+<h3 id="%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%28OneToOneField%29">一对一关联(OneToOneField)</h3>
+<p>创建模型的关联关系，<code>orm/models.py</code>，代码：</p>
+<h4 id="%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0">模型实现</h4>
+<p>使用<code>OneToOneField</code>进行关联</p>
+<blockquote>
+<h4 id="%3Ccode%3E%26quot%3BStudent%26quot%3B%3C/code%3E"><code>&quot;Student&quot;</code></h4>
+<ul>
+<li><strong>关联的目标模型</strong>（这里是名为 <code>Student</code> 的模型）</li>
+<li>使用字符串形式避免循环导入（Django 会按需解析）</li>
+<li>等效写法：<code>Student</code>（需先导入模型类）</li>
+</ul>
+<h4 id="%E2%96%B6-%3Ccode%3Erelated_name%3D%26quot%3Bprofile%26quot%3B%3C/code%3E">▶ <code>related_name=&quot;profile&quot;</code></h4>
+<ul>
+<li><p><strong>反向关系名称</strong>（从 <code>Student</code> 访问当前模型的关键字）</p>
+</li>
+<li><p>效果：通过 <code>student.profile</code> 直接获取关联对象</p>
+<p>python</p>
+
+<pre class="language-none"><code class="language-none">student = Student.objects.get(id=1)
+profile = student.profile  # 获取该学生的关联档案
+</code></pre>
+</li>
+<li><p>未设置时默认名：<code>小写模型类名</code>（如 <code>studentprofile</code>）</p>
+</li>
+</ul>
+<h4 id="%E2%96%B6-%3Ccode%3Eon_delete%3Dmodels.CASCADE%3C/code%3E">▶ <code>on_delete=models.CASCADE</code></h4>
+<ul>
+<li><strong>删除联动规则</strong>：当关联的 <code>Student</code> 被删除时</li>
+<li><code>CASCADE</code>：同步删除当前模型实例（级联删除）<br />
+  <em>例如：删除学生时，其档案自动删除</em></li>
+<li>其他选项：<ul>
+<li><code>PROTECT</code>：阻止删除（引发 <code>ProtectedError</code>）</li>
+<li><code>SET_NULL</code>：设为 <code>NULL</code>（需字段允许 <code>null=True</code>）</li>
+<li><code>SET_DEFAULT</code>：设为默认值（需设置 <code>default</code>）</li>
+</ul>
+</li>
+</ul>
+<h4 id="%E2%96%B6-%3Ccode%3Everbose_name%3D%26quot%3B%E5%AD%A6%E7%94%9F%26quot%3B%3C/code%3E">▶ <code>verbose_name=&quot;学生&quot;</code></h4>
+<ul>
+<li><strong>可读的字段名称</strong>（用于后台/admin界面展示）</li>
+<li>中文显示为&quot;学生&quot;（替代默认的英文显示）</li>
+</ul>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">from django.db import models
+
+# Create your models here.
+&quot;&quot;&quot;
+一对一模型关联
+&quot;&quot;&quot;
+
+# 主表
+class Student(models.Model):
+    name = models.CharField(max_length=20, db_index=True, verbose_name=&quot;姓名&quot;)
+    age = models.IntegerField(verbose_name=&quot;年龄&quot;)
+    sex = models.BooleanField(null=True, blank=True, default=None, verbose_name=&quot;性别&quot;)
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name=&quot;创建时间&quot;)
+    updated_time = models.DateTimeField(auto_now=True, verbose_name=&quot;更新时间&quot;)
+
+    class Meta:
+        db_table = 'orm_student'
+        verbose_name = &quot;学生信息&quot;
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str({&quot;id&quot;: self.pk, &quot;name&quot;: self.name, &quot;age&quot;: self.age})
+
+# 附加的表
+class StudentProfile(models.Model):
+    # 设置外键[1对1，models.OneToOneField(&quot;主键模型类名&quot;, on_delete=&quot;外键约束类型&quot;, ....)]
+    # 设置外键以后，在数据库中会自动生成一个&quot;属性_id&quot;的真实字段给开发者进行外键记录
+    # related_name 主要声明给主模型来使用的，用于反向查询。
+    # StudentProfile.student = 学生信息
+    # Student.profile = 学生详细信息
+    student = models.OneToOneField(&quot;Student&quot;, related_name=&quot;profile&quot;, on_delete=models.CASCADE, verbose_name=&quot;学生&quot;)
+    description = models.TextField(default=&quot;&quot;, verbose_name=&quot;个性签名&quot;)
+    address = models.CharField(max_length=500, verbose_name=&quot;家庭住址&quot;)
+    mobile = models.CharField(max_length=15, verbose_name=&quot;紧急联系电话&quot;)
+
+    class Meta:
+        db_table = &quot;orm_student_profile&quot;
+        verbose_name = &quot;学生详细信息&quot;
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str({&quot;address&quot;: self.address, &quot;mobile&quot;: self.mobile})
+
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202507311923571.png" alt="image-20250731192326508" /></p>
+<p>进行数据迁移</p>
+
+<pre class="language-bash"><code class="language-bash">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<h4 id="%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE">添加数据</h4>
+
+<pre class="language-python"><code class="language-python">class StudentView(View):
+    &quot;&quot;&quot;1：1模型关联&quot;&quot;&quot;
+    def get1(self, request):
+        &quot;&quot;&quot;添加数据操作&quot;&quot;&quot;
+        &quot;&quot;&quot;
+        唯一方式：先添加主模型数据Student, 后添加外键模型数据
+        &quot;&quot;&quot;
+        student = models.Student.objects.create(
+            name=&quot;小白&quot;,
+            age=17,
+            sex=True,
+        )
+        profile = models.StudentProfile.objects.create(
+            # student=student, # 通过指定对象的方式，可以帮我们自动绑定外键
+            student_id=student.id,  # 等价于上一句
+            description=&quot;一段长长长长的个性签名....&quot;,
+            address=&quot;学生小白的家庭住址&quot;,
+            mobile=&quot;13312345618&quot;,
+        )
+
+
+        &quot;&quot;&quot;注意：不要使用以下写法，外键模型的数据无法提添加，但是不会报错。&quot;&quot;&quot;
+        # student = models.Student.objects.create(
+        #     name=&quot;小辉&quot;,
+        #     age=17,
+        #     sex=True,
+        #     profile=models.StudentProfile(
+        #         description=&quot;一段长长长长的个性签名....&quot;,
+        #         address=&quot;学生小辉的家庭住址&quot;,
+        #         mobile=&quot;13312345668&quot;,
+        #     )
+        # )
+
+        return JsonResponse({})
+
+
+</code></pre>
+<h4 id="%E7%9B%B8%E4%BA%92%E8%AE%BF%E9%97%AE%E7%AD%9B%E9%80%89">相互访问筛选</h4>
+
+<pre class="language-python"><code class="language-python">    def get2(self, request):
+        &quot;&quot;&quot;查询数据&quot;&quot;&quot;
+        &quot;&quot;&quot;
+        方式1：从主模型(主表, orm_student)查询到外键模型(附加表, orm_student_profile)
+        &quot;&quot;&quot;
+        # 例如，小明今天没上学，查询他的紧急联系电话和家庭地址
+        student = models.Student.objects.filter(name=&quot;小明&quot;).first()
+        if student:
+            # profile就是在StudentProfile里面定义的 related_name
+            print(student.profile.mobile)
+            print(student.profile.address)
+
+        &quot;&quot;&quot;
+        方式2：使用外键模型中查询数据，以主键模型作为条件
+        &quot;&quot;&quot;
+        # 例如，小白今天没上学，查询他的紧急联系电话和家庭地址
+        profile = models.StudentProfile.objects.filter(student__name=&quot;小白&quot;).first()
+        print(profile.mobile)
+
+        &quot;&quot;&quot;
+        方式3：从外键模型(附加表, orm_student_profile)查询到主模型(主表, orm_student)
+        &quot;&quot;&quot;
+        # 例如，根据手机号，13312345618 是谁的手机号码
+        student_profile = models.StudentProfile.objects.filter(mobile=&quot;13312345618&quot;).first()
+        if student_profile:
+            print(student_profile.student.name)
+
+        &quot;&quot;&quot;
+        方式4：查询主模型数据，以外键模型作为条件
+        &quot;&quot;&quot;
+        # 例如，根据手机号，13312345618 是谁的手机号码
+        student = models.Student.objects.filter(profile__mobile=&quot;13312345618&quot;).first()
+        print(student.name)
+
+        return JsonResponse({})
+</code></pre>
+<h4 id="%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE">修改数据</h4>
+
+<pre class="language-python"><code class="language-python">    def get3(self, request):
+        &quot;&quot;&quot;更新数据&quot;&quot;&quot;
+        &quot;&quot;&quot;方式1：从主模型更新外键模型数据（save）&quot;&quot;&quot;
+        # 例如，修改小明的家庭地址
+        student = models.Student.objects.filter(name=&quot;小明&quot;).first()
+        if student:
+            print(student)
+            print(student.profile)
+            print(student.profile.address)
+            # 直接修改，并保存即可
+            student.profile.address = &quot;学生小明的新家庭地址&quot;
+            # 修改的address是StudentProfile的字段，所以使用StudentProfile的save方法
+            student.profile.save()
+
+        &quot;&quot;&quot;方式2：修改外键模型数据，使用主模型作为修改条件(update)&quot;&quot;&quot;
+        # 例如，修改小白的家庭地址
+        models.StudentProfile.objects.filter(student__name=&quot;小白&quot;).update(address=&quot;学生小白的新家庭地址&quot;)
+
+        &quot;&quot;&quot;方式3：从外键模型更新主模型数据(save)&quot;&quot;&quot;
+        # 例如，修改手机号：&quot;13312345618&quot; 的学生的年龄为21岁
+        student_profile = models.StudentProfile.objects.filter(mobile=&quot;13312345618&quot;).first()
+        if student_profile:
+            print(student_profile)
+            print(student_profile.student)
+            print(student_profile.student.age)
+            student_profile.student.age = 21
+            student_profile.student.save()
+
+        &quot;&quot;&quot;方式4：修改主模型数据，使用外键模型作为修改条件（update）&quot;&quot;&quot;
+        # 例如，修改手机号：&quot;13312345118&quot; 的学生的年龄为18岁
+        models.Student.objects.filter(profile__mobile=&quot;13312345118&quot;).update(age=18)
+
+        return JsonResponse({})
+
+</code></pre>
+<h4 id="%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE">删除数据</h4>
+
+<pre class="language-python"><code class="language-python">def get(self,request):
+    &quot;&quot;&quot;删除操作&quot;&quot;&quot;
+    &quot;&quot;&quot;当on_delete=models.CASCADE时，删除主模型数据，mysql会自动删除外键模型数据&quot;&quot;&quot;
+    # 例如，删除小明的数据记录
+    #models.Student.objects.filter(name=&quot;小明&quot;).delete()
+
+    &quot;&quot;&quot;当on_delete=models.CASCADE时，删除外键模型数据，不会影响主模型数据的&quot;&quot;&quot;
+    # 例如，删除手机号为13312345118的学生附加资料
+    models.StudentProfile.objects.filter(mobile=&quot;13312345118&quot;).delete()
+    return JsonResponse({})
+</code></pre>
+<h4 id="%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F%E9%80%89%E9%A1%B9%28%E5%88%A0%E9%99%A4%29">外键约束选项(删除)</h4>
+<p>在设置外键时，需要通过<strong>on_delete</strong>选项指明主表删除数据时，对于外键引用表数据如何处理，在django.db.models中包含了可选常量：</p>
+<ul>
+<li><p><strong>CASCADE</strong>： 级联/株连，删除主表数据时连通一起删除外键表中数据</p>
+</li>
+<li><p><strong>PROTECT</strong>： 删除保护，通过抛出<strong>ProtectedError</strong>异常，来阻止删除主表中被外键应用的数据，意思是必须先删除外键数据以后才能删除主键数据</p>
+</li>
+<li><p><strong>SET_NULL</strong>： 设置为NULL，仅在该字段null=True允许为null时可用</p>
+</li>
+<li><p>SET_DEFAULT： 设置为默认值，仅在该字段设置了默认值时可用</p>
+</li>
+<li><p>SET()： 设置为特定值或者调用特定方法，例如：</p>
+
+<pre class="language-python"><code class="language-python">from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db import models
+def get_sentinel_user():
+    return get_user_model().objects.get_or_create(username='deleted')[0]
+class UserModel(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET(get_sentinel_user),
+    )
+</code></pre>
+</li>
+<li><p><strong>DO_NOTHING</strong>： 不做任何操作，如果数据库前置指明级联性，此选项会抛出<strong>IntegrityError</strong>异常</p>
+</li>
+</ul>
+<h3 id="%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%28ForeignKey%29">一对多关联(ForeignKey)</h3>
+<p>一对多模型关联，例如学生和成绩，文章分类和文章，商品分类和商品，商品品牌和商品之间的关系。</p>
+<p>使用<code>ForeignKey</code>进行关联(在子模型里面)</p>
+
+<pre class="language-python"><code class="language-python">class Author(models.Model):
+    name = models.CharField(max_length=20, db_index=True, verbose_name=&quot;姓名&quot;)
+    age = models.IntegerField(verbose_name=&quot;年龄&quot;)
+    sex = models.BooleanField(null=True, blank=True, default=None, verbose_name=&quot;性别&quot;)
+
+    class Meta:
+        db_table = 'orm_author'
+        verbose_name = &quot;作者信息&quot;
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str({&quot;id&quot;: self.pk, &quot;name&quot;: self.name, &quot;age&quot;: self.age,  &quot;sex&quot;: self.sex})
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=50, verbose_name=&quot;文章标题&quot;)
+    content = models.TextField(null=True, verbose_name=&quot;文章内容&quot;)
+    pubdate = models.DateTimeField(null=True, verbose_name=&quot;发布时间&quot;)
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name=&quot;创建时间&quot;)
+    updated_time = models.DateTimeField(auto_now=True, verbose_name=&quot;创建时间&quot;)
+    author = models.ForeignKey(&quot;Author&quot;, on_delete=models.DO_NOTHING, related_name=&quot;article_list&quot;, verbose_name=&quot;作者&quot;)
+
+    class Meta:
+        db_table = &quot;orm_article&quot;
+        verbose_name = &quot;文章信息&quot;
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str({&quot;id&quot;: self.id, &quot;title&quot;: self.title, &quot;pubdate&quot;: self.pubdate})
+</code></pre>
+<p>进行数据迁移</p>
+
+<pre class="language-bash"><code class="language-bash">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<p>关联操作</p>
+
+<pre class="language-python"><code class="language-python"># from .models import Achievement
+# student = Student.objects.get(pk=10)
+# achievement_list = [
+#   Achievement(student=student,score=100),
+#   Achievement(student=student,score=100),
+#   Achievement(student=student,score=100),
+#   Achievement(student=student,score=100),
+# ]
+#
+# Achievement.objects.bulk_create(achievement_list)
+
+# 获取一个学生的所有成绩
+# student = Student.objects.get(pk=10)
+# print(student.score_list.all().values(&quot;id&quot;,&quot;score&quot;))      # 必须在外键模型中设置related_name=&quot;score_list&quot;,否则无法获取外键关系
+# print(student.achievement_set.all().values(&quot;id&quot;,&quot;score&quot;)) # 如果外键模型中没有设置related_name则可以通过模型_set提供给主模型调用数据
+
+# 从外键数据查找主模型
+from .models import Achievement
+student_achievement = Achievement.objects.filter(score=80).first()
+print(student_achievement.student)    # 查找外键属性字段
+print(student_achievement.student_id) # 直接查数据表中的数值ID
+</code></pre>
+<h4 id="%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE">添加数据</h4>
+
+<pre class="language-python"><code class="language-python">class ArticleView(View):
+    &quot;&quot;&quot;1:多模型关联&quot;&quot;&quot;
+    def get1(self,request):
+        &quot;&quot;&quot;添加数据&quot;&quot;&quot;
+        &quot;&quot;&quot;1. 先添加主模型，根据主模型添加外键模型&quot;&quot;&quot;
+        author = models.Author.objects.create(
+            name=&quot;小明&quot;,
+            age=23,
+            sex=True
+        )
+        article_list = [
+            models.Article(title=&quot;文章标题1&quot;, content=&quot;文章内容1&quot;, 
+                           pubdate=&quot;2023-03-15 10:30:30&quot;, author=author),
+            models.Article(title=&quot;文章标题2&quot;, content=&quot;文章内容2&quot;, 
+                           pubdate=&quot;2023-03-16 10:30:30&quot;, author_id=author.id),
+        ]
+        models.Article.objects.bulk_create(article_list)
+
+        &quot;&quot;&quot;如果已经有了主模型，则直接通过查询主模型提取主键ID，再添加外键模型数据即可。&quot;&quot;&quot;
+        # 例如，给小明记录多2片文章
+        author = models.Author.objects.filter(name=&quot;小明&quot;).first()
+        if author:
+            article_list = [
+                models.Article(title=&quot;文章标题3&quot;, content=&quot;文章内容3&quot;, 
+                               pubdate=&quot;2023-03-15 10:30:33&quot;, author=author),
+                models.Article(title=&quot;文章标题4&quot;, content=&quot;文章内容4&quot;, 
+                               pubdate=&quot;2023-03-16 10:30:34&quot;, author_id=author.id),
+            ]
+            models.Article.objects.bulk_create(article_list)
+
+        &quot;&quot;&quot;添加主模型，再添加外键模型的另一种写法&quot;&quot;&quot;
+        models.Article.objects.create(
+            title=&quot;文章标题5&quot;,
+            content=&quot;文章内容5&quot;,
+            pubdate=&quot;2023-10-03 12:05:00&quot;,
+            author=models.Author.objects.create(name=&quot;小白&quot;, age=23, sex=False)
+        )
+
+        return JsonResponse({})
+</code></pre>
+<h4 id="%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">查询数据</h4>
+
+<pre class="language-python"><code class="language-python">    def get2(self, request):
+        &quot;&quot;&quot;查询数据&quot;&quot;&quot;
+        &quot;&quot;&quot;通过主模型查找外键模型&quot;&quot;&quot;
+        # 例如，查询小明的所有文章
+        author = models.Author.objects.filter(name=&quot;小明&quot;).first()
+        if author:
+            print(author)
+            # 获取外键，article_list就是Article中related_name定义，提供给Author反向查询使用的
+            print(author.article_list.all())
+
+        &quot;&quot;&quot;使用主模型作为条件，直接查询外键模型的数据&quot;&quot;&quot;
+        # 例如，查询小白的所有文章
+        article_list = models.Article.objects.filter(author__name=&quot;小白&quot;).all()
+        print(article_list)
+
+        &quot;&quot;&quot;通过外键模型查询主模型&quot;&quot;&quot;
+        # 例如，查询文章标题为《文章标题5》的作者
+        article = models.Article.objects.filter(title=&quot;文章标题5&quot;).first()
+        if article:
+            print(article.author, type(article.author))
+            print(article.author.name)
+
+        &quot;&quot;&quot;使用外键模型作为条件，直接查询主模型的数据&quot;&quot;&quot;
+        # 例如，查询文章标题为《文章标题3》的作者
+        author = models.Author.objects.filter(article_list__title=&quot;文章标题3&quot;).first()
+        print(author)
+        print(author.name)
+        return JsonResponse({})
+</code></pre>
+<h4 id="%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE">更新数据</h4>
+
+<pre class="language-python"><code class="language-python">def get3(self, request):
+    &quot;&quot;&quot;更新操作&quot;&quot;&quot;
+    &quot;&quot;&quot;获取主模型，再改动外键模型[外键模型可以是1个或多个，如果是多个，则需要循环]&quot;&quot;&quot;
+    # 把小明的所有文章发布时间修改成 2023-10-15 10:00:00
+    author = models.Author.objects.filter(name=&quot;小明&quot;).first()
+    for article in author.article_list.all():
+        article.pubdate = &quot;2023-10-15 10:00:00&quot;
+        article.save()
+
+    &quot;&quot;&quot;以主模型作为更新条件，更新外键模型数据&quot;&quot;&quot;
+    # 把小白的所有文章发布时间修改成 2023-05-05 10:00:00
+    models.Article.objects.filter(author__name=&quot;小白&quot;).update(pubdate=&quot;2023-05-05 10:00:00&quot;)
+
+    &quot;&quot;&quot;获取到外键模型，再改动主模型&quot;&quot;&quot;
+    # 例如，修改文章标题《文章标题4》的作者的年龄为27岁
+    article = models.Article.objects.filter(title=&quot;文章标题4&quot;).first()
+    article.author.age = 27
+    article.author.save()
+
+
+    &quot;&quot;&quot;以外键模型作为更新条件，更新主模型数据&quot;&quot;&quot;
+    # 例如，修改文章标题《文章标题1》的作者的年龄为22岁
+    models.Author.objects.filter(article_list__title=&quot;文章标题1&quot;).update(age=22)
+
+
+    &quot;&quot;&quot;外键是可以在开发中更改绑定关系&quot;&quot;&quot;
+    # # 例如，修改文章标题《文章标题3》的作者为小白
+    article = models.Article.objects.filter(title=&quot;文章标题3&quot;).first()
+    author = models.Author.objects.filter(name=&quot;小白&quot;).first()
+    article.author = author
+    article.save()
+
+    # # 例如，修改文章标题《文章标题3》的作者为小明
+    # models.Article.objects.filter(title=&quot;文章标题3&quot;).update(
+    #     author=models.Author.objects.filter(name=&quot;小明&quot;).first()
+    # )
+
+    return JsonResponse({})
+</code></pre>
+<h4 id="%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE">删除数据</h4>
+
+<pre class="language-python"><code class="language-python">def get(self,request):
+    &quot;&quot;&quot;删除数据&quot;&quot;&quot;
+    models.Author.objects.filter(name=&quot;小白&quot;).delete()
+    return JsonResponse({})
+</code></pre>
+<h3 id="%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%EF%BC%88ManyToManyField%EF%BC%89">多对多关联（ManyToManyField）</h3>
+<h4 id="%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0">模型实现</h4>
+<p>多对多模型关联, 例如：网课和学生，活动和商品，软件应用和服务器。使用<code>ManyToManyField</code>进行关联, 同时没有主次之分</p>
+<p>在创建这两个表的时候, 实际还会创建一个关系表</p>
+
+<pre class="language-python"><code class="language-python">&quot;&quot;&quot;多对多&quot;&quot;&quot;
+# 一个老师可以授课多个课程
+# 一个课程也可以由多个老师授课
+# 多对多关联以后，在数据迁移时，在数据库中实际上会创建三张表，分别是：2个模型对象实体表，1张关联2个模型的关系表。
+# 一对一，把主模型的主键id，作为外键字段声明在外键模型中【所以外键模型多出一个关联属性字段】
+# 一对多，把主模型的主键id，作为外键字段声明在外键模型中【所以外键模型多出一个关联属性字段】
+# 多对多，把2个主模型的主键id，作为外键字段记录第三张关系表中，这张表主要有2个外键字段。而且ORM中，我们无法直接访问和操作这个表的，只能通过主模型来操作
+class Teacher(models.Model):
+    name = models.CharField(max_length=15,verbose_name=&quot;老师&quot;)
+    # 注意：Teacher模型中设置了course外键，就不要设置Course的teacher外键了。2个冲突的。
+    # course = models.ManyToManyField(&quot;Course&quot;, related_name=&quot;to_teacher&quot;)
+
+    class Meta:
+        db_table = &quot;tb_teacher&quot;
+        verbose_name = '老师信息表'
+        verbose_name_plural = verbose_name
+
+class Course(models.Model):
+    name = models.CharField(max_length=20, verbose_name=&quot;课程&quot;)
+    # 多对多不需要我们设置on_delete，直接默认就是models.CASCADE级联了。
+    teacher = models.ManyToManyField(&quot;Teacher&quot;, related_name=&quot;to_course&quot;)
+
+    class Meta:
+        db_table = &quot;tb_course&quot;
+        verbose_name = '课程信息表'
+        verbose_name_plural = verbose_name
+</code></pre>
+<p>进行数据迁移</p>
+
+<pre class="language-none"><code class="language-none">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<h4 id="%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE">添加数据</h4>
+
+<pre class="language-python"><code class="language-python">class TeacherView(View):
+    &quot;&quot;&quot;多对多关联操作&quot;&quot;&quot;
+    def get1(self, request):
+        &quot;&quot;&quot;添加数据&quot;&quot;&quot;
+        &quot;&quot;&quot;先添加实体模型，然后通过外键使用add进行关联两个模型&quot;&quot;&quot;
+        # 1. 先添加实体模型
+        teacher = models.Teacher.objects.create(name=&quot;大明&quot;, age=32, sex=True)
+        course = models.Course.objects.create(name=&quot;python基础课&quot;)
+        # 2. 通过外键使用add绑定关系
+        teacher.course.add(course)
+
+        # 也可以给已有的模型绑定关系
+        teacher = models.Teacher.objects.filter(name=&quot;大明&quot;).first()
+        course1 = models.Course.objects.create(name=&quot;python框架&quot;)
+        course2 = models.Course.objects.create(name=&quot;python项目实战&quot;)
+        teacher.course.add(course1, course2)
+
+        return JsonResponse({})
+</code></pre>
+<h4 id="%E6%9F%A5%E8%AF%A2">查询</h4>
+
+<pre class="language-python"><code class="language-python">def get2(self, request):
+    &quot;&quot;&quot;查询数据&quot;&quot;&quot;
+    &quot;&quot;&quot;先查其中一个模型，接着通过外键，查询另一个模型的数据&quot;&quot;&quot;
+    # 例如，查询大明的授课列表
+    teacher = models.Teacher.objects.filter(name=&quot;大明&quot;).first()
+    print(teacher.course.all())
+
+    &quot;&quot;&quot;使用其中一个模型作为条件，查询另一个模型的数据&quot;&quot;&quot;
+    # 例如，查询大明的授课列表
+    course_objs = models.Course.objects.filter(teacher__name=&quot;大明&quot;).all()
+    print(course_objs)
+
+    &quot;&quot;&quot;反过来，也是如此&quot;&quot;&quot;
+    # 例如，python基础课的授课老师列表
+    course = models.Course.objects.filter(name=&quot;python基础课&quot;).first()
+    print(course.teacher.all())
+
+    teacher_list = models.Teacher.objects.filter(course__name=&quot;python基础课&quot;).all()
+    print(teacher_list)
+
+    return JsonResponse({})
+</code></pre>
+<h4 id="%E6%9B%B4%E6%96%B0">更新</h4>
+
+<pre class="language-python"><code class="language-python">def get(self,request):
+    &quot;&quot;&quot;更新数据&quot;&quot;&quot;
+    # 把大明的所有授课课程的名字后面加上（大明专讲）
+    teacher = models.Teacher.objects.filter(name=&quot;大明&quot;).first()
+    if teacher:
+        for course in teacher.course.all():
+            course.name = course.name + &quot;（大明专讲）&quot;
+            course.save()
+
+    # # 通过update修改, 字符串的拼接需要使用Concat
+    from django.db.models import F, Value
+    from django.db.models.functions import Concat
+    models.Course.objects.filter(teacher__name=&quot;大白&quot;).update(name=Concat(F(&quot;name&quot;), Value(&quot;[精讲]&quot;)))
+    return JsonResponse({})
+</code></pre>
+<h4 id="%E5%88%A0%E9%99%A4">删除</h4>
+
+<pre class="language-python"><code class="language-python">    def get4(self,request):
+        &quot;&quot;&quot;删除数据&quot;&quot;&quot;
+        &quot;&quot;&quot;删除模型表记录时，对应的关系也会被删除&quot;&quot;&quot;
+        # 删除大明的信息，mysql会自动删除绑定关系
+        models.Teacher.objects.filter(name=&quot;大明&quot;).delete()
+
+        &quot;&quot;&quot;解绑关系&quot;&quot;&quot;
+        teacher = models.Teacher.objects.filter(name=&quot;大白&quot;).first()
+        course = models.Course.objects.filter(name=&quot;java基础课&quot;).first()
+        teacher.course.remove(course) # 注意：这并非删除课程，而是解除绑定关系而已
+
+        return JsonResponse({})
+
+</code></pre>
+<h3 id="%E8%87%AA%E5%85%B3%E8%81%94">自关联</h3>
+<p>自关联就是1张数据表中，主键和外键都在一张表上。一般会在多级部门，多级菜单，多级权限，省市区行政区划，粉丝关注，好友关系，这些业务中使用到。举例：</p>
+<p>行政区划表 tb_area, 这里的一个地区的上一级可以是同一个表里面的另一项</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>name</th>
+  <th>parent_id/pid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>河南省</td>
+  <td></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>河北省</td>
+  <td></td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>郑州市</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>开封市</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td>石家庄</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td>邯郸市</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td>二七区</td>
+  <td>3</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td>新郑区</td>
+  <td>3</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td>郑东新区</td>
+  <td>3</td>
+</tr>
+</tbody>
+</table>
+<p>要理解自关联，就要这个数据表理解成2张或者3张表就可以了。</p>
+<p>省级别，province，</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>name</th>
+  <th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>河南省</td>
+  <td></td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>河北省</td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+<p>市级别，city，</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>name</th>
+  <th>parent_id/pid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>3</td>
+  <td>郑州市</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>开封市</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td>石家庄</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td>邯郸市</td>
+  <td>2</td>
+</tr>
+</tbody>
+</table>
+<p>区级别，area，</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>name</th>
+  <th>parent_id/pid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>7</td>
+  <td>二七区</td>
+  <td>3</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td>新郑区</td>
+  <td>3</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td>郑东新区</td>
+  <td>3</td>
+</tr>
+</tbody>
+</table>
+<p>上面很明显是1个省份有多个城市，1个城市有多个地区，这就是属于1对多的自关联</p>
+<p>用户与用户之间的好友关系，这就是属于多对多的自关联。</p>
+<p>用户表 user</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>username</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>小明</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>小红</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>小黑</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>小白</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td>小辉</td>
+</tr>
+</tbody>
+</table>
+<p>好友关系表 user_friend</p>
+<table>
+<thead>
+<tr>
+  <th>id</th>
+  <th>user1</th>
+  <th>user2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>1</td>
+  <td>2</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>1</td>
+  <td>3</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>1</td>
+  <td>4</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>2</td>
+  <td>3</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td>2</td>
+  <td>4</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td>2</td>
+  <td>5</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td>3</td>
+  <td>4</td>
+</tr>
+</tbody>
+</table>
+<h4 id="%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0">模型实现</h4>
+<p>还是使用的<code>ForeignKey</code>和<code>ManyToManyField</code>但是不是写另一个模型的名字是使用self, 在进行多对多的时候为了避免递归搜寻, 默认是不支持反向查询的, 需要加一下参数<code>symmetrical=True</code></p>
+
+<pre class="language-python"><code class="language-python">class Area(models.Model):
+    &quot;&quot;&quot;一对多的自关联&quot;&quot;&quot;
+    name = models.CharField(max_length=50)
+    parent = models.ForeignKey(&quot;self&quot;, on_delete=models.SET_NULL, related_name=&quot;to_son&quot;, null=True, blank=True)
+    class Meta:
+        db_table = &quot;orm_area&quot;
+        verbose_name = '行政区划表'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str({&quot;id&quot;:self.id, &quot;name&quot;:self.name})
+
+
+class Member(models.Model):
+    &quot;&quot;&quot;多对多的自关联&quot;&quot;&quot;
+    name = models.CharField(max_length=50, unique=True, verbose_name=&quot;用户名&quot;)
+    age = models.SmallIntegerField(default=0, verbose_name=&quot;年龄&quot;)
+    # symmetrical=True 默认值，表示双向关系，绑定的关系是双向，一般用于好友关系
+    # 这种情况下，django不提供反向查询
+    friends = models.ManyToManyField(to=&quot;self&quot;, symmetrical=True)
+    # symmetrical=False 表示单向关系，绑定的关系是单向，一般用于单向关注，黑名单
+    focus = models.ManyToManyField(to=&quot;self&quot;, symmetrical=False, related_name=&quot;fans_list&quot;)
+
+    class Meta:
+        db_table = &quot;orm_member&quot;
+        verbose_name = '会员信息表'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str({&quot;id&quot;:self.id, &quot;name&quot;:self.name})
+
+</code></pre>
+<p>数据迁移</p>
+
+<pre class="language-none"><code class="language-none">python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+<p>分析：</p>
+
+<pre class="language-none"><code class="language-none">父级对象：area.parent  # parent就是自关联模型的外键属性，并非固定属性，看创建模型时的设置
+父级获取子级数据对象：area.son_list.all()
+</code></pre>
+<h4 id="%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE">添加数据</h4>
+
+<pre class="language-python"><code class="language-python">class Student4View(View):
+    &quot;&quot;&quot;自关联&quot;&quot;&quot;
+    def get1(self, request):
+        &quot;&quot;&quot;添加数据&quot;&quot;&quot;
+        # 添加省份数据，因为没有上级辖区，所以不需要声明其他字段
+        area1 = Area.objects.create(name=&quot;河南省&quot;)
+        area2 = Area.objects.create(name=&quot;河北省&quot;)
+        #
+        # # 添加城市数据
+        area3 = Area.objects.get(name=&quot;河南省&quot;)
+        area3.to_son.add(
+            Area.objects.create(name=&quot;郑州市&quot;),
+            Area.objects.create(name=&quot;开封市&quot;)
+        )
+
+        area4 = Area.objects.get(name=&quot;河北省&quot;)
+        Area.objects.create(name=&quot;石家庄&quot;, parent=area4)
+        Area.objects.create(name=&quot;邯郸市&quot;, parent_id=area4.id)
+
+        # # 添加地区数据
+        area5 = Area.objects.get(name=&quot;郑州市&quot;)
+        area5.to_son.add(*[
+            Area.objects.create(name=&quot;二七区&quot;),
+            Area.objects.create(name=&quot;新郑区&quot;),
+            Area.objects.create(name=&quot;郑东新区&quot;)
+        ])
+
+        province = Area.objects.create(name=&quot;广东省&quot;)
+        area_list = [
+            Area(name=&quot;佛山市&quot;),
+            Area(name=&quot;广州市&quot;),
+            Area(name=&quot;珠海市&quot;),
+            Area(name=&quot;深圳市&quot;),
+        ]
+        # bulk属性只有在一对多的时候存在，多对多是没有。bulk允许列表中出现没有保存到数据库中的模型对象，django会自动创建到数据库中
+        province.to_son.add(*area_list, bulk=False)
+
+        return HttpResponse(&quot;ok&quot;)
+</code></pre>
+<h4 id="%E6%9F%A5%E6%89%BE%E6%95%B0%E6%8D%AE">查找数据</h4>
+
+<pre class="language-python"><code class="language-python">def get2(self, request):
+    &quot;&quot;&quot;查询数据&quot;&quot;&quot;
+    &quot;&quot;&quot;通过子级记录查找父级记录，得到唯一的父级&quot;&quot;&quot;
+    area = Area.objects.get(name=&quot;二七区&quot;)
+    print(area.parent)  # {'id': 3, 'name': '郑州市'}
+    print(area.parent.parent) # {'id': 1, 'name': '河南省'}
+
+    &quot;&quot;&quot;通过父级记录查找子级记录，得到多个子级&quot;&quot;&quot;
+    area = Area.objects.get(name=&quot;河南省&quot;)
+    son_list = area.to_son.all()
+    print(son_list)  # &lt;QuerySet [&lt;Area: {'id': 3, 'name': '郑州市'}&gt;, &lt;Area: {'id': 4, 'name': '开封市'}&gt;]&gt;
+
+    data = []
+    for son_area in son_list:
+        grandson_list = son_area.to_son.all()
+        data.extend(list(grandson_list))
+    print(data)
+
+    &quot;&quot;&quot;使用子级记录作为查询条件，查询数据&quot;&quot;&quot;
+    area = Area.objects.filter(to_son__name__in=[&quot;郑东新区&quot;]).first() # 因为同一个父级下有多个子级记录，所以必须使用in来查找
+    print(area)  # {'id': 3, 'name': '郑州市'}
+
+    # 通过孙子找爷爷
+    area = Area.objects.filter(to_son__to_son__name__in=[&quot;郑东新区&quot;]).first()
+    print(area)  # {'id': 1, 'name': '河南省'}
+
+    &quot;&quot;&quot;使用父级记录作为查询条件，查询数据&quot;&quot;&quot;
+    son_list = Area.objects.filter(parent__name=&quot;河南省&quot;).all()
+    print(son_list)  # &lt;QuerySet [&lt;Area: {'id': 3, 'name': '郑州市'}&gt;, &lt;Area: {'id': 4, 'name': '开封市'}&gt;]&gt;
+
+    grandson_list = Area.objects.filter(parent__parent__name=&quot;河南省&quot;).all()
+    print(grandson_list) # &lt;QuerySet [&lt;Area: {'id': 7, 'name': '二七区'}&gt;, &lt;Area: {'id': 8, 'name': '新郑区'}&gt;, &lt;Area: {'id': 9, 'name': '郑东新区'}&gt;]&gt;
+    # SQL: SELECT `orm_area`.`id`, `orm_area`.`name`, `orm_area`.`parent_id` FROM `orm_area` INNER JOIN `orm_area` T2 ON (`orm_area`.`parent_id` = T2.`id`) INNER JOIN `orm_area` T3 ON (T2.`parent_id` = T3.`id`) WHERE T3.`name` = '河南省' LIMIT 21
+
+
+    return HttpResponse(&quot;ok&quot;)
+</code></pre>
+<h4 id="%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%BB%BA%E7%AB%8B%E5%85%B3%E8%81%94">多对多建立关联</h4>
+
+<pre class="language-python"><code class="language-python">def get3(self, request):
+    &quot;&quot;&quot;多对多的自关联[双向]：添加数据&quot;&quot;&quot;
+    # 添加数据
+    member1 = Member.objects.create(name=&quot;小明&quot;, age=16)
+    member2 = Member.objects.create(name=&quot;小红&quot;, age=15)
+    member3 = Member.objects.create(name=&quot;小白&quot;, age=15)
+    member4 = Member.objects.create(name=&quot;小黑&quot;, age=15)
+    member5 = Member.objects.create(name=&quot;小兰&quot;, age=15)
+
+    # 小红添加好友
+    member1 = Member.objects.get(name=&quot;小红&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小白&quot;)
+    member1.friends.add(member2, member3)
+
+    # 小明添加好友
+    member1 = Member.objects.get(name=&quot;小明&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小白&quot;)
+    member4 = Member.objects.get(name=&quot;小红&quot;)
+    member1.friends.add(member2, member3, member4)
+
+    # 小兰添加好友
+    member1 = Member.objects.get(name=&quot;小兰&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小白&quot;)
+    member4 = Member.objects.get(name=&quot;小红&quot;)
+    member5 = Member.objects.get(name=&quot;小明&quot;)
+    member1.friends.add(member2, member3, member4, member5)
+
+    # 小白添加好友
+    member1 = Member.objects.get(name=&quot;小白&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小明&quot;)
+    member4 = Member.objects.get(name=&quot;小红&quot;)
+    member1.friends.add(member2, member3, member4)
+
+    return HttpResponse(&quot;OK&quot;)
+</code></pre>
+<h4 id="%E5%A4%9A%E5%AF%B9%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">多对多数据操作</h4>
+
+<pre class="language-python"><code class="language-python">def get4(self, request):
+    &quot;&quot;&quot;多对多的自关联[双向]：查询数据&quot;&quot;&quot;
+    member = Member.objects.get(name=&quot;小黑&quot;)
+    # 查找小黑的朋友?
+    print(member.friends.all())
+    return HttpResponse(&quot;OK&quot;)
+
+def get5(self,request):
+    &quot;&quot;&quot;多对多的自关联[单向]: 添加数据&quot;&quot;&quot;
+    # 小红的关注
+    member1 = Member.objects.get(name=&quot;小红&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小白&quot;)
+    member1.focus.add(member2, member3)
+
+    # 小明的关注
+    member1 = Member.objects.get(name=&quot;小明&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小白&quot;)
+    member4 = Member.objects.get(name=&quot;小红&quot;)
+    member1.focus.add(member2, member3, member4)
+
+    # 小兰的关注
+    member1 = Member.objects.get(name=&quot;小兰&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小白&quot;)
+    member4 = Member.objects.get(name=&quot;小红&quot;)
+    member5 = Member.objects.get(name=&quot;小明&quot;)
+    member1.focus.add(member2, member3, member4, member5)
+
+    # 小白的关注
+    member1 = Member.objects.get(name=&quot;小白&quot;)
+    member2 = Member.objects.get(name=&quot;小黑&quot;)
+    member3 = Member.objects.get(name=&quot;小明&quot;)
+    member4 = Member.objects.get(name=&quot;小红&quot;)
+    member1.focus.add(member2, member3, member4)
+
+    &quot;&quot;&quot;自关联的添加关系与普通多表关联的关系操作类似，不仅支持add，也支持set，clear,remove等操作&quot;&quot;&quot;
+
+    return HttpResponse(&quot;OK&quot;)
+
+def get(self,request):
+    &quot;&quot;&quot;多对多的自关联[单向]: 查询数据&quot;&quot;&quot;
+    查询小红的关注列表
+    member = Member.objects.get(name=&quot;小红&quot;)
+    print(member.focus.all())
+
+    # 查询小红的粉丝列表
+    member = Member.objects.get(name=&quot;小红&quot;)
+    print(member.fans_list.all())
+
+    return HttpResponse(&quot;OK&quot;)
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html">
+                            <span class="icon"></span>
+                            <span class="label">2025-7-29-07-数据库</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html">
+                            <span class="label">2025-8-1-09-ORM优化</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>

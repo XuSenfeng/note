@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>pytorch - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["AI 机器学习"], "date": "2026-04-27", "update": [], "ts": 1777302764, "author": "", "brief": "", "cover": "", "layout": "post"}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class="active"><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-5-Transformers.html"><span class="label">2024-10-5-Transformers</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-6-Juoyter.html"><span class="label">2024-10-6-Juoyter</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-7-Pandas库.html"><span class="label">2024-10-7-Pandas库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-10-9-transforms实战.html"><span class="label">2024-10-9-transforms实战</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-21-LLM.html"><span class="label">2024-9-21-LLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-vLLM.html"><span class="label">2024-9-22-vLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-22-深度学习环境.html"><span class="label">2024-9-22-深度学习环境</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机器学习/2024-9-23-01pytorch.html"><span class="label">2024-9-23-01pytorch</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/2024-9-8-机器学习.html"><span class="label">2024-9-8-机器学习</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">rv模型部署</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-00-驱动移植.html"><span class="label">2025-11-28-00-驱动移植</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-11-28-01-环境搭建.html"><span class="label">2025-11-28-01-环境搭建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-2-02-基础概念.html"><span class="label">2025-12-2-02-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-03-RKNN_Toolkit2.html"><span class="label">2025-12-3-03-RKNN_Toolkit2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2025-12-3-04-RKLLM.html"><span class="label">2025-12-3-04-RKLLM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/rv模型部署/2026-2-2-05-RKNN开发.html"><span class="label">2026-2-2-05-RKNN开发</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">vllm代码分析</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-00-整体框架.html"><span class="label">2024-12-31-00-整体框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/vllm代码分析/2024-12-31-01-collect_env.html"><span class="label">2024-12-31-01-collect_env</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">具身智能</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-2-基础概念.html"><span class="label">2026-2-2-基础概念</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-02-仿真.html"><span class="label">2026-2-3-02-仿真</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-3-03-姿态解算.html"><span class="label">2026-2-3-03-姿态解算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/具身智能/2026-2-4-04-SO-ARM101.html"><span class="label">2026-2-4-04-SO-ARM101</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">实际应用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-1-30-ollama.html"><span class="label">2025-1-30-ollama</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-10-语音识别.html"><span class="label">2025-12-10-语音识别</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-12-22-QLearning.html"><span class="label">2025-12-22-QLearning</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-dify.html"><span class="label">2025-2-16-dify</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-16-langChain.html"><span class="label">2025-2-16-langChain</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-23-langchain2.html"><span class="label">2025-2-23-langchain2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-2-26-Lora微调.html"><span class="label">2025-2-26-Lora微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-3-20-COZE.html"><span class="label">2025-3-20-COZE</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2025-4-2-MCP.html"><span class="label">2025-4-2-MCP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2026-2-27-OpenClaw.html"><span class="label">2026-2-27-OpenClaw</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2026-2-27-skills.html"><span class="label">2026-2-27-skills</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2026-3-18-DIMOS.html"><span class="label">2026-3-18-DIMOS</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2026-3-26-picoclaw.html"><span class="label">2026-3-26-picoclaw</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2026-3-26-各种claw.html"><span class="label">2026-3-26-各种claw</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/实际应用/2026-4-22-Claude-code.html"><span class="label">2026-4-22-Claude-code</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式移植</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/00细聊.html"><span class="label">00细聊</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/嵌入式移植/2025-12-18-01-模型量化.html"><span class="label">2025-12-18-01-模型量化</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">强化学习</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-6-01-基础.html"><span class="label">2026-2-6-01-基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-6-02-贝尔曼公式.html"><span class="label">2026-2-6-02-贝尔曼公式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-6-03-贝尔曼最优公式.html"><span class="label">2026-2-6-03-贝尔曼最优公式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-6-04-值迭代与策略迭代.html"><span class="label">2026-2-6-04-值迭代与策略迭代</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-7-05-蒙特卡洛方法.html"><span class="label">2026-2-7-05-蒙特卡洛方法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-7-06-随机近似与随机梯度下降.html"><span class="label">2026-2-7-06-随机近似与随机梯度下降</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-8-07-时序差分方法.html"><span class="label">2026-2-8-07-时序差分方法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-8-08-值函数近似.html"><span class="label">2026-2-8-08-值函数近似</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-9-09-策略梯度.html"><span class="label">2026-2-9-09-策略梯度</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/强化学习/2026-2-9-10-Actor-Critic.html"><span class="label">2026-2-9-10-Actor-Critic</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">李沐课程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础numpy.html"><span class="label">0000-0-0-00基础numpy</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/0000-0-0-00基础pandas.html"><span class="label">0000-0-0-00基础pandas</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-10-31-01.html"><span class="label">2024-10-31-01</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2024-11-03-02数据类型.html"><span class="label">2024-11-03-02数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-03基础函数.html"><span class="label">2025-1-08-03基础函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-04数据集.html"><span class="label">2025-1-08-04数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-08-05感知机.html"><span class="label">2025-1-08-05感知机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-09模型选择.html"><span class="label">2025-1-09模型选择</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-10-10丢弃法.html"><span class="label">2025-1-10-10丢弃法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-11-11数值稳定性.html"><span class="label">2025-1-11-11数值稳定性</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-12层和块.html"><span class="label">2025-1-12-12层和块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-GPU.html"><span class="label">2025-1-12-GPU</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-12-实战比赛.html"><span class="label">2025-1-12-实战比赛</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-13卷积.html"><span class="label">2025-1-13-13卷积</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-13-14池化.html"><span class="label">2025-1-13-14池化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-15LeNet.html"><span class="label">2025-1-14-15LeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-16AlexNet.html"><span class="label">2025-1-14-16AlexNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-17VGG.html"><span class="label">2025-1-14-17VGG</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-18NiN.html"><span class="label">2025-1-14-18NiN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-14-19GoogLeNet.html"><span class="label">2025-1-14-19GoogLeNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-20批量归一化.html"><span class="label">2025-1-15-20批量归一化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-15-21残差网络ResNet.html"><span class="label">2025-1-15-21残差网络ResNet</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-16-芯片.html"><span class="label">2025-1-16-芯片</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-22数据增广.html"><span class="label">2025-1-17-22数据增广</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-17-23微调.html"><span class="label">2025-1-17-23微调</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-18-24CIFAR数据集.html"><span class="label">2025-1-18-24CIFAR数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-19-25目标检测.html"><span class="label">2025-1-19-25目标检测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-1-23-26区域卷积神经网络.html"><span class="label">2025-1-23-26区域卷积神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-1-27语义分割.html"><span class="label">2025-2-1-27语义分割</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-33长短期记忆LSTM.html"><span class="label">2025-2-10-33长短期记忆LSTM</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-34深度循环网络.html"><span class="label">2025-2-10-34深度循环网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-35-BPTT.html"><span class="label">2025-2-10-35-BPTT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-10-36双向循环神经网络.html"><span class="label">2025-2-10-36双向循环神经网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-37编码器解码器.html"><span class="label">2025-2-11-37编码器解码器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-38seq2seq.html"><span class="label">2025-2-11-38seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-39束搜索.html"><span class="label">2025-2-11-39束搜索</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-11-40注意力机制.html"><span class="label">2025-2-11-40注意力机制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-13-41注意力seq2seq.html"><span class="label">2025-2-13-41注意力seq2seq</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-42自注意力.html"><span class="label">2025-2-15-42自注意力</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-43Transformer.html"><span class="label">2025-2-15-43Transformer</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-15-44BERT.html"><span class="label">2025-2-15-44BERT</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-28样式迁移.html"><span class="label">2025-2-5-28样式迁移</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-5-29序列模型.html"><span class="label">2025-2-5-29序列模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-6-30文字处理.html"><span class="label">2025-2-6-30文字处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-7-31-循环神经网络RNN.html"><span class="label">2025-2-7-31-循环神经网络RNN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/李沐课程/2025-2-9-32-门控循环单元GRU.html"><span class="label">2025-2-9-32-门控循环单元GRU</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">视觉识别</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-04-经典算法.html"><span class="label">2025-12-12-04-经典算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/2025-12-12-05-YoloV1.html"><span class="label">2025-12-12-05-YoloV1</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">K230</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-1-01-SDK编译.html"><span class="label">2026-1-1-01-SDK编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-10-03-Linux代码开发.html"><span class="label">2026-1-10-03-Linux代码开发</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/K230/2026-1-3-02-基础原理.html"><span class="label">2026-1-3-02-基础原理</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">MaixCAM</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-02-模型训练.html"><span class="label">2025-12-11-02-模型训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-11-03-常用的模型.html"><span class="label">2025-12-11-03-常用的模型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-04-Yolo模型转换.html"><span class="label">2025-12-14-04-Yolo模型转换</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-14-05-MaixCDK基础使用.html"><span class="label">2025-12-14-05-MaixCDK基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-16-06-maixcdk工具.html"><span class="label">2025-12-16-06-maixcdk工具</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-07-组件.html"><span class="label">2025-12-17-07-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-08-Camera示例.html"><span class="label">2025-12-17-08-Camera示例</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-17-09-APP.html"><span class="label">2025-12-17-09-APP</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-18-06-模型相关参数.html"><span class="label">2025-12-18-06-模型相关参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-07-AI编译器.html"><span class="label">2025-12-19-07-AI编译器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-19-08-模型实现.html"><span class="label">2025-12-19-08-模型实现</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-20-09-MaixPy编译.html"><span class="label">2025-12-20-09-MaixPy编译</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-3-00-资料.html"><span class="label">2025-12-3-00-资料</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/MaixCAM/2025-12-5-01编译下载.html"><span class="label">2025-12-5-01编译下载</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">openCV</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/openCV/2026-2-10-01-图像基础.html"><span class="label">2026-2-10-01-图像基础</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">yolo</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-02-基础使用.html"><span class="label">2025-12-12-02-基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-03-数据集.html"><span class="label">2025-12-12-03-数据集</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-12-04-预测.html"><span class="label">2025-12-12-04-预测</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-05-训练.html"><span class="label">2025-12-13-05-训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-06-yolov5基础使用.html"><span class="label">2025-12-13-06-yolov5基础使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-07-AutoDL服务器训练.html"><span class="label">2025-12-13-07-AutoDL服务器训练</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-08-yolov5框架.html"><span class="label">2025-12-13-08-yolov5框架</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-09-修改网络.html"><span class="label">2025-12-13-09-修改网络</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-13-10-模型部署.html"><span class="label">2025-12-13-10-模型部署</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机器学习/视觉识别/yolo/2025-12-4-01-yolo安装.html"><span class="label">2025-12-4-01-yolo安装</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>pytorch</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>AI 机器学习</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-04-27">
+                                    2026-04-27
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机器学习/2024-9-23-01pytorch.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="pytorch">pytorch</h1>
+<h2 id="%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8">基础入门</h2>
+<p>可以使用dir和help两个函数进行探索使用pytorch</p>
+<p>使用dir可以对一个包进行打开操作, 使用help可以获取某一个包的具体使用</p>
+<p><img src="C:%5CUsers%5Cjinhua%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20240923172733947.png" alt="image-20240923172733947" /></p>
+<h3 id="%E5%90%8D%E8%AF%8D">名词</h3>
+<h4 id="%E5%BC%A0%E9%87%8F">张量</h4>
+<p><a href="https://zhuanlan.zhihu.com/p/48982978#:~:text=%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E9%87%8C%EF%BC%8CTen"  target="_blank">笔记 | 什么是张量（tensor）&amp; 深度学习 - 知乎 (zhihu.com)</a></p>
+<p>在深度学习里，<strong>Tensor实际上就是一个多维数组（multidimensional array）</strong>。</p>
+<p>而Tensor的目的是<strong>能够创造更高维度的矩阵、向量</strong>。</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409252313363.jpeg" alt="img" /></p>
+<p>举个简单的例子，<a href="https://zhida.zhihu.com/search?content_id=9946792&amp;content_type=Article&amp;match_order=1&amp;q=%E5%BD%A9%E8%89%B2%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6&amp;zhida_source=entity"  target="_blank">彩色图像文件</a>（RGB）一般都会处理成3-d tensor，每个2d array中的element表示一个像素，R代表Red，G代表Green，B代表Blue：</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409252314013.webp" alt="img" /></p>
+<p>再来看看Tensor对象的3个属性：</p>
+<ol>
+<li><strong>rank</strong>：<a href="https://zhida.zhihu.com/search?content_id=9946792&amp;content_type=Article&amp;match_order=1&amp;q=number+of+dimensions&amp;zhida_source=entity"  target="_blank">number of dimensions</a></li>
+<li><strong>shape</strong>: number of rows and columns</li>
+<li><strong>type</strong>: data type of tensor's elements</li>
+</ol>
+<h4 id="%E5%8D%B7%E7%A7%AF">卷积</h4>
+<p><a href="https://b23.tv/T4gTHYC"  target="_blank">https://b23.tv/T4gTHYC</a></p>
+<p>卷积, 实际可以理解为两个函数的相互作用</p>
+<p>数学上，其连续函数的解析式写作：</p>
+<p>$ F(x) = \int_{-\infty}^{+\infty}f(\tau)\,g(x -\tau)$</p>
+<p>$ F(x) = \sum_{\tau=1}^N f(\tau)\,g(x -\tau)$</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409252256263.gif" alt="在这里插入图片描述" /></p>
+<p>通常情况下，f ( τ ) 表示被积函数，而 g ( x − τ )  表示卷积核函数。这里多说一句，之所以不使用 f ( x ) 表示原函数而用 f ( τ ) ，而且强调 f ( τ ) 是被积函数，是因为 f ( x )  与 f ( τ ) 之间还存在着如下关系：<br />
+$ f(x) = \int_{-\infty}^{+\infty}f(\tau)d\tau$</p>
+<p>上式表明的操作在直观上理解是先对卷积核翻转，然后与输入点乘、求和得到输出。在机器学习领域尤其是深度学习中，卷积的实现通常省去了卷积核翻转这一步，因为深度学习中的卷积核参数是不断学习更新，因此有没有翻转并没有性质上的影响。严格定义上说，深度学习中的卷积实际上是另一种操作：<a href="https://zhida.zhihu.com/search?content_id=105153470&amp;content_type=Article&amp;match_order=1&amp;q=%E4%BA%92%E7%9B%B8%E5%85%B3&amp;zhida_source=entity"  target="_blank">互相关</a> <a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Cross-correlation"  target="_blank">Cross-Correlation</a>。公式表示如下</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409252334611.png" alt="image-20240925233420506" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409252334905.webp" alt="动图" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409252335303.png" alt="image-20240925233512203" /></p>
+<p>不考虑 padding，以 stride 为 1，那么我们进行卷积计算得到的结果为</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409252335091.png" alt="image-20240925233556003" /></p>
+<h4 id="%E5%8D%B7%E7%A7%AF%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F">卷积的三种模式</h4>
+<p>深度学习框架中通常会实现三种不同的卷积模式，分别是 SAME、VALID、FULL。这三种模式的核心区别在于<strong>卷积核进行卷积操作的移动区域不同</strong>，进而导致输出的尺寸不同。我们以一个例子来看这三种模式的区别，输入图片的尺寸是 5×5 ，卷积核尺寸是 3×3 ，stride 取 1。</p>
+<ul>
+<li>FULL 模式</li>
+</ul>
+<p>FULL 模式下卷积核<strong>从与输入有一个点的相交的地方就开始卷积</strong>。如下图所示，蓝框的位置就是卷积核第一个卷积的地方，灰色部分是为了卷积能够正常进行的 padding（一般填 0）。因此 FULL 模式下卷积核移动区域最大，卷积后输出的尺寸也最大。</p>
+<p><img src="https://pica.zhimg.com/80/v2-23ba5f401533b72b0214bd51a091000c_720w.webp" alt="img" /></p>
+<ul>
+<li>VALID 模式</li>
+</ul>
+<p>VALID 模式与 FULL 模式相反，<strong>在整个卷积核与输入重叠的地方才开始卷积操作</strong>，因此不需要 padding，输出的尺寸也最小</p>
+<p><img src="https://pic4.zhimg.com/80/v2-fc57effd13fdf64eeb375f57e65e309d_720w.webp" alt="img" /></p>
+<ul>
+<li>SAME 模式</li>
+</ul>
+<p>SAME 模式是最常用的一种模式，SAME 的意思是卷积后输出的尺寸与输入尺寸保持一致（假定 stride 为 1）。通过将卷积核的中心与输入的第一个点进行对齐确定卷积核起始位置，然后补齐对应 padding 即可。如下图所示，可以看到卷积输出的尺寸与出入保持一致。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a18f53d4f4d60a0eb6d1940d06bd5af5_720w.webp" alt="img" /></p>
+<p>SAME 模式下当卷积核边长为偶数时，可以通过在其中一边增加多一行（列）padding，即不对称的 padding 实现输出尺寸与输入尺寸保持一致，如下图所示（卷积核尺寸为 2×2 ）</p>
+<p><img src="https://pica.zhimg.com/80/v2-0ace23e8761226979fbe7ecd0a1905c8_720w.webp" alt="img" /></p>
+<p>以上三种模式区别在于卷积核进行卷积操作的移动区域不同，其实是确定了所需的 padding。</p>
+<h4 id="%E6%B1%A0%E5%8C%96%E5%B1%82Pooling-layers">池化层Pooling layers</h4>
+<p>它实际上是一种形式的降采样。有多种不同形式的非线性池化函数，而其中“最大池化（Max pooling）”是最为常见的。它是将输入的图像划分为若干个矩形区域，对每个子区域输出最大值。直觉上，这种机制能够有效地原因在于，在发现一个特征之后，它的精确位置远不及它和其他特征的相对位置的关系重要。池化层会不断地减小数据的空间大小，因此参数的数量和计算量也会下降，这在一定程度上也控制了过拟合。通常来说，CNN的卷积层之间都会周期性地插入池化层。<br />
+<img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409262220821.png" alt="img" /></p>
+<h4 id="%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB">非线性激活</h4>
+<p><strong>ReLu</strong>，全称是Rectified Linear Unit，中文名称是线性整流函数，是在神经网络中常用的激活函数。通常意义下，其指代数学中的斜坡函数，即F(X) = max(0, x) 。其对应的函数图像如下所示：</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409262259886.png" alt="image-20240926225959744" /></p>
+<ul>
+<li><strong>Sigmoid，</strong>是常用的连续、平滑的s型激活函数，也被称为逻辑（Logistic）函数。可以将一个实数映射到 <img src="https://www.zhihu.com/equation?tex=%280%2C+1%29&amp;consumer=ZHI_MENG" alt="(0, 1)" /> 的区间，用来做二分类。其函数定义为  $f(x) = \frac{1}{1 + e^{-x}}$，函数图像如下所示：</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409262300639.webp" alt="img" /></p>
+<ul>
+<li><strong>Tanh函数</strong>称为双曲正切函数，函数定义为 $f(x) = tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$，值域为 (-1,1)(0, 1) ，函数图像如下：</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409262300689.webp" alt="img" /></p>
+<p>引入非线性激活函数的目的是提高神经网络的非线性拟合能力，增强模型的表达能力。因此，在表诉过程中，在没有明确指明的情况下，激活函数指代非线性激活函数。经过严格的数学推导，如果网络中没有使用激活函数，每一层的节点的输入都是上层输出的线性函数，无论神经网络中的隐含层有多少，最后的输出结果都是网络输入的线性拟合，即隐含层没有发挥其作用。为此，引入非线性函数作为激活函数来提高模型的表达能力。</p>
+<p>举个栗子：如果不使用非线性函数作为激活函数，对于二分类问题，可以使用逻辑回归做简单的线性划分，如下图所示：</p>
+<p><img src="https://pic1.zhimg.com/v2-7a857d55584ce83c1b877ae96383c0c6_b.webp?consumer=ZHI_MENG" alt="img" /></p>
+<p>使用简单的线性划分无法有效划分数据类别，对此需要引入非线性，为数据集划分提高有效的方式。如下图所示：</p>
+<p><img src="https://picx.zhimg.com/v2-e042df59cf85ccb712141d152d958d8d_b.webp?consumer=ZHI_MENG" alt="img" /></p>
+<p>由此可见，引入激活函数能够正确有效划分数据类别。引入非线性因素，使得神经网络能够更好地解决复杂问题。</p>
+<h4 id="Normalization-Layer">Normalization Layer</h4>
+<p><a href="https://zhuanlan.zhihu.com/p/647813604"  target="_blank">一文搞懂Batch Normalization 和 Layer Normalization - 知乎 (zhihu.com)</a></p>
+<p>Normalization：规范化或标准化，就是把输入数据X，在输送给神经元之前先对其进行平移和伸缩变换，将X的分布规范化成在固定区间范围的<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=%E6%A0%87%E5%87%86%E5%88%86%E5%B8%83&amp;zhida_source=entity"  target="_blank">标准分布</a>。</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409271852225.png" alt="image-20240927185243068" /></p>
+<p>μ：<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=%E5%B9%B3%E7%A7%BB%E5%8F%82%E6%95%B0&amp;zhida_source=entity"  target="_blank">平移参数</a> ，δ：缩放参数 ，b ：再平移参数， g 再缩放参数，得到的数据符合均值为 b 、方差为g^2 的分布。</p>
+<p>Normalization 的作用很明显，把数据拉回<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=%E6%A0%87%E5%87%86%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83&amp;zhida_source=entity"  target="_blank">标准正态分布</a>，因为<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C&amp;zhida_source=entity"  target="_blank">神经网络</a>的Block大部分都是<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97&amp;zhida_source=entity"  target="_blank">矩阵运算</a>，一个向量经过矩阵运算后值会越来越大，为了网络的稳定性，我们需要及时把值拉回正态分布。</p>
+<p>Normalization根据标准化操作的维度不同可以分为batch Normalization和Layer Normalization，不管在哪个维度上做noramlization，本质都是为了让数据在这个维度上归一化，因为在训练过程中，上一层传递下去的值千奇百怪，什么样子的分布都有。BatchNorm就是通过对<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=batch+size&amp;zhida_source=entity"  target="_blank">batch size</a>这个维度归一化来让分布稳定下来。LayerNorm则是通过对<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=Hidden+size&amp;zhida_source=entity"  target="_blank">Hidden size</a>这个维度归一化来让某层的分布稳定。</p>
+<p>可以这样理解，深度网络每一层网络是相对独立的，也就是说每一层网络可以单独看成一个Classifier.不停对上一层的输出数据进行分类，每一层输出的数据分布又不一样，这就会出现Internal Covariate Shift（<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=%E5%86%85%E9%83%A8%E5%8D%8F%E5%8F%98%E9%87%8F&amp;zhida_source=entity"  target="_blank">内部协变量</a>偏移）. 随着网络的层数不断增大，这种误差就会不断积累，最终导致效果欠佳。显然对<a href="https://zhida.zhihu.com/search?content_id=232088974&amp;content_type=Article&amp;match_order=1&amp;q=%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86&amp;zhida_source=entity"  target="_blank">数据预处理</a>只能解决第一层的问题，之后需要Normalization等方法来解决。</p>
+<h4 id="Recuurent-Layers%E5%BE%AA%E7%8E%AF%E5%B1%82">Recuurent Layers循环层</h4>
+<p>Recurrent Layers的主要作用是在神经网络中提供记忆功能，使得网络能够处理时间序列数据或具有时间相关性的数据。通过在网络中引入循环连接，Recurrent Layers可以将先前的输出作为输入传递给下一个时间步，从而允许网络在处理序列数据时考虑到之前的信息。这种记忆机制能够帮助网络更好地理解和预测序列数据中的模式和趋势，同时也有助于解决短期记忆和梯度消失等问题。因此，Recurrent Layers在语言模型、机器翻译、时间序列预测等任务中具有重要作用。</p>
+<h4 id="Transform-Layer">Transform Layer</h4>
+<p>解决特定问题的时候使用</p>
+<h4 id="Linear-Layer">Linear Layer</h4>
+<p>线性层, 对输入的每一个数据乘以一个权重, 之后相加</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409271917063.png" alt="image-20240927191723938" /></p>
+<h4 id="Dropout-Layers">Dropout Layers</h4>
+<p>随机吧一部分的元素变为0, 防止数据过拟合, 防止在实际处理数的时候泛用性不强</p>
+<h4 id="Sparse-Layer">Sparse Layer</h4>
+<p>用于自然语言的处理</p>
+<h4 id="%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD">损失函数和反向传播</h4>
+<p>Loss: 实际获取的数据和真实的数据之间的差距, 可以使用这一个计算实际输出和目标的差距, 也可以为更新输出提供依据(反向传播)</p>
+<h3 id="%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE">加载数据</h3>
+<p>读取数据的时候主要有两个类, dataset, dataloader</p>
+<p>dataset: 对数据进行分类并进行编号, 获取数据的lable值</p>
+<p>dataloader: 对数据进行打包, 为后面的网络提供不同的数据形式</p>
+<p><strong>数据集:</strong> 一般使用一下的标识方法</p>
+<ol>
+<li>把不同的数据按照文件夹分类, 文件夹的名字标识这一个数据集的type</li>
+<li>使用单独的文件标识图片的lable</li>
+<li>之间把lable写在图片的名字</li>
+</ol>
+
+<pre class="language-c"><code class="language-c">from torch.utils.data import Dataset
+help(Dataset)
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">Help on class Dataset in module torch.utils.data.dataset:
+
+class Dataset(typing.Generic)
+ |  An abstract class representing a :class:`Dataset`.
+ |
+ |  All datasets that represent a map from keys to data samples should subclass
+ |  it. All subclasses should overwrite :meth:`__getitem__`, supporting fetching a
+ |  data sample for a given key. Subclasses could also optionally overwrite
+ |  :meth:`__len__`, which is expected to return the size of the dataset by many
+ |  :class:`~torch.utils.data.Sampler` implementations and the default options
+ |  of :class:`~torch.utils.data.DataLoader`. Subclasses could also
+ |  optionally implement :meth:`__getitems__`, for speedup batched samples
+ |  loading. This method accepts list of indices of samples of batch and returns
+ |  list of samples.
+ |
+ |  .. note::
+ |    :class:`~torch.utils.data.DataLoader` by default constructs an index
+ |    sampler that yields integral indices.  To make it work with a map-style
+ |    dataset with non-integral indices/keys, a custom sampler must be provided.
+ |
+ |  Method resolution order:
+ |      Dataset
+ |      typing.Generic
+ |      builtins.object
+ |
+ |  Methods defined here:
+ |
+ |  __add__(self, other: 'Dataset[T_co]') -&gt; 'ConcatDataset[T_co]'
+ |
+ |  __getitem__(self, index) -&gt; +T_co
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
+ |
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |
+ |  __annotations__ = {}
+ |
+ |  __orig_bases__ = (typing.Generic[+T_co],)
+ |
+ |  __parameters__ = (+T_co,)
+ |
+ |  ----------------------------------------------------------------------
+ |  Class methods inherited from typing.Generic:
+ |
+ |  __class_getitem__(...)
+ |      Parameterizes a generic class.
+ |
+ |      At least, parameterizing a generic class is the *main* thing this
+ |      method does. For example, for some generic class `Foo`, this is called
+ |      when we do `Foo[int]` - there, with `cls=Foo` and `params=int`.
+ |
+ |      However, note that this method is also called when defining generic
+ |      classes in the first place with `class Foo[T]: ...`.
+ |
+ |  __init_subclass__(...)
+ |      Function to initialize subclasses.
+</code></pre>
+<p>也可以使用<code>Dataset??</code>这一个方式获取的信息比较清晰</p>
+
+<pre class="language-bash"><code class="language-bash">Init signature: Dataset()
+Source:        
+class Dataset(Generic[T_co]):
+    r&quot;&quot;&quot;An abstract class representing a :class:`Dataset`.
+
+    All datasets that represent a map from keys to data samples should subclass
+    it. All subclasses should overwrite :meth:`__getitem__`, supporting fetching a
+    data sample for a given key. Subclasses could also optionally overwrite
+    :meth:`__len__`, which is expected to return the size of the dataset by many
+    :class:`~torch.utils.data.Sampler` implementations and the default options
+    of :class:`~torch.utils.data.DataLoader`. Subclasses could also
+    optionally implement :meth:`__getitems__`, for speedup batched samples
+    loading. This method accepts list of indices of samples of batch and returns
+    list of samples.
+    所有的数据集子类需要集成这一个类, 重写__getitem__
+
+    .. note::
+      :class:`~torch.utils.data.DataLoader` by default constructs an index
+      sampler that yields integral indices.  To make it work with a map-style
+      dataset with non-integral indices/keys, a custom sampler must be provided.
+    &quot;&quot;&quot;
+
+    def __getitem__(self, index) -&gt; T_co:
+        raise NotImplementedError(&quot;Subclasses of Dataset should implement __getitem__.&quot;)
+
+    # def __getitems__(self, indices: List) -&gt; List[T_co]:
+    # Not implemented to prevent false-positives in fetcher check in
+    # torch.utils.data._utils.fetch._MapDatasetFetcher
+
+    def __add__(self, other: &quot;Dataset[T_co]&quot;) -&gt; &quot;ConcatDataset[T_co]&quot;:
+        return ConcatDataset([self, other])
+
+    # No `def __len__(self)` default?
+    # See NOTE [ Lack of Default `__len__` in Python Abstract Base Classes ]
+    # in pytorch/torch/utils/data/sampler.py
+File:           e:\jhy\python\anaconda-test\.conda\lib\site-packages\torch\utils\data\dataset.py
+Type:           type
+Subclasses:     IterableDataset, TensorDataset, StackDataset, ConcatDataset, Subset, MapDataPipe
+</code></pre>
+</blockquote>
+<h3 id="%E5%AE%9E%E6%88%98">实战</h3>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409231942661.png" alt="image-20240923194200555" /></p>
+<p>在实际使用的时候由于需要使用到图片的读取, 所以为这里要安装OpenCV<code>pip install opencv-python</code>, 也可以使用PIL里面的Image</p>
+
+<pre class="language-python"><code class="language-python">from torch.utils.data import Dataset
+from PIL import Image
+import os
+
+# dir_path = &quot;./hymenoptera_data/train/ants&quot;
+# img_path_list = os.listdir(dir_path)
+# print(img_path_list)
+
+# path = os.path.join(root_dir, lable_dir)
+# print(path)
+# img_path = &quot;./hymenoptera_data/train/ants/0013035.jpg&quot;
+# img = Image.open(img_path)
+# print(img.size)
+# img.show()
+class Mydata(Dataset):
+    def __init__(self, read_dir, lable_dir):
+        # 初始化
+        self.root_dir = read_dir
+        self.lable_dir = lable_dir
+        self.path = os.path.join(self.root_dir, self.lable_dir)
+        self.img_path_list = os.listdir(self.path)
+
+
+
+    def __getitem__(self, index):
+        &quot;&quot;&quot;
+        Return the image and lable of the index-th sample
+        可以使对象使用引用的方式进行调用
+        &quot;&quot;&quot;
+        img_name = self.img_path_list[index]
+        img_path = os.path.join(self.path, img_name)
+        img = Image.open(img_path)
+        lable = self.lable_dir
+        return img, lable
+
+    def __len__(self):
+        return len(self.img_path_list)
+
+# 获取第一个数据集
+root_dir = &quot;./hymenoptera_data/train&quot;
+ants_lable_dir = &quot;ants&quot;
+ants_mydata = Mydata(root_dir, ants_lable_dir)
+img, lable = ants_mydata[0]
+img.show()
+
+bees_lable_dir = &quot;bees&quot;
+bees_mydata = Mydata(root_dir, bees_lable_dir)
+bees_img, bees_lable = bees_mydata[0]
+bees_img.show()
+</code></pre>
+<p>这两个数据集可以使用<code>+</code>进行合并</p>
+
+<pre class="language-python"><code class="language-python">train_dataset = ants_mydata + bees_mydata
+</code></pre>
+<h2 id="tensorboard">tensorboard</h2>
+<p>TensorBoard 是一组用于数据可视化的工具。它包含在流行的开源机器学习库 Tensorflow 中。TensorBoard 的主要功能包括：</p>
+<ol>
+<li>可视化模型的网络架构</li>
+<li>跟踪模型指标，如损失和准确性等</li>
+<li>检查机器学习工作流程中权重、偏差和其他组件的直方图</li>
+<li>显示非表格数据，包括图像、文本和音频</li>
+<li>将高维嵌入投影到低维空间</li>
+</ol>
+<p>这一个在torch里面有调用模块的, 使用<code>pip install tensorboard</code>安装</p>
+
+<pre class="language-c"><code class="language-c">from torch.utils.tensorboard import SummaryWriter
+
+write = SummaryWriter(&quot;logs&quot;)  # 是要用这一个文件夹存放数据
+
+# write.add_image()
+for i in range(100):
+    write.add_scalar(&quot;y=x&quot;, i, i)   # 画图的时候，y轴是i，x轴是i, 不同的文件需要使用不同的title
+
+write.close()
+</code></pre>
+<blockquote>
+<p>之后使用命令<code>tensorboard --logdir=logs</code>即可打开生成的文件(这里的参数是数据保存的那一个文件夹), 可以使用<code>--port=port</code>设置端口, 默认的时候会使用网页<a href="http://localhost:6006/%E8%BF%9B%E8%A1%8C%E6%98%BE%E7%A4%BA"  target="_blank">http://localhost:6006/%E8%BF%9B%E8%A1%8C%E6%98%BE%E7%A4%BA</a></p>
+</blockquote>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409232334463.png" alt="image-20240923233445226" /></p>
+<h3 id="%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87">显示图片</h3>
+
+<pre class="language-python"><code class="language-python">from torch.utils.tensorboard import SummaryWriter
+import numpy as np
+from PIL import Image
+
+write = SummaryWriter(&quot;logs&quot;)  # 是要用这一个文件夹存放数据
+image_path = &quot;hymenoptera_data/train/ants/0013035.jpg&quot;
+
+img =Image.open(image_path)
+img_array = np.array(img)
+# 在使用np这一个格式的时候需要加上dataformats这一个参数
+# 第一个参数是窗口区分, 第二个是图片数据, 第三个是第几步(可以使用滑块换步)
+write.add_image(&quot;test&quot;, img_array, 1, dataformats='HWC')  
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409241001865.png" alt="image-20240924100139724" /></p>
+<h3 id="%E6%98%BE%E7%A4%BA%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B">显示训练过程</h3>
+
+<pre class="language-python"><code class="language-python"># 这里的jiao是训练使用的一个Moudle
+# input是输入的数据
+writer = SummaryWriter(&quot;logs&quot;)
+writer.add_graph(jiao, input)
+writer.close()
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409272257605.png" alt="image-20240927225748432" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409272258867.png" alt="image-20240927225841697" /></p>
+<h2 id="transforms">transforms</h2>
+<h3 id="ToTensor">ToTensor</h3>
+<p>ToTensor数据类型: 使用<code>from torchvision import transforms</code>文件下面的ToTensor可以把PIL或者一个<code>numpy.ndarray</code>转换为一个tensor数据类型, 这一个数据类型实际是对图片进行一些方便神经网络的封装</p>
+
+<pre class="language-python"><code class="language-python">from torchvision import transforms
+from PIL import Image
+
+image_path = &quot;hymenoptera_data/train/ants/0013035.jpg&quot;
+img = Image.open(image_path)
+
+# 1. ToTensor
+trans1 = transforms.ToTensor()
+img_tensor = trans1(img)
+</code></pre>
+
+<pre class="language-python"><code class="language-python">import cv2
+cv_img = cv2.imread(image_path)
+</code></pre>
+<blockquote>
+<p>使用这种方式打开的文件是一个<code>numpy.ndarray</code>格式的图片</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">from torchvision import transforms
+from PIL import Image
+from torch.utils.tensorboard import SummaryWriter
+
+image_path = &quot;hymenoptera_data/train/ants/0013035.jpg&quot;
+img = Image.open(image_path)
+
+writer = SummaryWriter(&quot;logs&quot;)
+
+# 1. ToTensor
+trans1 = transforms.ToTensor()
+img_tensor = trans1(img)
+print(img_tensor)
+
+writer.add_image(&quot;ToTensor&quot;, img_tensor)
+</code></pre>
+<p>可以使用这一个方式显示图片</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409241221068.png" alt="image-20240924122156943" /></p>
+<h3 id="Compose">Compose</h3>
+<p>把多个transform集合在一起, 在实际使用的时候可以把多个处理的transform放在一起, 依次执行</p>
+<p>这一个初始化的时候的参数是一个数列</p>
+
+<pre class="language-python"><code class="language-python">trans4 = transforms.Compose([
+    transforms.Resize((300, 300)),
+    transforms.ToTensor()
+])
+img_tensor = trans4(img)
+writer.add_image(&quot;Compose&quot;, img_tensor, 1)
+</code></pre>
+<h3 id="Normalize">Normalize</h3>
+<p>用于处理图片的差异, 参数是均值和标准差, 需要按照通道的个数传进去一个数列</p>
+<p>这一个参数数值是需要计算获取的</p>
+<p>实际的normal处理事input[channel] = (input[channel] - mean[channel]) / std[channel]</p>
+<p>如公式所示，通过减去均值并除以标准差，我们可以将图像数据的分布转换为标准正态分布（均值为0，标准差为1）。这样，模型在训练过程中就可以更容易地学习到数据的特征。</p>
+<blockquote>
+<p>数据标准化：如上所述，transforms.Normalize()函数可以对图像数据进行标准化处理，使数据分布符合标准正态分布。这有助于模型更快地收敛，并提高模型的性能。<br />
+提高模型泛化能力：通过对数据进行标准化，我们可以减少模型对特定数据集的过拟合，从而提高模型在未见过的数据上的泛化能力。<br />
+加速模型训练：标准化的数据可以使模型在训练过程中更快地学习到数据的特征，从而加速模型的训练速度。</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python"># 2. Normalize
+print(img_tensor[0][0][0])
+trans2 = transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+img_tensor = trans2(img_tensor)
+print(img_tensor[0][0][0])
+</code></pre>
+<h3 id="Resize">Resize</h3>
+<p><code>size((h, w))</code>或者<code>size(int)</code>第一个会把图像进行变换, 第二个会使得这一个图形比较小的一个边和这一个数字一样</p>
+<p>If the image is torch Tensor, it is expected to have [..., H, W] shape, where ... means a maximum of two leading dimensions</p>
+<p>也可以使用PIL格式的数据</p>
+<blockquote>
+<p>ToTensor的转换格式是</p>
+<p>Converts a PIL Image or numpy.ndarray (H x W x C) in the range [0, 255] to a torch.FloatTensor of shape (C x H x W) in the range [0.0, 1.0]</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">print(img.size)
+trans3 = transforms.Resize((300, 300))
+img_tensor = trans3(img)
+print(img_tensor)
+print(img_tensor.size)
+</code></pre>
+<h2 id="Dataset">Dataset</h2>
+<p>这里选取其中一个数据集</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409241842098.png" alt="image-20240924184250991" /></p>
+<blockquote>
+<p>The CIFAR-10 dataset consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images.</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">import torchvision
+from PIL import Image
+
+# 获取CIFAR10数据集
+train_set = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=True, download=True)
+test_set = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True)
+
+# 获取数据集的大小
+print(len(train_set))
+print(len(test_set))
+
+# 获取数据集的标签
+print(train_set.classes)
+print(test_set.classes)
+
+print(train_set[1])
+print(test_set[1])
+
+# 显示图片
+train_set[1][0].show()
+test_set[1][0].show()
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">PS E:\JHY\python\anaconda-test&gt; &amp; e:/JHY/python/anaconda-test/.conda/python.exe e:/JHY/python/anaconda-test/my_dataset.py
+Files already downloaded and verified
+Files already downloaded and verified
+50000
+10000
+['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+(&lt;PIL.Image.Image image mode=RGB size=32x32 at 0x218909AD370&gt;, 9)
+(&lt;PIL.Image.Image image mode=RGB size=32x32 at 0x218909AD160&gt;, 8)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409241919607.png" alt="image-20240924191954360" /></p>
+</blockquote>
+<p>可以直接使用工具集在获取数据集的时候进行加工</p>
+
+<pre class="language-python"><code class="language-python">import torchvision
+from PIL import Image
+from torch.utils.tensorboard import SummaryWriter
+# 初始化数据集的转换
+dataset_tramsforms = torchvision.transforms.Compose([
+    torchvision.transforms.ToTensor()
+])
+
+
+# 获取CIFAR10数据集, 直接进行转换
+train_set = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=True, download=True, transform=dataset_tramsforms)
+test_set = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True, transform=dataset_tramsforms)
+
+writer = SummaryWriter(&quot;logs&quot;)
+for i in range(10):
+    img, lable = train_set[i]
+    writer.add_image(&quot;train_set&quot;, img, i)
+
+for i in range(10):
+    img, lable = test_set[i]
+    writer.add_image(&quot;test_set&quot;, img, i)
+
+writer.close()
+# print(test_set[0])
+</code></pre>
+<h2 id="Dataloader">Dataloader</h2>
+<p>一个加载器, 把数据加载到神经网络里面, 从dataset里面取数据, 取的方法和数量是需要使用dataloader进行设置的</p>
+<h3 id="%E5%8F%82%E6%95%B0">参数</h3>
+<ul>
+<li><strong>dataset</strong> (<a href="https://pytorch.org/docs/1.0.0/data.html#torch.utils.data.Dataset"  target="_blank"><em>Dataset</em></a>) – dataset from which to load the data.</li>
+<li><strong>batch_size</strong> (<a href="https://docs.python.org/3/library/functions.html#int"  target="_blank"><em>int</em></a><em>,</em> <em>optional</em>) – how many samples per batch to load (default: <code>1</code>).一次加载的数量</li>
+<li><strong>shuffle</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"  target="_blank"><em>bool</em></a><em>,</em> <em>optional</em>) – set to <code>True</code> to have the data reshuffled at every epoch (default: <code>False</code>).这数据是不是需要打乱, 一般使用true</li>
+<li><strong>sampler</strong> (<a href="https://pytorch.org/docs/1.0.0/data.html#torch.utils.data.Sampler"  target="_blank"><em>Sampler</em></a><em>,</em> <em>optional</em>) – defines the strategy to draw samples from the dataset. If specified, <code>shuffle</code> must be False.</li>
+<li><strong>batch_sampler</strong> (<a href="https://pytorch.org/docs/1.0.0/data.html#torch.utils.data.Sampler"  target="_blank"><em>Sampler</em></a><em>,</em> <em>optional</em>) – like sampler, but returns a batch of indices at a time. Mutually exclusive with <code>batch_size</code>, <code>shuffle</code>, <code>sampler</code>, and <code>drop_last</code>.</li>
+<li><strong>num_workers</strong> (<a href="https://docs.python.org/3/library/functions.html#int"  target="_blank"><em>int</em></a><em>,</em> <em>optional</em>) – how many subprocesses to use for data loading. 0 means that the data will be loaded in the main process. (default: <code>0</code>)是不是使用多进程进行加载, Windows下面这一个可能有问题</li>
+<li><strong>collate_fn</strong> (<em>callable</em><em>,</em> <em>optional</em>) – merges a list of samples to form a mini-batch.</li>
+<li><strong>pin_memory</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"  target="_blank"><em>bool</em></a><em>,</em> <em>optional</em>) – If <code>True</code>, the data loader will copy tensors into CUDA pinned memory before returning them.</li>
+<li><strong>drop_last</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"  target="_blank"><em>bool</em></a><em>,</em> <em>optional</em>) – set to <code>True</code> to drop the last incomplete batch, if the dataset size is not divisible by the batch size. If <code>False</code> and the size of dataset is not divisible by the batch size, then the last batch will be smaller. (default: <code>False</code>)除不尽的时候剩下的那几张牌是不是要舍去</li>
+<li><strong>timeout</strong> (<em>numeric</em><em>,</em> <em>optional</em>) – if positive, the timeout value for collecting a batch from workers. Should always be non-negative. (default: <code>0</code>)</li>
+<li><strong>worker_init_fn</strong> (<em>callable</em><em>,</em> <em>optional</em>) – If not <code>None</code>, this will be called on each worker subprocess with the worker id (an int in <code>[0, num_workers - 1]</code>) as input, after seeding and before data loading. (default: <code>None</code>)</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">import torchvision
+from torch.utils.data import DataLoader
+
+# 初始化数据集的转换
+dataset_tramsforms = torchvision.transforms.Compose([
+    torchvision.transforms.ToTensor()
+])
+
+test_set = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True, transform=dataset_tramsforms)
+
+test_loader = DataLoader(test_set, batch_size=4, shuffle=True, num_workers=0, drop_last=False)
+
+img, targrt = test_set[0]
+print(img.shape)
+print(targrt)
+
+for data in test_loader:
+    imgs, targets = data
+    print(imgs.shape)
+    print(targets)
+    break
+</code></pre>
+<blockquote>
+
+<pre class="language-bash"><code class="language-bash">PS E:\JHY\python\anaconda-test&gt; &amp; e:/JHY/python/anaconda-test/.conda/python.exe e:/JHY/python/anaconda-test/my_dataloader.py
+Files already downloaded and verified
+torch.Size([3, 32, 32])
+3
+torch.Size([4, 3, 32, 32])
+tensor([5, 9, 5, 9])
+</code></pre>
+<p>这里是把图片按照四个一组进行打包, 石笋这一个返回的是两个tensor数据类型</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">wrier = SummaryWriter(&quot;logs&quot;)
+step = 0
+for data in test_loader:
+    imgs, targets = data
+    wrier.add_images(&quot;test_loader&quot;, imgs, step)  # 这里使用images加载多个图片
+    step += 1
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409251910926.png" alt="image-20240925191028788" /></p>
+<h2 id="%E7%BD%91%E7%BB%9C%E6%90%AD%E5%BB%BA">网络搭建</h2>
+<p>这一个系列的工具主要是在torch.nn里面</p>
+<ul>
+<li>Container: 一个神经网络的框架</li>
+<li>Convolution Layers: 卷积层</li>
+<li>Pooling Layers: 池化层</li>
+<li>Padding Layers:</li>
+<li>...</li>
+</ul>
+<h3 id="Container">Container</h3>
+<p>这里面最常用的是Moudle这一个类, 是所有神经网络的基类</p>
+<p>实际的处理数据的函数是每一个类里面的forward这一个函数</p>
+
+<pre class="language-python"><code class="language-python">import torch.nn as nn
+import torch.nn.functional as F
+
+class Model(nn.Module):
+    def __init__(self):
+        super(Model, self).__init__()
+        self.conv1 = nn.Conv2d(1, 20, 5)
+        self.conv2 = nn.Conv2d(20, 20, 5)
+
+    def forward(self, x):
+       x = F.relu(self.conv1(x)) # 一次卷积, 一次非线性处理
+       return F.relu(self.conv2(x)) # 再次进行卷积非线性获取输出
+</code></pre>
+
+<pre class="language-c"><code class="language-c">from torch import nn
+import torch
+
+class My_Moudle(nn.Module):
+    def __init__(self):
+        super(My_Moudle, self).__init__()
+
+
+    def forward(self, x):
+        return x + 1
+
+
+if __name__ == &quot;__main__&quot;:
+    x = torch.tensor(1.0)
+    model = My_Moudle()
+    y = model(x)
+    print(y)
+</code></pre>
+
+<pre class="language-bash"><code class="language-bash">PS E:\JHY\python\anaconda-test&gt; &amp; e:/JHY/python/anaconda-test/.conda/python.exe e:/JHY/python/anaconda-test/my_moudle.py
+tensor(2.)
+</code></pre>
+<h3 id="Sequential">Sequential</h3>
+
+<pre class="language-python"><code class="language-python"># Example of using Sequential
+model = nn.Sequential(
+          nn.Conv2d(1,20,5),
+          nn.ReLU(),
+          nn.Conv2d(20,64,5),
+          nn.ReLU()
+        )
+
+# Example of using Sequential with OrderedDict
+model = nn.Sequential(OrderedDict([
+          ('conv1', nn.Conv2d(1,20,5)),
+          ('relu1', nn.ReLU()),
+          ('conv2', nn.Conv2d(20,64,5)),
+          ('relu2', nn.ReLU())
+        ]))
+</code></pre>
+<h3 id="%E5%B1%82">层</h3>
+<h4 id="%E5%8D%B7%E7%A7%AF%E5%B1%82Convolution-Layers">卷积层Convolution Layers</h4>
+<p>这里的里面比较常用的是Conv1d, Conv2d, 这一个文件的操作实际是对functional这一个文件的操作进行的封装</p>
+<p><a href="https://gitcode.com/gh_mirrors/co/conv_arithmetic/blob/master/README.md?utm_source=csdn_github_accelerator&amp;isLogin=1"  target="_blank">conv_arithmetic:A technical report on convolution arithmetic in the context of deep learning - GitCode</a></p>
+<ul>
+<li>Conv2d</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">torch.nn.Conv2d(in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True)
+</code></pre>
+<img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409261824662.png" alt="image-20240926182432173" style="zoom:150%;" />
+<p>in_channels</p>
+<p>​	输入的通道数</p>
+<p>out_channels</p>
+<p>​	输出的通道数, 实际是使用几个不同的卷积核生成多个结果</p>
+<p>kernel_size<br />
+  卷积核的大小，一般我们会使用5x5、3x3这种左右两个数相同的卷积核，因此这种情况只需要写kernel_size = 5这样的就行了。如果左右两个数不同，比如3x5的卷积核，那么写作kernel_size = (3, 5)，注意需要写一个tuple，而不能写一个列表（list）。里面的数字是不需要设置的, 会在训练的时候进行调整的</p>
+<p>stride = 1<br />
+  卷积核在图像窗口上每次平移的间隔，即所谓的步长。这个概念和Tensorflow等其他框架没什么区别，不再多言。</p>
+<p>padding</p>
+<p>​	拓展的大小</p>
+<p>dilation空洞卷积, 一般不使用</p>
+<p><img src="https://raw.gitcode.com/gh_mirrors/co/conv_arithmetic/files/master/gif/dilation.gif" alt="img" /></p>
+<p>groups</p>
+<p>bias=True</p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409261935794.png" alt="image-20240926193519679" /></p>
+<blockquote>
+<p>原理</p>
+
+<pre class="language-python"><code class="language-python">torch.nn.functional.conv2d(input, weight, bias=None, stride=1, padding=0, dilation=1, groups=1) 
+</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>input</strong> – input tensor of shape (minibatch×in_channels×iH×iW)输入的需要是一个四维的数组, 可以使用reship函数进行变换</li>
+<li><strong>weight</strong> – filters of shape (out_channels×in_channelsgroups×kH×kW)</li>
+<li><strong>bias</strong> – optional bias tensor of shape (out_channelsout_channels). Default: <code>None</code></li>
+<li><strong>stride</strong> – the stride of the convolving kernel. Can be a single number or a tuple (sH, sW). Default: 1</li>
+<li><strong>padding</strong> – implicit zero paddings on both sides of the input. Can be a single number or a tuple (padH, padW). Default: 0 填充</li>
+<li><strong>dilation</strong> – the spacing between kernel elements. Can be a single number or a tuple (dH, dW). Default: 1</li>
+<li><strong>groups</strong> – split input into groups, in_channelsin_channels should be divisible by the number of groups. Default: 1</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">import torch
+import torch.nn.functional as F
+
+input = torch.tensor([[1, 2, 0, 3, 1], 
+                      [0, 1, 2, 3, 1], 
+                      [1, 2, 1, 0, 0], 
+                      [5, 2, 3, 1, 1], 
+                      [2, 1, 0, 1, 1]])
+
+kernel = torch.tensor([[1, 2, 1],
+                      [0, 1, 0],
+                      [2, 1, 0]])
+&quot;&quot;&quot;
+结果
+1*1 + 2*2 + 0*1 + 0*0 + 1*1 + 0*2 + 1*2 + 2*1 + 0*3 = 10
+1*2 + 2*0 + 1*3 + 0*1 + 1*2 + 0*3 + 2*2 + 1*3 + 0*0 = 12
+...
+&quot;&quot;&quot;
+
+# 这里的参数是(N, C, H, W), N是batch_size(每一次训练的时候图片的数量), C是通道数(二维向量是1), H是高, W是宽
+input = torch.reshape(input, (1, 1, 5, 5))
+kernel = torch.reshape(kernel, (1, 1, 3, 3))
+
+print(input.shape)
+print(kernel.shape)
+
+output = F.conv2d(input, kernel, stride=1, padding=0)  # 这里的stride是步长, padding是填充
+print(output)
+
+</code></pre>
+
+<pre class="language-bash"><code class="language-bash">PS E:\JHY\python\anaconda-test&gt; &amp; e:/JHY/python/anaconda-test/.conda/python.exe e:/JHY/python/anaconda-test/my_conv.py
+torch.Size([1, 1, 5, 5])
+torch.Size([1, 1, 3, 3])
+tensor([[[[10, 12, 12],
+          [18, 16, 16],
+          [13,  9,  3]]]])
+</code></pre>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">import torch
+import torchvision
+from torch.utils.data import DataLoader
+from torch import nn
+from torch.utils.tensorboard import SummaryWriter
+
+dateset = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True, 
+                                       transform=torchvision.transforms.ToTensor())
+
+dataloader = DataLoader(dateset, batch_size=64)
+
+class JIAO(nn.Module):
+    def __init__(self):
+        super(JIAO, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=6, kernel_size=3, stride=1, padding=0)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        return x
+
+jiao = JIAO()
+&quot;&quot;&quot;
+JIAO(
+  (conv1): Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))
+)
+&quot;&quot;&quot;
+print(jiao) 
+
+writer = SummaryWriter(&quot;logs&quot;)
+step = 0
+
+for data in dataloader:
+    imgs, targets = data
+    output = jiao(imgs)
+    print(imgs.shape) # torch.Size([64, 3, 32, 32])
+    print(output.shape) # torch.Size([64, 6, 30, 30])
+    writer.add_images(&quot;input&quot;, imgs, step)
+    ## 这里的3是输出通道数, 30是输出的高和宽, 使用-1是自动计算, 3是可以显示的通道数
+    output = torch.reshape(output, (-1, 3, 30, 30)) 
+    writer.add_images(&quot;output&quot;, output, step)
+    step += 1
+
+writer.close()
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409261932362.png" alt="image-20240926193224030" /></p>
+<h4 id="%E6%B1%A0%E5%8C%96%E5%B1%82-Pooling-layers">池化层 Pooling layers</h4>
+<p>MaxPool: 最大池化</p>
+<p>MaxUnpool: 上采样</p>
+<p>...</p>
+<p>最常使用的MaxPool2d</p>
+<ul>
+<li>MaxPool2d</li>
+</ul>
+<p>class torch.nn.MaxPool2d(kernel_size, stride=None, padding=0,  dilation=1,return_indices=False, ceil_mode=False)</p>
+<blockquote>
+<ul>
+<li><strong>kernel_size</strong> – the size of the window to take a max over生成的窗口</li>
+<li><strong>stride</strong> – the stride of the window. Default value is <code>kernel_size</code></li>
+<li><strong>padding</strong> – implicit zero padding to be added on both sides</li>
+<li><strong>dilation</strong> – a parameter that controls the stride of elements in the window</li>
+<li><strong>return_indices</strong> – if <code>True</code>, will return the max indices along with the outputs. Useful when Unpooling later</li>
+<li><strong>ceil_mode</strong> – when True, will use ceil instead of floor to compute the output shape当一个取值范围不能全部覆盖的时候是不是进行舍去操作</li>
+</ul>
+</blockquote>
+<h4 id="%E5%9E%AB%E5%B1%82Padding-Layer">垫层Padding Layer</h4>
+<p>使用数字进行填充, 几乎用不到</p>
+<h4 id="%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BBNon-Linear-Activactions">非线性激活Non-Linear Activactions</h4>
+<p>主要使用的是ReLu, Sigmoid, Tanh这几个算法使用的方式和前面的基本一样</p>
+<h4 id="Normalization-Layers">Normalization Layers</h4>
+<p>这一个不常使用, 主要用的函数是BatchNorm2d这一个函数, 它的参数mun_features指的是channel的数量</p>
+<h4 id="Liner-Layer">Liner Layer</h4>
+<p>参数实际是input和output的大小, 权重是按照输入的数据计算的</p>
+<p>例: 实际的计算可以把一个1x1x4096的数据转换为1x1x1000</p>
+<h4 id="flatten">flatten</h4>
+<p>把输入的数据展开为一行</p>
+<h4 id="%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD">损失函数和反向传播</h4>
+<ul>
+<li>L1loss</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">classtorch.nn.L1Loss(size_average=None, reduce=None, reduction='elementwise_mean')
+</code></pre>
+<p>使用这一个可以计算结果和真实值之间的绝对值, 可以使用reduction控制是平均还是求和</p>
+
+<pre class="language-python"><code class="language-python">&gt;&gt;&gt; loss = nn.L1Loss()
+&gt;&gt;&gt; input = torch.randn(3, 5, requires_grad=True)
+&gt;&gt;&gt; target = torch.randn(3, 5)
+&gt;&gt;&gt; output = loss(input, target)
+&gt;&gt;&gt; output.backward()
+</code></pre>
+<p>input和target需要是相同的图形</p>
+<ul>
+<li>MSELOSS</li>
+</ul>
+<p>计算平方差的平均数</p>
+<ul>
+<li>CrossEntorpyLoss交叉熵</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409272323402.png" alt="image-20240927232316235" /></p>
+<p>有多个分类的时候, 比如说有三个分类的时候, 一张图片的输出是[0.1, 0.2, 0.3], 分别标准0, 1, 2这三个类, 实际的分类应该是1</p>
+<p>实际计算的时候x是获取的[0.1, 0.2, 0.3], class是1</p>
+<p>loss(x, class) = -0.2 + log(exp(0.1) + exp(0.2) + exp(0.3))</p>
+<blockquote>
+<p>exp是指数函数$e^x$</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">x = torch.tensor([0.1, 0.2, 0.3])
+y = torch.tensor([1])
+x = torch.reshape(x, (1, 3))
+loss_cross = nn.CrossEntorpyLoss()
+result_cross = loss_cross(x, y)
+print(result_cross)
+</code></pre>
+
+<pre class="language-python"><code class="language-python">
+from torch import nn
+from torch.nn import Conv2d
+from torch.nn import MaxPool2d
+from torch.nn import Flatten
+import torch
+from torch.utils.tensorboard import SummaryWriter
+import torchvision
+from torchvision import transforms
+from torch.utils.data import DataLoader
+
+# 初始化数据集的转换
+dataset_tramsforms = transforms.Compose([
+    torchvision.transforms.ToTensor()
+])
+
+train_set = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True, transform=dataset_tramsforms)
+dataloader = DataLoader(train_set, batch_size=64)
+
+
+class JIAO(nn.Module):
+    def __init__(self):
+        super(JIAO, self).__init__()
+        self.moudle1 = nn.Sequential(
+            Conv2d(in_channels=3, out_channels=32, kernel_size=5, padding=4),
+            nn.MaxPool2d(kernel_size=2),
+            Conv2d(32, 32, 5, padding=2),
+            nn.MaxPool2d(2),
+            Conv2d(32, 64, 5, padding=2),
+            nn.MaxPool2d(2),
+            Flatten(),
+            nn.Linear(64*4*4, 64),
+            nn.Linear(64, 10)
+        )
+
+    def forward(self, x):
+        x = self.moudle1(x)
+        return x
+
+jiao = JIAO()
+loss = nn.CrossEntropyLoss()
+
+for data in dataloader:
+    imgs, labels = data
+    output = jiao(imgs)
+    result_loss = loss(output, labels)
+    print(result_loss)
+    result_loss.backward() # 反向传播, 可以使用这一个计算出来一个梯度, 之后进一步优化
+    break
+</code></pre>
+<h4 id="%E4%BC%98%E5%8C%96%E5%99%A8optim">优化器optim</h4>
+
+<pre class="language-python"><code class="language-python">for input, target in dataset:
+    optimizer.zero_grad()
+    output = model(input)
+    loss = loss_fn(output, target)
+    loss.backward()
+    optimizer.step()
+</code></pre>
+<blockquote>
+<ul>
+<li><strong>params</strong> (<em>iterable</em>) – iterable of parameters to optimize or dicts defining parameter groups, 模型的参数</li>
+<li><strong>rho</strong> (<a href="https://docs.python.org/3/library/functions.html#float"  target="_blank"><em>float</em></a><em>,</em> <em>optional</em>) – coefficient used for computing a running average of squared gradients (default: 0.9)学习速率</li>
+<li><strong>eps</strong> (<a href="https://docs.python.org/3/library/functions.html#float"  target="_blank"><em>float</em></a><em>,</em> <em>optional</em>) – term added to the denominator to improve numerical stability (default: 1e-6)</li>
+<li><strong>lr</strong> (<a href="https://docs.python.org/3/library/functions.html#float"  target="_blank"><em>float</em></a><em>,</em> <em>optional</em>) – coefficient that scale delta before it is applied to the parameters (default: 1.0)</li>
+<li><strong>weight_decay</strong> (<a href="https://docs.python.org/3/library/functions.html#float"  target="_blank"><em>float</em></a><em>,</em> <em>optional</em>) – weight decay (L2 penalty) (default: 0)</li>
+</ul>
+</blockquote>
+<h4 id="%E7%8E%B0%E6%9C%89%E7%9A%84%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8Bmodels">现有的网络模型models</h4>
+<p><a href="https://pytorch.org/docs/0.4.1/torchvision/models.html"  target="_blank">torchvision.models — PyTorch master documentation</a></p>
+<p>比较常用的时候vgg16, vgg19</p>
+
+<pre class="language-python"><code class="language-python">torchvision.models.vgg16(pretrained=False, **kwargs)
+</code></pre>
+<p><strong>pretrained</strong> (<a href="https://docs.python.org/3/library/functions.html#bool"  target="_blank"><em>bool</em></a>) – If True, returns a model pre-trained on ImageNet(在ImageNet里面训练出来的数据, 这一个网络里面可以进行1000个分类, 但是由于这一个数据集比较大, 所以方便下载)</p>
+
+<pre class="language-python"><code class="language-python">vgg16_true.add_module(&quot;add_linear&quot;, torch.nn.Linear(1000, 10)) # 添加新的层
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409281709126.png" alt="image-20240928170922809" /></p>
+
+<pre class="language-python"><code class="language-python">vgg16_true.classifier.add_module(&quot;add_linear&quot;, torch.nn.Linear(1000, 10)) # 添加新的层(在现有的层里面)
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409281711469.png" alt="image-20240928171141329" /></p>
+<p>也可以使用</p>
+
+<pre class="language-python"><code class="language-python">vgg16_true.classifier[6] = nn.Linear(4096, 10) # 修改原有的层
+</code></pre>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409281714434.png" alt="image-20240928171449315" /></p>
+<h2 id="%E5%AE%9E%E6%88%98">实战</h2>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409272236547.png" alt="image-20240927223634375" /></p>
+<p>首先把数据进行一次卷积扩展一下层数, 之后进行一次最大值池化, 之后再次卷积一次, 然后最大值池化, 再重复一下然后展平, 最后使用线性层处理</p>
+
+<pre class="language-python"><code class="language-python">from torch import nn
+from torch.nn import Conv2d
+from torch.nn import MaxPool2d
+from torch.nn import Flatten
+import torch
+from torch.utils.tensorboard import SummaryWriter
+
+
+class JIAO(nn.Module):
+    def __init__(self):
+        super(JIAO, self).__init__()
+        # self.conv1 = Conv2d(in_channels=3, out_channels=32, kernel_size=5, padding=4)
+        # self.maxpool1 = nn.MaxPool2d(kernel_size=2)
+        # self.conv2 = Conv2d(32, 32, 5, padding=2)
+        # self.maxpool2 = MaxPool2d(2)
+        # self.conv3 = Conv2d(32, 64, 5, padding=2)
+        # self.maxpool3 = MaxPool2d(2)
+        # self.flatten = Flatten()
+        # self.linear1 = nn.Linear(64*4*4, 64)
+        # self.linear2 = nn.Linear(64, 10)
+        # 可以使用一下的代码进行简化
+        self.moudle1 = nn.Sequential(
+            Conv2d(in_channels=3, out_channels=32, kernel_size=5, padding=4),
+            nn.MaxPool2d(kernel_size=2),
+            Conv2d(32, 32, 5, padding=2),
+            nn.MaxPool2d(2),
+            Conv2d(32, 64, 5, padding=2),
+            nn.MaxPool2d(2),
+            Flatten(),
+            nn.Linear(64*4*4, 64),
+            nn.Linear(64, 10)
+        )
+
+    def forward(self, x):
+        x = self.moudle1(x)
+        return x
+
+jiao = JIAO()
+print(jiao)
+
+input = torch.randn(64, 3, 32, 32)
+output = jiao(input)
+print(output.shape)
+
+writer = SummaryWriter(&quot;logs&quot;)
+writer.add_graph(jiao, input)
+writer.close()
+</code></pre>
+<ul>
+<li>加反馈以及优化器</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">from torch import nn
+from torch.nn import Conv2d
+from torch.nn import MaxPool2d
+from torch.nn import Flatten
+import torch
+from torch.utils.tensorboard import SummaryWriter
+import torchvision
+from torchvision import transforms
+from torch.utils.data import DataLoader
+
+# 初始化数据集的转换
+dataset_tramsforms = transforms.Compose([
+    torchvision.transforms.ToTensor()
+])
+
+train_set = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True, transform=dataset_tramsforms)
+dataloader = DataLoader(train_set, batch_size=64)
+
+
+class JIAO(nn.Module):
+    def __init__(self):
+        super(JIAO, self).__init__()
+        self.moudle1 = nn.Sequential(
+            Conv2d(in_channels=3, out_channels=32, kernel_size=5, padding=4),
+            nn.MaxPool2d(kernel_size=2),
+            Conv2d(32, 32, 5, padding=2),
+            nn.MaxPool2d(2),
+            Conv2d(32, 64, 5, padding=2),
+            nn.MaxPool2d(2),
+            Flatten(),
+            nn.Linear(64*4*4, 64),
+            nn.Linear(64, 10)
+        )
+
+    def forward(self, x):
+        x = self.moudle1(x)
+        return x
+
+jiao = JIAO()
+loss = nn.CrossEntropyLoss()
+optimizer = torch.optim.SGD(jiao.parameters(), lr=0.01)
+for i in range(20):
+    for data in dataloader:
+        imgs, labels = data
+        output = jiao(imgs)
+        result_loss = loss(output, labels)
+        optimizer.zero_grad() # 梯度清零
+        result_loss.backward() # 反向传播
+        optimizer.step() # 更新参数
+        print(result_loss)
+        # break
+
+</code></pre>
+<h2 id="%E5%8A%A0%E8%BD%BD%E4%BF%9D%E5%AD%98">加载保存</h2>
+<ul>
+<li>第一种结构加参数</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">torch.save(vgg16_true, &quot;vgg16.pth&quot;) # 保存模型
+</code></pre>
+<blockquote>
+<p>记录了模型以及模型里面的参数</p>
+</blockquote>
+
+<pre class="language-python"><code class="language-python">torch.load(&quot;vgg16.pth&quot;)
+</code></pre>
+<blockquote>
+<p>使用这一个方法的时候, 如果加载的是一个自己定义的类, 这一个类需要引入一下</p>
+</blockquote>
+<ul>
+<li>方法二只记录参数</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">torch.save(vgg16_true.state_dict(), &quot;vgg16.pht&quot;) # 保存模型
+</code></pre>
+<p>恢复</p>
+
+<pre class="language-python"><code class="language-python">vgg16 = torchvision.models.vgg16(pretrained=False)
+vgg16.load_state_dict(torch.load(&quot;vgg16.pht&quot;)) # 加载模型
+</code></pre>
+<blockquote>
+<p><strong>注: </strong>使用这一个方式的时候需要初始化一个Model对象再</p>
+</blockquote>
+<h2 id="%E5%AE%8C%E6%95%B4%E7%9A%84%E8%AE%AD%E7%BB%83">完整的训练</h2>
+
+<pre class="language-python"><code class="language-python">import torchvision
+import torch
+from torch.utils.tensorboard import SummaryWriter
+# train_data = torchvision.datasets.ImageNet(root=&quot;./dataset_ImageNet&quot;, train=True, download=True,
+#                                            transform=torchvision.transforms.ToTensor())
+
+# vgg16_true = torchvision.models.vgg16(pretrained=True) # 加载预训练模型, 使用数据集训练好的参数
+# vgg16_flase = torchvision.models.vgg16(pretrained=False) # 不加载预训练模型, 使用默认参数
+
+# print(vgg16_true)
+# print(vgg16_flase)
+
+train_data = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=True, download=True,
+                                            transform=torchvision.transforms.ToTensor())
+test_data = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True,
+                                            transform=torchvision.transforms.ToTensor())
+# vgg16_true.add_module(&quot;add_linear&quot;, torch.nn.Linear(1000, 10)) # 添加新的层
+# vgg16_true.classifier.add_module(&quot;add_linear&quot;, torch.nn.Linear(1000, 10)) # 添加新的层(在现有的层里面)
+# vgg16_true.classifier[6] = torch.nn.Linear(4096, 10) # 修改原有的层
+# print(vgg16_true)
+
+train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=64)
+test_dataloader = torch.utils.data.DataLoader(test_data, batch_size=64)
+
+
+class JIAO(torch.nn.Module):
+    def __init__(self):
+        super(JIAO, self).__init__()
+        self.moudle1 = torch.nn.Sequential(
+            torch.nn.Conv2d(in_channels=3, out_channels=32, kernel_size=5, padding=2),
+            torch.nn.MaxPool2d(kernel_size=2),
+            torch.nn.Conv2d(32, 32, 5, padding=2),
+            torch.nn.MaxPool2d(2),
+            torch.nn.Conv2d(32, 64, 5, padding=2),
+            torch.nn.MaxPool2d(2),
+            torch.nn.Flatten(),
+            torch.nn.Linear(64*4*4, 64),
+            torch.nn.Linear(64, 10)
+        )
+
+    def forward(self, x):
+        x = self.moudle1(x)
+        return x
+
+# 执行的是当前文件
+if __name__ == &quot;__main__&quot;:
+
+    jiao = JIAO()
+    #损失函数
+    loss_fn = torch.nn.CrossEntropyLoss()
+    #优化器
+    learn_rate = 0.01 # 1e-2
+    optimizer = torch.optim.SGD(jiao.parameters(), lr=learn_rate)
+
+    writer = SummaryWriter(&quot;logs&quot;)
+
+    #训练
+    epoch = 20
+    total_step = 0
+    for i in range(epoch):
+        for data in train_dataloader:
+            imgs, labels = data
+            output = jiao(imgs)
+            result_loss = loss_fn(output, labels)
+            optimizer.zero_grad() # 梯度清零
+            result_loss.backward() # 反向传播
+            optimizer.step() # 更新参数
+            # print(result_loss)
+            # break
+            total_step = total_step + 1
+            if total_step % 100 == 0:
+                print(&quot;epoch: &quot;, i, &quot;step: &quot;, total_step, &quot;loss: &quot;, result_loss)
+                writer.add_scalar(&quot;train_loss&quot;, result_loss, total_step)
+
+        # 测试
+        total_test_loss = 0
+        with torch.no_grad():
+            for data in test_dataloader:
+                img, target = data
+                output = jiao(img)
+                loss = loss_fn(output, target)
+                total_test_loss += loss
+
+        writer.add_scalar(&quot;test_loss&quot;, total_test_loss, i)
+        print(&quot;epoch: &quot;, i, &quot;loss: &quot;, total_test_loss)
+
+        torch.save(jiao, &quot;./my_mod/model_{}.pth&quot;.format(i))
+
+    writer.close()
+</code></pre>
+<h2 id="%E6%AD%A3%E7%A1%AE%E7%8E%87">正确率</h2>
+<p>在实际训练的时候输出的是各个选项的概率, 比如一个只有两个数据的分类, 可能输出1. [0.1, 0.2], 2. [0.3, 0.4]</p>
+<p>使用Argmax可以获取到Preds = [1][1]</p>
+<p>如果Input target是[0][1]</p>
+<p>使用Preds == Input target可以获取[False, True].sum = 1</p>
+
+<pre class="language-python"><code class="language-python">import torch
+
+outputs = torch.tensor([[0.1, 0.2], 
+                        [0.3, 0.4], 
+                        [0.5, 0.2]])
+
+# output: tensor([1, 1, 0])
+print(outputs.argmax(dim=1)) # dim=1表示按行取最大值的索引
+preds = outputs.argmax(dim=1)
+targets = torch.tensor([1, 0, 0])
+# output: tensor([ True, False,  True])
+print(targets == preds)
+print((targets == preds).sum().item()) # 2
+</code></pre>
+
+<pre class="language-python"><code class="language-python"># import torch
+
+# outputs = torch.tensor([[0.1, 0.2], 
+#                         [0.3, 0.4], 
+#                         [0.5, 0.2]])
+
+# # output: tensor([1, 1, 0])
+# print(outputs.argmax(dim=1)) # dim=1表示按行取最大值的索引
+# preds = outputs.argmax(dim=1)
+# targets = torch.tensor([1, 0, 0])
+# # output: tensor([ True, False,  True])
+# print(targets == preds)
+# print((targets == preds).sum().item()) # 2
+
+import torch
+import torchvision
+from my_model_pretraines import JIAO
+test_data = torchvision.datasets.CIFAR10(root=&quot;./dataset&quot;, train=False, download=True,
+                                            transform=torchvision.transforms.ToTensor())
+
+test_dataloader = torch.utils.data.DataLoader(test_data, batch_size=64)
+
+module = torch.load(&quot;my_mod/model_19.pth&quot;)
+
+# 测试一下准确率
+
+correct = 0
+total = len(test_data)
+with torch.no_grad():
+    for data in test_dataloader:
+        imgs, labels = data
+        outputs = module(imgs)
+        preds = outputs.argmax(dim=1)
+        correct += (preds == labels).sum().item()
+
+print(&quot;准确率: &quot;, correct / total)
+</code></pre>
+<h2 id="%E4%BD%BF%E7%94%A8GPU">使用GPU</h2>
+<ul>
+<li>方法一</li>
+</ul>
+<p>网络模型, 数据(输入, 标注)以及损失函数有</p>
+<p>在模型使用的时候用<code>model = model.cuda()</code>, 误差函数也可以使用<code>loss_fn = loss_fn.cuda()</code></p>
+
+<pre class="language-python"><code class="language-python">def train(jiao : JIAO, epoch : int, learn_rate : float, output_name : str, train_dataloader):
+    jiao = jiao.cuda()
+    total_step = 0
+    #损失函数
+    loss_fn = torch.nn.CrossEntropyLoss()
+    loss_fn = loss_fn .cuda()
+    optimizer = torch.optim.SGD(jiao.parameters(), lr=learn_rate)
+
+    for i in range(epoch):
+        for data in train_dataloader:
+            imgs, labels = data
+            imgs = imgs.cuda()
+            labels = labels.cuda()
+            output = jiao(imgs)
+            result_loss = loss_fn(output, labels)
+            optimizer.zero_grad() # 梯度清零
+            result_loss.backward() # 反向传播
+            optimizer.step()
+            total_step = total_step + 1
+            if total_step % 100 == 0:
+                print(&quot;epoch: &quot;, i, &quot;step: &quot;, total_step, &quot;loss: &quot;, result_loss)
+    torch.save(jiao, output_name)
+</code></pre>
+<ul>
+<li>方法二</li>
+</ul>
+
+<pre class="language-python"><code class="language-python">device = torch.device(&quot;cpu&quot;) # cuda / cuda:0 / cuda:1 定义一个设备
+# 之后把模型之类的使用to定义到这一个设备
+jiao = jiao.to(device)
+loss_fn = loss_fn.to(device)
+</code></pre>
+<h2 id="%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83">测试环境</h2>
+<p><a href="https://colab.research.google.com/"  target="_blank">欢迎使用 Colaboratory - Colab (google.com)</a></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409282212141.png" alt="image-20240928221225921" /></p>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/image/202409282212783.png" alt="image-20240928221248593" /></p>
+<h2 id="%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%B5%8B%E8%AF%95">模型的测试</h2>
+<p>使用以及训练好的模型, 提供输入, 可以在github上面找, 搜索github</p>
+
+<pre class="language-python"><code class="language-python">import PIL
+import PIL.Image
+import torchvision
+import torch
+from my_model_pretraines import JIAO
+
+img_path = &quot;./img/shi.png&quot;
+img = PIL.Image.open(img_path)
+classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+print(img)
+img = img.convert(&quot;RGB&quot;)
+
+transform = torchvision.transforms.Compose([
+    torchvision.transforms.Resize((32, 32)),
+    torchvision.transforms.ToTensor()
+])
+
+img = transform(img)
+# print(img.shape)
+moudle = torch.load(&quot;my_mod/model.pth&quot;) # 如果gpu训练想在cpu使用，需要加上map_location=torch.device(&quot;cpu&quot;)
+moudle = moudle.cuda()
+img = torch.reshape(img, (1, 3, 32, 32))
+img = img.cuda()
+moudle.eval()   # 把这一个模型设置为测试模式
+with torch.no_grad():
+    output = moudle(img)
+print(output)
+result = output.argmax(dim=1)
+print(&quot;filename = {}, class = {}&quot;.format(img_path, classes[result.item()]))
+</code></pre>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机器学习/2024-9-22-深度学习环境.html">
+                            <span class="icon"></span>
+                            <span class="label">2024-9-22-深度学习环境</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机器学习/2024-9-8-机器学习.html">
+                            <span class="label">2024-9-8-机器学习</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>
