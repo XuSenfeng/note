@@ -1,3 +1,9 @@
+---
+tags:
+  - 使用软件
+  - HomeAssistant
+  - 物联网
+---
 # HomeAssistant
 
 智能家居的控制, 不同品牌的智能家居
