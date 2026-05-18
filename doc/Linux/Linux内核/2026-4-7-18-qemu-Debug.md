@@ -1,3 +1,8 @@
+---
+tags:
+  - Linux
+  - 基础知识
+---
 # Qemu Debug
 
 [利用QEMU+GDB搭建Linux内核调试环境 - 学习，积累，成长 - 博客园](https://www.cnblogs.com/dongxb/p/16192358.html)
