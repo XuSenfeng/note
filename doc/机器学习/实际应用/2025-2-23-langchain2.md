@@ -1,3 +1,8 @@
+---
+tags:
+  - Agent开发
+  - AI应用
+---
 RunnablePassthrough允许传递输入数据，可以保持不变或添加额外的键。通常与RunnableParallel一起使用，将数据分配给映射中的新键。
 
 实际是对上一层的输出做处理, 作为参数传入RunnablePassthrough, 可以使用assign来给参数里面添加新的键值对

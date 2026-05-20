@@ -1,3 +1,7 @@
+---
+tags:
+  - AI应用
+---
 # Claude Code
 
 这个安装需要使用外网的VPN

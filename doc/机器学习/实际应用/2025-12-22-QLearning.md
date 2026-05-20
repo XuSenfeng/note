@@ -1,3 +1,7 @@
+---
+tags:
+  - AI算法
+---
 # Qlearning
 
 ## 基础变量
