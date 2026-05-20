@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Transformers实战" 
-date:   2024-8-5 15:39:08 +0800
-tags: AI 机器学习
+title: Transformers实战
+date: 2024-8-5 15:39:08 +0800
+tags:
+  - AI应用
 ---
 
 # Transformers实战
