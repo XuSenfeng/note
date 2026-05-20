@@ -1,3 +1,7 @@
+---
+tags:
+  - 模型部署
+---
 # RKNN Toolkit2
 
 [RKNN Toolkit2](https://github.com/airockchip/rknn-toolkit2) 开发套件(Python接口)运行在PC平台（x86/arm64），提供了模型转换、 量化功能、模型推理、性能和内存评估、量化精度分析、模型加密等功能。 
