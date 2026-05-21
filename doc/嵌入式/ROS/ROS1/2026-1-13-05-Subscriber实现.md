@@ -1,3 +1,9 @@
+---
+tags:
+  - ROS1
+  - 控制
+  - 机械
+---
 # Subscriber实现
 
 ![image-20260113152502331](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202601131525394.png)

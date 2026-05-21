@@ -1,3 +1,10 @@
+---
+tags:
+  - ROS2
+  - 控制
+  - 机械
+  - 导航
+---
 # slam_toolbox
 
 这是一个二维的, 开箱即用的一个建模工具
@@ -21,3 +28,4 @@ ros2 run nav2_map_server map_saver_cli -f room
 ```
 
 ![image-20260124145705565](https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-picture/202601241457650.png)
+> 建好的图可以使用[[2026-1-24-26-Navigation2自主导航]]进行导航, 基础概念[[2026-1-23-24-自主导航概念]]
