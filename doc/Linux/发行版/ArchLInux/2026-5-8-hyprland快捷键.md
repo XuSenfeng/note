@@ -1,0 +1,69 @@
+---
+tags:
+  - 使用
+  - Linux
+  - Arch
+  - 图形界面
+---
+# 快捷键
+
+## 开启应用
+```bash
+Super + T           │ 终端 (foot)          │ variables.conf:85
+Super + W           │ 浏览器 (zen-browser) │ variables.conf:86 
+Super + C           │ 编辑器 (codium)      │ variables.conf:87 
+Super + E           │ 文件管理器 (thunar)  │ variables.conf:88
+Super + G           │ GitHub Desktop       │ keybinds.conf:166
+Super + Alt + E     │ Nemo 文件管理器      │ keybinds.conf:168
+Ctrl + Alt + Escape │ QPS (进程管理器)     │ keybinds.conf:169
+Ctrl + Alt + V      │ PulseAudio 音量控制  │ keybinds.conf:170
+```
+
+## 窗口管理
+
+```bash
+  │ Super + Q                 │ 关闭窗口             │ variables.conf:76     │
+  │ Super + F                 │ 全屏                │ variables.conf:73     │
+  │ Super + Alt + F           │ 带边框全屏           │ variables.conf:74     │
+  │ Super → ↑ ↓ ←             │ 移动焦点             │ keybinds.conf:126-129 │
+  │ Super + Shift → ↑ ↓ ←     │ 移动窗口             │ keybinds.conf:130-133 │
+  │ Super + Z                 │ 鼠标拖动移动窗口      │ variables.conf:69      │
+  │ Super + X                 │ 鼠标拖动调整窗口大小  │ variables.conf:70      │
+  │ Super + Alt + Space       │ 切换窗口浮动         │ variables.conf:75     │
+  │ Super + P                 │ 钉住窗口 (置顶)      │ variables.conf:72     │  
+  │ Super + Alt + \           │ 画中画模式           │ variables.conf:71     │
+  │ Super - / Super =         │ 左右缩放窗口         │ keybinds.conf:134-135 │
+  │ Super + Shift + - / +     │ 上下缩放窗口         │ keybinds.conf:136-137 │
+  │ Super + Alt + 方向         | 方向缩放窗口         │ keybinds.conf:138-141 │
+  │ Ctrl + Super + \          │ 居中窗口             │ keybinds.conf:146     │
+  │ Ctrl + Super + Alt + \    │ 居中并设为 55%x70%   │ keybinds.conf:147-148 │
+  │ Super + ,                 │ 切换窗口成组         │ variables.conf:66     │
+  │ Super + U                 │ 从组中移出窗口       │ variables.conf:65     │
+  │ Alt + Tab / Shift+Alt+Tab │ 在组间循环切换       │ variables.conf:63-64  │
+  │ Ctrl + Alt + Tab / +Shift │ 切换组活动窗口 前/后  │ keybinds.conf:119-120  │
+  │ Super + Shift + ,         │ 锁定/解锁组          │ keybinds.conf:123     │
+```
+
+## 工作区切换
+
+```bash                                                    
+  │ Super + 数字         │ 切换到工作区 1-10   │ keybinds.conf:48-57  │                         
+  │ Ctrl + Super + 数字  │ 切换到工作区组 1-10 │ keybinds.conf:59-68  │ 
+  │ Ctrl + Super + ← →  │ 上一个/下一个工作区 │ variables.conf:57-58 │
+  │ Super + Page_Up/Down│ 上一个/下一个工作区 │ keybinds.conf:74-75  │
+  │ Super + 滚轮         │ 上一个/下一个工作区 │ keybinds.conf:70-71  │
+  │ Super + S           │ 切换特殊工作区      │ variables.conf:60    │
+  │ Ctrl + Super + 滚轮  │ 切换到工作区组 ±1   │ keybinds.conf:77-78  │
+```
+
+ ### 窗口移动到工作区
+ ```bash
+  │ Super + 数字         │ 切换到工作区 1-10   │ keybinds.conf:48-57  │
+  │ Ctrl + Super + 数字  │ 切换到工作区组 1-10 │ keybinds.conf:59-68  │
+  │ Ctrl + Super + ← →   │ 上一个/下一个工作区 │ variables.conf:57-58 │
+  │ Super + Page_Up/Down │ 上一个/下一个工作区 │ keybinds.conf:74-75  │
+  │ Super + 滚轮         │ 上一个/下一个工作区 │ keybinds.conf:70-71  │
+  │ Super + S            │ 切换特殊工作区      │ variables.conf:60    │
+  │ Ctrl + Super + 滚轮  │ 切换到工作区组 ±1   │ keybinds.conf:77-78  │
+ ```
+

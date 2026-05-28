@@ -242,3 +242,5 @@ homeassistant/{component}/{unique_id}/config
 ## 脚本
 
 可以使用noderad配置 一个脚本
+
+> 可以配合[[2026-2-27-OpenClaw]]使用
