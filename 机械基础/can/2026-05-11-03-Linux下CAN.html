@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": ["Linux", "CAN协议", "基础知识"], "date": false, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+<li class=""><a  href="/note/copilot/">copilot</a></li>
+<li class="active"><a  href="/note/机械基础/">机械基础</a></li>
+<li class=""><a  href="/note/项目代码分析/">项目代码分析</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机械基础/2025-05-13-01-电机参数.html"><span class="label">2025-05-13-01-电机参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/2026-05-13-02-物理参数.html"><span class="label">2026-05-13-02-物理参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="active_parent no_link"><a><span class="label">can</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机械基础/can/2026-05-11-01-CAN协议.html"><span class="label">2026-05-11-01-CAN协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/can/2026-05-11-02-机器狗电机.html"><span class="label">2026-05-11-02-机器狗电机</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机械基础/can/2026-05-11-03-Linux下CAN.html"><span class="label">2026-05-11-03-Linux下CAN</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1></h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                                <li>Linux</li>
+                            
+                                <li>CAN协议</li>
+                            
+                                <li>基础知识</li>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机械基础/can/2026-05-11-03-Linux下CAN.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <h1 id="Linux-CAN">Linux CAN</h1>
+<p>[[2025-11-19-72-CAN]]</p>
+<p>CAN 帧是 CAN 协议中数据传输的基本单元，它包括以下几种类型：</p>
+<ul>
+<li><strong>数据帧</strong>：用于传输数据。</li>
+<li><strong>遥控帧</strong>：请求发送数据帧。</li>
+<li><strong>错误帧</strong>：标识错误的帧。</li>
+<li><strong>过载帧</strong>：用于延长数据帧或遥控帧的传输。</li>
+</ul>
+<h2 id="Socket-CAN">Socket CAN</h2>
+<p>SocketCAN 是 Linux 内核中实现 CAN 协议的框架，它将 CAN 设备作为网络接口来处理，使得用户可以使用标准的网络协议栈与 CAN 设备进行通信<br />
+它为用户空间应用程序提供了一个 socket 接口，并且建立在 Linux 网络层之上，从而可以使用所有提供的排队功能<br />
+可以同时打开多个 socket，在不同的或相同的协议模块上，它们可以监听/发送不同或相同的 CAN ID 的帧。多个 socket 在同一个接口上监听具有相同 CAN ID 的帧，都会收到相同的匹配 CAN 帧<br />
+希望使用特定传输协议（例如 ISO-TP）进行通信的应用程序只需在打开 socket 时选择该协议，然后就可以读取和写入应用程序数据字节流，而无需处理 CAN-ID、帧等</p>
+<ul>
+<li><code>candump</code>：用于监视 CAN 设备上的数据传输。</li>
+<li><code>cansend</code>：用于向 CAN 设备发送数据帧。</li>
+<li><code>canreceive</code>：用于接收 CAN 设备上的数据帧。</li>
+</ul>
+<p>与通常已知的 TCP/IP 和以太网网络不同，CAN 总线是一个仅广播的媒介，没有像以太网这样的 MAC 层寻址。CAN 标识符 (can_id) 用于 CAN 总线上的仲裁。因此，CAN-ID 必须在总线上唯一选择。在设计 CAN-ECU 网络时，CAN-ID 被映射为由特定的 ECU 发送。因此，CAN-ID 可以最好地被视为一种源地址</p>
+<h3 id="can-utils">can-utils</h3>
+<p>一组用于 Linux 下 SocketCAN 的实用程序集合，它包括了许多用于测试和调试 CAN 设备的工具</p>
+<ul>
+<li><code>canconfig</code>：用于配置 CAN 接口的参数。</li>
+<li><code>cantest</code>：用于测试 CAN 接口的发送和接收功能。</li>
+<li><code>canfdtest</code>：类似于 cantest，但支持 CAN FD（Flexible Data Rate)</li>
+</ul>
+<h3 id="candump">candump</h3>
+<p><code>candump</code> 是一个用于监视和记录 CAN 总线上所有通信的实用工具。它能够实时显示所有接收到的 CAN 帧，并且可以将数据记录到文件中，以便后续分析</p>
+<h3 id="cansend">cansend</h3>
+<p><code>cansend</code> 工具允许用户手动发送 CAN 帧到指定的 CAN 接口, 用户可以指定 CAN 帧的 ID、数据长度和要发送的数据</p>
+<h3 id="canreceive">canreceive</h3>
+<p>用于接收并显示从 CAN 接口收到的数据帧。它通常用于测试或调试目的</p>
+<h2 id="%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C">配置网络</h2>
+<h3 id="%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3%E5%8F%82%E6%95%B0">设置一个接口参数</h3>
+
+<pre class="language-bash"><code class="language-bash">sudo ip link set can0 up type can bitrate 500000
+</code></pre>
+<p><code>can0</code> 是接口名称，<code>bitrate 500000</code> 设置了 CAN 接口的波特率为 500kbps</p>
+<h3 id="%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE">网络设置</h3>
+<p>创建一个虚拟的CAN卡用于测试</p>
+
+<pre class="language-bash"><code class="language-bash">sudo ip link add vcan0 type vcan
+sudo ip link set vcan0 up
+</code></pre>
+<p>如果与远程 CAN 网络通信，需要设置远程地址</p>
+
+<pre class="language-bash"><code class="language-bash">sudo ip link set can0 address &lt;remote-can-address&gt;
+</code></pre>
+<p>在多接口的环境下面需要配置路由规则</p>
+
+<pre class="language-bash"><code class="language-bash">sudo ip route add &lt;destination&gt; dev &lt;interface&gt;
+</code></pre>
+<h3 id="%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0">配置参数</h3>
+
+<pre class="language-bash"><code class="language-bash">sudo canconfig can0 bitrate 1000000
+# 配置CANFD的参数
+sudo ip link set can0 up type can fd on bitrate 500000 fd bitrate 2000000
+</code></pre>
+<h2 id="%E6%95%B0%E6%8D%AE%E6%94%B6%E5%8F%91">数据收发</h2>
+
+<pre class="language-bash"><code class="language-bash">cansend can0 123#11FF2233
+</code></pre>
+<h2 id="API">API</h2>
+<p>有两种 CAN 协议可供选择，即 raw socket 协议和广播管理器 (BCM)</p>
+
+<pre class="language-c"><code class="language-c">s = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+s = socket(PF_CAN, SOCK_DGRAM, CAN_BCM);
+</code></pre>
+<p>成功创建 socket 后，您通常会使用 bind(2) 系统调用将 socket 绑定到 CAN 接口<br />
+绑定 (CAN_RAW) 或连接 (CAN_BCM) socket 后，您可以像往常一样从/向 socket read(2) 和 write(2)，或者在 socket 上使用 send(2)、sendto(2)、sendmsg(2) 和 recv* 对等操作</p>
+<h3 id="%E4%B8%80%E5%B8%A7%E6%95%B0%E6%8D%AE">一帧数据</h3>
+<p>Classical CAN 帧结构（也称为 CAN 2.0B）、CAN FD 帧结构</p>
+
+<pre class="language-c"><code class="language-c">struct can_frame {
+        canid_t can_id;  /* 32 bit CAN_ID + EFF/RTR/ERR flags */
+        union {
+                /* CAN frame payload length in byte (0 .. CAN_MAX_DLEN)
+                 * was previously named can_dlc so we need to carry that
+                 * name for legacy support
+                 */
+                __u8 len; // 有效数据的长度
+                __u8 can_dlc; /* deprecated */
+        };
+        __u8    __pad;   /* padding */
+        __u8    __res0;  /* reserved / padding */
+        // 当 len 元素为 8 时，len8_dlc 元素可以包含值 9 .. 15
+        // （所有大于或等于 8 的 DLC 值的实际有效负载长度）
+        __u8    len8_dlc; /* optional DLC for 8 byte payload length (9 .. 15) */
+        __u8    data[8] __attribute__((aligned(8)));
+};
+</code></pre>
+<h3 id="%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B">使用示例</h3>
+
+<pre class="language-c"><code class="language-c">int s;
+struct sockaddr_can addr;
+struct ifreq ifr;
+
+s = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+
+# 进行实际的绑定工作
+strcpy(ifr.ifr_name, &quot;can0&quot; );
+ioctl(s, SIOCGIFINDEX, &amp;ifr);
+
+addr.can_family = AF_CAN;
+// 可以设置为0表示绑定任意的CAN接口
+addr.can_ifindex = ifr.ifr_ifindex;
+
+bind(s, (struct sockaddr *)&amp;addr, sizeof(addr));
+
+struct can_frame frame;
+
+# 读取数据
+nbytes = read(s, &amp;frame, sizeof(struct can_frame));
+
+if (nbytes &lt; 0) {
+        perror(&quot;can raw socket read&quot;);
+        return 1;
+}
+
+/* paranoid check ... */
+if (nbytes &lt; sizeof(struct can_frame)) {
+        fprintf(stderr, &quot;read: incomplete CAN frame\n&quot;);
+        return 1;
+}
+
+# 写入数据
+nbytes = write(s, &amp;frame, sizeof(struct can_frame));
+
+</code></pre>
+<p>要在绑定到“任何”CAN 接口的 socket 上写入 CAN 帧，必须确定传出接口</p>
+
+<pre class="language-c"><code class="language-c">strcpy(ifr.ifr_name, &quot;can0&quot;);
+ioctl(s, SIOCGIFINDEX, &amp;ifr);
+addr.can_ifindex = ifr.ifr_ifindex;
+addr.can_family  = AF_CAN;
+
+nbytes = sendto(s, &amp;frame, sizeof(struct can_frame),
+                0, (struct sockaddr*)&amp;addr, sizeof(addr));
+</code></pre>
+<h3 id="CAN-FD-API">CAN FD API</h3>
+<h4 id="%E4%B8%80%E5%B8%A7%E6%95%B0%E6%8D%AE">一帧数据</h4>
+
+<pre class="language-c"><code class="language-c">struct canfd_frame {
+        canid_t can_id;  /* 32 bit CAN_ID + EFF/RTR/ERR flags */
+        __u8    len;     /* frame payload length in byte (0 .. 64) */
+        __u8    flags;   /* additional flags for CAN FD */
+        __u8    __res0;  /* reserved / padding */
+        __u8    __res1;  /* reserved / padding */
+        __u8    data[64] __attribute__((aligned(8)));
+};
+</code></pre>
+<p>当 struct can_frame 的内容被复制到 struct canfd_frame 中时，所有结构元素都可以按原样使用 - 只有 data[] 变得扩展了</p>
+<h3 id="%E8%BF%87%E6%BB%A4%E5%99%A8">过滤器</h3>
+<p>使用 CAN_RAW socket 接收 CAN 帧可以通过定义 0 .. n 个带有 CAN_RAW_FILTER socket 选项的过滤器来控制</p>
+
+<pre class="language-c"><code class="language-c">struct can_filter {
+        canid_t can_id;
+        canid_t can_mask;
+};
+</code></pre>
+<p>可以获取到<code>&lt;received_can_id&gt; &amp; mask == can_id &amp; mask</code>的所有数据</p>
+
+<pre class="language-c"><code class="language-c">struct can_filter rfilter[2];
+
+rfilter[0].can_id   = 0x123;
+rfilter[0].can_mask = CAN_SFF_MASK;  // 标准帧全掩码（0x7FF）
+rfilter[1].can_id   = 0x200;
+rfilter[1].can_mask = 0x700; // 掩码：只匹配高3位，低8位无视
+
+setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, &amp;rfilter, sizeof(rfilter));
+</code></pre>
+<p>可以使用以下的命令禁用所有的接受数据</p>
+
+<pre class="language-c"><code class="language-c">setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+</code></pre>
+<h2 id="%E8%B0%83%E8%AF%95">调试</h2>
+
+<pre class="language-bash"><code class="language-bash">watch -n1 sudo ip -d -s link show can1
+</code></pre>
+<p><strong>实时、每秒自动刷新监控 can1 网卡的【详细硬件状态 + 收发统计 + CAN 错误计数器】</strong>，不用你反复手动敲命令，故障变化一眼就能看到。</p>
+
+<pre class="language-bash"><code class="language-bash">cangen can1
+</code></pre>
+<p>自动生成随机的 CAN 报文，并持续发送到指定的 CAN 接口（can0/can1）</p>
+
+<pre class="language-bash"><code class="language-bash">candump any -tA -xe
+</code></pre>
+<p><strong>实时监听系统里</strong>所有 CAN 接口（can0 + can1 同时看）<strong>，打印带绝对时间戳的报文，并且强制显示 CAN 总线错误帧、异常状态</strong></p>
+<blockquote>
+<p>基础的协议查看[[2022-9-6-56-CAN协议]]</p>
+</blockquote>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机械基础/can/2026-05-11-02-机器狗电机.html">
+                            <span class="icon"></span>
+                            <span class="label">2026-05-11-02-机器狗电机</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>
