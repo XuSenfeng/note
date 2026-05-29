@@ -5,6 +5,8 @@ tags:
 ---
 # Qemu Debug
 
+> [[2023-9-6-00-补充知识]], [[2023-9-6-00-补充知识2]]
+
 [利用QEMU+GDB搭建Linux内核调试环境 - 学习，积累，成长 - 博客园](https://www.cnblogs.com/dongxb/p/16192358.html)
 
 ```bash

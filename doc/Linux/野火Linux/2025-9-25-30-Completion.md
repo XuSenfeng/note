@@ -7,7 +7,6 @@
 信号量/互斥量：资源对所有进程/线程是公平的，按先来后到顺序使用
 
 完成量：一个线程的运行依赖另一个线程
-
 #### completion结构体
 
 include/linux/completion.h
