@@ -27,6 +27,15 @@ const NotificationSequence sequence_display_backlight_enforce_on = {
     NULL,
 };
 
+const NotificationSequence sequence_eat = {
+    &message_note_c7,
+    &message_delay_50,
+    &message_sound_off,
+    NULL,
+};
+
 NotificationApp* notification = furi_record_open(RECORD_NOTIFICATION);
+
 notification_message_block(notification, &sequence_display_backlight_enforce_on);
+notification_message(notification, &sequence_eat);
 ```
