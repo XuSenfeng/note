@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>语法 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class="active"><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+<li class=""><a  href="/note/copilot/">copilot</a></li>
+<li class=""><a  href="/note/机械基础/">机械基础</a></li>
+<li class=""><a  href="/note/项目代码分析/">项目代码分析</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">C#</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/no_translate.html?ref=C.html&from=/编程基础/C.html"><span class="label">2023-6-24-1.C#</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C和指针</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-C语言环境.html"><span class="label">2022-7-25-C语言环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-字符串操作.html"><span class="label">2022-7-25-字符串操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-操作符和表达式.html"><span class="label">2022-7-25-操作符和表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-数据.html"><span class="label">2022-7-25-数据</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-词法规则.html"><span class="label">2022-7-25-词法规则</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-25-语句.html"><span class="label">2022-7-25-语句</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-函数.html"><span class="label">2022-7-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-指针.html"><span class="label">2022-7-26-指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-数组.html"><span class="label">2022-7-26-数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-26-表达式.html"><span class="label">2022-7-26-表达式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-动态内存分配.html"><span class="label">2022-7-27-动态内存分配</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-字符串字符字节.html"><span class="label">2022-7-27-字符串字符字节</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构体和指针.html"><span class="label">2022-7-27-结构体和指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-27-结构和联合.html"><span class="label">2022-7-27-结构和联合</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-预处理器.html"><span class="label">2022-7-28-预处理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-28-高级指针.html"><span class="label">2022-7-28-高级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-29-输入输出函数.html"><span class="label">2022-7-29-输入输出函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-标准库函数.html"><span class="label">2022-7-30-标准库函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-30-经典抽象数据类型.html"><span class="label">2022-7-30-经典抽象数据类型</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C和指针/2022-7-31-运行时环境.html"><span class="label">2022-7-31-运行时环境</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">C陷阱与缺陷</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-26-函数.html"><span class="label">2022-8-26-函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/C陷阱与缺陷/2022-8-27-语义陷阱.html"><span class="label">2022-8-27-语义陷阱</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">JavaScript</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/JavaScript/2026-07-21-JavaScript.html"><span class="label">2026-07-21-JavaScript</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">c</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-16-c监控.html"><span class="label">2023-6-16-c监控</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/c/2023-6-19-C语言编译链接.html"><span class="label">2023-6-19-C语言编译链接</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">cpp</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-1-01-C++.html"><span class="label">2025-1-1-01-C++</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-22-03-lambda函数引用和auto.html"><span class="label">2025-1-22-03-lambda函数引用和auto</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-26-04-多线程.html"><span class="label">2025-1-26-04-多线程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2025-1-6-02-模板和STL数据结构.html"><span class="label">2025-1-6-02-模板和STL数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/cpp/2026-06-15-05-Json-nlohmann.html"><span class="label">2026-06-15-05-Json-nlohmann</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">go</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/2022-8-26-01-介绍.html"><span class="label">2022-8-26-01-介绍</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-26-02-基础语法.html"><span class="label">2026-3-26-02-基础语法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-29-03-多任务.html"><span class="label">2026-3-29-03-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-30-GoModules包管理.html"><span class="label">2026-3-30-GoModules包管理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/go/2026-3-30-多任务通信.html"><span class="label">2026-3-30-多任务通信</span><span class=""></span></a></li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/go/进阶使用/2026-3-30-01-网络服务.html"><span class="label">2026-3-30-01-网络服务</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="active_parent no_link"><a><span class="label">protobuf</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/编程基础/protobuf/2026-07-17-01-Protocol-Buffers.html"><span class="label">2026-07-17-01-Protocol-Buffers</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/编程基础/protobuf/2026-07-17-02-语法.html"><span class="label">2026-07-17-02-语法</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">python</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">基础语法</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html"><span class="label">2023-6-15-修饰器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-23-01基础运算.html"><span class="label">2023-9-23-01基础运算</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2023-9-24-02函数及变量.html"><span class="label">2023-9-24-02函数及变量</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-03虚拟环境.html"><span class="label">2024-4-23-03虚拟环境</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-23-04常用函数.html"><span class="label">2024-4-23-04常用函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-24-05程序获取参数.html"><span class="label">2024-4-24-05程序获取参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-06推导式和拆包.html"><span class="label">2024-4-25-06推导式和拆包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-07引入.html"><span class="label">2024-4-25-07引入</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-08匿名函数.html"><span class="label">2024-4-25-08匿名函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-25-09面向对象.html"><span class="label">2024-4-25-09面向对象</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-26-10文件基本操作.html"><span class="label">2024-4-26-10文件基本操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-11OS模块.html"><span class="label">2024-4-27-11OS模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-12迭代器.html"><span class="label">2024-4-27-12迭代器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-13异常处理.html"><span class="label">2024-4-27-13异常处理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-27-14生成器.html"><span class="label">2024-4-27-14生成器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-28-15闭包.html"><span class="label">2024-4-28-15闭包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-4-30-16深拷贝浅拷贝.html"><span class="label">2024-4-30-16深拷贝浅拷贝</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-1-17With和上下文管理器.html"><span class="label">2024-5-1-17With和上下文管理器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-18GIL.html"><span class="label">2024-5-4-18GIL</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2024-5-4-19垃圾回收.html"><span class="label">2024-5-4-19垃圾回收</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-1-31-多任务.html"><span class="label">2025-1-31-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-CPP交互使用.html"><span class="label">2025-12-19-CPP交互使用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-12-19-打包whl文件.html"><span class="label">2025-12-19-打包whl文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-2-25-yaml.html"><span class="label">2025-2-25-yaml</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/基础语法/2025-3-21-包导入.html"><span class="label">2025-3-21-包导入</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">进阶使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active no_link"><a><span class="label">C语言-Cpp接轨</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/C语言-Cpp接轨/2025-12-10-01-struct.html"><span class="label">2025-12-10-01-struct</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">django</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-01-Django.html"><span class="label">2025-7-24-01-Django</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-02-创建.html"><span class="label">2025-7-24-02-创建</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-03-路由.html"><span class="label">2025-7-24-03-路由</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-04-视图.html"><span class="label">2025-7-24-04-视图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-24-05-配置文件.html"><span class="label">2025-7-24-05-配置文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-26-04-模版.html"><span class="label">2025-7-26-04-模版</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-28-05-静态文件.html"><span class="label">2025-7-28-05-静态文件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-06-中间件.html"><span class="label">2025-7-29-06-中间件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-29-07-数据库.html"><span class="label">2025-7-29-07-数据库</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-7-30-08-进阶数据查询.html"><span class="label">2025-7-30-08-进阶数据查询</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-1-09-ORM优化.html"><span class="label">2025-8-1-09-ORM优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-10-模型扩展.html"><span class="label">2025-8-2-10-模型扩展</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-2-11-组件.html"><span class="label">2025-8-2-11-组件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/django/2025-8-3-12-异步.html"><span class="label">2025-8-3-12-异步</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">pyQT</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-11-08界面容器.html"><span class="label">2024-5-11-08界面容器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-01介绍以及安装.html"><span class="label">2024-5-6-01介绍以及安装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-6-02控件.html"><span class="label">2024-5-6-02控件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-03布局.html"><span class="label">2024-5-7-03布局</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-7-04窗口.html"><span class="label">2024-5-7-04窗口</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-05信号与槽.html"><span class="label">2024-5-8-05信号与槽</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-06QTDesigner.html"><span class="label">2024-5-8-06QTDesigner</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/pyQT/2024-5-8-07线程.html"><span class="label">2024-5-8-07线程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">简单模块使用</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2024-5-4-01logging日志模块.html"><span class="label">2024-5-4-01logging日志模块</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/简单模块使用/2025-3-15-02fastapi.html"><span class="label">2025-3-15-02fastapi</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">线程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-10-01多任务.html"><span class="label">2024-5-10-01多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2024-5-14-02队列.html"><span class="label">2024-5-14-02队列</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/线程/2025-2-20-async.html"><span class="label">2025-2-20-async</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">网络编程</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-01网络编程.html"><span class="label">2024-5-10-01网络编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-10-02Socket.html"><span class="label">2024-5-10-02Socket</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-5-12-03软件.html"><span class="label">2024-5-12-03软件</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/python/进阶使用/网络编程/2024-8-20-04MQTT.html"><span class="label">2024-8-20-04MQTT</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">前端</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-12-04-CSS2.html"><span class="label">2024-8-12-04-CSS2</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-01-基础知识.html"><span class="label">2024-8-5-01-基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-5-02-HTML.html"><span class="label">2024-8-5-02-HTML</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/前端/2024-8-6-03-CSS.html"><span class="label">2024-8-6-03-CSS</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">嵌入式C语言</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-__attribute__.html"><span class="label">2022-7-21-__attribute__</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-内联函数内置内存函数.html"><span class="label">2022-7-21-内联函数内置内存函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-变量指针.html"><span class="label">2022-7-21-变量指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-大小端数据对齐size_t.html"><span class="label">2022-7-21-大小端数据对齐size_t</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-存储器.html"><span class="label">2022-7-21-存储器</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-21-语句表达式define.html"><span class="label">2022-7-21-语句表达式define</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-Linux中的面向对象思想-封装.html"><span class="label">2022-7-22-Linux中的面向对象思想-封装</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-main函数的参数.html"><span class="label">2022-7-22-main函数的参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-二级指针.html"><span class="label">2022-7-22-二级指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-代码复用分层思想.html"><span class="label">2022-7-22-代码复用分层思想</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数参数的本质.html"><span class="label">2022-7-22-函数参数的本质</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-函数指针.html"><span class="label">2022-7-22-函数指针</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-指针和数组.html"><span class="label">2022-7-22-指针和数组</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-22-面向对象编程基础.html"><span class="label">2022-7-22-面向对象编程基础</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-goto关键字.html"><span class="label">2022-7-23-goto关键字</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-可重入函数.html"><span class="label">2022-7-23-可重入函数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-多任务.html"><span class="label">2022-7-23-多任务</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-头文件剖析.html"><span class="label">2022-7-23-头文件剖析</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-异步通信模式.html"><span class="label">2022-7-23-异步通信模式</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-操作系统基本原理.html"><span class="label">2022-7-23-操作系统基本原理</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块化编程.html"><span class="label">2022-7-23-模块化编程</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块进阶.html"><span class="label">2022-7-23-模块进阶</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-23-模块间通讯.html"><span class="label">2022-7-23-模块间通讯</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-MMU内存管理单元.html"><span class="label">2022-7-24-MMU内存管理单元</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-中断.html"><span class="label">2022-7-24-中断</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-寄存器操作.html"><span class="label">2022-7-24-寄存器操作</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-嵌入式启动.html"><span class="label">2022-7-24-嵌入式启动</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-文件系统.html"><span class="label">2022-7-24-文件系统</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-系统调用.html"><span class="label">2022-7-24-系统调用</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/嵌入式C语言/2022-7-24-进程线程协程.html"><span class="label">2022-7-24-进程线程协程</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">微信小程序</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/微信小程序/2025-7-22-01-入门.html"><span class="label">2025-7-22-01-入门</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/微信小程序/2025-7-24-02-升级.html"><span class="label">2025-7-24-02-升级</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/微信小程序/2025-8-12-04-上线.html"><span class="label">2025-8-12-04-上线</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/微信小程序/2025-8-9-03-第三方UI库.html"><span class="label">2025-8-9-03-第三方UI库</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">算法基础</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/0000-00-00-00-算法.html"><span class="label">0000-00-00-00-算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2022-7-31-高级数据结构.html"><span class="label">2022-7-31-高级数据结构</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-01快速排序.html"><span class="label">2024-12-31-01快速排序</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-02哈希表.html"><span class="label">2024-12-31-02哈希表</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/编程基础/算法基础/2024-12-31-03贪心算法.html"><span class="label">2024-12-31-03贪心算法</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>语法</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-07-17">
+                                    2026-07-17
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/编程基础/protobuf/2026-07-17-02-语法.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <p><a href="https://protobuf.com.cn/programming-guides/proto3/#scalar"  target="_blank">https://protobuf.com.cn/programming-guides/proto3/#scalar</a></p>
+<p>定义一个搜索请求消息格式，其中每个搜索请求都有一个查询字符串、您感兴趣的特定结果页面以及每页的结果数量。</p>
+
+<pre class="language-protobuf"><code class="language-protobuf">syntax = &quot;proto3&quot;;
+
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 results_per_page = 3;
+}
+</code></pre>
+<ul>
+<li>文件的第一行指定您使用的是 protobuf 语言规范的 proto3 版本， 必须是文件的第一个非空、非注释行。</li>
+</ul>
+<blockquote>
+<p>其他可以使用的还有<code>edition = &quot;2023&quot;;</code>或者<code>syntax = &quot;proto2&quot;;</code><br />
+如果没有这部分, 默认使用的是proto2</p>
+</blockquote>
+<ul>
+<li><code>SearchRequest</code> 消息定义指定了三个字段（名称/值对），每种你想包含在此类消息中的数据都对应一个字段。每个字段都有一个名称和一个类型。</li>
+</ul>
+<p>一旦消息类型投入使用，这个编号就<strong>不能更改</strong>, 字段编号<strong>永远不应被重用</strong>。</p>
+<h2 id="%E6%B6%88%E6%81%AF%E5%AD%97%E6%AE%B5">消息字段</h2>
+<p>你必须为消息定义中的每个字段赋予一个介于 <code>1</code> 和 <code>536,870,911</code> 之间的编号</p>
+<ul>
+<li>给定的编号<strong>必须</strong>在该消息的所有字段中是<strong>唯一的</strong>。</li>
+<li>字段编号 <code>19,000</code> 到 <code>19,999</code> 为 Protocol Buffers <strong>实现保留</strong>。如果你在消息中使用这些保留的字段编号，protocol buffer 编译器会报错。</li>
+<li>您不能使用任何先前保留的字段编号或已分配给扩展的任何字段编号。</li>
+</ul>
+<h3 id="%E4%BF%9D%E7%95%99">保留</h3>
+<p>当您不再需要某个字段且所有引用都已从客户端代码中删除时，您可以从消息中删除该字段定义。但是，您<strong>必须保留</strong>已删除的字段编号。</p>
+<p>如果您通过完全删除字段或将其注释掉来更新消息类型，未来的开发人员在对该类型进行自己的更新时可以重用该字段编号。这可能会导致严重问题，如重用字段编号的后果中所述。为确保这种情况不会发生，请将您删除的字段编号添加到 <code>reserved</code> 列表中</p>
+
+<pre class="language-protobuf"><code class="language-protobuf">message Foo {
+  reserved 2, 15, 9 to 11;
+}
+</code></pre>
+<h3 id="%E5%9F%BA%E6%95%B0">基数</h3>
+<p>基数决定一个字段能出现多少次、序列化规则、能不能区分「没赋值」和「赋值成默认值」</p>
+<p>proto3 一共有四类基数：<strong><code>optional</code>、隐式默认字段、<code>repeated</code>、<code>map</code></strong>。</p>
+<ol>
+<li><code>optional</code></li>
+</ol>
+
+<pre class="language-protobuf"><code class="language-protobuf">optional int32 age = 1; 
+optional User info = 2;
+</code></pre>
+<p>设置的时候, 不管值是不是默认值（比如 <code>age=0</code>），都会序列化到二进制；代码里可以判断「此字段被显式赋值」<br />
+没有设置的时候, 不会序列化；读取时返回类型默认值；代码可以检测「有没有设置过」。</p>
+<blockquote>
+<p>可以区分：<strong>没设置 vs 设置了默认值</strong></p>
+</blockquote>
+<ol start="2">
+<li>隐式字段, 不设置</li>
+</ol>
+
+<pre class="language-protobuf"><code class="language-protobuf">int32 age = 1; // 基础类型，隐式基数 
+User info = 2; // 消息类型，隐式基数
+</code></pre>
+<p>实际的处理分为两种</p>
+<ul>
+<li>设置的是一个<strong>消息类型</strong>, 行为<strong>完全等价于 optional</strong></li>
+<li>设置的是一个<strong>基础类型</strong>, 值不等于默认值的时候才进行序列化, 接收方无法分辨你到底是主动赋值默认值，还是压根没传这个字段</li>
+</ul>
+<ol start="3">
+<li><code>repeated</code>可以重复的</li>
+</ol>
+
+<pre class="language-protobuf"><code class="language-protobuf">repeated string tags = 3; 
+repeated Order orders = 4;
+</code></pre>
+<p>实际就是一个数组</p>
+<ul>
+<li>字段可以出现 <strong>0 次或多次</strong>（数组 / 列表）</li>
+<li>顺序保留，序列化后解析出来顺序不变</li>
+<li>哪怕是空列表：<ul>
+<li>protobuf 二进制里<strong>不会编码空数组</strong></li>
+<li>解析时得到空列表</li>
+</ul>
+</li>
+<li>列表内允许重复元素</li>
+</ul>
+<ol start="4">
+<li><code>map</code>映射字段</li>
+</ol>
+
+<pre class="language-protobuf"><code class="language-protobuf">map&lt;string, int32&gt; score_map = 5;
+</code></pre>
+<p>本质是语法糖，等价于：</p>
+
+<pre class="language-protobuf"><code class="language-protobuf">repeated MapEntry entries;
+message MapEntry {
+  optional string key = 1;
+  optional int32 value = 2;
+}
+</code></pre>
+<ul>
+<li>Key 只能是基础标量类型（不能是 message）</li>
+<li>key 唯一，不存在重复 key</li>
+<li><strong>不保证顺序</strong>（不要依赖遍历顺序）</li>
+<li>空 map 不会序列化到二进制</li>
+<li>等价于编程语言里的字典、HashMap</li>
+</ul>
+<h2 id="%E6%B3%A8%E9%87%8A">注释</h2>
+<ul>
+<li>优先使用 C/C++/ <a href="https://protobuf.com.cn/programming-guides/proto3/#"  target="_blank">Java</a> 风格的行尾注释 '//'，放在 .proto 代码元素的前一行。</li>
+<li>也接受 C 风格的内联/多行注释 <code>/* ... */</code>。<ul>
+<li>使用多行注释时，推荐使用 '*' 作为边距行。</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E5%8F%82%E6%95%B0">参数</h2>
+<h3 id="%E6%A0%87%E9%87%8F">标量</h3>
+<table>
+<thead>
+<tr>
+  <th>Proto 类型</th>
+  <th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>double</td>
+  <td>使用 <a href="https://en.wikipedia.org/wiki/IEEE_754"  target="_blank">IEEE 754</a> 双精度格式。</td>
+</tr>
+<tr>
+  <td>float</td>
+  <td>使用 <a href="https://en.wikipedia.org/wiki/IEEE_754"  target="_blank">IEEE 754</a> 单精度格式。</td>
+</tr>
+<tr>
+  <td>int32</td>
+  <td>使用可变长度编码。对于编码负数效率低下——如果你的字段可能包含负值，请改用 sint32。</td>
+</tr>
+<tr>
+  <td>int64</td>
+  <td>使用可变长度编码。对于编码负数效率低下——如果你的字段可能包含负值，请改用 sint64。</td>
+</tr>
+<tr>
+  <td>uint32</td>
+  <td>使用可变长度编码。</td>
+</tr>
+<tr>
+  <td>uint64</td>
+  <td>使用可变长度编码。</td>
+</tr>
+<tr>
+  <td>sint32</td>
+  <td>使用可变长度编码。有符号整数值。这些比常规的 int32 更高效地编码负数。</td>
+</tr>
+<tr>
+  <td>sint64</td>
+  <td>使用可变长度编码。有符号整数值。这些比常规的 int64 更高效地编码负数。</td>
+</tr>
+<tr>
+  <td>fixed32</td>
+  <td>总是四个字节。如果值经常大于 228，比 uint32 更高效。</td>
+</tr>
+<tr>
+  <td>fixed64</td>
+  <td>总是八个字节。如果值经常大于 256，比 uint64 更高效。</td>
+</tr>
+<tr>
+  <td>sfixed32</td>
+  <td>总是四个字节。</td>
+</tr>
+<tr>
+  <td>sfixed64</td>
+  <td>总是八个字节。</td>
+</tr>
+<tr>
+  <td>bool</td>
+  <td></td>
+</tr>
+<tr>
+  <td>string</td>
+  <td>字符串必须始终包含 UTF-8 编码或 7 位 ASCII 文本，且长度不能超过 232。</td>
+</tr>
+<tr>
+  <td>bytes</td>
+  <td>可包含任意字节序列，长度不超过 232。</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+  <th>Proto 类型</th>
+  <th>C++ 类型</th>
+  <th><a href="https://protobuf.com.cn/programming-guides/proto3/#"  target="_blank">Java</a>/Kotlin 类型[1]</th>
+  <th>Python 类型[3]</th>
+  <th>Go 类型</th>
+  <th>Ruby 类型</th>
+  <th>C# 类型</th>
+  <th>PHP 类型</th>
+  <th>Dart 类型</th>
+  <th>Rust 类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>double</td>
+  <td>double</td>
+  <td>double</td>
+  <td>float</td>
+  <td>float64</td>
+  <td>Float</td>
+  <td>double</td>
+  <td>float</td>
+  <td>double</td>
+  <td>f64</td>
+</tr>
+<tr>
+  <td>float</td>
+  <td>float</td>
+  <td>float</td>
+  <td>float</td>
+  <td>float32</td>
+  <td>Float</td>
+  <td>float</td>
+  <td>float</td>
+  <td>double</td>
+  <td>f32</td>
+</tr>
+<tr>
+  <td>int32</td>
+  <td>int32_t</td>
+  <td>int</td>
+  <td>int</td>
+  <td>int32</td>
+  <td>Fixnum 或 Bignum (根据需要)</td>
+  <td>int</td>
+  <td>integer</td>
+  <td>int</td>
+  <td>i32</td>
+</tr>
+<tr>
+  <td>int64</td>
+  <td>int64_t</td>
+  <td>long</td>
+  <td>int/long[4]</td>
+  <td>int64</td>
+  <td>Bignum</td>
+  <td>long</td>
+  <td>integer/string[6]</td>
+  <td>Int64</td>
+  <td>i64</td>
+</tr>
+<tr>
+  <td>uint32</td>
+  <td>uint32_t</td>
+  <td>int[2]</td>
+  <td>int/long[4]</td>
+  <td>uint32</td>
+  <td>Fixnum 或 Bignum (根据需要)</td>
+  <td>uint</td>
+  <td>integer</td>
+  <td>int</td>
+  <td>u32</td>
+</tr>
+<tr>
+  <td>uint64</td>
+  <td>uint64_t</td>
+  <td>long[2]</td>
+  <td>int/long[4]</td>
+  <td>uint64</td>
+  <td>Bignum</td>
+  <td>ulong</td>
+  <td>integer/string[6]</td>
+  <td>Int64</td>
+  <td>u64</td>
+</tr>
+<tr>
+  <td>sint32</td>
+  <td>int32_t</td>
+  <td>int</td>
+  <td>int</td>
+  <td>int32</td>
+  <td>Fixnum 或 Bignum (根据需要)</td>
+  <td>int</td>
+  <td>integer</td>
+  <td>int</td>
+  <td>i32</td>
+</tr>
+<tr>
+  <td>sint64</td>
+  <td>int64_t</td>
+  <td>long</td>
+  <td>int/long[4]</td>
+  <td>int64</td>
+  <td>Bignum</td>
+  <td>long</td>
+  <td>integer/string[6]</td>
+  <td>Int64</td>
+  <td>i64</td>
+</tr>
+<tr>
+  <td>fixed32</td>
+  <td>uint32_t</td>
+  <td>int[2]</td>
+  <td>int/long[4]</td>
+  <td>uint32</td>
+  <td>Fixnum 或 Bignum (根据需要)</td>
+  <td>uint</td>
+  <td>integer</td>
+  <td>int</td>
+  <td>u32</td>
+</tr>
+<tr>
+  <td>fixed64</td>
+  <td>uint64_t</td>
+  <td>long[2]</td>
+  <td>int/long[4]</td>
+  <td>uint64</td>
+  <td>Bignum</td>
+  <td>ulong</td>
+  <td>integer/string[6]</td>
+  <td>Int64</td>
+  <td>u64</td>
+</tr>
+<tr>
+  <td>sfixed32</td>
+  <td>int32_t</td>
+  <td>int</td>
+  <td>int</td>
+  <td>int32</td>
+  <td>Fixnum 或 Bignum (根据需要)</td>
+  <td>int</td>
+  <td>integer</td>
+  <td>int</td>
+  <td>i32</td>
+</tr>
+<tr>
+  <td>sfixed64</td>
+  <td>int64_t</td>
+  <td>long</td>
+  <td>int/long[4]</td>
+  <td>int64</td>
+  <td>Bignum</td>
+  <td>long</td>
+  <td>integer/string[6]</td>
+  <td>Int64</td>
+  <td>i64</td>
+</tr>
+<tr>
+  <td>bool</td>
+  <td>bool</td>
+  <td>boolean</td>
+  <td>bool</td>
+  <td>bool</td>
+  <td>TrueClass/FalseClass</td>
+  <td>bool</td>
+  <td>boolean</td>
+  <td>bool</td>
+  <td>bool</td>
+</tr>
+<tr>
+  <td>string</td>
+  <td>std::string</td>
+  <td>String</td>
+  <td>str/unicode[5]</td>
+  <td>string</td>
+  <td>String (UTF-8)</td>
+  <td>string</td>
+  <td>string</td>
+  <td>String</td>
+  <td>ProtoString</td>
+</tr>
+<tr>
+  <td>bytes</td>
+  <td>std::string</td>
+  <td>ByteString</td>
+  <td>str (Python 2), bytes (Python 3)</td>
+  <td>[]byte</td>
+  <td>String (ASCII-8BIT)</td>
+  <td>ByteString</td>
+  <td>string</td>
+  <td>List</td>
+  <td>ProtoBytes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E9%BB%98%E8%AE%A4%E5%80%BC">默认值</h3>
+<ul>
+<li>对于字符串，默认值是空字符串。</li>
+<li>对于字节，默认值是空字节。</li>
+<li>对于布尔值，默认值是 false。</li>
+<li>对于数值类型，默认值是零。</li>
+<li>对于消息字段，该字段未设置。其确切值取决于语言。详情请参阅<a href="https://protobuf.com.cn/reference/"  target="_blank">生成的代码指南</a>。</li>
+<li>对于枚举，默认值是<strong>第一个定义的枚举值</strong>，它必须为 0。</li>
+</ul>
+<h3 id="%E6%9E%9A%E4%B8%BE">枚举</h3>
+<p>当您定义消息类型时，您可能希望它的某个字段只能是预定义列表中的值之一。例如，假设您想为每个 <code>SearchRequest</code> 添加一个 <code>corpus</code> 字段，其中 corpus 可以是 <code>UNIVERSAL</code>、<code>WEB</code>、<code>IMAGES</code>、<code>LOCAL</code>、<code>NEWS</code>、<code>PRODUCTS</code> 或 <code>VIDEO</code>。您可以通过在您的消息定义中添加一个 <code>enum</code> 并为每个可能的值定义一个常量来非常简单地实现这一点。</p>
+
+<pre class="language-protobuf"><code class="language-protobuf">enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_UNIVERSAL = 1;
+  CORPUS_WEB = 2;
+  CORPUS_IMAGES = 3;
+  CORPUS_LOCAL = 4;
+  CORPUS_NEWS = 5;
+  CORPUS_PRODUCTS = 6;
+  CORPUS_VIDEO = 7;
+}
+
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 results_per_page = 3;
+  Corpus corpus = 4;
+}
+</code></pre>
+<p>在枚举值加前缀时，剥离前缀后的其余名称仍应是合法且符合样式的枚举名称</p>
+
+<pre class="language-protobuf"><code class="language-protobuf">enum DeviceTier {
+  DEVICE_TIER_UNKNOWN = 0;
+  DEVICE_TIER_1 = 1;
+  DEVICE_TIER_2 = 2;
+}
+</code></pre>
+<p>其中 <code>DEVICE_TIER_</code> 部分被视为对枚举值进行作用域限定，而不是作为单个枚举值名称的一部分。一些 Protobuf 实现会自动剥离与包含枚举名称匹配的前缀（在安全的情况下），但在本例中不能，因为裸露的 <code>1</code> 不是合法的枚举值名称<br />
+在 proto3 中，枚举定义中定义的第一个值<strong>必须</strong>为零，并且应该命名为 <code>ENUM_TYPE_NAME_UNSPECIFIED</code> 或 <code>ENUM_TYPE_NAME_UNKNOWN</code>。这是因为</p>
+<ul>
+<li>必须有一个零值，以便我们可以将 0 用作数字默认值。</li>
+<li>零值需要是第一个元素，以便与 proto2 语义兼容，其中除非明确指定了不同的值，否则第一个枚举值是默认值。</li>
+</ul>
+<h2 id="%E4%BD%BF%E7%94%A8%E5%85%B6%E4%BB%96%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B">使用其他消息类型</h2>
+<p>您可以使用其他消息类型作为字段类型。例如，假设您希望在每个 <code>SearchResponse</code> 消息中包含 <code>Result</code> 消息——为此，您可以在同一个 <code>.proto</code> 文件中定义一个 <code>Result</code> 消息类型，然后在 <code>SearchResponse</code> 中指定一个类型为 <code>Result</code> 的字段</p>
+
+<pre class="language-protobuf"><code class="language-protobuf">```proto
+message SearchResponse {
+  repeated Result results = 1;
+}
+
+message Result {
+  string url = 1;
+  string title = 2;
+  repeated string snippets = 3;
+}
+</code></pre>
+<h3 id="%E5%AF%BC%E5%85%A5">导入</h3>
+
+<pre class="language-protobuf"><code class="language-protobuf">import &quot;myproject/other_protos.proto&quot;;
+</code></pre>
+<p>protobuf 编译器会在使用 <code>-I</code>/<code>--proto_path</code> 标志指定的一组目录中搜索导入的文件，以解析 <code>import</code> 指令。<code>import</code> 语句中给定的路径是相对于这些目录解析的</p>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/编程基础/protobuf/2026-07-17-01-Protocol-Buffers.html">
+                            <span class="icon"></span>
+                            <span class="label">2026-07-17-01-Protocol-Buffers</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/编程基础/python/基础语法/2023-6-15-修饰器.html">
+                            <span class="label">2023-6-15-修饰器</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>
