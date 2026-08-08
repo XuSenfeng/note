@@ -38,6 +38,7 @@ NotificationApp* notification = furi_record_open(RECORD_NOTIFICATION);
 
 notification_message_block(notification, &sequence_display_backlight_enforce_on);
 notification_message(notification, &sequence_eat);
+furi_record_close(RECORD_NOTIFICATION);
 ```
 
 ## 灯光/背光管理
