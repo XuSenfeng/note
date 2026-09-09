@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"  class="">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="keywords" content="">
+    
+    
+    <meta name="description" content="">
+    
+    <meta name="generator" content="teedoc">
+    <meta name="theme" content="teedoc-plugin-theme-default">
+    
+        
+        <meta name="markdown-generator" content="teedoc-plugin-markdown-parser">
+        
+        <script>
+MathJax = {"loader": {"load": ["output/svg"]}, "tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}, "svg": {"fontCache": "global"}};
+</script>
+        
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+        <meta name="html-generator" content="teedoc-plugin-jupyter-notebook-parser">
+        
+        <script src="/note/static/js/theme_default/pre_main.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/prism.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/viewer.min.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/dark.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/theme_default/light.css" type="text/css"/>
+        
+        <script src="/note/static/js/theme_default/jquery.min.js"></script>
+        
+        <script src="/note/static/js/theme_default/split.js"></script>
+        
+        <link rel="stylesheet" href="/note/static/css/search/style.css" type="text/css"/>
+        
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4d52982572d5512e9762879ebf063c86";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        
+        <meta name="blog-generator" content="teedoc-plugin-blog">
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/gitalk/custom_gitalk.css" type="text/css"/>
+        
+        <link rel="stylesheet" href="/note/static/css/custom.css" type="text/css"/>
+        
+    
+    
+    <title>一致性测试 - XvSenfeng's Note</title>
+    
+    <script type="text/javascript">js_vars = {"teedoc-plugin-ad-hint": {"type": "hint", "label": "☆", "content": "这是一个支持国际化的消息示例</br>喜欢项目请<a target=\"_blank\" href=\"https://github.com/teedoc/teedoc\">点下 ☆ star </a>哦~🦀🦀", "show_times": 2, "show_after_s": 432000, "date": "2021-11-16 14:40", "color": "#a0421d", "link_color": "#e53935", "link_bg_color": "#e6ae5c", "bg_color": "#ffcf89", "color_hover": "white", "bg_color_hover": "#f57c00", "close_color": "#eab971"}}</script>
+    <script type="text/javascript">metadata = {"tags": [], "date": null, "update": [], "ts": 0, "author": "", "brief": "", "cover": ""}</script>
+</head>
+
+
+<body class="type_doc">
+    
+    <div id="navbar">
+        <div id="navbar_menu">
+            <a class="site_title" href="/note/">
+                
+                    <img class="site_logo" src="/note/static/image/logo.png" alt="XvSenfeng logo">
+                
+                
+                    <h2>XvSenfeng</h2>
+                
+        </a>
+            <a id="navbar_menu_btn"></a>
+        </div>
+        <div id="navbar_items">
+            <div>
+                <ul id="nav_left">
+<li class=""><a  href="/note/blog/">博客</a></li>
+<li class=""><a  href="/note/Linux/">Linux</a></li>
+<li class=""><a  href="/note/代码分析/">代码分析</a></li>
+<li class=""><a  href="/note/使用软件/">使用软件</a></li>
+<li class=""><a  href="/note/嵌入式/">嵌入式</a></li>
+<li class=""><a  href="/note/手机安卓/">手机安卓</a></li>
+<li class=""><a  href="/note/机器学习/">机器学习</a></li>
+<li class=""><a  href="/note/编程基础/">编程基础</a></li>
+<li class=""><a  href="/note/网络/">网络</a></li>
+<li class=""><a  href="/note/copilot/">copilot</a></li>
+<li class="active"><a  href="/note/机械基础/">机械基础</a></li>
+<li class=""><a  href="/note/随记/">随记</a></li>
+<li class=""><a  href="/note/项目代码分析/">项目代码分析</a></li>
+</ul>
+
+            </div>
+            <div>
+                <ul id="nav_right">
+<li class=""><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+</ul>
+
+                <ul class="nav_plugins"><li><a id="google_translate_element"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Translate</a></li></ul><ul class="nav_plugins"><li><a id="themes" class="light"></a></li></ul><ul class="nav_plugins"><li><a id="search"><span class="icon"></span><span class="placeholder">搜索</span>
+                            <div id="search_hints">
+                                <span id="search_input_hint">输入关键词，多关键词空格隔开</span>
+                                <span id="search_loading_hint">正在加载，请稍候。。。</span>
+                                <span id="search_download_err_hint">下载文件失败，请刷新重试或检查网络</span>
+                                <span id="search_other_docs_result_hint">来自其它文档的结果</span>
+                                <span id="search_curr_doc_result_hint">当前文档搜索结果</span>
+                            </div></a></li></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div id="sidebar_wrapper">
+            <div id="sidebar">
+                <div id="sidebar_title">
+                    
+                </div>
+                <ul class="show">
+<li class="not_active with_link"><a href="/note/机械基础/2026-05-13-01-物理参数.html"><span class="label">2026-05-13-01-物理参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/2026-07-01-02-220V和380V供电.html"><span class="label">2026-07-01-02-220V和380V供电</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/index.html"><span class="label">README</span><span class=""></span></a></li>
+<li class="active_parent no_link"><a><span class="label">EtherCAT</span><span class="sub_indicator"></span></a><ul class="show">
+<li class="not_active with_link"><a href="/note/机械基础/EtherCAT/2026-06-17-01-基础知识.html"><span class="label">2026-06-17-01-基础知识</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/EtherCAT/2026-06-23-18-Linux库控制.html"><span class="label">2026-06-23-18-Linux库控制</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/EtherCAT/2026-06-24-03-抓包.html"><span class="label">2026-06-24-03-抓包</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/EtherCAT/2026-08-25-04-基础命令.html"><span class="label">2026-08-25-04-基础命令</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/EtherCAT/2026-08-31-05-一致性测试-从机.html"><span class="label">2026-08-31-05-一致性测试-从机</span><span class=""></span></a></li>
+<li class="active with_link"><a href="/note/机械基础/EtherCAT/2026-08-31-06-一致性测试-主机.html"><span class="label">2026-08-31-06-一致性测试-主机</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">can</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机械基础/can/2026-05-11-01-CAN协议.html"><span class="label">2026-05-11-01-CAN协议</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/can/2026-05-11-02-机器狗电机.html"><span class="label">2026-05-11-02-机器狗电机</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/can/2026-05-11-03-Linux下CAN.html"><span class="label">2026-05-11-03-Linux下CAN</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/can/2026-06-24-04-CANOpen.html"><span class="label">2026-06-24-04-CANOpen</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">imu</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机械基础/imu/2026-08-26-01-陀螺仪.html"><span class="label">2026-08-26-01-陀螺仪</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/imu/2026-28-26-02-滤波.html"><span class="label">2026-28-26-02-滤波</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">导航算法</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-03-01-DWA导航算法.html"><span class="label">2026-06-03-01-DWA导航算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-03-02-四叉树.html"><span class="label">2026-06-03-02-四叉树</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-04-03-Astar算法.html"><span class="label">2026-06-04-03-Astar算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-04-04-ElasticBand路径优化.html"><span class="label">2026-06-04-04-ElasticBand路径优化</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-04-05-Bresenham直线算法.html"><span class="label">2026-06-04-05-Bresenham直线算法</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-04-06-栅格地图.html"><span class="label">2026-06-04-06-栅格地图</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-04-07-Dijkstra最短路径.html"><span class="label">2026-06-04-07-Dijkstra最短路径</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-04-08-Floyd最短路径.html"><span class="label">2026-06-04-08-Floyd最短路径</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/导航算法/2026-06-04-09-MAPF多机器人路径规划.html"><span class="label">2026-06-04-09-MAPF多机器人路径规划</span><span class=""></span></a></li>
+</ul>
+</li>
+<li class="not_active no_link"><a><span class="label">电机</span><span class="sub_indicator sub_indicator_collapsed"></span></a><ul class="">
+<li class="not_active with_link"><a href="/note/机械基础/电机/2025-05-13-01-机器狗电机参数.html"><span class="label">2025-05-13-01-机器狗电机参数</span><span class=""></span></a></li>
+<li class="not_active with_link"><a href="/note/机械基础/电机/2026-07-31-02-施耐德电机.html"><span class="label">2026-07-31-02-施耐德电机</span><span class=""></span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        <div id="article">
+            <div id="menu_wrapper">
+                <div id="menu">
+                </div>
+            </div>
+            <div id="content_wrapper">
+                <div id="content_body">
+                    <div id="article_head">
+                        <div id="article_title">
+                            
+                            <h1>一致性测试</h1>
+                            
+                        </div>
+                        <div id="article_tags">
+                            <ul>
+                            
+                            </ul>
+                        </div>
+                        <div id="article_info">
+                        <div id="article_info_left">
+                            <span class="article_author">
+                                
+                            </span>
+                            
+                                <span class="article_date" title="最后修改日期： 2026-09-09">
+                                    2026-09-09
+                                </span>
+                            
+                        </div>
+                        <div id="article_info_right">
+                            
+                            <div id="source_link">
+                                <a href="https://github.com/XuSenfeng/note/tree/master/doc/机械基础/EtherCAT/2026-08-31-06-一致性测试-主机.md" target="_blank">
+                                    编辑本页
+                                </a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <div id="article_tools">
+                        <span></span>
+                        <span id="toc_btn"></span>
+                    </div>
+                    <div id="update_history">
+                        
+                    </div>
+                    <div id="article_content">
+                        
+                            <p>ETG 不为主机设备颁发证书</p>
+<table>
+<thead>
+<tr>
+  <th>路径</th>
+  <th>依据文档</th>
+  <th>结果</th>
+  <th>认证/证书</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>A. 主机&quot;互通性验证&quot;</strong>(推荐、实操)</td>
+  <td><strong>ETG.1500(主机分级)</strong> + <strong>ETG.7010(指南)</strong></td>
+  <td>到 ETC 或 Plug Fest 上<strong>跑互联测试</strong></td>
+  <td><strong>无证书</strong>,但有&quot;符合 Class A/B + Feature Pack&quot;的自声明</td>
+</tr>
+<tr>
+  <td><strong>B. 主机自声明&quot;符合 Master Class&quot;</strong></td>
+  <td>核对 <strong>ETG.1500 的 Table 1</strong> 要求清单</td>
+  <td>对照勾选</td>
+  <td>无官方证书,靠 vendor 承诺</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>主要需要关注的是 ETG1500 EtherCAT Master Classes</p>
+</blockquote>
+<p>你不是&quot;测一致性&quot;,而是&quot;<strong>声明你的主机属于哪个等级(Class)</strong>&quot;。ETG.1500 定义了:</p>
+<p>主机分两级(第 4 章)</p>
+<ul>
+<li><strong>Class A:标准 EtherCAT 主机</strong> —— 支持 ETG.1000 系列全部 + ETG.1020 大部分功能,<strong>推荐追求的目标</strong>。</li>
+<li><strong>Class B:最小 EtherCAT 主机</strong> —— 功能精简,只要求能跑大部分设备(支持 CoE + 周期 PDO 交换)。只在资源受限(如嵌入式)时允许用。</li>
+</ul>
+<p><img src="https://picture-01-1316374204.cos.ap-beijing.myqcloud.com/lenovo-xiangong/20260909154153958.png?imageSlim" alt="image.png" /><br />
+ETG.1500 §4.3 对 Class B 的定义就是&quot;运行大多数 EtherCAT 设备所需的主要功能(例如支持 CoE、周期性过程数据交换)&quot;,并且明确只在资源受限、无法做到 Class A 时才允许宣称(嵌入式系统正是它举的例子)。电机控制器 + 只做 CoE,就是这一档。</p>
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>项目</th>
+  <th>Class B</th>
+  <th>测什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>101</td>
+  <td>Service Commands</td>
+  <td>支持 ENI 导入时必须全支持</td>
+  <td>若只做内部配置,可裁剪命令种类(§5.3.1)</td>
+</tr>
+<tr>
+  <td>103</td>
+  <td>Device Emulation 从站</td>
+  <td>必须</td>
+  <td>带/不带应用控制器的从站都能带起来;<strong>对 emulation=true 的从站不要置 Error Indication Acknowledge 位</strong>(§5.3.3) | Support Slaves with and without application  controller</td>
+</tr>
+<tr>
+  <td>104</td>
+  <td>ESM</td>
+  <td>必须</td>
+  <td>INIT→PREOP→SAFEOP→OP 全迁移;超时值取自 ESI/SII,缺失则用 ETG.1020 默认值;OpOnly 标志置位时非 OP 态要关掉所有输出 SM | Support of ESM special behaviour</td>
+</tr>
+<tr>
+  <td>105</td>
+  <td>错误处理</td>
+  <td>必须</td>
+  <td>WKC 校验、丢帧、从站掉线;必须给应用层提供访问错误/诊断信息的接口(§5.3.5)  Checking of network or slave errors, e.g. | Working  <br>Counter</td>
+</tr>
+<tr>
+  <td>107</td>
+  <td>EtherCAT 帧类型</td>
+  <td>必须</td>
+  <td>EtherType 0x88A4、EtherCAT Header Type=1 | Support EtherCAT Frames</td>
+</tr>
+<tr>
+  <td>201</td>
+  <td>周期 PDO</td>
+  <td>必须</td>
+  <td>周期性过程映像刷新 | Cyclic process data exchange</td>
+</tr>
+<tr>
+  <td>301</td>
+  <td>在线扫描 <strong>或</strong> 读 ENI</td>
+  <td>二者至少一个</td>
+  <td>Network configuration functionality included in  EtherCAT Master | Network Configuration taken from ENI file</td>
+</tr>
+<tr>
+  <td>302</td>
+  <td>启动时比对网络配置</td>
+  <td>必须</td>
+  <td>VendorID / ProductCode / RevisionNo / SerialNo、Identification、拓扑 | Compare configured and existing network  configuration during boot-up</td>
+</tr>
+<tr>
+  <td>305</td>
+  <td>EEPROM 访问</td>
+  <td>读必须(写可选)</td>
+  <td>通过 ESC 寄存器访问 SII,含访问状态机 | Support routines to access EEPROM via ESC  register</td>
+</tr>
+<tr>
+  <td>401</td>
+  <td>邮箱</td>
+  <td>必须</td>
+  <td>基本邮箱传输 | Main functionality for mailbox transfer</td>
+</tr>
+<tr>
+  <td>402</td>
+  <td>邮箱可靠层 RMSM</td>
+  <td>必须</td>
+  <td>丢帧重发恢复 | Support underlying resilient layer</td>
+</tr>
+<tr>
+  <td>404</td>
+  <td>邮箱轮询</td>
+  <td>必须</td>
+  <td>按 ENI 的 PollTime 轮询输入邮箱,或用 FMMU 映射 SM 状态位 0x0805.0 | Polling Mailbox state in slaves</td>
+</tr>
+<tr>
+  <td>501</td>
+  <td>SDO 上/下载</td>
+  <td>必须</td>
+  <td>expedited + normal 两种都要 | Normal and expedited transfer</td>
+</tr>
+<tr>
+  <td>505</td>
+  <td>Emergency</td>
+  <td>必须</td>
+  <td>接收 EMCY——<strong>对电机控制器这条最关键,驱动器故障就靠它上报</strong> | Receive Emergency messages</td>
+</tr>
+<tr>
+  <td>1101</td>
+  <td>DC支持</td>
+  <td>支持DC的时候必须</td>
+  <td>支持分布时钟 | Support of Distributed Clock</td>
+</tr>
+<tr>
+  <td>1201</td>
+  <td>从站到从站通信</td>
+  <td>必须</td>
+  <td>主站栈或应用做数据搬运 | Information is given in ENI file or can be part of any  other network configuration  <br>Copying of the data can be handled by master stackor master’s application</td>
+</tr>
+</tbody>
+</table>
+<p>Class B 里降为&quot;宜&quot;(should)的,建议你还是做:</p>
+<ul>
+<li><strong>502 分段传输</strong>:读长对象、字符串、SDO Info 响应超过邮箱长度时必然用到</li>
+<li><strong>503 Complete Access</strong>:注意——<strong>支持 ENI 导入的话这条是 shall</strong>。你自己那个 JUXIE 的 ESI 里 <code>CompleteAccess=&quot;1&quot;</code>,并且 PDO 映射对象整体写入通常就走 CA</li>
+<li><strong>504 SDO Info</strong>:在线扫描模式下要读从站对象字典,基本躲不开</li>
+<li>102 IRQ 位、303 显式设备识别(热插拔/防插错线)、1102/1103 DC 传输延迟与同步窗口监视</li>
+</ul>
+<h2 id="%E6%B5%8B%E8%AF%95%E6%AE%B5%E7%9A%84%E9%87%87%E8%B4%AD%E6%B8%85%E5%8D%95%28%2B%C2%A74.1%29--ETG7000_3_V1i0i0_D_R_InteroperabilityTestDirective.pdf">测试段的采购清单(+§4.1)  ETG7000_3_V1i0i0_D_R_InteroperabilityTestDirective.pdf</h2>
+<p>文档对从站段有硬门槛,两条前提:</p>
+<ul>
+<li>每个从站<strong>必须已在 ETC 通过一致性测试</strong>——你自己的 JUXIE 不满足这条,不能算入测试段</li>
+<li>每个从站必须在默认模式下、<strong>无需手动加启动命令</strong>就能进 OP</li>
+</ul>
+<p>要求覆盖的维度:</p>
+<ul>
+<li><strong>拓扑</strong>:星型(4 端口设备)、线型(2 端口 MII)、菊花链(3 端口全接)、两从站间 100m 网线</li>
+<li><strong>ESC 型号</strong>:ET1100、ET1200、Altera IP Core、ESC10/ESC20、Xilinx IP Core、netX100、netX50、TI</li>
+<li><strong>DC</strong>:仅 32 位、64 位、无接收时间寄存器三种</li>
+<li><strong>标识</strong>:直接 ID 机制、请求 ID 机制、无 ID 选择器</li>
+<li><strong>过程数据</strong>:纯输入、纯输出、输入输出兼有,以及支持 Modules/Slots 的 ESI</li>
+<li><strong>邮箱协议</strong>:CoE(§4.1.5 只列了 CoE,对你正好)</li>
+</ul>
+<p>4.2 还列了一批专门用来踩坑的设备,其中几个对 CoE-only 主站特别值得凑:</p>
+<ul>
+<li>默认使能 emergency 对象的设备 / 完全不支持 emergency 的设备</li>
+<li>8/16/32 位 ENUM SDO,<strong>其中至少一个要有 255 个 ENUM 字符串</strong></li>
+<li>&quot;慢速&quot;设备:邮箱响应 ≥10 秒,整个对象字典列表传输 ≥30 秒 —— 专门打超时和分段传输</li>
+<li>修订号字大小端相反的两种设备 —— 打配置比对(302)</li>
+<li>完全中断驱动 PDI 的设备(INIT/PREOP 下不访问 ESC,PDI 看门狗会超时)vs 轮询 PDI 的设备</li>
+<li>复杂设备但无过程数据 / 过程数据可变(ESI 里没有 PDO 尺寸信息)/ 仅支持 PDO upload(ESI 里没有 PDO 条目和字典,靠 <code>Mailbox:CoE@PdoUpload=1</code> + SDO Info)</li>
+<li><strong>拒绝 SAFEOP→OP 除非输出 SM 在看门狗超时内被写过至少一次</strong>的从站</li>
+</ul>
+<p>最后一条几乎是必配 —— 很多自研主站就是在这里卡住,因为它们在切 OP 之前不发过程数据。</p>
+
+                        
+                    </div>
+                </div>
+                <div id="previous_next">
+                    <div id="previous">
+                        
+                        <a href="/note/机械基础/EtherCAT/2026-08-31-05-一致性测试-从机.html">
+                            <span class="icon"></span>
+                            <span class="label">2026-08-31-05-一致性测试-从机</span>
+                        </a>
+                        
+                    </div>
+                    <div id="next">
+                        
+                        <a href="/note/机械基础/can/2026-05-11-01-CAN协议.html">
+                            <span class="label">2026-05-11-01-CAN协议</span>
+                            <span class="icon"></span>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div id="comments-container"></div>
+            </div>
+            <div id="toc_wrapper">
+                <div id="toc">
+                    <div id="toc_content">
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="to_top" href="#"></a>
+    <div id="doc_footer">
+        <div id="footer">
+            <div id="footer_top">
+                <ul>
+<li><a>链接</a><ul><li><a target="_blank" href="https://teedoc.neucrack.com">网站使用 teedoc 生成</a></li>
+<li><a target="_blank" href="https://neucrack.com">Copyright © 2021 Neucrack</a></li>
+<li><a  href="/note/sitemap.xml">网站地图</a></li>
+</ul>
+</li>
+<li><a>源码</a><ul><li><a target="_blank" href="https://github.com/XuSenfeng/note/">github</a></li>
+<li><a target="_blank" href="https://github.com/teedoc/teedoc">本网站源文件</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <div id="footer_bottom">
+                <ul>
+<li><a target="_blank" href="https://beian.miit.gov.cn">渝ICP备19015320号</a></li>
+<li><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030602004109">粤公网安备44030602004109号</a></li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+    
+        <script src="/note/teedoc-plugin-markdown-parser/mermaid.min.js"></script>
+    
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    
+        <script type="text/javascript">
+                var transLoaded = false;
+                var loading = false;
+                var domain = "translate.google.com";
+                var domainDefault = domain;
+                var storeDomain = localStorage.getItem("googleTransDomain");
+                if(storeDomain){
+                    domain = storeDomain;
+                    console.log("load google translate domain from local storage:" + domain);
+                }
+                function getUrl(domain){
+                    if(domain == "/")
+                        return "/static/js/google_translate/element.js?cb=googleTranslateElementInit";
+                    else
+                        return "https://" + domain + "/translate_a/element.js?cb=googleTranslateElementInit";
+                }
+                var url = getUrl(domain);
+                console.log("google translate domain:" + domain + ", url: " + url);
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: "auto", layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                }
+                function loadJS( url, callback ){
+                    var script = document.createElement('script');
+                    fn = callback || function(){ };
+                    script.type = 'text/javascript';
+                    if(script.readyState){
+                        script.onreadystatechange = function(){
+                            if( script.readyState == 'loaded' || script.readyState == 'complete' ){
+                                script.onreadystatechange = null;
+                                fn();
+                            }
+                        };
+                    }else{
+                        script.onload = function(){
+                            fn();
+                        };
+                    }
+                    script.src = url;
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                }
+                function removeHint(){
+                    var hint = document.getElementById("loadingTranslate");
+                    if(hint){
+                        hint.remove();
+                    }
+                }
+                var btn = document.getElementById("google_translate_element");
+                btn.onclick = function(){
+                    if(transLoaded) return;
+                    if(loading){
+                        var flag = confirm("loading from " + domain + ", please wait, or change domain?");
+                        if(flag){
+                            newDomain = prompt("domain, default: " + domainDefault + ", now: " + domain);
+                            if(newDomain){
+                                domain = newDomain;
+                                console.log(domain);
+                                url = getUrl(domain);
+                                loadJS(url, function(){
+                                    localStorage.setItem("googleTransDomain", domain);
+                                    removeHint()
+                                    transLoaded = true;
+                                });
+                            }
+                        }
+                        return;
+                    }
+                    btn.innerHTML = '<span id="loadingTranslate"><img class="icon" src="/note/static/image/google_translate/translate.svg"/>Loading ...</span>';
+                    loading = true;
+                    loadJS(url, function(){
+                        localStorage.setItem("googleTransDomain", domain);
+                        removeHint()
+                        transLoaded = true;
+                    });
+                }
+                </script>
+            
+    
+        <script src="/note/static/js/theme_default/tocbot.min.js"></script>
+    
+        <script src="/note/static/js/theme_default/main.js"></script>
+    
+        <script src="/note/static/js/theme_default/viewer.min.js"></script>
+    
+        <script src="/note/static/css/theme_default/prism.min.js"></script>
+    
+        <script src="/note/static/js/search/search_main.js"></script>
+    
+        <script src="/note/static/js/plugin_blog/main.js"></script>
+    
+        <link rel="stylesheet" href="/note/static/js/add_hint/style.css" type="text/css"/>
+    
+        <script src="/note/static/js/add_hint/main.js"></script>
+    
+        <script src="/note/static/js/gitalk/gitalk.min.js"></script>
+    
+        <script src="/note/static/js/gitalk/main.js"></script>
+    
+        <script src="/note/static/js/custom.js"></script>
+    
+</body>
+
+</html>
